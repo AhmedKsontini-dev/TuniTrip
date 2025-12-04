@@ -1,0 +1,100 @@
+/* ======== COULEURS ======== */
+:root {
+    --primary: #1c2228;
+    --secondary: #d8b65d;
+    --white: #ffffff;
+}
+
+/* ======== SIDEBAR ======== */
+.bg-gradient-primary {
+    background-color: var(--primary) !important;
+    background-image: none !important;
+}
+
+.sidebar .nav-item .nav-link,
+.sidebar-brand-text {
+    color: var(--white) !important;
+}
+
+.sidebar .nav-item .nav-link:hover {
+    background-color: var(--secondary) !important;
+    color: var(--primary) !important;
+    font-weight: bold;
+}
+
+/* Icones */
+.sidebar .nav-item .nav-link i {
+    color: var(--secondary) !important;
+}
+
+/* Active link */
+.sidebar .nav-item.active .nav-link {
+    background-color: var(--secondary) !important;
+    color: var(--primary) !important;
+}
+
+/* ======== TOPBAR ======== */
+.topbar {
+    background-color: var(--primary) !important;
+}
+
+.topbar .nav-link,
+.topbar .navbar-search input {
+    color: var(--white) !important;
+}
+
+.topbar .navbar-search input::placeholder {
+    color: #ccc;
+}
+
+/* ======== BOUTONS ======== */
+.btn-primary {
+    background-color: var(--secondary) !important;
+    border-color: var(--secondary) !important;
+    color: var(--primary) !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary) !important;
+    border-color: var(--secondary) !important;
+    color: var(--secondary) !important;
+}
+
+/* ======== TABLEAUX & CARTES ======== */
+.card,
+.table {
+    border-color: var(--secondary) !important;
+}
+
+/* Titres */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--primary);
+}
+
+/* ======== SCROLL TOP BUTTON ======== */
+.scroll-to-top {
+    background-color: var(--secondary) !important;
+    color: var(--primary) !important;
+}
+
+/* ======== LOGOUT MODAL ======== */
+.modal-content {
+    border: 2px solid var(--secondary);
+}
+
+.modal-header {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+.modal-footer .btn-primary {
+    background-color: var(--secondary) !important;
+    color: var(--primary) !important;
+}
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #d8b65d !important;
+    border-color: #1c2228 !important;
+}

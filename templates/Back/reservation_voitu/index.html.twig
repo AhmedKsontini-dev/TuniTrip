@@ -1,0 +1,107 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Gestion des réservations de transfert{% endblock %}
+
+{% block body %}
+<style>
+.dataTables_wrapper .dataTables_filter {
+    float: right;
+    text-align: right;
+}
+.dataTables_wrapper .dataTables_paginate {
+    float: right;
+    text-align: right;
+}
+</style>
+
+<div class="container mt-4">
+    <h1 class="mb-3">🚖 Réservations des voitures</h1>
+
+    <!-- 🔔 Messages flash -->
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">{{ message }}</div>
+        {% endfor %}
+    {% endfor %}
+
+    <!-- ➕ Bouton Ajouter -->
+    <a href="{{ path('app_reservation_voiture_new') }}" class="btn btn-primary mb-3">
+        ➕ Nouvelle réservation
+    </a>
+
+    <!-- 📊 Tableau des réservations -->
+    <table class="table table-bordered table-hover align-middle datatable">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Image voiture</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Date de naissance</th>
+                <th>Nationalité</th>
+                <th>Adresse</th>
+                <th>Téléphone</th>
+                <th>Date début</th>
+                <th>Date fin</th>
+                <th>Prix Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for reservation in reservation_voitures %}
+                <tr>
+                    <td>{{ reservation.id }}</td>
+
+                    <!-- 🖼️ Image voiture -->
+                    <td>
+                        {% if reservation.voiture and reservation.voiture.image %}
+                            <img src="{{ asset('uploads/images/' ~ reservation.voiture.image) }}"
+                                alt="Voiture"
+                                style="width: 70px; height: 50px; object-fit: cover; border-radius: 6px;">
+                        {% else %}
+                            <span class="text-muted">—</span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ reservation.nom }}</td>
+                    <td>{{ reservation.prenom }}</td>
+                    <td>{{ reservation.dateNaissance ? reservation.dateNaissance|date('Y-m-d') : '—' }}</td>
+                    <td>{{ reservation.nationalite }}</td>
+                    <td>{{ reservation.adresse }}</td>
+                    <td>{{ reservation.tel }}</td>
+                    <td>{{ reservation.dateDebut ? reservation.dateDebut|date('Y-m-d') : '—' }}</td>
+                    <td>{{ reservation.dateFin ? reservation.dateFin|date('Y-m-d') : '—' }}</td>
+
+                    <!-- 💰 Prix total -->
+                    <td>
+                        {% if reservation.prixTotal %}
+                            <strong>{{ reservation.prixTotal }} TND</strong>
+                        {% else %}
+                            —
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <a href="{{ path('app_reservation_voiture_show', {'id': reservation.id}) }}" class="btn btn-sm btn-info">👁️</a>
+                        <a href="{{ path('app_reservation_voiture_edit', {'id': reservation.id}) }}" class="btn btn-sm btn-warning">✏️</a>
+
+                        <form method="post"
+                            action="{{ path('app_reservation_voiture_delete', {'id': reservation.id}) }}"
+                            style="display:inline-block;"
+                            onsubmit="return confirm('Supprimer cette réservation ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reservation.id) }}">
+                            <button class="btn btn-sm btn-danger">🗑️</button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="12" class="text-center text-muted">Aucune réservation enregistrée.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+{% endblock %}

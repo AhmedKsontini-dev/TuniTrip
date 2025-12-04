@@ -1,0 +1,90 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Détails de la voiture{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="card shadow-lg border-0 rounded-4 p-4">
+
+        <!-- 🚗 Image principale -->
+        {% if voiture.image %}
+            <div class="text-center mb-4">
+                <img src="{{ asset('uploads/images/' ~ voiture.image) }}" 
+                     alt="{{ voiture.marque }} {{ voiture.modele }}" 
+                     class="img-fluid rounded shadow-sm" 
+                     style="max-width: 400px; height: 300px;">
+            </div>
+        {% else %}
+            <div class="text-center text-muted mb-4">Aucune image disponible</div>
+        {% endif %}
+
+        <!-- 🏷️ Titre principal -->
+        <h1 class="text-center mb-4 text-primary fw-bold">
+            {{ voiture.marque }} {{ voiture.modele }}
+        </h1>
+
+        <!-- 📋 Informations principales -->
+        <div class="row text-center mb-4">
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">🆔 ID</h6>
+                <p class="fw-semibold">{{ voiture.id }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">🚘 Immatriculation</h6>
+                <p class="fw-semibold">{{ voiture.immatriculation }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">💰 Prix / Jour</h6>
+                <p class="fw-semibold text-success">{{ voiture.prixJour }} TND</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">📦 Boîte de vitesse</h6>
+                <p class="fw-semibold">{{ voiture.boiteVitesse }}</p>
+            </div>
+        </div>
+
+        <!-- ⚙️ Détails supplémentaires -->
+        <hr>
+        <div class="row text-center mb-4">
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">🧊 Climatiseur</h6>
+                {% if voiture.climatiseur %}
+                    <span class="badge bg-success px-3 py-2">Oui</span>
+                {% else %}
+                    <span class="badge bg-secondary px-3 py-2">Non</span>
+                {% endif %}
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">👥 Passagers</h6>
+                <p class="fw-semibold">{{ voiture.passengers }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">🧳 Valises</h6>
+                <p class="fw-semibold">{{ voiture.suitcases }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">📅 Disponibilité</h6>
+                {% if voiture.disponible %}
+                    <span class="badge bg-success px-3 py-2">Disponible</span>
+                {% else %}
+                    <span class="badge bg-danger px-3 py-2">Non disponible</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- 📝 Description -->
+        {% if voiture.description %}
+            <hr>
+            <h4 class="text-primary mt-3">📝 Description</h4>
+            <p class="mt-2">{{ voiture.description|nl2br }}</p>
+        {% endif %}
+    </div>
+
+    <!-- 🔙 Boutons d’action -->
+    <div class="text-center mt-4">
+        <a href="{{ path('app_voitures_index') }}" class="btn btn-secondary px-4 me-2">↩️ Retour à la liste</a>
+        <a href="{{ path('app_voitures_edit', {'id': voiture.id}) }}" class="btn btn-warning px-4 me-2">✏️ Modifier</a>
+        
+    </div>
+</div>
+{% endblock %}

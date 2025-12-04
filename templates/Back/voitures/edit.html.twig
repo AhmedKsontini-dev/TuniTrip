@@ -1,0 +1,121 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Modifier la voiture{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="card shadow-lg border-0 rounded-4 p-4">
+
+        <!-- 🏷️ Titre principal -->
+        <h2 class="text-center text-primary fw-bold mb-4">
+            ✏️ Modifier la voiture : "{{ voiture.marque }} {{ voiture.modele }}"
+        </h2>
+        <!-- 🖼️ Section image -->
+        <h5 class="text-primary mb-3">📸 Image actuelle</h5>
+        <div class="mb-3 text-center">
+            {% if voiture.image %}
+                <img src="{{ asset('uploads/images/' ~ voiture.image) }}" 
+                     alt="{{ voiture.marque }}" 
+                     class="img-thumbnail mb-3 shadow-sm" 
+                     style="width: 400px;">
+            {% else %}
+                <p class="text-muted">Aucune image enregistrée.</p>
+            {% endif %}
+        </div>
+        <!-- 📋 Début du formulaire -->
+        {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+
+        <div class="row g-4">
+
+            <!-- 🧱 Colonne gauche -->
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    {{ form_label(form.image, 'Changer l’image') }}
+                    {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.image) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.marque) }}
+                    {{ form_widget(form.marque, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.marque) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.modele) }}
+                    {{ form_widget(form.modele, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.modele) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.immatriculation) }}
+                    {{ form_widget(form.immatriculation, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.immatriculation) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.prixJour, 'Prix / Jour (TND)') }}
+                    {{ form_widget(form.prixJour, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.prixJour) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.boiteVitesse, 'Boîte de vitesse') }}
+                    {{ form_widget(form.boiteVitesse, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.boiteVitesse) }}
+                </div>
+
+            </div>
+
+            <!-- 🧱 Colonne droite -->
+            <div class="col-lg-6">
+
+                <div class="mb-3">
+                    {{ form_label(form.description) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': 5}}) }}
+                    {{ form_errors(form.description) }}
+                </div>
+
+                <div class="form-check mb-3">
+                    {{ form_widget(form.disponible, {'attr': {'class': 'form-check-input'}}) }}
+                    {{ form_label(form.disponible, 'Disponible', {'label_attr': {'class': 'form-check-label'}}) }}
+                </div>
+
+                <div class="form-check mb-3">
+                    {{ form_widget(form.climatiseur, {'attr': {'class': 'form-check-input'}}) }}
+                    {{ form_label(form.climatiseur, 'Climatiseur', {'label_attr': {'class': 'form-check-label'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.passengers, 'Nombre de passagers') }}
+                    {{ form_widget(form.passengers, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.passengers) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.suitcases, 'Nombre de valises') }}
+                    {{ form_widget(form.suitcases, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.suitcases) }}
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+        
+
+       
+
+        <!-- 🔘 Boutons -->
+        <div class="text-center mt-4">
+            <button class="btn btn-success px-4">
+                💾 Enregistrer les modifications
+            </button>
+            <a href="{{ path('app_voitures_index') }}" class="btn btn-secondary px-4">
+                ↩️ Retour à la liste
+            </a>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

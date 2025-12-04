@@ -1,0 +1,91 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Détails du transfert{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="card shadow-lg border-0 rounded-4 p-4">
+
+        <!-- 🏷️ Titre principal -->
+        <h1 class="text-center mb-4 text-primary fw-bold">
+            🚖 {{ transfere.lieuDepart }} → {{ transfere.lieuArrivee }}
+        </h1>
+
+        <!-- 🖼️ Image principale -->
+        {% if transfere.image %}
+            <div class="text-center mb-4">
+                <img src="{{ asset('uploads/images/' ~ transfere.image) }}" 
+                     alt="{{ transfere.lieuDepart }} → {{ transfere.lieuArrivee }}" 
+                     class="img-fluid rounded shadow-sm" 
+                     style="max-width: 400px; height: 300px; object-fit: cover;">
+            </div>
+        {% else %}
+            <div class="text-center text-muted mb-4">Aucune image disponible</div>
+        {% endif %}
+
+       
+
+        <!-- 📋 Informations principales -->
+        <div class="row text-center mb-4">
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">🆔 ID</h6>
+                <p class="fw-semibold">{{ transfere.id }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">📍 Lieu de départ</h6>
+                <p class="fw-semibold">{{ transfere.lieuDepart }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">🎯 Lieu d’arrivée</h6>
+                <p class="fw-semibold">{{ transfere.lieuArrivee }}</p>
+            </div>
+           
+        </div>
+
+        <!-- ⏱️ Détails supplémentaires -->
+        <hr>
+        <div class="row text-center mb-4">
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">💰 Prix</h6>
+                <p class="fw-semibold text-success">{{ transfere.prix }} TND</p>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <h6 class="text-muted">⏳ Durée</h6>
+                <p class="fw-semibold">{{ transfere.duree }}</p>
+            </div>
+            
+            <div class="col-md-4 mb-3">
+                <h6 class="text-muted">📅 Statut</h6>
+                {% if transfere.actif %}
+                    <span class="d-inline-flex align-items-center">
+                        <span class="me-2" 
+                            style="display:inline-block; width:15px; height:15px; border-radius:50%; background-color:#28a745;">
+                        </span>
+                        <span class="text-success fw-semibold">Actif</span>
+                    </span>
+                {% else %}
+                    <span class="d-inline-flex align-items-center">
+                        <span class="me-2" 
+                            style="display:inline-block; width:15px; height:15px; border-radius:50%; background-color:#dc3545;">
+                        </span>
+                        <span class="text-danger fw-semibold">Inactif</span>
+                    </span>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 🔙 Boutons d’action -->
+    <div class="text-center mt-4">
+        <a href="{{ path('app_transfere_index') }}" class="btn btn-secondary px-4 me-2">
+            ↩️ Retour à la liste
+        </a>
+        <a href="{{ path('app_transfere_edit', {'id': transfere.id}) }}" class="btn btn-warning px-4 me-2">
+            ✏️ Modifier
+        </a>
+        
+    </div>
+</div>
+{% endblock %}

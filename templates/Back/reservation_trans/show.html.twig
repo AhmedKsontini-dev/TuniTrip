@@ -1,0 +1,154 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Détails Réservation #{{ reservation.id }}{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="card shadow-lg border-0 rounded-4 p-4">
+
+        <!-- 🏷️ Titre principal -->
+        <h1 class="text-center mb-4 text-primary fw-bold">
+            🚖 Réservation #{{ reservation.id }}
+        </h1>
+
+        <!-- 👤 Informations Client -->
+        <hr>
+        <h4 class="text-primary mb-3">Informations Client</h4>
+        <div class="row text-center">
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">Nom complet</h6>
+                <p class="fw-semibold">{{ reservation.firstName }} {{ reservation.lastName }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">Téléphone</h6>
+                <p class="fw-semibold">{{ reservation.tel ?: '—' }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">WhatsApp</h6>
+                <p class="fw-semibold">{{ reservation.whatsappNumber ?: '—' }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">Email</h6>
+                <p class="fw-semibold">{{ reservation.email ?: '—' }}</p>
+            </div>
+        </div>
+
+        <!-- 🚗 Détails du Transfert -->
+        <hr>
+        <h4 class="text-primary mb-3">Détails du Transfert</h4>
+        <div class="row text-center">
+            <div class="col-md-4 mb-3">
+                <h6 class="text-muted">Trajet</h6>
+                <p class="fw-semibold">
+                    {{ reservation.trajetTransfert.lieuDepart }} → {{ reservation.trajetTransfert.lieuArrivee }}
+                </p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h6 class="text-muted">Type de transfert</h6>
+                <p class="fw-semibold">{{ reservation.transferType.value }}</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h6 class="text-muted">Nombre de personnes</h6>
+                <p class="fw-semibold">{{ reservation.persons }}</p>
+            </div>
+        </div>
+
+        <div class="text-center mb-4">
+            <span class="badge bg-success fs-6 px-3 py-2">
+                💰 {{ reservation.prixTotal }} TND
+            </span>
+        </div>
+
+        <!-- 📅 Pick-up -->
+        <hr>
+        <h4 class="text-primary mb-3">📍 Détails du Pick-up</h4>
+        <div class="row text-center">
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">Date</h6>
+                <p class="fw-semibold">{{ reservation.pickupDate ? reservation.pickupDate|date('d/m/Y') : '—' }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">Heure</h6>
+                <p class="fw-semibold">{{ reservation.pickupTime ? reservation.pickupTime|date('H:i') : '—' }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">Lieu de départ</h6>
+                <p class="fw-semibold">
+                    {{ reservation.pickupLocation 
+                        ?: (reservation.trajetTransfert ? reservation.trajetTransfert.lieuDepart : '—') }}
+                </p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">Destination</h6>
+                <p class="fw-semibold">
+                    {{ reservation.dropoffLocation 
+                        ?: (reservation.trajetTransfert ? reservation.trajetTransfert.lieuArrivee : '—') }}
+                </p>
+            </div>
+        </div>
+
+        <!-- 🔁 Retour — affiché uniquement si le type de transfert = "return" -->
+        {% if reservation.transferType.value == 'return' %}
+            <hr>
+            <h4 class="text-primary mb-3">🔁 Détails du Retour</h4>
+            <div class="row text-center">
+                <div class="col-md-3 mb-3">
+                    <h6 class="text-muted">Date</h6>
+                    <p class="fw-semibold">{{ reservation.returnPickupDate ? reservation.returnPickupDate|date('d/m/Y') : '—' }}</p>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <h6 class="text-muted">Heure</h6>
+                    <p class="fw-semibold">{{ reservation.returnPickupTime ? reservation.returnPickupTime|date('H:i') : '—' }}</p>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <h6 class="text-muted">Lieu de départ</h6>
+                    <p class="fw-semibold">{{ reservation.returnPickupLocation ?: '—' }}</p>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <h6 class="text-muted">Destination</h6>
+                    <p class="fw-semibold">{{ reservation.returnDropoffLocation ?: '—' }}</p>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- ✈️ Autres informations -->
+        <hr>
+        <h4 class="text-primary mb-3">Autres Informations</h4>
+        <div class="row text-center">
+            <div class="col-md-4 mb-3">
+                <h6 class="text-muted">Numéro de vol</h6>
+                <p class="fw-semibold">{{ reservation.flightNumber ?: '—' }}</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h6 class="text-muted">Commentaires</h6>
+                <p class="fw-semibold">{{ reservation.comments ?: 'Aucun' }}</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h6 class="text-muted">Créé le</h6>
+                <p class="fw-semibold">{{ reservation.createdAt|date('d/m/Y H:i') }}</p>
+            </div>
+        </div>
+
+        <!-- 📌 Statut -->
+        <hr>
+        <div class="text-center mt-4">
+            <h6 class="text-muted">Statut actuel</h6>
+            {% if reservation.statut == 'en_attente' %}
+                <span class="badge bg-warning text-dark fs-6 px-3 py-2">⏳ En attente</span>
+            {% elseif reservation.statut == 'confirmee' %}
+                <span class="badge bg-success fs-6 px-3 py-2">✅ Confirmée</span>
+            {% else %}
+                <span class="badge bg-danger fs-6 px-3 py-2">❌ Annulée</span>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <!-- 🔙 Bouton retour -->
+    <div class="text-center mt-4">
+        <a href="{{ path('back_reservation_transfert_index') }}" class="btn btn-secondary px-4">
+            ↩️ Retour à la liste
+        </a>
+    </div>
+</div>
+{% endblock %}

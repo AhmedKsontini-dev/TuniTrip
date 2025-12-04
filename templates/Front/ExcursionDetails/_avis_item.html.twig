@@ -1,0 +1,27 @@
+<div class="card mb-3 shadow-sm">
+    <div class="card-body">
+
+        <div class="d-flex justify-content-between align-items-start mb-2">
+            <div>
+                <strong>{{ a.user ? a.user.email : 'Utilisateur anonyme' }}</strong>
+                {% if a.compagnon %}
+                    <span class="badge bg-secondary ms-2">{{ a.compagnon }}</span>
+                {% endif %}
+            </div>
+            <div class="text-warning">
+                {% for i in 1..5 %}
+                    {% if i <= a.note %}⭐{% else %}☆{% endif %}
+                {% endfor %}
+                <span class="text-dark ms-1">{{ a.note }}/5</span>
+            </div>
+        </div>
+
+        {% if a.commentaire %}
+            <p>{{ a.commentaire }}</p>
+        {% endif %}
+
+        <small class="text-muted">
+            <i class="bi bi-clock"></i> {{ a.createdAt|date('d/m/Y à H:i') }}
+        </small>
+    </div>
+</div>

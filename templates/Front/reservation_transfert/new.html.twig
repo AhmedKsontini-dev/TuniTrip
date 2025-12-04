@@ -1,0 +1,719 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}TuniTrip - Transfert{% endblock %}
+{% block body %}
+<style>
+
+.home {
+    position: relative;
+    height: 420px;
+    background-image: url("{{ asset('assetsFront/inner_HEADER.jpg') }}");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.home::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(25, 32, 38, 0.8); /* même overlay que les autres headers */
+}
+
+.home_content {
+    position: absolute;
+    z-index: 2; /* au-dessus de l'overlay */
+    margin-top: 60px; /* pour aligner le contenu comme les autres headers */
+}
+
+.home_title {
+    font-size: 40px;
+    color: #D7B65D; /* couleur dorée identique */
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* --- VARIABLES ET RESET --- */
+:root {
+  --primary: #1c2228;
+  --secondary: #d8b65d;
+  --text-dark: #1c2228;
+  --text-light: #64748b;
+  --border: #e2e8f0;
+  --bg-light: #f8fafc;
+  --shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* --- CONTENEUR PRINCIPAL --- */
+.reservation-container {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 0 1.5rem;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+/* --- EN-TÊTE AVEC PROGRESSION --- */
+.form-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.form-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.form-header .route {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+
+.route-arrow {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* --- INDICATEUR D'ÉTAPES --- */
+.steps-indicator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 400px;
+  margin: 2rem auto 3rem;
+  position: relative;
+}
+
+.steps-indicator::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 25%;
+  right: 25%;
+  height: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.step-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--text-light);
+  transition: all 0.3s ease;
+}
+
+.step-item.active .step-circle {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  transform: scale(1.1);
+}
+
+.step-item.completed .step-circle {
+  background: var(--secondary);
+  border-color: var(--secondary);
+  color: var(--primary);
+}
+
+.step-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-light);
+  transition: color 0.3s;
+}
+
+.step-item.active .step-label {
+  color: var(--primary);
+}
+
+/* --- CARTE DU FORMULAIRE --- */
+.form-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.form-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
+
+/* --- ÉTAPES --- */
+.form-step {
+  display: none;
+  animation: slideIn 0.5s ease;
+}
+
+.form-step.active {
+  display: block;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* --- TITRE D'ÉTAPE --- */
+.step-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.step-title::before {
+  content: '';
+  width: 6px;
+  height: 30px;
+  background: linear-gradient(180deg, var(--primary), var(--secondary));
+  border-radius: 3px;
+}
+
+/* --- CHAMPS DE FORMULAIRE --- */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-row-custom {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-row-custom.single {
+  grid-template-columns: 1fr;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  font-size: 1rem;
+  color: var(--text-dark);
+  transition: all 0.3s ease;
+  background: var(--bg-light);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+.form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+/* --- CHAMPS DE RETOUR (masqués par défaut) --- */
+.return-fields {
+  display: none;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px dashed var(--border);
+  animation: fadeInDown 0.4s ease;
+}
+
+.return-fields.visible {
+  display: block;
+}
+
+.return-fields-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- BOUTONS --- */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.btn {
+ 
+  min-width: 180px;
+  border-radius: 999px;
+  padding: 12px 24px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #fff;
+  flex: 1;
+  box-shadow: 0 15px 35px rgba(28,34,40,.2);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(28,34,40,.3);
+}
+
+.btn-secondary {
+  background: rgba(28,34,40,.12);
+  color: var(--primary);
+  box-shadow: none;
+  border: 1px solid rgba(28,34,40,.2);
+}
+
+.btn-secondary:hover {
+  background: rgba(28,34,40,.18);
+  border-color: rgba(28,34,40,.3);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #fff;
+  flex: 1;
+  box-shadow: 0 15px 35px rgba(216,182,93,.35);
+}
+
+.btn-success:hover {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(216,182,93,.45);
+}
+
+/* --- MODAL --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 0.5rem; /* moins de marge autour */
+}
+
+.modal-overlay.show {
+  display: flex;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-card {
+  background: white;
+  border-radius: 20px; /* légèrement réduit */
+  padding: 2rem; /* réduit de 3rem -> 2rem */
+  max-width: 480px; /* réduit de 550px */
+  width: 100%;
+  text-align: center;
+  animation: modalSlideUp 0.4s ease;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
+}
+
+/* --- Content spacing --- */
+.modal-details {
+  background: var(--bg-light);
+  border-radius: 14px;
+  padding: 1rem; /* réduit */
+  margin: 1.5rem 0; /* réduit */
+}
+
+.modal-details p {
+  margin: 0.5rem 0; /* réduit */
+  font-size: 0.9rem; /* un peu plus compact */
+}
+
+.modal-card h3 {
+  font-size: 1.6rem; /* réduit de 1.8 */
+}
+
+.modal-card .subtitle {
+  font-size: 1rem;
+  margin-bottom: 1rem; /* réduit */
+}
+
+.modal-divider {
+  margin: 1rem 0; /* réduit */
+}
+
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 768px) {
+  .modal-card {
+    padding: 1.2rem; /* très compact sur mobile */
+    border-radius: 16px;
+  }
+
+  .modal-details {
+    padding: 0.8rem;
+  }
+
+  .modal-details p {
+    font-size: 0.85rem;
+  }
+
+  .modal-card h3 {
+    font-size: 1.4rem;
+  }
+
+  .modal-card .subtitle {
+    font-size: 0.9rem;
+  }
+}
+
+</style>
+<!-- === HEADER === -->
+<div class="home">
+    <div class="home_content">
+        <div class="home_title">Reservation transfert</div>
+        <p>Home // Transfert </p>
+    </div>
+</div>
+<div class="reservation-container">
+  <!-- EN-TÊTE -->
+  <div class="form-header">
+    <h2>Réservation de Transfert</h2>
+    <div class="route">
+      <span>{{ trajet.lieuDepart }}</span>
+      <span class="route-arrow">→</span>
+      <span>{{ trajet.lieuArrivee }}</span>
+    </div>
+  </div>
+
+  <!-- INDICATEUR D'ÉTAPES -->
+  <div class="steps-indicator">
+    <div class="step-item active" id="step-indicator-1">
+      <div class="step-circle">1</div>
+      <div class="step-label">Détails du trajet</div>
+    </div>
+    <div class="step-item" id="step-indicator-2">
+      <div class="step-circle">2</div>
+      <div class="step-label">Vos informations</div>
+    </div>
+  </div>
+
+  <!-- FORMULAIRE -->
+  <div class="form-card">
+    {{ form_start(form, {'attr': {'id': 'reservationForm'}}) }}
+
+    <!-- ÉTAPE 1 : Détails du Trajet -->
+    <div class="form-step active" id="step-1">
+      <h3 class="step-title">Détails de votre transfert</h3>
+
+      <div class="form-row-custom">
+        <div class="form-group">{{ form_row(form.pickupDate) }}</div>
+        <div class="form-group">{{ form_row(form.pickupTime) }}</div>
+      </div>
+
+      <div class="form-row-custom">
+        <div class="form-group">{{ form_row(form.pickupLocation) }}</div>
+        <div class="form-group">{{ form_row(form.dropoffLocation) }}</div>
+      </div>
+
+      <div class="form-row-custom">
+        <div class="form-group">{{ form_row(form.transferType) }}</div>
+        <div class="form-group">{{ form_row(form.persons) }}</div>
+      </div>
+
+      <!-- CHAMPS DE RETOUR (masqués par défaut) -->
+      <div class="return-fields" id="returnFields">
+        <div class="return-fields-title">
+          <span>↩️</span>
+          <span>Informations du retour</span>
+        </div>
+        <div class="form-row-custom">
+          <div class="form-group">{{ form_row(form.returnPickupDate) }}</div>
+          <div class="form-group">{{ form_row(form.returnPickupTime) }}</div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <div style="flex: 1;"></div>
+        <button type="button" class="btn btn-primary" onclick="goToStep(2)">
+          Continuer
+          <span>→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 2 : Informations Personnelles -->
+    <div class="form-step" id="step-2">
+      <h3 class="step-title">Vos informations</h3>
+
+      <div class="form-row-custom">
+        <div class="form-group">{{ form_row(form.firstName) }}</div>
+        <div class="form-group">{{ form_row(form.lastName) }}</div>
+      </div>
+
+      <div class="form-row-custom">
+        <div class="form-group">{{ form_row(form.email) }}</div>
+        <div class="form-group">{{ form_row(form.tel) }}</div>
+      </div>
+
+      <div class="form-row-custom">
+        <div class="form-group">{{ form_row(form.whatsappNumber) }}</div>
+        <div class="form-group">{{ form_row(form.flightNumber) }}</div>
+      </div>
+
+      <div class="form-row-custom single">
+        <div class="form-group">{{ form_row(form.comments) }}</div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" onclick="goToStep(1)">
+          <span>←</span>
+          Retour
+        </button>
+        <button type="submit" class="btn btn-success">
+          <span>✓</span>
+          Confirmer la réservation
+        </button>
+      </div>
+    </div>
+
+    {{ form_end(form) }}
+  </div>
+</div>
+
+<!-- MODAL DE CONFIRMATION -->
+<div class="modal-overlay" id="confirmationModal">
+  <div class="modal-card">
+    
+    <h3>Réservation confirmée !</h3>
+    <p class="subtitle">Merci {{ reservation.firstName }} {{ reservation.lastName }}</p>
+
+    <div class="modal-details">
+      <p>
+        <strong>Type de transfert</strong>
+        <span>
+          {% if reservation.transferType and reservation.transferType.value == 'one_way' %}
+            Aller simple
+          {% else %}
+            Aller-retour
+          {% endif %}
+        </span>
+      </p>
+      <p>
+        <strong>Date & Heure départ</strong>
+        <span>{{ reservation.pickupDate|date('d/m/Y') }} à {{ reservation.pickupTime|date('H:i') }}</span>
+      </p>
+      <p>
+        <strong>Trajet</strong>
+        <span>{{ trajet.lieuDepart }} → {{ trajet.lieuArrivee }}</span>
+      </p>
+      
+      {% if reservation.transferType and reservation.transferType.value == 'return' and reservation.returnPickupDate %}
+        <div class="modal-divider"></div>
+        <p style="color: var(--secondary); font-weight: 600; margin-top: 1rem;">
+          <strong>↩️ Informations du retour</strong>
+        </p>
+        <p>
+          <strong>Date & Heure retour</strong>
+          <span>{{ reservation.returnPickupDate|date('d/m/Y') }} à {{ reservation.returnPickupTime|date('H:i') }}</span>
+        </p>
+        <p>
+          <strong>Trajet retour</strong>
+          <span>{{ trajet.lieuArrivee }} → {{ trajet.lieuDepart }}</span>
+        </p>
+      {% endif %}
+      
+      <div class="modal-divider"></div>
+      <p>
+        <strong>Personnes</strong>
+        <span>{{ reservation.persons }}</span>
+      </p>
+      <p style="font-size: 1.2rem; color: var(--primary);">
+        <strong>Prix total</strong>
+        <span style="font-weight: 700; color: var(--secondary);">{{ reservation.prixTotal }} DT</span>
+      </p>
+    </div>
+
+    <p class="modal-footer-text">
+      Un email de confirmation vous sera envoyé à <strong>{{ reservation.email }}</strong> dans les 24 heures. Notre équipe vous contactera pour finaliser les détails.
+    </p>
+
+    <button class="btn btn-success" onclick="closeModal()">
+      Retour à l'accueil
+    </button>
+  </div>
+</div>
+
+<script>
+// Gestion des étapes
+function goToStep(stepNumber) {
+  // Validation de l'étape 1 avant de continuer
+  if (stepNumber === 2) {
+    const requiredFields = ['pickupDate', 'pickupTime', 'pickupLocation', 'dropoffLocation', 'transferType', 'persons'];
+    let isValid = true;
+
+    requiredFields.forEach(fieldName => {
+      const field = document.querySelector(`[name*="${fieldName}"]`);
+      if (field && !field.value) {
+        isValid = false;
+        field.focus();
+        field.style.borderColor = '#ef4444';
+        setTimeout(() => field.style.borderColor = '', 2000);
+      }
+    });
+
+    if (!isValid) {
+      alert('Veuillez remplir tous les champs obligatoires');
+      return;
+    }
+  }
+
+  // Masquer toutes les étapes
+  document.querySelectorAll('.form-step').forEach(step => {
+    step.classList.remove('active');
+  });
+
+  // Afficher l'étape sélectionnée
+  document.getElementById(`step-${stepNumber}`).classList.add('active');
+
+  // Mettre à jour les indicateurs
+  document.querySelectorAll('.step-item').forEach((item, index) => {
+    item.classList.remove('active', 'completed');
+    if (index + 1 < stepNumber) {
+      item.classList.add('completed');
+    } else if (index + 1 === stepNumber) {
+      item.classList.add('active');
+    }
+  });
+
+  // Scroll en haut
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Gestion de l'affichage des champs de retour
+document.addEventListener('DOMContentLoaded', function() {
+  // Bloquer les dates passées
+  const today = new Date().toISOString().split('T')[0];
+  const dateInputs = document.querySelectorAll('input[type="date"]');
+  
+  dateInputs.forEach(input => {
+    input.setAttribute('min', today);
+  });
+
+  // Gestion du transferType
+  const transferTypeField = document.querySelector('[name*="transferType"]');
+  const returnFields = document.getElementById('returnFields');
+
+  if (transferTypeField) {
+    function checkTransferType() {
+      console.log('Transfer type value:', transferTypeField.value); // Debug
+      // Comparaison avec la valeur de l'enum (string 'return')
+      if (transferTypeField.value === 'return') {
+        returnFields.classList.add('visible');
+      } else {
+        returnFields.classList.remove('visible');
+      }
+    }
+
+    transferTypeField.addEventListener('change', checkTransferType);
+    
+    // Vérifier la valeur initiale au chargement
+    checkTransferType();
+  }
+
+  // Afficher le modal si nécessaire
+  {% if showModal %}
+  const modal = document.getElementById('confirmationModal');
+  modal.classList.add('show');
+  {% endif %}
+});
+
+// Fermer le modal
+function closeModal() {
+  const modal = document.getElementById('confirmationModal');
+  modal.classList.remove('show');
+  window.location.href = "{{ path('app_accueil') }}";
+}
+</script>
+{% endblock %}

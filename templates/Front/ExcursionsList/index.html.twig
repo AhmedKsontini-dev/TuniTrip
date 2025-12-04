@@ -1,0 +1,504 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}TuniTrip | Nos Excursions{% endblock %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{{ asset('assetsFront/styles/offers_styles.css') }}">
+<link rel="stylesheet" href="{{ asset('assetsFront/styles/offers_responsive.css') }}">
+<style>
+/* Container */
+.filter-section {
+    background: #192026;
+    padding: 20px;
+    border-radius: 12px;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Title */
+.filter-title {
+    font-weight: bold;
+    color: #D7B65D;
+    margin-bottom: 20px;
+}
+
+/* Inputs style */
+.theme-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    background: #101417;
+    border: 1px solid #2b333a;
+    color: #fff;
+}
+
+.theme-input:focus {
+    outline: none;
+    border-color: #D7B65D;
+}
+
+/* Slider */
+.theme-slider {
+    width: 100%;
+    accent-color: #D7B65D;
+}
+
+/* Filter groups spacing */
+.filter-group {
+    margin-bottom: 18px;
+}
+
+/* Ratings */
+.ratings-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.rating-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.stars {
+    color: #D7B65D;
+    font-size: 18px;
+}
+
+/* Button */
+.filter-btn {
+    width: 100%;
+    padding: 12px;
+    background: #D7B65D;
+    color: #192026;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.filter-btn:hover {
+    background: #c9a44f;
+    cursor: pointer;
+}
+
+    /* ----------- COULEURS PRINCIPALES ----------- */
+:root {
+    --primary: #192026;
+    --secondary: #D7B65D;
+}
+
+
+
+/* ----------- CARTE EXCURSION ----------- */
+.excursion-card {
+    display: flex;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 25px;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.10);
+    border: 1px solid var(--secondary);
+}
+
+.excursion-image {
+    width: 35%;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.excursion-content {
+    width: 65%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+
+/* ----------- BADGE CATÉGORIE ----------- */
+.excursion-badge {
+    position: absolute;
+    top: 12px;
+    left: -10px;
+    background: var(--secondary);
+    color: var(--primary);
+    padding: 6px 18px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    transform: rotate(-8deg);
+    border-radius: 6px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+}
+
+
+
+/* ----------- TITRE + PRIX ----------- */
+.excursion-title {
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.excursion-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--secondary);
+}
+
+
+
+/* ----------- DESCRIPTION ----------- */
+.excursion-description {
+    color: #444;
+    margin-bottom: 15px;
+}
+
+
+
+/* ----------- MÉTA ----------- */
+.excursion-meta span {
+    margin-right: 15px;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.excursion-meta i {
+    color: var(--secondary);
+    margin-right: 5px;
+}
+
+
+
+/* ----------- BOUTON DÉTAILS ----------- */
+.excursion-details-btn {
+    background: var(--primary);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+    align-self: flex-start;
+}
+
+.excursion-details-btn:hover {
+    background: var(--secondary);
+    color: var(--primary);
+}
+
+.home {
+    position: relative;
+    height: 420px;
+    background-image: url("{{ asset('assetsFront/images/excur.jpg') }}");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.home::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(25, 32, 38, 0.8); /* même overlay que les autres headers */
+}
+
+.home_content {
+    position: absolute;
+    z-index: 2; /* au-dessus de l'overlay */
+    margin-top: 60px; /* pour aligner le contenu comme les autres headers */
+}
+
+.home_title {
+    font-size: 40px;
+    color: #D7B65D; /* couleur dorée identique */
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.home_content p {
+    font-size: 1.05rem;
+    margin: 0;
+    color: rgba(255,255,255,.8);
+}
+
+/* Bouton favoris positionné dans le coin supérieur droit de l'image */
+.favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    font-size: 1.6rem;
+    transition: transform 0.2s ease;
+}
+
+/* Couleur initiale du cœur (vide) */
+.favorite-btn i.far.fa-heart {
+    color: #fff; /* blanc pour cœur vide */
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+/* Cœur plein lorsque actif */
+.favorite-btn i.fas.fa-heart {
+    color: #d8b65d; /* couleur secondaire */
+    text-shadow: 0 0 5px rgba(0,0,0,0.7);
+    transform: scale(1.2);
+}
+
+/* Effet hover sur le bouton */
+.favorite-btn:hover i {
+    transform: scale(1.3);
+    color: #d8b65d;
+}
+
+/* Animation au clic */
+.favorite-btn.clicked i {
+    animation: pop 0.3s ease forwards;
+}
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.5); }
+    100% { transform: scale(1.2); }
+}
+
+</style>
+{% endblock %}
+
+{% block body %}
+<!-- Header -->
+<div class="home">
+    <div class="home_content">
+        <div class="home_title">Nos Excursions</div>
+        <p>Home // Liste D'excursions</p>
+    </div>
+</div>
+
+
+
+<!-- Main -->
+<div class="container my-5">
+
+    <div class="row">
+        <!-- Filtres -->
+        <div class="col-lg-3 col-md-4 mb-4">
+            <div class="filter-section">
+
+                <h4 class="filter-title">
+                    <i class="fa fa-filter me-2"></i>Filtres
+                </h4>
+
+                <form method="get" action="{{ path('app_front_excursions_list') }}">
+
+                    <!-- Catégorie -->
+                    <div class="filter-group">
+                        <label for="categorie">Catégorie</label>
+                        <select name="categorie" id="categorie" class="theme-input">
+                            <option value="">Toutes</option>
+                            <option value="attractions">Attractions</option>
+                            <option value="visites guidees">Visites guidées</option>
+                            <option value="excursions journee">Excursions d'une journée</option>
+                            <option value="plein air">Activités de plein air</option>
+                            <option value="concerts spect">Concerts et spectacles</option>
+                            <option value="evenement">Évènements</option>
+                            <option value="cours ateliers">Cours & ateliers</option>
+                            <option value="shopping">Shopping</option>
+                            <option value="ressources touristiques">Ressources touristiques</option>
+                        </select>
+                    </div>
+
+                    <!-- Localisation -->
+                    <div class="filter-group">
+                        <label for="localisation">Localisation</label>
+                        <select name="localisation" id="localisation" class="theme-input">
+                            <option value="">Toutes</option>
+                            {% for loc in localisations %}
+                                <option value="{{ loc }}">{{ loc }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Prix -->
+                    <div class="filter-group">
+                        <label for="prix">Prix max : <span id="prixValue">200</span> TND</label>
+                        <input type="range" min="10" max="1000" value="200"
+                            id="prix" name="prix"
+                            class="theme-slider"
+                            oninput="document.getElementById('prixValue').textContent=this.value">
+                    </div>
+
+                    <!-- Durée -->
+                    <div class="filter-group">
+                        <label for="duree">Durée (jours)</label>
+                        <select name="duree" id="duree" class="theme-input">
+                            <option value="">Toutes</option>
+                            <option value="1">1 jour</option>
+                            <option value="2">2 jours</option>
+                            <option value="3">3 jours</option>
+                            <option value="4+">4 jours et +</option>
+                        </select>
+                    </div>
+
+                    <!-- Notes voyageurs -->
+                    <div class="filter-group">
+                        <label>Notes voyageurs</label>
+                        <div class="ratings-filter">
+                            {% for n in [5,4,3,2,1] %}
+                                <label class="rating-option">
+                                    <input type="radio" name="rating" value="{{ n }}">
+                                    <span class="stars">
+                                        {% for i in 1..n %}★{% endfor %}
+                                    </span>
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Langue du guide -->
+                    <div class="filter-group">
+                        <label for="langue">Langue du guide</label>
+                        <select name="langue" id="langue" class="theme-input">
+                            <option value="">Toutes</option>
+                            <option value="fr">Français</option>
+                            <option value="en">Anglais</option>
+                            <option value="de">Allemand</option>
+                            <option value="it">Italien</option>
+                            <option value="es">Espagnol</option>
+                        </select>
+                    </div>
+
+                    <!-- Nombre de personnes max -->
+                    <div class="filter-group">
+                        <label for="nbr_personnes">Nombre de personnes max</label>
+                        <input type="number" name="nbr_personnes" id="nbr_personnes"
+                            class="theme-input" placeholder="ex: 8">
+                    </div>
+
+                    <button type="submit" class="filter-btn">
+                        <i class="fa fa-search me-1"></i>Appliquer les filtres
+                    </button>
+
+                </form>
+            </div>
+        </div>
+
+
+
+        <!-- Liste Excursions -->
+        <div class="col-lg-9 col-md-8">
+            {% if excursions|length > 0 %}
+                {% for excursion in excursions %}
+                    <div class="excursion-card">
+                        <div class="excursion-image" style="background-image: url('{{ excursion.imagePrincipalePath }}');">
+                            <span class="excursion-badge">{{ excursion.categorie }}</span>
+
+                            {# Bouton favoris #}
+                            <button class="favorite-btn" data-excursion-id="{{ excursion.id }}"
+                                {% if not app.user %}
+                                    onclick="window.location.href='{{ path('app_login') }}'"
+                                {% endif %}>
+                                <i class="far fa-heart {% if excursion.id in userFavorisIds %}fas text-warning{% endif %}"></i>
+                            </button>
+                        </div>
+
+                        <div class="excursion-content">
+                            <div class="excursion-header">
+                                <h5 class="excursion-title">{{ excursion.titre }}</h5>
+                                <div class="excursion-price">
+                                    {{ excursion.prixParPersonne }} TND <span class="text-muted fs-6">/pers</span>
+                                </div>
+                            </div>
+
+                            <p class="excursion-description">{{ excursion.description|slice(0,180) }}...</p>
+
+                            <div class="excursion-meta">
+                                <span><i class="fa fa-map-marker"></i>{{ excursion.localisation }}</span>
+                                <span><i class="fa fa-clock-o"></i>{{ excursion.duree }} j</span>
+                                <span><i class="fa fa-tag"></i>{{ excursion.categorie }}</span>
+                            </div>
+
+                            <a href="{{ path('app_front_excursion_details', {'id': excursion.id}) }}" class="excursion-details-btn">
+                                <i class="fa fa-info-circle me-1"></i> Voir les détails
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-warning mt-4 text-center">
+                    <i class="fa fa-exclamation-circle me-2"></i>Aucune excursion ne correspond à vos filtres.
+                </div>
+            {% endif %}
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{{ asset('assetsFront/plugins/parallax-js-master/parallax.min.js') }}"></script>
+<script>
+    const slider = document.getElementById("prixSlider");
+    const output = document.getElementById("prixValue");
+    slider.oninput = function () {
+        output.textContent = this.value;
+    }
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.favorite-btn');
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            // Si non connecté, on laisse la redirection HTML onclick
+            if (!btn.dataset.excursionId || !{{ app.user ? 'true' : 'false' }}) return;
+
+            const excursionId = btn.dataset.excursionId;
+            const icon = btn.querySelector('i');
+
+            try {
+                const response = await fetch(`/favori/toggle/${excursionId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    if (data.favori) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas', 'text-warning');
+                    } else {
+                        icon.classList.remove('fas', 'text-warning');
+                        icon.classList.add('far');
+                    }
+                } else if (data.message) {
+                    alert(data.message);
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Une erreur est survenue.');
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

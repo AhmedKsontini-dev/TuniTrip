@@ -1,0 +1,309 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Liste des réservations de transfert{% endblock %}
+
+{% block body %}
+<style>
+.dataTables_wrapper .dataTables_filter {
+    float: right;
+    text-align: right;
+}
+.dataTables_wrapper .dataTables_paginate {
+    float: right;
+    text-align: right;
+}
+.dropdown-toggle::after {
+    display: none; /* cache la petite flèche Bootstrap */
+}
+</style>
+
+<div class="container mt-4">
+
+    <h1 class="mb-3">🚖 Liste des réservations de transfert</h1>
+
+    <table class="table table-bordered table-hover align-middle datatable">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Client</th>
+                <th>Téléphone</th>
+                <th>Trajet</th>
+                <th>Type</th>
+                <th>Pers</th>
+                <th>Date / Heures</th>
+                <th>Prix</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in reservations %}
+                <tr>
+                    <td>{{ r.id }}</td>
+                    <td>{{ r.firstName }} <br> {{ r.lastName }}</td>
+                    <td>{{ r.tel }}</td>
+                    <td>{{ r.trajetTransfert.lieuDepart }} → {{ r.trajetTransfert.lieuArrivee }}</td>
+                    <td>{{ r.transferType.value == 'return' ? 'Aller-Retour' : 'Aller simple' }}</td>
+                    <td>{{ r.persons }}</td>
+                    <td>{{ r.pickupDate ? r.pickupDate|date('d/m/Y') : '-' }} <br> {{ r.pickupTime ? r.pickupTime|date('H:i') : '-' }}</td>
+                    <td>{{ r.prixTotal }} DT</td>
+                    <td>
+                        {% if r.statut == 'en_attente' %}
+                            <span class="badge bg-warning text-dark">⏳ En attente</span>
+                        {% elseif r.statut == 'confirmee' %}
+                            <span class="badge bg-success">✅ Confirmée</span>
+                        {% else %}
+                            <span class="badge bg-danger">❌ Annulée</span>
+                        {% endif %}
+                    </td>
+
+                    <!-- 🟡 Dropdown Actions -->
+                    <td class="text-center">
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                ⋮
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow">
+                                <li>
+                                    <a class="dropdown-item text-info" href="{{ path('admin_reservation_transfert_show', {id: r.id}) }}">
+                                        👁️ Voir détails
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"
+                                       class="dropdown-item text-warning"
+                                       data-bs-toggle="modal"
+                                       data-bs-target="#editModal"
+                                       data-id="{{ r.id }}"
+                                       data-persons="{{ r.persons }}"
+                                       data-transfertype="{{ r.transferType.value }}"
+                                       data-firstname="{{ r.firstName }}"
+                                       data-lastname="{{ r.lastName }}"
+                                       data-email="{{ r.email }}"
+                                       data-tel="{{ r.tel }}"
+                                       data-whatsapp="{{ r.whatsappNumber }}"
+                                       data-flight="{{ r.flightNumber }}"
+                                       data-comments="{{ r.comments|e('html_attr') }}"
+                                       data-pickupdate="{{ r.pickupDate ? r.pickupDate|date('Y-m-d') : '' }}"
+                                       data-pickuptime="{{ r.pickupTime ? r.pickupTime|date('H:i') : '' }}"
+                                       data-pickuplocation="{{ r.pickupLocation }}"
+                                       data-dropofflocation="{{ r.dropoffLocation }}"
+                                       data-returnpickupdate="{{ r.returnPickupDate ? r.returnPickupDate|date('Y-m-d') : '' }}"
+                                       data-returnpickuptime="{{ r.returnPickupTime ? r.returnPickupTime|date('H:i') : '' }}"
+                                       data-returnpickuplocation="{{ r.returnPickupLocation }}"
+                                       data-returndropofflocation="{{ r.returnDropoffLocation }}">
+                                        ✏️ Modifier
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-success" href="{{ path('admin_reservation_transfert_update_statut', {id: r.id, statut: 'confirmee'}) }}">
+                                        ✅ Confirmer
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="{{ path('admin_reservation_transfert_update_statut', {id: r.id, statut: 'annulee'}) }}">
+                                        ❌ Annuler
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form method="post" action="{{ path('admin_reservation_transfert_delete', {id: r.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer cette réservation ?');">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button type="submit" class="dropdown-item text-danger">🗑️ Supprimer</button>
+                                    </form>
+
+                                </li>
+
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="10" class="text-center text-muted">Aucune réservation enregistrée.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- ✅ Modal d'édition -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5 class="modal-title">Modifier la réservation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editReservationForm">
+          <input type="hidden" name="id" id="edit-id">
+
+          <div class="row mb-2">
+            <div class="col">
+              <label>Prénom</label>
+              <input type="text" class="form-control" id="edit-firstname" name="firstName">
+            </div>
+            <div class="col">
+              <label>Nom</label>
+              <input type="text" class="form-control" id="edit-lastname" name="lastName">
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col">
+              <label>Email</label>
+              <input type="email" class="form-control" id="edit-email" name="email">
+            </div>
+            <div class="col">
+              <label>Téléphone</label>
+              <input type="text" class="form-control" id="edit-tel" name="tel">
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col">
+              <label>WhatsApp</label>
+              <input type="text" class="form-control" id="edit-whatsapp" name="whatsappNumber">
+            </div>
+            <div class="col">
+              <label>Numéro de vol</label>
+              <input type="text" class="form-control" id="edit-flight" name="flightNumber">
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col">
+              <label>Type transfert</label>
+              <select class="form-select" id="edit-transfertype" name="transferType">
+                <option value="one_way">Aller simple</option>
+                <option value="return">Aller-retour</option>
+              </select>
+            </div>
+            <div class="col">
+              <label>Personnes</label>
+              <input type="number" min="1" class="form-control" id="edit-persons" name="persons">
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col">
+              <label>Pickup Date</label>
+              <input type="date" class="form-control" id="edit-pickupdate" name="pickupDate">
+            </div>
+            <div class="col">
+              <label>Pickup Time</label>
+              <input type="time" class="form-control" id="edit-pickuptime" name="pickupTime">
+            </div>
+          </div>
+
+          <div class="row mb-2 return-fields" style="display:none;">
+            <div class="col">
+              <label>Return Pickup Date</label>
+              <input type="date" class="form-control" id="edit-returnpickupdate" name="returnPickupDate">
+            </div>
+            <div class="col">
+              <label>Return Pickup Time</label>
+              <input type="time" class="form-control" id="edit-returnpickuptime" name="returnPickupTime">
+            </div>
+          </div>
+
+          <div class="row mb-2 return-fields" style="display:none;">
+            <div class="col">
+              <label>Return Pickup Location</label>
+              <input type="text" class="form-control" id="edit-returnpickuplocation" name="returnPickupLocation">
+            </div>
+            <div class="col">
+              <label>Return Dropoff Location</label>
+              <input type="text" class="form-control" id="edit-returndropofflocation" name="returnDropoffLocation">
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <label>Commentaires</label>
+            <textarea class="form-control" id="edit-comments" name="comments"></textarea>
+          </div>
+
+          <div class="mt-3">
+            <strong>Prix total : </strong> <span id="edit-prixTotal">0 DT</span>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        <button type="button" class="btn btn-success" id="saveEditBtn">💾 Enregistrer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('editModal');
+    const prixSpan = document.getElementById('edit-prixTotal');
+    const returnFields = modal.querySelectorAll('.return-fields');
+
+    function toggleReturnFields(show) {
+        returnFields.forEach(f => f.style.display = show ? 'flex' : 'none');
+    }
+
+    modal.addEventListener('show.bs.modal', (event) => {
+        const button = event.relatedTarget;
+
+        // Remplir tous les champs depuis data-*
+        modal.querySelectorAll('[id^="edit-"]').forEach(input => {
+            const field = input.id.replace('edit-', '');
+            if (button.dataset[field] !== undefined) {
+                input.value = button.dataset[field];
+            }
+        });
+
+        // Afficher les champs return si nécessaire
+        toggleReturnFields(button.dataset.transfertype === 'return');
+
+        const id = button.dataset.id;
+        const personsInput = document.getElementById('edit-persons');
+        const typeSelect = document.getElementById('edit-transfertype');
+
+        function recalc() {
+            fetch(`/back/reservation-transfert/${id}/recalculate-price`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    persons: personsInput.value,
+                    transferType: typeSelect.value
+                })
+            })
+            .then(res => res.json())
+            .then(data => prixSpan.textContent = data.prixTotal + ' DT');
+        }
+
+        personsInput.addEventListener('change', recalc);
+        typeSelect.addEventListener('change', () => {
+            toggleReturnFields(typeSelect.value === 'return');
+            recalc();
+        });
+        recalc();
+    });
+
+    document.getElementById('saveEditBtn').addEventListener('click', () => {
+        const form = document.getElementById('editReservationForm');
+        const id = document.getElementById('edit-id').value;
+        const data = Object.fromEntries(new FormData(form).entries());
+
+        fetch(`/back/reservation-transfert/${id}/update-fields`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(resp => {
+            if (resp.success) location.reload();
+            else alert('Erreur lors de la mise à jour !');
+        });
+    });
+});
+</script>
+{% endblock %}

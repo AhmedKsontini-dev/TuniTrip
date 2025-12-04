@@ -1,0 +1,71 @@
+{# templates/blogs.html.twig #}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Blogs - TuniTrip</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Fullscreen background */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .bg-container {
+            background-image: url('{{ asset('assetsFront/images/construction.png') }}');
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            text-align: center;
+            
+        }
+
+        .bg-container h1 {
+            font-size: 48px;
+            color: #192026;
+            margin-bottom: 20px;
+        }
+
+        .bg-container p {
+            font-size: 20px;
+            color: #fff;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+
+        }
+
+        .bg-container a {
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 16px;
+            color: #fff;
+            background: linear-gradient(135deg, #D7B65D, #192026);
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            margin-bottom: 50px;
+        }
+
+        .bg-container a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-container">
+       
+        <a href="{{ path('app_accueil') }}">Retour à l'accueil</a>
+    </div>
+</body>
+</html>

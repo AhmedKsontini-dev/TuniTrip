@@ -1,0 +1,121 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Détails de l’excursion{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="card shadow-lg border-0 rounded-4 p-4">
+        <h1 class="text-center mb-4 text-primary fw-bold">{{ excursion.titre }}</h1>
+
+        {# Image principale #}
+        {% if excursion.imagePrincipale %}
+            <div class="text-center mb-4">
+                <img src="{{ asset('uploads/images/' ~ excursion.imagePrincipale) }}" 
+                     alt="{{ excursion.titre }}" class="img-fluid rounded shadow-sm" style="max-width:600px;">
+            </div>
+        {% endif %}
+
+        {# Informations principales #}
+        <div class="row mb-4 text-center">
+            <div class="col-md-3"><strong>Catégorie:</strong> {{ excursion.categorie ?: '—' }}</div>
+            <div class="col-md-3"><strong>Durée:</strong> {{ excursion.duree ?: '—' }}</div>
+            <div class="col-md-3"><strong>Localisation:</strong> {{ excursion.localisation ?: '—' }}</div>
+            <div class="col-md-3 text-success"><strong>Prix:</strong> {{ excursion.prixParPersonne }} TND</div>
+        </div>
+
+        
+        {# À propos #}
+        {% if excursion.aPropos %}
+            <hr>
+            <h4 class="text-primary">À quoi s'attendre</h4>
+            <div>{{ excursion.aPropos|raw }}</div>
+        {% endif %}
+
+        {# Description #}
+        <hr>
+        <h4 class="text-primary">Description</h4>
+        <div>{{ excursion.description|raw }}</div>
+
+        {# Inclus, Non inclus et Itinéraire #}
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <h5 class="text-success">✅ Inclus</h5>
+                {% if excursion.inclusList|length > 0 %}
+                    <ul class="list-group list-group-flush">
+                        {% for item in excursion.inclusList %}
+                            <li class="list-group-item">{{ item.item }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">Aucun élément inclus</p>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4">
+                <h5 class="text-danger">❌ Non inclus</h5>
+                {% if excursion.nonInclusList|length > 0 %}
+                    <ul class="list-group list-group-flush">
+                        {% for item in excursion.nonInclusList %}
+                            <li class="list-group-item">{{ item.item }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">Aucun élément exclus</p>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4">
+                <h5 class="text-warning">🗺️ Itinéraire</h5>
+                {% if excursion.itineraires|length > 0 %}
+                    <ol class="list-group list-group-numbered">
+                        {% for step in excursion.itineraires %}
+                            <li class="list-group-item">
+                                <strong>{{ step.titreEtape }}</strong>
+                                {% if step.descriptionEtape %}
+                                    <div>{{ step.descriptionEtape|raw }}</div>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ol>
+                {% else %}
+                    <p class="text-muted">Aucune étape définie</p>
+                {% endif %}
+            </div>
+        </div>
+
+        {# Statut et dates #}
+        <div class="row text-center mt-4">
+            <div class="col-md-4">
+                Statut: 
+                {% if excursion.actif %}
+                    <span class="badge bg-success">Visible</span>
+                {% else %}
+                    <span class="badge bg-secondary">Masquée</span>
+                {% endif %}
+            </div>
+            <div class="col-md-4">Créée le: {{ excursion.createdAt ? excursion.createdAt|date('d/m/Y H:i') : '—' }}</div>
+            <div class="col-md-4">Dernière mise à jour: {{ excursion.updatedAt ? excursion.updatedAt|date('d/m/Y H:i') : '—' }}</div>
+        </div>
+
+        {# Galerie d’images #}
+        {% if excursion.images|length > 0 %}
+            <hr>
+            <h4 class="text-primary mt-4">Galerie d’images</h4>
+            <div class="d-flex flex-wrap justify-content-center gap-3 mt-3">
+                {% for img in excursion.images %}
+                    <img src="{{ asset('uploads/images/' ~ img.imageUrl) }}" 
+                         alt="" class="img-thumbnail shadow-sm" style="width:180px;height:120px;object-fit:cover;">
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {# Boutons d'action #}
+        <hr>
+        <div class="text-center mt-4">
+            <a href="{{ path('admin_excursion_index') }}" class="btn btn-secondary px-4">↩️ Retour à la liste</a>
+            <a href="{{ path('admin_excursion_edit', {id: excursion.id}) }}" class="btn btn-warning px-4">✏️ Modifier</a>
+            <a href="{{ path('admin_image_excursion_new', {excursionId: excursion.id}) }}" class="btn btn-info px-4">🖼️ Gérer les images</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

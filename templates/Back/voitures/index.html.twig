@@ -1,0 +1,76 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Liste des voitures{% endblock %}
+
+{% block body %}
+<style>
+.dataTables_wrapper .dataTables_filter {
+    float: right;
+    text-align: right;
+}
+.dataTables_wrapper .dataTables_paginate {
+    float: right;
+    text-align: right;
+}
+</style>
+
+<div class="container mt-4">
+    <h1 class="mb-3">🚗 Liste des voitures</h1>
+
+    <a href="{{ path('app_voitures_new') }}" class="btn btn-primary mb-3">
+        ➕ Nouvelle voiture
+    </a>
+
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">{{ message }}</div>
+        {% endfor %}
+    {% endfor %}
+
+    <table class="table table-bordered table-hover align-middle datatable">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Image</th>
+                <th>Marque</th>
+                <th>Modèle</th>
+                <th>Immatricule</th>
+                <th>Prix j</th>
+                <th>Boîte de vitesse</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for voiture in voitures %}
+                <tr>
+                    <td>{{ voiture.id }}</td>
+                    <td>
+                        {% if voiture.image %}
+                            <img src="{{ asset('uploads/images/' ~ voiture.image) }}" alt="Image voiture" class="rounded" width="80" height="50">
+                        {% else %}
+                            <span class="text-muted">Aucune image</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ voiture.marque }}</td>
+                    <td>{{ voiture.modele }}</td>
+                    <td>{{ voiture.immatriculation }}</td>
+                    <td>{{ voiture.prixJour }}</td>
+                    <td>{{ voiture.boiteVitesse }}</td>
+                    <td>
+                        <a href="{{ path('app_voitures_show', {'id': voiture.id}) }}" class="btn btn-sm btn-info">👁️</a>
+                        <a href="{{ path('app_voitures_edit', {'id': voiture.id}) }}" class="btn btn-sm btn-warning">✏️</a>
+                        <form method="post" action="{{ path('app_voitures_delete', {'id': voiture.id}) }}" style="display:inline-block;" onsubmit="return confirm('Supprimer cette voiture ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ voiture.id) }}">
+                            <button class="btn btn-sm btn-danger">🗑️</button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8" class="text-center text-muted">Aucune voiture enregistrée.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

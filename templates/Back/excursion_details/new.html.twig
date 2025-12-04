@@ -1,0 +1,147 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Ajouter un détail d'excursion{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2>Ajouter un détail pour : <strong>{{ excursion.titre }}</strong></h2>
+
+    <form action="{{ path('excursion_details_create') }}" method="post">
+
+    {# ID excursion #}
+    <input type="hidden" name="excursion_id" value="{{ excursion.id }}">
+
+    <h4 class="mt-4">📌 Détail d’excursion</h4>
+
+    <div class="mb-3">
+    <label for="titre" class="form-label">Titre</label>
+        <select id="titre" name="titre" class="form-control">
+            <option value="">-- Choisir un titre --</option>
+            <option value="Accessibilité">Accessibilité</option>
+            <option value="Informations supplémentaires">Informations supplémentaires</option>
+            <option value="Conditions d'annulation">Conditions d'annulation</option>
+            <option value="Aide">Aide</option>
+            <option value="Rendez-vous et prise en charge">Rendez-vous et prise en charge</option>
+        </select>
+    </div>
+
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea id="description" name="description" class="form-control" rows="4" ></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="ordre" class="form-label">Ordre d'affichage</label>
+        <input type="number" id="ordre" name="ordre" class="form-control" value="1" min="1" >
+    </div>
+
+
+    <hr>
+
+    <!-- -------------------- INCLUS EXCURSION -------------------- -->
+    <h4 class="mt-4">🟢 Inclus dans l'excursion</h4>
+
+    <div id="zone-inclus">
+        <div class="row mb-3">
+            <div class="col-md-8">
+                <input type="text" name="inclus_items[]" class="form-control" placeholder="Élément inclus...">
+            </div>
+            <div class="col-md-4">
+                <input type="number" name="inclus_ordres[]" class="form-control" value="1" min="1">
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-success mb-3" onclick="addInclus()">+ Ajouter un élément inclus</button>
+
+
+    <hr>
+
+    <!-- -------------------- NON INCLUS EXCURSION -------------------- -->
+    <h4 class="mt-4">🔴 Non inclus dans l'excursion</h4>
+
+    <div id="zone-non-inclus">
+        <div class="row mb-3">
+            <div class="col-md-8">
+                <input type="text" name="non_inclus_items[]" class="form-control" placeholder="Élément non inclus...">
+            </div>
+            <div class="col-md-4">
+                <input type="number" name="non_inclus_ordres[]" class="form-control" value="1" min="1">
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-danger mb-3" onclick="addNonInclus()">+ Ajouter un élément non inclus</button>
+
+    <hr>
+
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+
+</form>
+
+</div>
+
+
+<script>
+function addInclus() {
+    const zone = document.getElementById('zone-inclus');
+    const html = `
+        <div class="row mb-3">
+            <div class="col-md-8">
+                <input type="text" name="inclus_items[]" class="form-control" placeholder="Élément inclus...">
+            </div>
+            <div class="col-md-4">
+                <input type="number" name="inclus_ordres[]" class="form-control" value="1" min="1">
+            </div>
+        </div>
+    `;
+    zone.insertAdjacentHTML('beforeend', html);
+}
+
+function addNonInclus() {
+    const zone = document.getElementById('zone-non-inclus');
+    const html = `
+        <div class="row mb-3">
+            <div class="col-md-8">
+                <input type="text" name="non_inclus_items[]" class="form-control" placeholder="Élément non inclus...">
+            </div>
+            <div class="col-md-4">
+                <input type="number" name="non_inclus_ordres[]" class="form-control" value="1" min="1">
+            </div>
+        </div>
+    `;
+    zone.insertAdjacentHTML('beforeend', html);
+}
+</script>
+    <script>
+    document.getElementById('titre').addEventListener('change', function () {
+        const descriptionField = document.getElementById('description');
+
+        // Si "Aide"
+        if (this.value === "Aide") {
+            descriptionField.value = 
+    `Si vous avez des questions sur cette visite ou besoin d'aide pour réserver, 
+    nous nous ferons une joie de vous aider. 
+    Appelez-nous simplement au numéro 93312378.`;
+        }
+
+        // Si "Conditions d'annulation"
+        else if (this.value === "Conditions d'annulation") {
+            descriptionField.value =
+    `• Pour recevoir un remboursement complet, vous devez annuler plus de 24 heures avant l'heure de début de l'expérience.
+    • Si vous annulez moins de 24 heures avant l'heure de début de l'expérience, le montant que vous avez payé ne sera pas remboursé.
+    • Aucune modification effectuée moins de 24 heures avant l'heure de début de l'expérience ne sera acceptée.
+    • Les heures limites de réservation sont basées sur le fuseau horaire de l'expérience.
+    • Pour avoir lieu, cette expérience requiert un nombre minimum de voyageurs. Si elle est annulée car cette condition n'est pas remplie, nous vous proposerons une autre date/activité ou le remboursement complet.`;
+        }
+
+        // Si un autre titre est choisi → garder vide (ou ne rien faire)
+        else {
+            descriptionField.value = "";
+        }
+    });
+</script>
+
+
+{% endblock %}

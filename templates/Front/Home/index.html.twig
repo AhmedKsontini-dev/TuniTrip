@@ -1,0 +1,3528 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}TinuTrip{% endblock %}
+
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.7/swiper-bundle.min.css">
+{% endblock %}
+
+
+{% block body %}
+
+<style>
+/*----- Bannier ----*/
+.home_slider_background {
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100%;
+    transition: transform 8s ease-in-out;
+}
+
+/* Effet de zoom lent */
+.zoom {
+    animation: zoomEffect 12s ease-in-out infinite;
+}
+
+@keyframes zoomEffect {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+/*----- end Bannier ----*/
+
+/* --- Services --- */
+.transfer-section {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 60px;
+  padding: 80px 0;
+  background-color: #1c2228;
+  flex-wrap: wrap;
+}
+
+.transfer-item {
+  display: flex;
+  align-items: center;
+  max-width: 380px;
+  color: #d1d1d1;
+}
+
+.transfer-item img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 20px;
+  border: 2px solid #d8b65d; /* contour doré */
+  transition: transform 0.4s ease;
+}
+
+.transfer-item:hover img {
+  transform: scale(1.05);
+}
+
+.transfer-content h3 {
+  font-size: 1.4rem;
+  color: #d8b65d;
+  margin-bottom: 10px;
+  font-family: 'Playfair Display', serif;
+}
+
+.transfer-content p {
+  color: #b0b0b0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* --- end services --- */
+
+
+
+
+
+
+
+/* --- Votre Meilleure Option pour les Transferts Aéroport à Tunis --- */
+.airport-transfer-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* Dégradé vertical du noir vers le blanc vers 70-100% */
+  background: linear-gradient(to bottom, #1c2228 0%, #1c2228 70%, #ffffff 100%);
+  background-image: linear-gradient(to bottom, rgba(28,34,40,1) 0%, rgba(28,34,40,1) 85%, rgba(255,255,255,1) 120%), 
+                    url('../assetsFront/about-map.png');
+  background-blend-mode: overlay; /* pour mélanger le dégradé et l’image de fond */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  padding: 100px 8%;
+  gap: 60px;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.transfer-content-left {
+  flex: 1 1 500px;
+  color: #d1d1d1;
+}
+
+.transfer-content-left h2 {
+  font-size: 2rem;
+  color: #d8b65d;
+  margin-bottom: 25px;
+  font-family: 'Playfair Display', serif;
+  line-height: 1.3;
+}
+
+.transfer-content-left p {
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 15px;
+  color: #b0b0b0;
+}
+
+.transfer-image-right {
+  flex: 1 1 400px;
+  display: flex;
+  justify-content: center;
+}
+
+.transfer-image-right img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  animation: slideInRight 1.2s ease-out;
+}
+
+/* Animation de la voiture */
+@keyframes slideInRight {
+  0% {
+    transform: translateX(150px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+/* --- END Votre Meilleure Option pour les Transferts Aéroport à Tunis --- */
+
+
+/* --- Section de liste des voitures --- */
+.cars-section {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+    padding: 100px 0;
+    overflow: hidden;
+}
+
+.container {
+    width: 90%;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    color: #1c2228;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #7f8c8d;
+    font-size: 1rem;
+    margin-bottom: 60px;
+}
+
+/* --- Grille des cartes (Desktop) --- */
+.cars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 40px;
+}
+
+/* --- Carte voiture --- */
+.car-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    max-width: 350px;
+    margin: 0 auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.car-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.car-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Image wrapper + gradient overlay --- */
+.car-image-wrapper {
+    width: 100%;
+    height: 200px; /* 🔥 réduit pour toutes dimensions */
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, rgba(216, 182, 93, 1) 0%, rgba(28, 34, 40, 0.95) 50%);
+}
+
+.car-image-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 100%);
+    z-index: 2;
+}
+
+/* --- Texte "TuniTrip" --- */
+.car-brand {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    z-index: 1;
+    pointer-events: none;
+    font-family: 'Playfair Display', serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Image de voiture --- */
+.car-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 2;
+    opacity: 0;
+    transform: translateX(100%) scale(0.8);
+    transition: all 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.car-card.visible .car-image {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+}
+
+/* --- Contenu de la carte --- */
+.car-content {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.car-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1c2228;
+    margin-bottom: 15px;
+    letter-spacing: -0.5px;
+}
+
+/* --- Caractéristiques modernes --- */
+.car-features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 12px 15px;
+    font-size: 14px;
+    color: #495057;
+    transition: all 0.3s ease;
+}
+
+.feature:hover {
+    background: #e9ecef;
+    transform: translateX(5px);
+}
+
+.feature-icon {
+    font-size: 20px;
+}
+
+.feature-text {
+    font-weight: 500;
+}
+
+/* --- Séparateur élégant --- */
+.divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #e9ecef, transparent);
+    margin: 20px 0;
+}
+
+/* --- Badge prix animé --- */
+.price-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: linear-gradient(135deg, #d8b65d 0%, #c9a12c 100%);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    z-index: 3;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    border: 3px solid #fff;
+    text-align: center;
+    line-height: 1.2;
+
+    /* Animation swing */
+    animation: swing 2.5s ease-in-out infinite;
+    transform-origin: top center;
+}
+
+/* Mouvement de gauche à droite façon balançoire */
+@keyframes swing {
+    0% { transform: rotate(5deg); }
+    25% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(5deg); }
+}
+
+.price-badge-amount {
+    display: block;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.price-badge-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 500;
+    opacity: 0.95;
+    text-transform: uppercase;
+}
+
+:root {
+    --primary: #1c2228;
+    --secondary: #d8b65d;
+    --offwhite: #f5f4f1;
+}
+/* Bouton CTA moderne */
+.cta-button {
+    border: none;
+    border-radius: 999px;
+    padding: 12px 24px;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-decoration: none;
+    cursor: pointer; /* Important pour button */
+    transition: transform .2s ease, box-shadow .2s ease;
+    margin-top: 20px;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(28,34,40,.3);
+    color: #fff;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.cta-button:hover::before {
+    left: 100%;
+}
+
+
+
+/* --- Bouton Voir Plus --- */
+.see-more-wrapper {
+    text-align: center;
+    margin-top: 60px;
+}
+
+.see-more-button {
+    display: inline-block;
+    padding: 16px 40px;
+    background: transparent;
+    color: #d8b65d;
+    border: 2px solid #d8b65d;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.see-more-button:hover {
+    background: #d8b65d;
+    color: white;
+    transform: translateY(-3px);
+}
+
+/* --- Responsive tablette et mobile --- */
+@media (max-width: 768px) {
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .car-features {
+        grid-template-columns: 1fr;
+    }
+
+    /* Slider Mobile */
+    .cars-grid {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        gap: 20px;
+    }
+
+    .cars-slider-wrapper {
+        overflow-x: auto;
+        padding-bottom: 20px;
+        scroll-snap-type: x mandatory;
+    }
+
+    .car-card {
+        min-width: 300px;
+        max-width: 330px;
+        scroll-snap-align: start;
+    }
+}
+
+/* Très petits écrans */
+@media (max-width: 480px) {
+
+    .car-title {
+        font-size: 18px;
+    }
+
+    .car-content {
+        padding: 20px;
+    }
+
+    .feature {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .price-badge {
+        padding: 7px 12px;
+        font-size: 13px;
+    }
+
+    .price-badge-amount {
+        font-size: 17px;
+    }
+}
+
+.car-low-price {
+    display: flex;
+    align-items: center;
+    background: #fff6d6;
+    border: 1px solid #f3d27a;
+    padding: 8px 12px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #b8860b;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.car-low-price .money-icon {
+    font-size: 20px;
+    margin-right: 8px;
+}
+/* --- End liste voiture  --- */
+
+
+
+
+
+/* --- Section confort --- */
+.car-section {
+    position: relative;
+    background: url('../assetsFront/about-sky.png') center center / cover no-repeat;
+    overflow: visible; /* Changé de hidden à visible pour permettre le débordement */
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 100px; /* Espace pour l'image qui déborde */
+}
+
+.car-section .car-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1;
+}
+
+.car-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+.small-text {
+    font-size: 1rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+    opacity: 0.9;
+}
+
+.big-title {
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.car-container {
+    position: relative;
+    height: 300px; /* Augmenté pour permettre le débordement */
+    margin-bottom: -100px; /* Déborde sur la section suivante */
+}
+
+.car-img {
+    position: absolute;
+    right: -400px;
+    max-width: 95%;
+    opacity: 0;
+    transform: translateX(0);
+    transition: all 1.5s ease-out;
+    z-index: 10; /* Pour être au-dessus de la section suivante */
+}
+
+.car-img.animate {
+    right: 50%;
+    transform: translateX(50%);
+    opacity: 1;
+}
+
+/* --- Section Confort Plus --- */
+.comfort-section {
+    position: relative;
+    padding-top: 120px !important; /* Espace pour l'image de la voiture */
+    overflow: visible;
+}
+
+.comfort-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.comfort-section .row {
+    position: relative;
+}
+
+/* Image des chaises avec débordement */
+.comfort-section .img-container {
+    position: relative;
+    margin-bottom: -80px; /* 20% de débordement sur la section suivante */
+    z-index: 5;
+}
+
+.comfort-section .img-fluid {
+    position: relative;
+    z-index: 5;
+}
+
+.icon-card {
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+}
+
+.icon-card:hover {
+    transform: translateY(-5px);
+}
+
+.icon-card .icon {
+    font-size: 2rem;
+    color: #007bff;
+}
+
+.icon-card h5 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* Section suivante - ajustement du padding */
+.next-section {
+    padding-top: 100px !important; /* Espace pour l'image des chaises */
+}
+
+.icon-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    position: relative;
+    padding: 30px 0;
+}
+
+/* Ligne horizontale pointillée au milieu */
+.icon-grid::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    border-top: 2px dotted #D7B65D;
+    transform: translateY(-50%);
+}
+
+/* Ligne verticale pointillée au milieu */
+.icon-grid::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    border-left: 2px dotted #D7B65D;
+    transform: translateX(-50%);
+}
+
+.icon-item {
+    text-align: center;
+    padding: 40px 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.icon-item h5 {
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .icon-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .icon-grid::before,
+    .icon-grid::after {
+        display: none;
+    }
+    
+    .icon-item {
+        padding: 20px;
+        border-bottom: 1px dotted #D7B65D;
+    }
+    
+    .icon-item:last-child {
+        border-bottom: none;
+    }
+}
+/* --- END Section confort --- */
+
+
+/*steps*/
+
+.process-section {
+            width: 100%;
+
+            background: #1c2228 url('../assetsFront/luxury-curve-2x.png') center/cover no-repeat;
+            padding: 80px 40px;
+            position: relative;
+            text-align: center;
+        }
+
+        .process-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+            position: relative;
+        }
+
+        .process-step {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .circle-wrapper {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            border: 6px solid #d8b65d;
+            overflow: hidden;
+            margin-bottom: 30px;
+            background: #1c2228;
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .circle-wrapper:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.5);
+        }
+
+        .circle-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .step-title {
+            color: #d8b65d;
+            font-size: 20px;
+            text-align: center;
+            line-height: 1.4;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        .step-description {
+    color: white;
+    text-align: justify;
+    text-align-last: center; /* centre la dernière ligne */
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+        @media (max-width: 1200px) {
+            .circle-wrapper {
+                width: 220px;
+                height: 220px;
+            }
+
+            .step-title {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .process-container {
+                flex-wrap: wrap;
+                gap: 60px;
+            }
+
+            .process-step {
+                flex: 0 0 calc(50% - 30px);
+            }
+
+            .process-container::before {
+                display: none;
+            }
+
+            .circle-wrapper {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .process-step {
+                flex: 0 0 100%;
+            }
+
+            .circle-wrapper {
+                width: 250px;
+                height: 250px;
+            }
+
+            .process-section {
+                padding: 60px 20px;
+            }
+        }
+       /* Grand écran (PC) */
+        @media (min-width: 901px) {
+            .process-container {
+                flex-wrap: nowrap; /* toujours sur la même ligne */
+            }
+
+            .process-step:first-child .circle-wrapper {
+                margin-top: 100px;
+            }
+
+            .process-step:nth-child(2) .circle-wrapper {
+                margin-bottom: 50px;
+            }
+
+            .process-step:last-child .circle-wrapper {
+                margin-top: 100px;
+            }
+        }
+
+          /* Tablette et petits PC (entre 601px et 900px) */
+          @media (max-width: 900px) and (min-width: 601px) {
+              .process-container {
+                  flex-wrap: wrap; /* wrap pour la disposition 2+1 */
+                  gap: 20px;
+                  justify-content: center;
+              }
+
+              .process-step {
+                  flex: 0 0 50%; /* deux premiers cercles prennent 50% */
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+              }
+
+              /* Dernier cercle prend toute la largeur et est centré */
+              .process-step:last-child {
+                  flex: 0 0 100%;
+              }
+
+              .circle-wrapper {
+                  width: 200px;
+                  height: 200px;
+              }
+
+              .step-title {
+                  font-size: 18px;
+              }
+              .process-section {
+                  padding: 60px 20px;
+                  background: #1c2228; /* cacher image de fond */
+              }
+          }
+
+          /* Téléphone (<600px) */
+          @media (max-width: 600px) {
+              .process-container {
+                  flex-wrap: wrap; /* un cercle par ligne */
+                  gap: 40px;
+              }
+
+              .process-step {
+                  flex: 0 0 100%;
+              }
+
+              .circle-wrapper {
+                  width: 250px;
+                  height: 250px;
+              }
+
+              .process-section {
+                  padding: 60px 20px;
+                  background: #1c2228; /* cacher image de fond */
+              }
+          }
+
+/* endsteps*/
+
+
+
+/* B A P */
+.airport-transfer {
+  background-color: #fff;
+  background-image: url("{{ asset('assetsFront/about-map.png') }}");
+  padding: 80px 0;
+  min-height: 700px;
+}
+
+/* --- Container principal --- */
+.transfer-container {
+  max-width: 1200px;
+  margin: auto;
+  position: relative;
+}
+
+/* --- Image principale renommée --- */
+.transfer-photo-block {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.transfer-photo-block img {
+  width: 40%;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  object-fit: cover;
+}
+
+/* --- La carte blanche --- */
+.transfer-card {
+  position: absolute;
+  top: 18%;
+  left: 33%;
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  width: 70%;
+}
+
+.transfer-subtitle {
+  font-size: 13px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+.transfer-title {
+  font-size: 30px;
+  font-weight: 700;
+  margin: 10px 0 20px;
+  color: #111;
+  line-height: 1.3;
+}
+
+.transfer-text {
+  font-size: 15.5px;
+  color: #444;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  text-align: justify;
+}
+
+.transfer-btn {
+  background-color: #111;
+  color: #fff;
+  padding: 12px 30px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.transfer-btn:hover {
+  background-color: #fa9e1b;
+}
+
+/* --- Responsive (tablette) --- */
+@media (max-width: 992px) {
+  .airport-transfer {
+    padding: 60px 0;
+    background-size: cover;
+  }
+
+  .transfer-photo-block img {
+    width: 60%;
+  }
+
+  .transfer-card {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 90%;
+    margin: -80px auto 0; /* superpose légèrement sur l’image */
+  }
+}
+
+/* --- Responsive (mobile) --- */
+@media (max-width: 768px) {
+  .airport-transfer {
+    padding: 40px 0;
+  }
+
+  .transfer-photo-block {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .transfer-photo-block img {
+    width: 100%;
+  }
+
+  .transfer-card {
+    position: relative;
+    width: 90%;
+    margin-top:-72px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .transfer-title {
+    font-size: 24px;
+  }
+
+  .transfer-text {
+    font-size: 14.5px;
+  }
+
+  .transfer-btn {
+    padding: 10px 20px;
+  }
+}
+
+/* End BAP */
+
+
+/* populair location*/
+.popular-locations {
+  padding: 50px 0 50px 0;
+  background: #fff;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.section-subtitle {
+  color: #666;
+  font-size: 1rem;
+  margin-bottom: 50px;
+}
+
+.airport-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #222;
+}
+
+.cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.location-card {
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.location-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7); /* plus noir par défaut */
+  transition: background 0.3s ease; /* effet fluide au survol */
+}
+
+.location-card:hover::before {
+  background: rgba(0, 0, 0, 0.4); /* plus clair au survol */
+}
+
+
+.location-card .card-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.location-card h4,
+.location-card p {
+  margin: 0;
+}
+
+.location-card h4 {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.location-card p {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.price {
+  text-align: right;
+}
+
+.price strong {
+  font-size: 1.1rem;
+}
+.location-text {
+  color: #fff; /* texte blanc pour les lieux */
+  margin: 0;
+}
+
+.duree-text {
+  color: #FFD700; /* jaune doré pour la durée */
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+.price span {
+  color: #ddd;
+  font-size: 0.8rem;
+}
+.price-text {
+  color: #FFD700; /* jaune doré pour le prix */
+  font-weight: 700;
+}
+
+.location-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 992px) {
+  .cards-container {
+    gap: 15px;
+  }
+  .location-card {
+    height: 100px;
+  }
+}
+/* end populair location*/
+
+
+
+/* ======= SECTION AÉROPORT ======= */
+.propos-transfer-section {
+  background-color: #000;
+  color: #fff;
+}
+
+.propos-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  align-items: center;
+  gap: 40px;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Image */
+.propos-image-wrapper {
+  width: 100%;
+}
+.propos-image {
+  width: 100%;
+  height: 100%;
+  max-height: 660px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* Carte texte */
+.propos-info-card {
+  background-color: #1c1c1c;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  width: 100%;
+  max-width: 830px;
+  right: 230px;
+  width: 760px;
+
+}
+
+.propos-title {
+  color: #d8b65d;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.propos-description {
+  line-height: 1.7;
+  font-size: 1rem;
+  margin-bottom: 25px;
+}
+
+/* ======= RESPONSIVE ======= */
+@media (max-width: 1180px) {
+  /* ✅ Masquer l'image */
+  .propos-image-wrapper {
+    display: none;
+  }
+
+  /* ✅ Fond clair au lieu du noir */
+  .propos-transfer-section {
+    background-color: #fff;
+    color: #000;
+  }
+
+  /* ✅ Adapter la carte */
+  .propos-info-card {
+    background-color: #1c1c1c;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    margin: 0 auto;
+    right: 0;
+    width: auto;
+  }
+
+  .propos-title {
+    font-size: 1.5rem;
+    color: #b08b3b;
+  }
+
+  .propos-description {
+    font-size: 0.95rem;
+    color: white;
+  }
+
+  .propos-container {
+    padding: 10px 0 30px 0;
+  }
+}
+
+
+
+/* === BLOC PROMOTION AVEC IMAGE DE FOND === */
+.promo-banner {
+  position: relative;
+  background: url('../assetsFront/promo_parallax_02.jpg') no-repeat center center/cover;
+  height: 600px; /* ajuste selon ton design */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  overflow: hidden;
+  background-repeat: no-repeat;
+    background-size: cover;
+	    background-position: 50% -17px;
+
+}
+
+/* Overlay sombre */
+.promo-banner .promo-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5); /* opacité 0.5 */
+  z-index: 1;
+}
+
+/* Contenu centré au-dessus de l’image */
+.promo-banner .promo-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.promo-banner h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.promo-banner p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .promo-banner {
+    height: 300px;
+  }
+  .promo-banner h2 {
+    font-size: 1.8rem;
+  }
+  .promo-banner p {
+    font-size: 1rem;
+  }
+}
+
+
+
+
+
+
+
+/*---- excurssion --*/
+.excurssion-container {
+    background: url('../assetsFront/images/excu.jpeg') center center/cover no-repeat;
+    padding: 80px 50px;
+    text-align: center;
+}
+
+.excurssion-container h1 {
+    color: #fff;
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    font-weight: 600;
+    text-align: center;
+}
+.swiper {
+    padding-bottom: 50px;
+}
+
+.swiper-slide {
+    height: auto;
+}
+
+.tour-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25); /* légèrement moins intense */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    height: 530px; /* réduit la hauteur */
+    display: flex;
+    flex-direction: column;
+}
+
+
+        .tour-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+.image-container {
+    position: relative;
+    height: 185px; /* réduit la hauteur des images */
+
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.tour-card:hover .image-container img {
+    transform: scale(1.05);
+}
+
+        .play-button {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            z-index: 2;
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+
+        .play-button i {
+            color: #333;
+            font-size: 14px;
+            margin-left: 2px;
+        }
+
+        .favorite-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            border: none;
+            z-index: 2;
+        }
+
+        .favorite-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .favorite-btn i {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #ff5a5f;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .card-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .rating i {
+            color: #ff5a5f;
+        }
+
+        .rating-count {
+            color: #666;
+        }
+
+        .location {
+            color: #333;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+
+        .tour-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 15px;
+            line-height: 1.4;
+            min-height: 50px;
+        }
+
+        .tour-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        .tour-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tour-meta-item i {
+            color: #999;
+        }
+
+        .tour-description {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            margin-top: auto;
+        }
+
+        .price {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-label {
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .price-amount {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #222;
+        }
+
+        .price-amount span {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: #666;
+        }
+
+        .view-btn {
+            background: #ff5a5f;
+            color: #fff;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .view-btn:hover {
+            background: #e74c51;
+            transform: scale(1.05);
+        }
+
+        /* Swiper Navigation */
+        .swiper-button-next,
+        .swiper-button-prev {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .swiper-button-next:after,
+        .swiper-button-prev:after {
+            font-size: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
+            background: #fff;
+        }
+
+        /* Swiper Pagination */
+        .swiper-pagination {
+            bottom: 20px !important;
+        }
+
+        .swiper-pagination-bullet {
+            width: 12px;
+            height: 12px;
+            background: rgba(255,255,255,0.5);
+            opacity: 1;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: #ff5a5f;
+            width: 30px;
+            border-radius: 6px;
+        }
+
+        .view-all-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .view-all-btn {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .view-all-btn:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.5);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .swiper-button-next,
+            .swiper-button-prev {
+                display: none;
+            }
+        }
+
+
+
+/*-- testimonials --*/
+
+        .testimonials {
+    padding: 80px 0;
+    background: #f8f9fa;
+    text-align: center;
+}
+
+.section_title {
+    font-size: 2rem;
+    margin-bottom: 50px;
+    font-weight: 600;
+}
+
+.test_slider_container {
+    position: relative;
+}
+
+.test_item {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 65px;
+}
+
+.test_item_info {
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: #555;
+}
+.test_content {
+    width: 100%;
+    height: 100%;
+    padding-left: 38px;
+    padding-top: 30px;
+    padding-right: 40px;
+}
+
+
+.test_name {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.test_date {
+    font-size: 0.85rem;
+    color: #999;
+}
+
+.test_rating {
+    color: #ffb400; /* gold stars */
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+
+
+/* Navigation */
+.test_slider_nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    color: #333;
+    cursor: pointer;
+    user-select: none;
+}
+
+.test_slider_prev { left: -40px; }
+.test_slider_next { right: -40px; }
+
+
+
+
+/* Bouton */
+
+
+.submit_review_btn:hover {
+    background: #e74c51;
+    transform: scale(1.05);
+}
+
+.submit_review_btn {
+    background: #ff5a5f;
+    color: #fff;
+    padding: 12px 30px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.review_modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    overflow: auto;
+}
+
+.review_modal_content {
+    background: #fff;
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.close_modal {
+    position: absolute;
+    top: 10px; right: 15px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+
+.review_modal_content h3 {
+    margin-bottom: 20px;
+}
+
+.review_modal_content input,
+.review_modal_content textarea,
+.review_modal_content select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+}
+
+.submit_btn {
+    background: #ff5a5f;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit_btn:hover {
+    background: #e74c51;
+    transform: scale(1.05);
+}
+
+
+//* Section principale */
+.contact-section {
+    position: relative;
+    height: 100vh;
+    overflow: visible; /* Permet au fond de dépasser vers le bas */
+}
+
+/* Image de fond avec effet 20% en bas */
+.contact-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 113%; /* 20% de plus que la hauteur du bloc */
+    bottom: -20%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+}
+
+/* Contenu par-dessus l’image */
+.contact-left,
+.contact-right {
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    background: transparent; /* pas de fond noir */
+}
+
+/* Boîte du formulaire */
+.contact-box {
+    width: 85%;
+    max-width: 550px;
+    background: rgba(20, 20, 20, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: slideInRight 1s ease;
+}
+
+/* Champs et bouton (inchangés) */
+.form-control-modern {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 8px;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+}
+.form-control-modern:focus {
+    border-color: #0dcaf0;
+    box-shadow: 0 0 10px rgba(13, 202, 240, 0.4);
+}
+.btn-gradient {
+    background: linear-gradient(70deg, #D7B65D, #192026);
+    color: white;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    border: none;
+}
+.btn-gradient:hover {
+    transform: scale(1.05);
+}
+
+/* Animation d’apparition */
+@keyframes slideInRight {
+    from { transform: translateX(100px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .contact-section {
+        height: auto;
+        padding: 80px 0;
+    }
+    .contact-bg {
+        height: 100%;
+        bottom: 0;
+    }
+    .contact-left,
+    .contact-right {
+        height: auto;
+    }
+}
+
+/* ✅ Messages de succès et d’erreur */
+.popup-message {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    z-index: 9999;
+    border-radius: 10px;
+    padding: 15px 25px;
+    color: #192026;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    animation: slideIn 0.4s ease;
+}
+
+.alert-success {
+    background-color: #D7B65D; /* vert */
+}
+
+.alert-danger {
+    background-color: rgba(220, 53, 69, 0.95); /* rouge */
+    color: white; 
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.fade-out {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.5s ease;
+}
+
+
+
+
+
+.location-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.location-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.location-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* ---------- Modal overlay ---------- */
+.review-modal-overlay {
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0; */
+  background: rgba(8, 12, 20, 0.6);
+  backdrop-filter: blur(4px) saturate(110%);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  z-index: 10000;
+}
+
+/* show */
+.review-modal-overlay.show {
+  display: flex;
+  animation: overlayFade 220ms ease;
+}
+
+@keyframes overlayFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ---------- Modal card ---------- */
+.review-modal-card {
+  width: 100%;
+  max-width: 520px;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 1.6rem;
+  box-shadow: 0 18px 50px rgba(10, 15, 30, 0.32);
+  transform-origin: center;
+  animation: cardPop 260ms cubic-bezier(.2,.9,.3,1);
+  text-align: left;
+  color: #0b1220;
+}
+
+/* slight pop animation */
+@keyframes cardPop {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ---------- Header / title ---------- */
+.review-modal-card h3 {
+  margin: 0 0 0.4rem 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+.review-modal-card .subtitle {
+  margin: 0 0 0.9rem 0;
+  font-size: 0.95rem;
+  color: #5b6b7a;
+}
+
+/* ---------- Form layout ---------- */
+.review-form .form-group {
+  margin-bottom: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.review-form label {
+  font-size: 0.85rem;
+  color: #374151;
+  font-weight: 600;
+}
+
+.review-form input[type="text"],
+.review-form input[type="number"],
+.review-form textarea,
+.review-form select {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #e6e9ee;
+  background: #fff;
+  font-size: 0.95rem;
+  color: #0b1220;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.review-form textarea {
+  min-height: 88px;
+  resize: vertical;
+}
+
+/* focus */
+.review-form input:focus,
+.review-form textarea:focus,
+.review-form select:focus {
+  border-color: #7aa7ff;
+  box-shadow: 0 6px 18px rgba(122,167,255,0.12);
+}
+
+/* ---------- Star rating (visuel) ---------- */
+.star-rating {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  user-select: none;
+  margin-top: 0.25rem;
+}
+
+.star-rating .star {
+  font-size: 1.12rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 120ms ease, color 120ms ease;
+  color: #d1d5db; /* empty color */
+}
+
+.star-rating .star.hover,
+.star-rating .star.active {
+  color: #f5b301; /* filled */
+  transform: translateY(-2px);
+}
+
+/* ---------- Buttons ---------- */
+.modal-actions {
+  display: flex;
+  gap: 0.7rem;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 0.9rem;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.btn-primary {
+  background: linear-gradient(180deg,#0f66ff,#0b57e6);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(11,87,230,0.18);
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid #e6e9ee;
+  color: #374151;
+}
+
+/* Modal Overlay */
+        .review-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(28, 34, 40, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Modal Card */
+        .review-modal-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 540px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(28, 34, 40, 0.3);
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: #f3f4f6;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: #1c2228;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: #e5e7eb;
+            transform: rotate(90deg);
+        }
+
+        .close-btn::before {
+            content: '×';
+        }
+
+        /* Title */
+        h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1c2228;
+            margin-bottom: 1.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        /* Form Groups */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #1c2228;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        /* Input Styles */
+        .form-control {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            color: #1c2228;
+            background: #fafafa;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #d8b65d;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(216, 182, 93, 0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Star Rating */
+        .star-rating {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .star-rating input[type="radio"] {
+            display: none;
+        }
+
+        .star-rating label {
+            cursor: pointer;
+            font-size: 2rem;
+            color: #e5e7eb;
+            transition: all 0.2s ease;
+            margin: 0;
+        }
+
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input[type="radio"]:checked ~ label {
+            color: #d8b65d;
+            transform: scale(1.1);
+        }
+
+        .star-rating {
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+        }
+
+        .star-rating label:hover ~ label {
+            color: #d8b65d;
+        }
+
+        .star-rating input[type="radio"]:checked ~ label {
+            color: #d8b65d;
+        }
+
+        /* Submit Button */
+        .btn-primary {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #d8b65d 0%, #c9a647 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+            letter-spacing: 0.01em;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(216, 182, 93, 0.35);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* Helper Text */
+        .helper-text {
+            font-size: 0.82rem;
+            color: #6b7280;
+            margin-top: 0.25rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 520px) {
+            .review-modal-card {
+                padding: 1.5rem;
+                border-radius: 16px;
+            }
+
+            h3 {
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .close-btn {
+                top: 15px;
+                right: 15px;
+                width: 36px;
+                height: 36px;
+            }
+
+            .star-rating label {
+                font-size: 1.75rem;
+            }
+        }
+
+        /* Focus Accessibility */
+        .review-modal-card :focus-visible {
+            outline: 3px solid rgba(216, 182, 93, 0.4);
+            outline-offset: 2px;
+        }
+
+        /* Demo Button */
+        .demo-btn {
+            padding: 1rem 2rem;
+            background: #1c2228;
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top:20px
+        }
+
+/* Tronquer le texte à 2 lignes pour uniformiser la hauteur */
+.test_quote_text {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Nombre de lignes à afficher */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4em; /* Ajuste selon ton design */
+    min-height: 2.8em; /* 2 lignes x line-height pour garder la hauteur */
+    cursor: pointer; /* Indique que c’est cliquable */
+    transition: color 0.2s ease;
+     font-size: 0.95rem;
+     color: black;
+
+
+}
+
+.test_quote_text:hover {
+    color: #d8b65d;
+}
+
+.test_content {
+    width: 100%;
+    height: 100%;
+    padding-left: 38px;
+    padding-top: 30px;
+    padding-right: 40px;
+    position: relative;
+}
+/* Tooltip */
+.test_content .tooltip {
+    position: absolute;
+    bottom: 100%; /* au-dessus du commentaire */
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(28, 34, 40, 0.9);
+    color: #fff;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 10;
+}
+
+/* Flèche du tooltip */
+.test_content .tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* pointe vers le bas */
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(28, 34, 40, 0.9) transparent transparent transparent;
+}
+
+/* Afficher tooltip au survol */
+.test_content:hover .tooltip {
+    opacity: 1;
+}
+
+
+</style>
+
+
+
+	<div class="home">
+		
+		<!-- Home Slider -->
+
+		<div class="home_slider_container">
+    <div class="owl-carousel owl-theme home_slider">
+
+        <!-- Slider Item 1 -->
+        <div class="home_slider_item">
+            <div class="home_slider_background zoom" style="background-image:url({{ asset('assetsFront/SLIDE_05.jpg') }})"></div>
+            <div class="home_slider_content text-center">
+                <div class="home_slider_content_inner" data-animation-in="fadeInUp" data-animation-out="fadeOut">
+                    <h1>Explorez</h1>
+                    <h1>la Tunisie</h1>
+                    <div class="button home_slider_button">
+                        <div class="button_bcg"></div>
+                        <a href="#">Réservez maintenant<span></span><span></span><span></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slider Item 2 -->
+        <div class="home_slider_item">
+            <div class="home_slider_background zoom" style="background-image:url({{ asset('assetsFront/SLIDE_04.jpg') }})"></div>
+            <div class="home_slider_content text-center">
+                <div class="home_slider_content_inner" data-animation-in="fadeInUp" data-animation-out="fadeOut">
+                    <h1>Découvrez</h1>
+                    <h1>de nouvelles aventures</h1>
+                    <div class="button home_slider_button">
+                        <div class="button_bcg"></div>
+                        <a href="#">Explorez maintenant<span></span><span></span><span></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slider Item 3 -->
+        <div class="home_slider_item">
+            <div class="home_slider_background zoom" style="background-image:url({{ asset('assetsFront/SLIDE_02.jpg') }})"></div>
+            <div class="home_slider_content text-center">
+                <div class="home_slider_content_inner" data-animation-in="fadeInUp" data-animation-out="fadeOut">
+                    <h1>Voyagez</h1>
+                    <h1>en toute sérénité</h1>
+                    <div class="button home_slider_button">
+                        <div class="button_bcg"></div>
+                        <a href="#">Commencez maintenant<span></span><span></span><span></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Dots -->
+    <div class="home_slider_dots">
+        <ul id="home_slider_custom_dots" class="home_slider_custom_dots">
+            <li class="home_slider_custom_dot active"><div></div>01.</li>
+            <li class="home_slider_custom_dot"><div></div>02.</li>
+            <li class="home_slider_custom_dot"><div></div>03.</li>
+        </ul>
+    </div>
+</div>
+
+
+	</div>
+
+	<!-- Formulaire de réservation 
+	<section class="reservation-section py-5" style="background: url('{{ asset('assetsFront/about-map.png') }}') ;">>
+		<div class="container">
+			<div class="text-center mb-4">
+				<h2 class="fw-bold">Réserver un transfert</h2>
+				<p class="text-muted">Choisissez vos trajets et planifiez votre transfert facilement.</p>
+			</div>
+
+			<form id="formReservation" class="card shadow p-4 bg-white rounded">
+	
+				<div class="mb-3 text-center">
+					<label class="form-label fw-semibold d-block mb-2">Type de trajet :</label>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="typeTrajet" id="allerSimple" value="simple" checked>
+						<label class="form-check-label" for="allerSimple">Aller simple</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="typeTrajet" id="allerRetour" value="retour">
+						<label class="form-check-label" for="allerRetour">Aller-retour</label>
+					</div>
+				</div>
+
+	
+				<div id="trajetAller" class="row g-3 align-items-end">
+					<div class="col-md-4">
+						<label for="depart" class="form-label">Localisation départ</label>
+						<input type="text" id="depart" name="depart" class="form-control" placeholder="Ex: Tunis aéroport" required>
+					</div>
+					<div class="col-md-4">
+						<label for="destination" class="form-label">Localisation arrivée</label>
+						<input type="text" id="destination" name="destination" class="form-control" placeholder="Ex: Hammamet hôtel" required>
+					</div>
+					<div class="col-md-2">
+						<label for="dateDepart" class="form-label">Date départ</label>
+						<input type="date" id="dateDepart" name="dateDepart" class="form-control" required>
+					</div>
+					<div class="col-md-2">
+						<label for="heureDepart" class="form-label">Heure</label>
+						<input type="time" id="heureDepart" name="heureDepart" class="form-control" required>
+					</div>
+				</div>
+
+
+				<div id="trajetRetour" class="row g-3 align-items-end mt-3 d-none">
+					<hr>
+					<div class="col-md-4">
+						<label for="departRetour" class="form-label">Localisation départ (retour)</label>
+						<input type="text" id="departRetour" name="departRetour" class="form-control" placeholder="Ex: Hammamet hôtel">
+					</div>
+					<div class="col-md-4">
+						<label for="destinationRetour" class="form-label">Localisation arrivée (retour)</label>
+						<input type="text" id="destinationRetour" name="destinationRetour" class="form-control" placeholder="Ex: Tunis aéroport">
+					</div>
+					<div class="col-md-2">
+						<label for="dateRetour" class="form-label">Date retour</label>
+						<input type="date" id="dateRetour" name="dateRetour" class="form-control">
+					</div>
+					<div class="col-md-2">
+						<label for="heureRetour" class="form-label">Heure</label>
+						<input type="time" id="heureRetour" name="heureRetour" class="form-control">
+					</div>
+				</div>
+
+	
+				<div class="row mt-4">
+					<div class="col-md-4">
+						<label for="nbPersonnes" class="form-label">Nombre de personnes (adultes + enfants)</label>
+						<input type="number" id="nbPersonnes" name="nbPersonnes" class="form-control" min="1" value="1" required>
+					</div>
+				</div>
+
+			
+				<div class="text-center mt-4">
+					<button type="submit" class="btn btn-primary px-5 py-2 rounded-pill fw-semibold">
+						Réserver maintenant
+					</button>
+				</div>
+			</form>
+		</div>
+	</section>-->
+
+
+
+<!-- block de services -->
+
+<section class="transfer-section">
+  <div class="transfer-item">
+    <img src="{{ asset('assetsFront/serv_01-140x140.jpg') }}" alt="Airport Transfer">
+    <div class="transfer-content">
+      <h3>Airport Transfers →</h3>
+      <p>Pellentesque semper dui eget fermentum sagittis. Cur abitur bibendum id ante.</p>
+    </div>
+  </div>
+
+  <div class="transfer-item">
+    <img src="{{ asset('assetsFront/serv_02-140x140.jpg') }}" alt="Business Transfer">
+    <div class="transfer-content">
+      <h3>Business Transfers →</h3>
+      <p>Sed nisi magna, rhoncus nec imperdiet non, pretium vitae odio donec scelerisque gravida.</p>
+    </div>
+  </div>
+
+  <div class="transfer-item">
+    <img src="{{ asset('assetsFront/serv_03-140x140.jpg') }}" alt="Excursions">
+    <div class="transfer-content">
+      <h3>Excursions →</h3>
+      <p>Découvrez nos excursions et circuits uniques à travers les plus beaux sites de Tunisie.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- end block de services -->
+
+
+
+
+
+<!-- block de propos -->
+
+<section class="airport-transfer-section">
+  <div class="transfer-content-left">
+    <h2>Votre Meilleure Option pour les Transferts Aéroport à Tunis</h2>
+    <p>
+      Arriver à un aéroport, surtout après un long vol, peut souvent être une expérience stressante. 
+      C’est là que <strong>TuniTrip</strong> intervient pour transformer ce moment en une transition fluide et agréable. 
+      Que vous voyagiez seul pour affaires ou avec votre famille pour des vacances, nos services de transfert sont adaptés 
+      pour répondre à tous vos besoins.
+    </p>
+    <p>
+      Depuis le centre-ville ou des destinations périphériques, nos chauffeurs professionnels vous assurent une arrivée à 
+      l’aéroport en temps et en heure, avec tout le confort que vous méritez. 
+      L’excellence de notre service de transfert à Tunis a fait de nous le choix préféré de nombreux voyageurs.
+    </p>
+  </div>
+
+  <div class="transfer-image-right">
+    <img src="{{ asset('assetsFront/about-limmo.png') }}" alt="Voiture TuniTrip">
+  </div>
+</section>
+
+<!-- end block de propos -->
+
+
+
+
+
+
+
+
+
+        <!-- list voiture -->
+        <section class="cars-section">
+            <div class="container">
+                <h2 class="section-title">Nos Voitures de Prestige</h2>
+                <p class="section-subtitle">Découvrez notre flotte de véhicules premium pour vos déplacements</p>
+                  <div class="cars-slider-wrapper">
+                    <div class="cars-grid">
+                        {% for voiture in voitures %}
+                        <div class="car-card">
+                            <div class="car-image-wrapper">
+                                <span class="car-brand">Tuni<span style="color: #d8b65d;">Trip</span></span>
+                                <div class="price-badge">
+                                    <span class="price-badge-amount">{{ voiture.prixJour }} TND</span>
+                                    <span class="price-badge-label">par jour</span>
+                                </div>
+                                {% if voiture.image %}
+                                    <img src="{{ asset('uploads/images/' ~ voiture.image) }}" alt="{{ voiture.marque }} {{ voiture.modele }}" class="car-image">
+                                {% else %}
+                                    <img src="{{ asset('assetsFront/default-car.jpg') }}" alt="Image non disponible" class="car-image">
+                                {% endif %}
+                            </div>
+                            <div class="car-content">
+                                <h3 class="car-title"><span style="color:#d8b65d;">{{ voiture.marque }}</span> {{ voiture.modele }}</h3>
+                                
+                                <div class="car-features">
+                                    <div class="feature">
+                                        <span class="feature-icon">👥</span>
+                                        <span class="feature-text">{{ voiture.passengers }} places</span>
+                                    </div>
+                                    <div class="feature">
+                                        <span class="feature-icon">⚙️</span>
+                                        <span class="feature-text">{{ voiture.boiteVitesse }}</span>
+                                    </div>
+                                    <div class="feature">
+                                        <span class="feature-icon">🌡️</span>
+                                        <span class="feature-text">{{ voiture.climatiseur ? 'Climatisée' : 'Sans clim.' }}</span>
+                                    </div>
+                                    <div class="feature">
+                                        <span class="feature-icon">🧳</span>
+                                        <span class="feature-text">{{ voiture.suitcases }} valises</span>
+                                    </div>
+                                </div>
+                                <div class="divider"></div>
+                                <div class="car-low-price">
+                                    <span class="money-icon">💰</span>
+                                    <span class="low-price-text">{{ voiture.prixMois }} TND • Prix le plus bas\ mois</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                            <p style="grid-column: 1/-1; text-align: center; color: #7f8c8d; font-size: 18px; padding: 40px;">Aucune voiture disponible pour le moment.</p>
+                        {% endfor %}
+                    </div>
+                  </div>
+
+                  <div class="see-more-wrapper">
+                      <a href="{{path('app_front_list_voitures')}}" class="cta-button">Voir plus de véhicules →</a>
+                  </div>
+            </div>
+        </section>
+        <!-- end list voiture -->
+
+
+
+
+
+
+<!-- Section Confort -->
+<section class="car-section position-relative text-center text-white py-5">
+    <div class="car-bg"></div>
+
+    <div class="container position-relative z-10">
+        <p class="small-text mb-2" style="
+    font-style: italic;
+    color:black;
+    font-size: 20px;
+    font-family: 'Beyond';
+    ">We value the time and quality of travel for each of our clients</p>
+        <h2 class="big-title mb-5">
+          <span style="display:block;color:#D7B65D;font-weight: bolder;font-size: 70px;">Incredible</span>
+          <span style="display:block;color:#1c2228;font-size: 50px;font-weight: 600;font-family: serif;">comfort</span>
+        </h2>
+
+        <div class="car-container">
+            <img src="{{ asset('assetsFront/about-limmo-large.png') }}" 
+                 alt="Car" class="car-img">
+        </div>
+    </div>
+</section>
+
+<!-- Section Séparation avec voiture qui déborde -->
+<section class="separator-section" style="background-color: #1c2228; padding-top: 50px; padding-bottom: 60px;">
+    <div class="container">
+        <!-- Cette section est vide mais accueille le débordement de la voiture -->
+    </div>
+</section>
+
+<!-- Section Confort Plus -->
+<section class="comfort-section py-5" style="background-color: #1c2228;">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Image à gauche avec débordement -->
+            <div class="col-md-6 mb-4 mb-md-0 text-center">
+                <div class="img-container">
+                    <img src="{{ asset('assetsFront/about-chairs.png') }}" alt="Chairs" class="img-fluid">
+                </div>
+            </div>
+
+            <!-- Texte à droite -->
+<div class="col-md-6">
+    <h2 class="mb-4" style="color: white;">We make sure that your every trip is <span style="color: #D7B65D;">comfortable</span></h2>
+    
+    <div class="icon-grid d-flex flex-wrap gap-3">
+        <!-- Card 1 -->
+        <div class="icon-item text-center" style="flex: 0 0 48%;">
+            <img src="{{ asset('assetsFront/icons/clock.png') }}" alt="Clock" style="width:50px; height:50px;">
+            <h5 style="color: white; margin-top: 15px; font-size: 0.95rem;">24/7 Order<br>Available</h5>
+        </div>
+        
+        <!-- Card 2 -->
+        <div class="icon-item text-center" style="flex: 0 0 48%;">
+            <img src="{{ asset('assetsFront/icons/support.png') }}" alt="Support" style="width:50px; height:50px;">
+            <h5 style="color: white; margin-top: 15px; font-size: 0.95rem;">Fast Car<br>Delivery Service</h5>
+        </div>
+        
+        <!-- Card 3 -->
+        <div class="icon-item text-center" style="flex: 0 0 48%;">
+            <img src="{{ asset('assetsFront/icons/seat.png') }}" alt="Seat" style="width:50px; height:50px;">
+            <h5 style="color: white; margin-top: 15px; font-size: 0.95rem;">High Safety<br>and Security</h5>
+        </div>
+        
+        <!-- Card 4 -->
+        <div class="icon-item text-center" style="flex: 0 0 48%;">
+            <img src="{{ asset('assetsFront/icons/chauffeur.png') }}" alt="Driver" style="width:50px; height:50px;">
+            <h5 style="color: white; margin-top: 15px; font-size: 0.95rem;">Professional Car<br>Drivers</h5>
+        </div>
+    </div>
+</div>
+
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+<!-- B A P -->
+<section class="airport-transfer">
+  <div class="transfer-container">
+
+    <!-- Image principale -->
+    <div class="transfer-photo-block">
+      <img src="{{ asset('assetsFront/mercedess.jpg') }}" alt="Airport shuttle bus">
+
+      <!-- Card blanche sur l'image -->
+      <div class="transfer-card">
+        <span class="transfer-subtitle">SHUTTLE</span>
+        <h2 class="transfer-title">Effortless Airport Transfers in Tunisia</h2>
+        <p class="transfer-text">
+          Discover the ultimate convenience of our airport transfer services from Tunis Carthage Airport in Tunisia. Whether you’re arriving or departing, our reliable and professional chauffeurs will ensure a smooth and hassle-free journey to your destination. With a diverse fleet of comfortable vehicles, we cater to solo travelers, families, and groups of any size. From popular tourist spots to business locations, our punctual and customer-focused service will exceed your expectations. Book your economy or VIP airport transfer from Tunis Carthage Airport today and enjoy a seamless travel experience in Tunis.
+
+          Enjoy a seamless and stress-free journey with our reliable Airport transfers tunisia. Our friendly chauffeurs and comfortable vehicles will ensure a smooth ride to your hotel or any other destination in the city. Let us take care of your transportation needs, allowing you to fully immerse yourself in the beauty and charm of Tunis. Start your trip on the right note by booking our trusted Tunis–Carthage airport transfer service today!
+        </p>
+       
+      </div>
+    </div>
+
+  </div>
+</section>
+
+	<!-- END B A P -->
+
+
+
+<!-- Steps -->
+<section class="process-section">
+        <div class="process-container">
+            <div class="process-step">
+                <div class="circle-wrapper">
+                    <img src="{{asset('assetsFront/route.png')}}" alt="Parking lot with cars">
+                </div>
+                <h3 class="step-title">Create Your Route</h3><br>
+                  <p class="step-description">Enter your pickup & dropoff locations or the number of hours you wish to book a car and driver for</p>
+            </div>
+
+            <div class="process-step">
+                <div class="circle-wrapper">
+                    <img src="{{asset('assetsFront/choseCar.jpg')}}" alt="Gavel and car key">
+                </div>
+                <h3 class="step-title">Chose your car</h3><br>
+                  <p class="step-description">Select the car that suits your style or budget. Choose your favorite from a range of options tailored to your needs.</p>
+            </div>
+
+            <div class="process-step">
+                <div class="circle-wrapper">
+                    <img src="{{asset('assetsFront/confirmation.jpg')}}" alt="Container ship">
+                </div>
+                <h3 class="step-title">Receive a confirmation</h3><br>
+                  <p class="step-description">Your booking is received, you'll receive a confirmation email or notification with all the details of your reservation.</p>
+            </div>
+        </div>
+    </section>
+<!-- End Steps -->
+
+
+
+
+	
+	
+
+	<section class="popular-locations">
+  <div class="container">
+    <h2 class="section-title text-center">Transferet</h2>
+    <p class="section-subtitle text-center">
+      We’ve highlighted the most popular destinations among our guests. Whether you’re heading to Tunis Carthage Airport or Enfidha Airport, take a look and plan your transfer with ease.
+    </p>
+
+    <div class="row">
+
+      <!-- Tunis Carthage Airport -->
+      <div class="col-lg-6 col-md-12">
+        <h3 class="airport-title">Tunis Carthage Airport</h3>
+        <div class="cards-container">
+          {% for transfere in tunisCarthageTransfers %}
+            <a href="{{ path('app_reservation_transfert_new', { id: transfere.id }) }}" class="location-card-link">
+              <div class="location-card"
+                   style="background-image: url('{{ asset('uploads/images/' ~ transfere.image) }}');">
+                <div class="card-content">
+                  <div>
+                    <h4 class="location-text">{{ transfere.lieuDepart }}</h4>
+                    <p class="location-text">{{ transfere.lieuArrivee }}</p>
+                  </div>
+                  <div class="price">
+                    <strong class="price-text">{{ transfere.prix }} DT</strong>
+                    <p class="duree-text">{{ transfere.duree }}</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+          {% else %}
+            <p class="text-center text-muted">No transfers available.</p>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Enfidha Airport -->
+      <div class="col-lg-6 col-md-12">
+        <h3 class="airport-title">Enfidha Airport</h3>
+        <div class="cards-container">
+          {% for transfere in enfidhaTransfers %}
+            <a href="{{ path('app_reservation_transfert_new', { id: transfere.id }) }}" class="location-card-link">
+              <div class="location-card"
+                   style="background-image: url('{{ asset('uploads/images/' ~ transfere.image) }}');">
+                <div class="card-content">
+                  <div>
+                    <h4 class="location-text">{{ transfere.lieuDepart }}</h4>
+                    <p class="location-text">{{ transfere.lieuArrivee }}</p>
+                  </div>
+                  <div class="price">
+                    <strong class="price-text">{{ transfere.prix }} Dt</strong>
+                    <p class="duree-text">{{ transfere.duree }}</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+          {% else %}
+            <p class="text-center text-muted">No transfers available.</p>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+<!-- Section Instructions Transfert -->
+<section class="propos-transfer-section">
+  <div class="propos-container">
+    
+    <!-- Image -->
+    <div class="propos-image-wrapper">
+      <img src="{{ asset('assetsFront/zzz.png') }}" alt="Service de transfert aéroport" class="airport-image">
+    </div>
+    
+    <!-- Texte et bouton -->
+    <div class="propos-info-card">
+      <h2 class="propos-title">Navette Aéroport Carthage Transfer</h2>
+      <p class="propos-description">
+        Découvrez l’excellence du service <strong>Carthage Transfer</strong>, votre partenaire de confiance pour les transferts entre l’aéroport et votre destination à Tunis.
+        Nos chauffeurs expérimentés et ponctuels vous accueillent dès votre arrivée et assurent un trajet confortable, dans des véhicules modernes et parfaitement entretenus.
+        Chaque détail est pensé pour vous offrir une expérience fluide et sécurisée, à la hauteur de vos attentes.
+      </p>
+    </div>
+  </div>
+</section>
+<!-- end Section Instructions Transfert -->
+
+
+
+
+
+<div class="excurssion-container">
+    <h1>Trending Adventure Tours</h1>
+    
+    <div class="swiper toursSwiper">
+        <div class="swiper-wrapper">
+            {% for excursion in excursions %}
+                <div class="swiper-slide">
+                    <div class="tour-card">
+                        <div class="image-container">
+                            {# Utiliser mainImagePath défini dans le controller #}
+                            <img src="{{ excursion.mainImagePath }}" alt="{{ excursion.titre }}">
+                            
+                            {% if loop.index <= 3 %}
+                                <div class="badge">Populaire</div>
+                            {% else %}
+                                <div class="badge">Nouveau</div>
+                            {% endif %}
+                            
+                            <button class="favorite-btn">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+
+                        <div class="card-content">
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <span>5</span>
+                                <span class="rating-count">(1)</span>
+                                <span class="location">{{ excursion.localisation }}</span>
+                            </div>
+                            <h3 class="tour-title">{{ excursion.titre }}</h3>
+                            <div class="tour-meta">
+                                <div class="tour-meta-item">
+                                    <i class="far fa-clock"></i>
+                                    <span>{{ excursion.duree }}</span>
+                                </div>
+                                <div class="tour-meta-item">
+                                    <i class="fas fa-users"></i>
+                                    <span>0 - 15</span>
+                                </div>
+                            </div>
+                            <p class="tour-description">{{ excursion.description }}</p>
+                            <div class="card-footer">
+                                <div class="price">
+                                    <span class="price-label">from</span>
+                                    {# Utiliser le getter prixParPersonne #}
+                                    <div class="price-amount">${{ excursion.prixParPersonne }} <span>/person</span></div>
+                                </div>
+                                <button class="view-btn">View tour</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+
+        <!-- Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="view-all-container">
+        <div class="view-all-container">
+            <a class="cta-button" href="{{ path('app_front_excursions_list') }}">View all tours</a>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- Testimonials -->
+<div class="testimonials">
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <h2 class="section_title">What our clients say about us</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+
+                <!-- Testimonials Slider -->
+                <div class="test_slider_container">
+                    <div class="owl-carousel owl-theme test_slider">
+
+                        {% for a in avis %}
+                        <div class="owl-item">
+                            <div class="test_item">
+                                <div class="test_content">
+                                    <div class="test_item_info">
+                                        <div class="test_name">{{ a.nom }} {{ a.prenom }}</div>
+                                        <div class="test_date">{{ a.dateCreation|date('F d, Y') }}</div>
+                                    </div>
+
+                                    <p class="test_quote_text">
+                                        {{ a.commentaire }}
+                                    </p>
+
+                                    <div class="test_rating">
+                                        {% for i in 1..a.etoiles %} ★ {% endfor %}
+                                        {% for i in 1..(5 - a.etoiles) %} ☆ {% endfor %}
+                                    </div>
+
+                                    <!-- Tooltip -->
+                                    <div class="tooltip">Cliquer sur le commentaire pour lire tout</div>
+                                </div>
+
+                            </div>
+                        </div>
+                        {% else %}
+                        <p>Aucun avis pour le moment.</p>
+                        {% endfor %}
+
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="test_slider_nav test_slider_prev">‹</div>
+                    <div class="test_slider_nav test_slider_next">›</div>
+                </div>
+
+                <!-- Button pour ouvrir modal -->
+                <button class="cta-button" onclick="document.getElementById('reviewModal').style.display='flex'">
+                    Votre avis →
+                </button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+    <div id="reviewModal" class="review-modal-overlay" style="display: none;">
+        <div class="review-modal-card">
+            <button class="close-btn" onclick="document.getElementById('reviewModal').style.display='none'" aria-label="Fermer"></button>
+            
+            <h3>Laisser un avis</h3>
+            
+            <form id="reviewForm">
+                <div class="form-group">
+                    <label for="nom">Nom</label>
+                    <input type="text" id="nom" name="nom" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="prenom">Prénom</label>
+                    <input type="text" id="prenom" name="prenom" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="commentaire">Commentaire</label>
+                    <textarea id="commentaire" name="commentaire" class="form-control" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Note</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5" name="etoiles" value="5" required>
+                        <label for="star5" title="5 étoiles">★</label>
+                        
+                        <input type="radio" id="star4" name="etoiles" value="4">
+                        <label for="star4" title="4 étoiles">★</label>
+                        
+                        <input type="radio" id="star3" name="etoiles" value="3">
+                        <label for="star3" title="3 étoiles">★</label>
+                        
+                        <input type="radio" id="star2" name="etoiles" value="2">
+                        <label for="star2" title="2 étoiles">★</label>
+                        
+                        <input type="radio" id="star1" name="etoiles" value="1">
+                        <label for="star1" title="1 étoile">★</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="cta-button">Appliquer</button>
+            </form>
+        </div>
+</div>
+
+
+<!-- Modal Commentaire complet -->
+<div id="commentModal" class="review-modal-overlay" style="display: none;">
+    <div class="review-modal-card">
+        <button class="close-btn" onclick="document.getElementById('commentModal').style.display='none'" aria-label="Fermer"></button>
+        <h3 id="modalName">Nom Prénom</h3>
+        <div class="test_rating" id="modalRating">★★★★★</div>
+        <p id="modalCommentaire">Commentaire complet ici...</p>
+        <div id="modalDate" class="helper-text">Date</div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<!-- Bloc promotion avec image de fond -->
+<section class="promo-banner">
+  <div class="promo-overlay"></div>
+  <div class="promo-content text-center">
+    <h2 class="fw-bold">To the airport<br>with maximum comfort</h2>
+    <p class="mt-3">We value the time and quality of travel for each of our clients</p>
+  </div>
+</section>
+
+
+
+
+
+<section class="contact-section position-relative">
+    <div class="contact-bg" style="background-image: url({{ asset('assetsFront/images/contact.png') }})"></div>
+
+    <div class="container-fluid h-100">
+        <div class="row h-100 align-items-center">
+            
+            <!-- 🖼️ Côté gauche -->
+            <div class="col-lg-6 d-flex align-items-center justify-content-center contact-left text-center text-white">
+                <!-- Tu peux mettre une image ou du texte ici -->
+            </div>
+
+            <!-- 📩 Formulaire à droite -->
+            <div class="col-lg-6 d-flex align-items-center justify-content-center contact-right">
+                <div class="contact-box p-5 rounded-4 shadow-lg">
+                    <div class="text-center mb-4">
+                        <h2 class="text-white fw-bold">Contactez-nous</h2>
+                        <p class="text-secondary mb-0">Nous vous répondrons dans les plus brefs délais.</p>
+                    </div>
+
+                    <form id="contactForm" action="{{ path('app_accueil') }}" method="POST" class="contact_form">
+                        {{ form_widget(form._token) }}
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label text-light">Nom et Prénom</label>
+                                <input type="text" class="form-control form-control-modern" name="{{ form.nom.vars.full_name }}"
+                                       placeholder="Ex : Ahmed Ben Salah" value="{{ form.nom.vars.value|default('') }}" required>
+                                <div class="text-danger small">{{ form_errors(form.nom) }}</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label text-light">Email</label>
+                                <input type="email" class="form-control form-control-modern" name="{{ form.email.vars.full_name }}"
+                                       placeholder="Ex : ahmed@gmail.com" value="{{ form.email.vars.value|default('') }}" required>
+                                <div class="text-danger small">{{ form_errors(form.email) }}</div>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label text-light">Sujet</label>
+                                <input type="text" class="form-control form-control-modern" name="{{ form.sujet.vars.full_name }}"
+                                       placeholder="Sujet de votre message" value="{{ form.sujet.vars.value|default('') }}" required>
+                                <div class="text-danger small">{{ form_errors(form.sujet) }}</div>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label text-light">Message</label>
+                                <textarea name="{{ form.message.vars.full_name }}" class="form-control form-control-modern" rows="5"
+                                          placeholder="Écrivez votre message ici..." required>{{ form.message.vars.value|default('') }}</textarea>
+                                <div class="text-danger small">{{ form_errors(form.message) }}</div>
+                            </div>
+
+                            <div class="col-12 mt-3">
+                                <button type="submit" class="btn btn-gradient w-100 py-3 fw-semibold">Envoyer le message</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<!-- Bouton flottant pour revenir en haut -->
+<button id="back-to-top" title="Retour en haut" 
+        style="position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background-color: #d8b65d; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: transform 0.2s, opacity 0.3s; opacity: 0; z-index: 1000;">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#000" viewBox="0 0 24 24">
+    <path d="M18 6h-1V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h1a2 2 0 0 0 4 0h2a2 2 0 0 0 4 0h1a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2zm-9-2h4v2H9V4zm6 14H9a2 2 0 0 0-2-2h8a2 2 0 0 0-2 2zm5-3a1 1 0 0 1-1 1h-1V8h2v7z"/>
+  </svg>
+</button>
+
+
+<!-- Swiper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.7/swiper-bundle.min.js"></script>
+
+<!-- Script pour banniere -->
+<script>
+$(document).ready(function(){
+    $('.home_slider').owlCarousel({
+        items: 1,
+        loop: true,
+        autoplay: true,         // ✅ active le défilement automatique
+        autoplayTimeout: 6000,  // délai entre les slides (6 secondes)
+        autoplayHoverPause: false,
+        animateOut: 'fadeOut',
+        animateIn: 'fadeIn',
+        smartSpeed: 1500,
+        dots: true,
+        nav: false,             // supprime les flèches
+    });
+});
+</script>
+
+
+<!-- Script pour afficher/masquer le retour -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const allerSimple = document.getElementById('allerSimple');
+        const allerRetour = document.getElementById('allerRetour');
+        const trajetRetour = document.getElementById('trajetRetour');
+
+        allerSimple.addEventListener('change', () => {
+            trajetRetour.classList.add('d-none');
+        });
+        allerRetour.addEventListener('change', () => {
+            trajetRetour.classList.remove('d-none');
+        });
+    });
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const car = document.querySelector('.car-img');
+    car.classList.add('animate'); // animation directe
+});
+
+</script>
+
+
+
+<!-- Our Simple Booking Process -->
+	<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const items = document.querySelectorAll('.process-item');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Ajout d'un délai selon l'ordre de l'élément
+                const delay = Array.from(items).indexOf(entry.target) * 200; // 0ms, 200ms, 400ms
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                }, delay);
+
+                observer.unobserve(entry.target); // anim une seule fois
+            }
+        });
+    }, { threshold: 0.2 });
+
+    items.forEach(item => observer.observe(item));
+});
+</script>
+
+<script>
+        // Initialize Swiper
+        const swiper = new Swiper('.toursSwiper', {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: false,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                },
+                1280: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                }
+            }
+        });
+
+        // Toggle favorite
+        document.querySelectorAll('.favorite-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const icon = btn.querySelector('i');
+                icon.classList.toggle('far');
+                icon.classList.toggle('fas');
+            });
+        });
+
+        // Card click
+        document.querySelectorAll('.tour-card').forEach(card => {
+            card.addEventListener('click', () => {
+                alert('Navigating to tour details...');
+            });
+        });
+
+        // Prevent button clicks from triggering card click
+        document.querySelectorAll('.view-btn, .play-button').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        });
+    </script>
+
+
+<!-- Script -->
+<script>
+  const backToTopBtn = document.getElementById('back-to-top');
+
+  // Afficher le bouton après avoir scrollé
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 200) {
+      backToTopBtn.style.opacity = '1';
+    } else {
+      backToTopBtn.style.opacity = '0';
+    }
+  });
+
+  // Scroll doux vers le haut au clic
+  backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // <-- animation de scroll
+    });
+  });
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("contactForm");
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch(form.action, {
+                method: "POST",
+                body: formData,
+                headers: { "X-Requested-With": "XMLHttpRequest" }
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                showPopupMessage(data.message, "success");
+                form.reset();
+            } else {
+                // 🔴 Message d’erreur général
+                showPopupMessage(data.message, "error");
+
+                // 🧾 Afficher les erreurs détaillées (si tu veux)
+                if (data.errors) {
+                    console.warn("Détails des erreurs :", data.errors);
+                }
+            }
+        } catch (error) {
+            showPopupMessage("❌ Une erreur est survenue. Veuillez réessayer.", "error");
+            console.error("Erreur d’envoi :", error);
+        }
+    });
+
+    function showPopupMessage(message, type = "success") {
+        const msg = document.createElement("div");
+        msg.className = `alert ${type === "success" ? "alert-success" : "alert-danger"} fw-semibold popup-message`;
+        msg.innerHTML = message;
+
+        document.querySelector(".contact-right").appendChild(msg);
+
+        setTimeout(() => {
+            msg.classList.add("fade-out");
+            setTimeout(() => msg.remove(), 500);
+        }, 5000);
+    }
+});
+</script>
+<script>
+        // Intersection Observer pour animation au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Délai progressif pour chaque carte
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 150);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observer toutes les cartes
+        document.querySelectorAll('.car-card').forEach(card => {
+            observer.observe(card);
+        });
+
+       
+    </script>
+<script>
+document.getElementById('reviewForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const formData = {
+        nom: document.getElementById('nom').value,
+        prenom: document.getElementById('prenom').value,
+        commentaire: document.getElementById('commentaire').value,
+        etoiles: document.querySelector('input[name="etoiles"]:checked')?.value
+    };
+
+    fetch('{{ path("avis_add") }}', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+    })
+    .then(r => r.json())
+    .then(res => {
+        if (res.success) {
+            alert('Avis envoyé avec succès !');
+
+            // Fermer le modal
+            document.getElementById('reviewModal').style.display = 'none';
+
+            // Reset form
+            document.getElementById('reviewForm').reset();
+
+            // Optionnel : recharger uniquement le slider
+            location.reload();
+        }
+    });
+});
+
+// Fermeture du modal au clic extérieur
+document.getElementById('reviewModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        this.style.display = 'none';
+    }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('commentModal');
+    const modalName = document.getElementById('modalName');
+    const modalRating = document.getElementById('modalRating');
+    const modalCommentaire = document.getElementById('modalCommentaire');
+    const modalDate = document.getElementById('modalDate');
+
+    // Sélectionne tous les commentaires du slider
+    document.querySelectorAll('.test_quote_text').forEach((el, index) => {
+        el.addEventListener('click', () => {
+            const item = el.closest('.owl-item');
+            const nom = item.querySelector('.test_name').innerText;
+            const commentaire = el.innerText;
+            const etoiles = item.querySelector('.test_rating').innerText;
+            const date = item.querySelector('.test_date').innerText;
+
+            modalName.textContent = nom;
+            modalRating.textContent = etoiles;
+            modalCommentaire.textContent = commentaire;
+            modalDate.textContent = date;
+
+            modal.style.display = 'flex';
+        });
+    });
+
+    // Fermer le modal au clic en dehors
+    modal.addEventListener('click', function(e) {
+        if (e.target === this) {
+            modal.style.display = 'none';
+        }
+    });
+});
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+
+<title>New ReservationExcursion</title>
+
+{% block body %}
+    <h1>Create new ReservationExcursion</h1>
+
+    {{ include('Front/reservation_excursion/_form.html.twig') }}
+
+    <a href="{{ path('app_reservation_excursion_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<title>ReservationExcursion index</title>
+
+{% block body %}
+    <h1>ReservationExcursion index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Adult</th>
+                <th>Child</th>
+                <th>DateHeure</th>
+                <th>LocalisationPoint</th>
+                <th>DateCreation</th>
+                <th>Statut</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation_excursion in reservation_excursions %}
+            <tr>
+                <td>{{ reservation_excursion.id }}</td>
+                <td>{{ reservation_excursion.nom }}</td>
+                <td>{{ reservation_excursion.prenom }}</td>
+                <td>{{ reservation_excursion.adult }}</td>
+                <td>{{ reservation_excursion.child }}</td>
+                <td>{{ reservation_excursion.dateHeure ? reservation_excursion.dateHeure|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ reservation_excursion.localisationPoint }}</td>
+                <td>{{ reservation_excursion.dateCreation ? reservation_excursion.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ reservation_excursion.statut }}</td>
+                <td>
+                    <a href="{{ path('app_reservation_excursion_show', {'id': reservation_excursion.id}) }}">show</a>
+                    <a href="{{ path('app_reservation_excursion_edit', {'id': reservation_excursion.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reservation_excursion_new') }}">Create new</a>
+{% endblock %}

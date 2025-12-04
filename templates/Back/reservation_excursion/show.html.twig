@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<title>ReservationExcursion</title>
+
+{% block body %}
+    <h1>ReservationExcursion</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ reservation_excursion.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ reservation_excursion.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ reservation_excursion.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Adult</th>
+                <td>{{ reservation_excursion.adult }}</td>
+            </tr>
+            <tr>
+                <th>Child</th>
+                <td>{{ reservation_excursion.child }}</td>
+            </tr>
+            <tr>
+                <th>DateHeure</th>
+                <td>{{ reservation_excursion.dateHeure ? reservation_excursion.dateHeure|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>LocalisationPoint</th>
+                <td>{{ reservation_excursion.localisationPoint }}</td>
+            </tr>
+            <tr>
+                <th>DateCreation</th>
+                <td>{{ reservation_excursion.dateCreation ? reservation_excursion.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{{ reservation_excursion.statut }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reservation_excursion_index') }}">back to list</a>
+
+    <a href="{{ path('app_reservation_excursion_edit', {'id': reservation_excursion.id}) }}">edit</a>
+
+    {{ include('Front/reservation_excursion/_delete_form.html.twig') }}
+{% endblock %}

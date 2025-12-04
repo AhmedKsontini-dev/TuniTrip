@@ -1,0 +1,77 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Liste des transferts{% endblock %}
+
+{% block body %}
+<style>
+.dataTables_wrapper .dataTables_filter {
+    float: right;
+    text-align: right;
+}
+.dataTables_wrapper .dataTables_paginate {
+    float: right;
+    text-align: right;
+}
+</style>
+
+<div class="container mt-4">
+    <h1 class="mb-3">🚖 Liste des transferts</h1>
+
+    <!-- 🔘 Bouton d'ajout -->
+    <a href="{{ path('app_transfere_new') }}" class="btn btn-primary mb-3">
+        ➕ Nouveau transfert
+    </a>
+
+    <!-- 🔔 Messages flash -->
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">{{ message }}</div>
+        {% endfor %}
+    {% endfor %}
+
+    <!-- 📋 Tableau -->
+    <table class="table table-bordered table-hover align-middle datatable">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Image</th>
+                <th>Lieu de départ</th>
+                <th>Lieu d’arrivée</th>
+                <th>Durée</th>
+                <th>Prix (TND)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transfere in transferes %}
+                <tr>
+                    <td>{{ transfere.id }}</td>
+                    <td>
+                        {% if transfere.image %}
+                            <img src="{{ asset('uploads/images/' ~ transfere.image) }}" alt="Image transfert" class="rounded" width="80" height="50">
+                        {% else %}
+                            <span class="text-muted">Aucune image</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ transfere.lieuDepart }}</td>
+                    <td>{{ transfere.lieuArrivee }}</td>
+                    <td>{{ transfere.duree }}</td>
+                    <td>{{ transfere.prix }}</td>
+                    <td>
+                        <a href="{{ path('app_transfere_show', {'id': transfere.id}) }}" class="btn btn-sm btn-info">👁️</a>
+                        <a href="{{ path('app_transfere_edit', {'id': transfere.id}) }}" class="btn btn-sm btn-warning">✏️</a>
+                        <form method="post" action="{{ path('app_transfere_delete', {'id': transfere.id}) }}" style="display:inline-block;" onsubmit="return confirm('Supprimer ce transfert ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ transfere.id) }}">
+                            <button class="btn btn-sm btn-danger">🗑️</button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center text-muted">Aucun transfert enregistré.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

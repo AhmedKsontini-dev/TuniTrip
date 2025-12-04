@@ -1,0 +1,366 @@
+{% extends 'baseBack.html.twig' %}
+{% block title %}Messages{% endblock %}
+
+{% block body %}
+<style>
+/* --- Container principal --- */
+.messages-container {
+    display: flex;
+    height: 80vh;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+/* --- Liste à gauche --- */
+.message-list {
+    width: 30%;
+    border-right: 1px solid #ddd;
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Barre de recherche */
+.message-search {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+.message-search input {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* Liste des messages */
+.message-items {
+    flex: 1;
+    overflow-y: auto;
+}
+.message-item {
+    position: relative;
+    padding: 12px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+}
+.message-item:hover {
+    background-color: #e9ecef;
+}
+.message-item.active {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Messages non lus */
+.message-item.non-lu {
+    background-color: #f8d7da; /* rouge clair */
+}
+
+/* Badges */
+.badge-non-lu {
+    font-size: 0.65rem;
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background-color: #dc3545;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+.badge-lu {
+    font-size: 0.65rem;
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background-color: #28a745;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* --- Partie droite --- */
+.message-content {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.message-display {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.message-display .message-client {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.message-display .message-admin {
+    background-color: #d1ecf1;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.message-display h4 {
+    margin-top: 0;
+    font-size: 1.3rem;
+    color: #333;
+}
+
+.message-display p {
+    margin: 5px 0;
+    line-height: 1.5;
+    color: #555;
+}
+
+.message-display hr {
+    margin: 15px 0;
+    border-color: #ddd;
+}
+
+/* Zone de réponse */
+.reply-box {
+    padding: 15px;
+    background: #f1f3f5;
+    display: flex;
+    flex-direction: column;
+}
+.reply-box textarea {
+    width: 100%;
+    height: 100px;
+    resize: none;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+}
+.reply-box button {
+    align-self: flex-end;
+    margin-top: 10px;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.reply-box button:hover {
+    background-color: #0056b3;
+}
+
+/* Bouton suppression */
+.btn-delete-msg {
+    font-size: 0.85rem;
+    color: #dc3545;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.btn-delete-msg:hover {
+    text-decoration: underline;
+}
+</style>
+
+<div class="container mt-4">
+    <h1>📩 Messages de contact</h1>
+
+    <div class="messages-container">
+        <!-- Liste à gauche -->
+        <div class="message-list">
+            <div class="message-search">
+                <input type="text" id="searchInput" placeholder="Rechercher un message...">
+            </div>
+            <div class="message-items" id="messageItems">
+                {% for msg in contact_messages %}
+                    <div class="message-item {% if not msg.lus %}non-lu{% endif %}" 
+                         data-id="{{ msg.id }}"
+                         data-nom="{{ msg.nom }}" 
+                         data-email="{{ msg.email }}" 
+                         data-sujet="{{ msg.sujet }}" 
+                         data-message="{{ msg.message|e('html') }}" 
+                         data-date="{{ msg.dateEnvoi ? msg.dateEnvoi|date('d/m/Y H:i') : '' }}"
+                         data-lus="{{ msg.lus ? 'true' : 'false' }}">
+                        <div>
+                            <strong>{{ msg.nom }}</strong><br>
+                            <small>{{ msg.sujet }}</small>
+                        </div>
+                        <button class="btn-delete-msg" data-id="{{ msg.id }}">
+                            <i class="bi bi-trash"></i>
+                        </button>
+
+                        {% if not msg.lus %}
+                            <span class="badge badge-non-lu">Non lu</span>
+                        {% else %}
+                            <span class="badge badge-lu">Lu</span>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <p class="text-center text-muted mt-3">Aucun message</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Contenu à droite -->
+        <div class="message-content">
+            <div class="message-display" id="messageContent">
+                <p class="text-muted">Sélectionnez un message pour voir son contenu...</p>
+            </div>
+
+            <!-- Zone de réponse -->
+            <div class="reply-box" id="replyBox" style="display:none;">
+                <textarea id="replyMessage" placeholder="Tapez votre réponse ici..."></textarea>
+                <button id="sendReply">Répondre</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const items = Array.from(document.querySelectorAll('.message-item'));
+    const content = document.getElementById('messageContent');
+    const searchInput = document.getElementById('searchInput');
+    const replyBox = document.getElementById('replyBox');
+    const replyMessage = document.getElementById('replyMessage');
+    const sendReply = document.getElementById('sendReply');
+
+    // Affichage message + marquer comme lu
+    items.forEach(item => {
+        item.addEventListener('click', (e) => {
+            if(e.target.classList.contains('btn-delete-msg')) return;
+
+            items.forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+
+            const nom = item.dataset.nom;
+            const email = item.dataset.email;
+            const sujet = item.dataset.sujet;
+            const message = item.dataset.message;
+            const date = item.dataset.date;
+
+            content.innerHTML = `
+                <div class="message-client">
+                    <h4>${sujet}</h4>
+                    <p><strong>De :</strong> ${nom} &lt;${email}&gt;</p>
+                    <p><strong>Envoyé le :</strong> ${date}</p>
+                    <hr>
+                    <p>${message}</p>
+                </div>
+            `;
+            replyBox.style.display = 'flex';
+
+            // Marquer comme lu via AJAX
+            if(item.dataset.lus === 'false'){
+                fetch("/contact/message/" + item.dataset.id + "/mark-as-read", {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': '{{ csrf_token("mark_lu") }}'
+                    }
+                }).then(res => res.json())
+                .then(data => {
+                    if(data.success){
+                        item.dataset.lus = 'true';
+                        item.classList.remove('non-lu');
+
+                        const badgeOld = item.querySelector('.badge-non-lu');
+                        if(badgeOld) badgeOld.remove();
+                        const badgeLu = document.createElement('span');
+                        badgeLu.className = 'badge badge-lu';
+                        badgeLu.innerText = 'Lu';
+                        item.appendChild(badgeLu);
+                    }
+                });
+            }
+        });
+    });
+
+    // Filtrage
+    searchInput.addEventListener('input', () => {
+        const search = searchInput.value.toLowerCase();
+        items.forEach(item => {
+            const nom = item.dataset.nom.toLowerCase();
+            const sujet = item.dataset.sujet.toLowerCase();
+            item.style.display = (nom.includes(search) || sujet.includes(search)) ? 'flex' : 'none';
+        });
+    });
+
+    // Suppression
+    const csrfToken = '{{ csrf_token("delete_message") }}';
+    items.forEach(item => {
+        const btn = item.querySelector('.btn-delete-msg');
+        btn.addEventListener('click', () => {
+            if(!confirm('Voulez-vous vraiment supprimer ce message ?')) return;
+
+            fetch("/contact/message/" + btn.dataset.id + "/delete", {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            }).then(res => res.json())
+            .then(data => {
+                if(data.success){
+                    item.remove();
+                    content.innerHTML = `<p class="text-muted">Sélectionnez un message pour voir son contenu...</p>`;
+                    replyBox.style.display = 'none';
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-success';
+                    alertDiv.innerText = 'Message supprimé avec succès !';
+                    document.querySelector('.container').prepend(alertDiv);
+                    setTimeout(() => alertDiv.remove(), 5000);
+                }
+            });
+        });
+    });
+
+    // Envoyer la réponse et afficher en temps réel
+    sendReply.addEventListener('click', () => {
+        const message = replyMessage.value.trim();
+        if(!message) return alert('Veuillez écrire un message.');
+        const activeItem = document.querySelector('.message-item.active');
+        if(!activeItem) return alert('Aucun message sélectionné.');
+
+        const clientEmail = activeItem.dataset.email;
+
+        fetch("/contact/message/" + activeItem.dataset.id + "/reply", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': '{{ csrf_token("reply_message") }}'
+            },
+            body: JSON.stringify({ reply: message, email: clientEmail })
+        }).then(res => res.json())
+        .then(data => {
+            if(data.success){
+                // Ajouter le message envoyé dans l'affichage
+                const replyDiv = document.createElement('div');
+                replyDiv.className = 'message-admin';
+                replyDiv.innerHTML = `<strong>Votre réponse :</strong><p>${message}</p>`;
+                content.appendChild(replyDiv);
+
+                replyMessage.value = '';
+            } else {
+                alert('Erreur lors de l\'envoi.');
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

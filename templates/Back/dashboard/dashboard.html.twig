@@ -1,0 +1,622 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Dashboard Administration{% endblock %}
+
+
+
+
+
+{% block body %}
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f5f7fa;
+        color: #2d3748;
+    }
+    
+    .dashboard-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    .dashboard-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+    
+    .dashboard-header h1 {
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+    
+    .dashboard-header p {
+        opacity: 0.9;
+        font-size: 16px;
+    }
+    
+    .period-selector {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+    
+    .period-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    
+    .period-btn:hover, .period-btn.active {
+        background: white;
+        color: #667eea;
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+    
+    .stat-card {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
+        border-left: 4px solid;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    }
+    
+    .stat-card.revenue { border-color: #10b981; }
+    .stat-card.bookings { border-color: #3b82f6; }
+    .stat-card.cars { border-color: #f59e0b; }
+    .stat-card.customers { border-color: #8b5cf6; }
+    
+    .stat-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+    }
+    
+    .stat-icon.revenue { background: #d1fae5; color: #10b981; }
+    .stat-icon.bookings { background: #dbeafe; color: #3b82f6; }
+    .stat-icon.cars { background: #fef3c7; color: #f59e0b; }
+    .stat-icon.customers { background: #ede9fe; color: #8b5cf6; }
+    
+    .stat-title {
+        color: #64748b;
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .stat-value {
+        font-size: 32px;
+        font-weight: 700;
+        color: #1e293b;
+        margin: 10px 0;
+    }
+    
+    .stat-change {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+    
+    .stat-change.positive { color: #10b981; }
+    .stat-change.negative { color: #ef4444; }
+    
+    .charts-row {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+    
+    .chart-card {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    
+    .chart-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #1e293b;
+    }
+    
+    .revenue-breakdown {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .revenue-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        background: #f8fafc;
+        border-radius: 8px;
+        border-left: 3px solid;
+    }
+    
+    .revenue-item.voitures { border-color: #3b82f6; }
+    .revenue-item.transferts { border-color: #10b981; }
+    .revenue-item.excursions { border-color: #f59e0b; }
+    
+    .revenue-label {
+        font-weight: 600;
+        color: #475569;
+    }
+    
+    .revenue-amount {
+        font-size: 18px;
+        font-weight: 700;
+        color: #1e293b;
+    }
+    
+    .tables-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+    
+    .table-card {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    
+    .table-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .table-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: #1e293b;
+    }
+    
+    .view-all-btn {
+        color: #667eea;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        transition: color 0.3s;
+    }
+    
+    .view-all-btn:hover {
+        color: #764ba2;
+    }
+    
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .data-table th {
+        text-align: left;
+        padding: 12px;
+        background: #f8fafc;
+        color: #64748b;
+        font-weight: 600;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .data-table td {
+        padding: 12px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .data-table tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .status-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    
+    .status-badge.disponible {
+        background: #d1fae5;
+        color: #059669;
+    }
+    
+    .status-badge.loue {
+        background: #fee2e2;
+        color: #dc2626;
+    }
+    
+    .status-badge.confirme {
+        background: #dbeafe;
+        color: #2563eb;
+    }
+    
+    .status-badge.en-attente {
+        background: #fef3c7;
+        color: #d97706;
+    }
+    
+    .status-badge.annule {
+        background: #f3f4f6;
+        color: #6b7280;
+    }
+    
+    .rating {
+        color: #fbbf24;
+    }
+    
+    .alert-card {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        border-left: 4px solid #ef4444;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: start;
+        gap: 12px;
+    }
+    
+    .alert-icon {
+        color: #ef4444;
+        flex-shrink: 0;
+    }
+    
+    .alert-content h4 {
+        color: #991b1b;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+    
+    .alert-content p {
+        color: #7f1d1d;
+        font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+        .charts-row {
+            grid-template-columns: 1fr;
+        }
+        
+        .tables-section {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+<div class="dashboard-container">
+    <!-- En-tête du Dashboard -->
+    <div class="dashboard-header">
+        <h1>📊 Dashboard Administration</h1>
+        <p>Vue d'ensemble de votre activité - {{ "now"|date("d/m/Y") }}</p>
+        
+        <div class="period-selector">
+            <button class="period-btn active">Aujourd'hui</button>
+            <button class="period-btn">Cette semaine</button>
+            <button class="period-btn">Ce mois</button>
+            <button class="period-btn">Cette année</button>
+        </div>
+    </div>
+
+    <!-- Alertes importantes -->
+    {% if messagesNonLus > 0 %}
+    <div class="alert-card">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-content">
+            <h4>Messages non lus</h4>
+            <p>Vous avez {{ messagesNonLus }} message(s) client non lu(s) en attente de réponse.</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Statistiques principales -->
+    <div class="stats-grid">
+        <!-- Revenus -->
+        <div class="stat-card revenue">
+            <div class="stat-header">
+                <div class="stat-title">Revenus Total</div>
+                <div class="stat-icon revenue">💰</div>
+            </div>
+            <div class="stat-value">{{ revenusTotal|number_format(0, ',', ' ') }} TND</div>
+            <div class="stat-change positive">
+                ↑ +{{ evolutionRevenu|number_format(1) }}% vs période précédente
+            </div>
+        </div>
+
+        <!-- Réservations -->
+        <div class="stat-card bookings">
+            <div class="stat-header">
+                <div class="stat-title">Réservations</div>
+                <div class="stat-icon bookings">📅</div>
+            </div>
+            <div class="stat-value">{{ totalReservations }}</div>
+            <div class="stat-change positive">
+                ↑ +{{ evolutionReservations|number_format(1) }}% vs période précédente
+            </div>
+        </div>
+
+        <!-- Véhicules disponibles -->
+        <div class="stat-card cars">
+            <div class="stat-header">
+                <div class="stat-title">Véhicules</div>
+                <div class="stat-icon cars">🚗</div>
+            </div>
+            <div class="stat-value">{{ voituresDisponibles }}/{{ totalVoitures }}</div>
+            <div class="stat-change">
+                Taux d'occupation: {{ tauxOccupation|number_format(1) }}%
+            </div>
+        </div>
+
+        <!-- Clients -->
+        <div class="stat-card customers">
+            <div class="stat-header">
+                <div class="stat-title">Nouveaux Clients</div>
+                <div class="stat-icon customers">👥</div>
+            </div>
+            <div class="stat-value">{{ nouveauxClients }}</div>
+            <div class="stat-change positive">
+                +{{ clientsRecurrents }} clients récurrents
+            </div>
+        </div>
+    </div>
+
+    <!-- Graphiques et répartition -->
+    <div class="charts-row">
+        <!-- Répartition des revenus -->
+        <div class="chart-card">
+            <h3 class="chart-title">📈 Répartition des Revenus par Service</h3>
+            <div class="revenue-breakdown">
+                <div class="revenue-item voitures">
+                    <div>
+                        <div class="revenue-label">🚗 Location Voitures</div>
+                        <small style="color: #64748b;">{{ reservationsVoitures }} réservations</small>
+                    </div>
+                    <div class="revenue-amount">{{ revenusVoitures|number_format(0, ',', ' ') }} TND</div>
+                </div>
+                
+                <div class="revenue-item transferts">
+                    <div>
+                        <div class="revenue-label">🚕 Transferts</div>
+                        <small style="color: #64748b;">{{ reservationsTransferts }} réservations</small>
+                    </div>
+                    <div class="revenue-amount">{{ revenusTransferts|number_format(0, ',', ' ') }} TND</div>
+                </div>
+                
+                <div class="revenue-item excursions">
+                    <div>
+                        <div class="revenue-label">🎫 Excursions</div>
+                        <small style="color: #64748b;">{{ reservationsExcursions }} réservations</small>
+                    </div>
+                    <div class="revenue-amount">{{ revenusExcursions|number_format(0, ',', ' ') }} TND</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistiques rapides -->
+        <div class="chart-card">
+            <h3 class="chart-title">⚡ Statistiques Rapides</h3>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div style="padding: 15px; background: #f8fafc; border-radius: 8px;">
+                    <div style="color: #64748b; font-size: 14px; margin-bottom: 5px;">Note Moyenne</div>
+                    <div style="font-size: 24px; font-weight: 700; color: #1e293b;">
+                        ⭐ {{ noteMoyenne|number_format(1) }}/5
+                    </div>
+                    <small style="color: #64748b;">Sur {{ totalAvis }} avis</small>
+                </div>
+                
+                <div style="padding: 15px; background: #f8fafc; border-radius: 8px;">
+                    <div style="color: #64748b; font-size: 14px; margin-bottom: 5px;">Taux de Conversion</div>
+                    <div style="font-size: 24px; font-weight: 700; color: #1e293b;">
+                        {{ tauxConversion|number_format(1) }}%
+                    </div>
+                    <small style="color: #64748b;">Visiteurs → Réservations</small>
+                </div>
+                
+                <div style="padding: 15px; background: #f8fafc; border-radius: 8px;">
+                    <div style="color: #64748b; font-size: 14px; margin-bottom: 5px;">Panier Moyen</div>
+                    <div style="font-size: 24px; font-weight: 700; color: #1e293b;">
+                        {{ panierMoyen|number_format(0) }} TND
+                    </div>
+                    <small style="color: #64748b;">Par réservation</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tableaux de données -->
+    <div class="tables-section">
+        <!-- Top Véhicules -->
+        <div class="table-card">
+            <div class="table-header">
+                <h3 class="table-title">🏆 Top Véhicules</h3>
+                <a href="{{ path('app_voitures_index') }}" class="view-all-btn">Voir tout →</a>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Véhicule</th>
+                        <th>Réservations</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for voiture in topVoitures %}
+                    <tr>
+                        <td>
+                            <strong>{{ voiture.marque }} {{ voiture.modele }}</strong><br>
+                            <small style="color: #64748b;">{{ voiture.immatriculation }}</small>
+                        </td>
+                        <td>{{ voiture.nbReservations }}</td>
+                        <td>
+                            <span class="status-badge {{ voiture.disponible ? 'disponible' : 'loue' }}">
+                                {{ voiture.disponible ? 'Disponible' : 'Loué' }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Réservations récentes -->
+        <div class="table-card">
+            <div class="table-header">
+                <h3 class="table-title">🕐 Réservations Récentes</h3>
+                <a href="#" class="view-all-btn">Voir tout →</a>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Client</th>
+                        <th>Type</th>
+                        <th>Montant</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reservation in reservationsRecentes %}
+                    <tr>
+                        <td>
+                            <strong>{{ reservation.nom }} {{ reservation.prenom }}</strong><br>
+                            <small style="color: #64748b;">{{ reservation.created_at|date('d/m/Y H:i') }}</small>
+                        </td>
+                        <td>
+                            <span style="font-size: 18px;">
+                                {% if reservation.type == 'voiture' %}CARS
+                                {% elseif reservation.type == 'transfert' %}Transfert
+                                {% else %}Excursion{% endif %}
+                            </span>
+                        </td>
+                        <td><strong>{{ reservation.prix_total|number_format(0) }} TND</strong></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Excursions populaires -->
+        <div class="table-card">
+            <div class="table-header">
+                <h3 class="table-title">🌟 Excursions Populaires</h3>
+                <a href="{{ path('admin_excursion_index') }}" class="view-all-btn">Voir tout →</a>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Excursion</th>
+                        <th>Note</th>
+                        <th>Réservations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for excursion in excursionsPopulaires %}
+                    <tr>
+                        <td>
+                            <strong>{{ excursion.titre }}</strong><br>
+                            <small style="color: #64748b;">{{ excursion.prix_par_personne }} TND/pers</small>
+                        </td>
+                        <td>
+                            <span class="rating">⭐ {{ excursion.note_moyenne|number_format(1) }}</span>
+                        </td>
+                        <td>{{ excursion.nb_reservations }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Messages clients récents -->
+        <div class="table-card">
+            <div class="table-header">
+                <h3 class="table-title">💬 Messages Clients</h3>
+                <a href="{{ path('app_contact_message_index') }}" class="view-all-btn">Voir tout →</a>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Client</th>
+                        <th>Sujet</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for message in messagesRecents %}
+                    <tr style="{{ not message.lus ? 'background: #fef3c7;' : '' }}">
+                        <td>
+                            <strong>{{ message.nom }}</strong><br>
+                            <small style="color: #64748b;">{{ message.email }}</small>
+                        </td>
+                        <td>{{ message.sujet|slice(0, 30) }}...</td>
+                        <td>
+                            <small>{{ message.dateEnvoi|date('d/m H:i') }}</small>
+                            {% if not message.lus %}
+                            <br><span class="status-badge en-attente">Nouveau</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    // Gestion des boutons de période
+    document.querySelectorAll('.period-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            // Ici vous pouvez ajouter un appel AJAX pour charger les données de la période sélectionnée
+        });
+    });
+</script>
+{% endblock %}

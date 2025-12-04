@@ -1,0 +1,113 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Modifier la réservation{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="card shadow-lg border-0 rounded-4 p-4">
+
+        <!-- 🏷️ Titre principal -->
+        <h2 class="text-center text-primary fw-bold mb-4">
+            ✏️ Modifier la réservation : "{{ reservation_voiture.nom }} {{ reservation_voiture.prenom }}"
+        </h2>
+
+        {{ form_start(form) }}
+
+        <!-- 📌 Bloc 1 : Informations personnelles -->
+        <h4 class="text-secondary mb-3">👤 Informations personnelles</h4>
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                {{ form_label(form.nom) }}
+                {{ form_widget(form.nom, {'attr': {'class':'form-control'}}) }}
+                {{ form_errors(form.nom) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_label(form.prenom) }}
+                {{ form_widget(form.prenom, {'attr': {'class':'form-control'}}) }}
+                {{ form_errors(form.prenom) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_label(form.dateNaissance) }}
+                {{ form_widget(form.dateNaissance, {'attr': {'class':'form-control'}}) }}
+                {{ form_errors(form.dateNaissance) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_label(form.lieuNaissance) }}
+                {{ form_widget(form.lieuNaissance, {'attr': {'class':'form-control'}}) }}
+                {{ form_errors(form.lieuNaissance) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_label(form.nationalite) }}
+                {{ form_widget(form.nationalite, {'attr': {'class':'form-control'}}) }}
+                {{ form_errors(form.nationalite) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_label(form.adresse) }}
+                {{ form_widget(form.adresse, {'attr': {'class':'form-control'}}) }}
+                {{ form_errors(form.adresse) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_label(form.tel) }}
+                {{ form_widget(form.tel, {'attr': {'class':'form-control'}}) }}
+                {{ form_errors(form.tel) }}
+            </div>
+        </div>
+
+        <!-- 📌 Bloc 2 : Documents officiels -->
+        <h4 class="text-secondary mb-3">📄 Documents officiels</h4>
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                {{ form_label(form.numCinPassport) }}
+                {{ form_widget(form.numCinPassport, {'attr': {'class':'form-control'}}) }}
+                {{ form_errors(form.numCinPassport) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_label(form.cinDelivreLe) }}
+                {{ form_widget(form.cinDelivreLe, {'attr': {'class':'form-control'}}) }}
+                {{ form_errors(form.cinDelivreLe) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_label(form.numPermis) }}
+                {{ form_widget(form.numPermis, {'attr': {'class':'form-control'}}) }}
+                {{ form_errors(form.numPermis) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_label(form.permisDelivreLe) }}
+                {{ form_widget(form.permisDelivreLe, {'attr': {'class':'form-control'}}) }}
+                {{ form_errors(form.permisDelivreLe) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_label(form.permisLieuDelivrance) }}
+                {{ form_widget(form.permisLieuDelivrance, {'attr': {'class':'form-control'}}) }}
+                {{ form_errors(form.permisLieuDelivrance) }}
+            </div>
+        </div>
+
+        <!-- 📌 Bloc 3 : Dates de réservation -->
+        <h4 class="text-secondary mb-3">📅 Dates de réservation</h4>
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                {{ form_label(form.dateDebut) }}
+                {{ form_widget(form.dateDebut, {'attr': {'class':'form-control'}}) }}
+                {{ form_errors(form.dateDebut) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_label(form.dateFin) }}
+                {{ form_widget(form.dateFin, {'attr': {'class':'form-control'}}) }}
+                {{ form_errors(form.dateFin) }}
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+        <!-- 🔘 Boutons -->
+        <div class="text-center">
+            <button class="btn btn-success px-4 me-2">💾 Enregistrer</button>
+            <a href="{{ path('app_reservation_voiture_index') }}" class="btn btn-secondary px-4">↩️ Retour à la liste</a>
+        </div>
+
+        {{ form_end(form) }}
+
+    </div>
+</div>
+{% endblock %}

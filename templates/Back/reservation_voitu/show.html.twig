@@ -1,0 +1,107 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Détails de la réservation{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+
+    <!-- 🏷️ Titre principal -->
+    <h1 class="text-center mb-5 text-primary fw-bold">
+        Détails de la réservation : {{ reservation_voiture.nom }} {{ reservation_voiture.prenom }}
+    </h1>
+
+    <!-- 📌 Bloc : Informations personnelles -->
+    <div class="card mb-4 shadow-sm rounded-4 border-left-primary">
+        <div class="card-header bg-primary text-white fw-bold">
+            👤 Informations personnelles
+        </div>
+        <div class="card-body row text-center">
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">🆔 ID</h6>
+                <p class="fw-semibold">{{ reservation_voiture.id }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">📅 Date de naissance</h6>
+                <p class="fw-semibold">{{ reservation_voiture.dateNaissance ? reservation_voiture.dateNaissance|date('Y-m-d') : '' }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">📍 Lieu de naissance</h6>
+                <p class="fw-semibold">{{ reservation_voiture.lieuNaissance }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">🌐 Nationalité</h6>
+                <p class="fw-semibold">{{ reservation_voiture.nationalite }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">🏠 Adresse</h6>
+                <p class="fw-semibold">{{ reservation_voiture.adresse }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">📞 Téléphone</h6>
+                <p class="fw-semibold">{{ reservation_voiture.tel }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 📌 Bloc : Documents officiels -->
+    <div class="card mb-4 shadow-sm rounded-4 border-left-info">
+        <div class="card-header bg-info text-white fw-bold">
+            📄 Documents officiels
+        </div>
+        <div class="card-body row text-center">
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">🆔 CIN / Passeport</h6>
+                <p class="fw-semibold">{{ reservation_voiture.numCinPassport }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">📅 CIN délivré le</h6>
+                <p class="fw-semibold">{{ reservation_voiture.cinDelivreLe ? reservation_voiture.cinDelivreLe|date('Y-m-d') : '' }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">🆔 Numéro permis</h6>
+                <p class="fw-semibold">{{ reservation_voiture.numPermis }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">📅 Permis délivré le</h6>
+                <p class="fw-semibold">{{ reservation_voiture.permisDelivreLe ? reservation_voiture.permisDelivreLe|date('Y-m-d') : '' }}</p>
+            </div>
+            <div class="col-md-6 mb-3">
+                <h6 class="text-muted">📍 Lieu délivrance permis</h6>
+                <p class="fw-semibold">{{ reservation_voiture.permisLieuDelivrance }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 📌 Bloc : Réservation -->
+    <div class="card mb-4 shadow-sm rounded-4 border-left-success">
+        <div class="card-header bg-success text-white fw-bold">
+            📅 Détails de la réservation
+        </div>
+        <div class="card-body row text-center">
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">📅 Date début</h6>
+                <p class="fw-semibold">{{ reservation_voiture.dateDebut ? reservation_voiture.dateDebut|date('Y-m-d') : '' }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">📅 Date fin</h6>
+                <p class="fw-semibold">{{ reservation_voiture.dateFin ? reservation_voiture.dateFin|date('Y-m-d') : '' }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">⏱ Créé le</h6>
+                <p class="fw-semibold">{{ reservation_voiture.createdAt ? reservation_voiture.createdAt|date('Y-m-d H:i:s') : '' }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">⏱ Mis à jour</h6>
+                <p class="fw-semibold">{{ reservation_voiture.updatedAt ? reservation_voiture.updatedAt|date('Y-m-d H:i:s') : '' }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔙 Boutons d’action -->
+    <div class="text-center mt-4">
+        <a href="{{ path('app_reservation_voiture_index') }}" class="btn btn-secondary px-4 me-2">↩️ Retour à la liste</a>
+        <a href="{{ path('app_reservation_voiture_edit', {'id': reservation_voiture.id}) }}" class="btn btn-warning px-4 me-2">✏️ Modifier</a>
+        
+    </div>
+</div>
+{% endblock %}

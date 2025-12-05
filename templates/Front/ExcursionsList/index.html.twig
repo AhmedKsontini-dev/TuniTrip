@@ -412,12 +412,13 @@
                             <span class="excursion-badge">{{ excursion.categorie }}</span>
 
                             {# Bouton favoris #}
-                            <button class="favorite-btn" data-excursion-id="{{ excursion.id }}"
-                                {% if not app.user %}
-                                    onclick="window.location.href='{{ path('app_login') }}'"
-                                {% endif %}>
+                            <button class="favorite-btn require-login" 
+                                    data-excursion-id="{{ excursion.id }}" 
+                                    data-action="add-favoris">
                                 <i class="far fa-heart {% if excursion.id in userFavorisIds %}fas text-warning{% endif %}"></i>
                             </button>
+
+
                         </div>
 
                         <div class="excursion-content">
@@ -464,47 +465,56 @@
     }
 </script>
 
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const buttons = document.querySelectorAll('.favorite-btn');
+    const isLoggedIn = {{ app.user ? 'true' : 'false' }};
 
-    buttons.forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-            // Si non connecté, on laisse la redirection HTML onclick
-            if (!btn.dataset.excursionId || !{{ app.user ? 'true' : 'false' }}) return;
+    // Utilisation de delegation pour tous les boutons favorites (y compris chargés dynamiquement)
+    document.addEventListener('click', async (e) => {
+        const btn = e.target.closest('.favorite-btn');
 
-            const excursionId = btn.dataset.excursionId;
-            const icon = btn.querySelector('i');
+        if (!btn) return; // Si ce n'est pas un bouton favorite, ignorer
 
-            try {
-                const response = await fetch(`/favori/toggle/${excursionId}`, {
-                    method: 'POST',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Content-Type': 'application/json'
-                    }
-                });
+        const excursionId = btn.dataset.excursionId;
+        const icon = btn.querySelector('i');
 
-                const data = await response.json();
+        // Si non connecté → ouvrir le modal login
+        if (!isLoggedIn) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('#loginModal').modal('show');
+            return false;
+        }
 
-                if (data.success) {
-                    if (data.favori) {
-                        icon.classList.remove('far');
-                        icon.classList.add('fas', 'text-warning');
-                    } else {
-                        icon.classList.remove('fas', 'text-warning');
-                        icon.classList.add('far');
-                    }
-                } else if (data.message) {
-                    alert(data.message);
+        // Si connecté → exécuter la requête AJAX pour toggler le favoris
+        try {
+            const response = await fetch(`/favori/toggle/${excursionId}`, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/json'
                 }
-            } catch (err) {
-                console.error(err);
-                alert('Une erreur est survenue.');
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                if (data.favori) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas', 'text-warning');
+                } else {
+                    icon.classList.remove('fas', 'text-warning');
+                    icon.classList.add('far');
+                }
+            } else if (data.message) {
+                alert(data.message);
             }
-        });
+        } catch (err) {
+            console.error(err);
+            alert('Une erreur est survenue.');
+        }
     });
 });
 </script>
+
 {% endblock %}

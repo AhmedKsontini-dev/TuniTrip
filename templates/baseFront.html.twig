@@ -100,167 +100,309 @@
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-.auth-modal .modal-content {
-    background-color: #192026;
-    color: #FFFFFF;
-    border-radius: 14px;
-    border: 1px solid rgba(215, 182, 93, 0.25);
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6);
+/* ========================================
+   TuniTrip - Modal Authentication Styles
+   Couleurs: #1c2228 (principal), #d8b65d (secondaire)
+   ======================================== */
+
+/* Modal Overlay */
+.modal.fade .modal-dialog {
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
 }
 
+.modal-backdrop.show {
+    opacity: 0.7;
+    background: #1c2228;
+}
+
+/* Modal Container */
+.auth-modal {
+    max-width: 480px;
+    margin: 1.75rem auto;
+}
+
+.auth-modal .modal-content {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(28, 34, 40, 0.3);
+    overflow: hidden;
+    background: #ffffff;
+}
+
+/* Modal Header */
 .auth-modal .modal-header {
-    border-bottom: 1px solid rgba(215, 182, 93, 0.5);
+    background: linear-gradient(135deg, #1c2228 0%, #2a3139 100%);
+    padding: 1rem 2rem 1.5rem;
+    border-bottom: 3px solid #d8b65d;
 }
 
 .auth-modal .modal-title {
-    color: #FFFFFF;
-    font-weight: 600;
-    text-transform: uppercase;
+    color: #ffffff;
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.auth-title-sub {
+    color: #d8b65d;
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin-top: 0.25rem;
+    opacity: 0.95;
 }
 
 .auth-modal .close {
-    color: #FFFFFF;
+    color: #ffffff;
     opacity: 0.8;
+    font-size: 1.75rem;
+    font-weight: 300;
+    text-shadow: none;
+    transition: all 0.2s ease;
+    margin-top: -0.5rem;
 }
 
 .auth-modal .close:hover {
     opacity: 1;
+    color: #d8b65d;
+    transform: rotate(90deg);
 }
 
-.auth-modal .form-control {
-    background-color: rgba(255, 255, 255, 0.96);
-    border-radius: 6px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-    font-size: 13px;
-}
-
-.auth-modal .form-control:focus {
-    border-color: #D7B65D;
-    box-shadow: 0 0 0 0.12rem rgba(215, 182, 93, 0.45);
-}
-
-.fa,
-.fa-brands,
-.fa-duotone,
-.fa-light,
-.fa-regular,
-.fa-solid,
-.fa-thin,
-.fab,
-.fad,
-.fal,
-.far,
-.fas,
-.fat {
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    display: var(--fa-display, inline-block);
-    font-style: normal;
-    font-variant: normal;
-    line-height: 0;
-    text-rendering: auto;
-    /* Centering properties */
-    vertical-align: middle;
-    text-align: center;
-}
-
-.auth-modal .form-control::placeholder {
-    color: #9da4ae;
-    font-size: 12px;
-}
-
-.auth-modal label,
-.auth-modal .form-check-label {
-    color: #FFFFFF;
-    font-weight: 500;
-}
-
-.auth-modal .form-check-input {
-    margin-top: 5px;
-    margin-left: 3px;
-}
-
-.auth-modal .form-text {
-    color: #cccccc;
-}
-
-.auth-modal .modal-dialog {
-    max-width: 420px;
-}
-
+/* Modal Body */
 .auth-modal .modal-body {
-    padding: 24px 26px 22px 26px;
+    padding: 2rem;
+    background: #ffffff;
 }
 
-.auth-modal .modal-header {
-    padding: 18px 22px 12px 22px;
-}
-
-.auth-modal .auth-title-sub {
-    font-size: 12px;
-    color: #cccccc;
-    margin-top: 4px;
-}
-
-.auth-modal .auth-field {
+/* Form Fields */
+.auth-field,
+.auth-field-row {
     position: relative;
-    margin-bottom: 14px;
+    margin-bottom: 1.25rem;
 }
 
-.auth-modal .auth-field i {
-    position: absolute;
-    left: 10px;
-    top: 62%;
-    transform: translateY(-62%);
-    color: #D7B65D;
-    font-size: 14px;
-}
-
-.auth-modal .auth-field input {
-    padding-left: 32px;
-}
-
-.auth-modal .auth-footer-text {
-    font-size: 12px;
-    color: #cccccc;
-}
-
-.auth-modal .auth-field-row {
+.auth-field-row {
     display: flex;
-    gap: 10px;
+    gap: 1rem;
 }
 
-.auth-modal .auth-field-row .auth-field {
-    flex: 1 1 0;
+.auth-field-row .auth-field {
+    flex: 1;
 }
 
-.toast-success-register {
-    position: fixed;
-    top: 80px;
-    right: 20px;
-    z-index: 9999;
-    background: #1e2a33;
-    border-left: 4px solid #D7B65D;
-    color: #ffffff;
-    padding: 12px 16px;
-    border-radius: 6px;
-    font-size: 13px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-.btn-auth-primary {
-    background-color: #D7B65D;
-    border-color: #D7B65D;
-    color: #192026;
+.auth-field label {
+    display: block;
+    font-size: 0.875rem;
     font-weight: 600;
+    color: #1c2228;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.3px;
+}
+
+.auth-field i {
+    position: absolute;
+    left: 1rem;
+    top: 48px;
+    color: #d8b65d;
+    font-size: 1rem;
+    z-index: 1;
+}
+
+.auth-field .form-control {
+    padding: 0.875rem 1rem 0.875rem 2.75rem;
+    border: 2px solid #e8e9eb;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+    color: #1c2228;
+}
+
+.auth-field .form-control:focus {
+    background: #ffffff;
+    border-color: #d8b65d;
+    box-shadow: 0 0 0 4px rgba(216, 182, 93, 0.1);
+    outline: none;
+}
+
+.auth-field .form-control::placeholder {
+    color: #a0a4a8;
+}
+
+/* Checkbox Styling */
+.form-check {
+    padding-left: 1.75rem;
+}
+
+.form-check-input {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-top: 0.125rem;
+    border: 2px solid #d8b65d;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: #d8b65d;
+    border-color: #d8b65d;
+}
+
+.form-check-input:focus {
+    box-shadow: 0 0 0 3px rgba(216, 182, 93, 0.2);
+}
+
+.form-check-label {
+    font-size: 0.875rem;
+    color: #5a6169;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Auth Footer Text */
+.auth-footer-text {
+    font-size: 0.875rem;
+    color: #5a6169;
+    text-align: center;
+    margin: 0.5rem 0;
+}
+
+.auth-footer-text a {
+    color: #d8b65d;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.auth-footer-text a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #d8b65d;
+    transition: width 0.3s ease;
+}
+
+.auth-footer-text a:hover {
+    color: #c4a54d;
+}
+
+.auth-footer-text a:hover::after {
+    width: 100%;
+}
+
+/* Primary Button */
+.btn-auth-primary {
+    background: linear-gradient(135deg, #d8b65d 0%, #c4a54d 100%);
+    border: none;
+    color: #1c2228;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.875rem 2rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(216, 182, 93, 0.3);
+    letter-spacing: 0.5px;
     text-transform: uppercase;
+    font-size: 0.875rem;
 }
 
 .btn-auth-primary:hover {
-    background-color: #c2a356;
-    border-color: #c2a356;
-    color: #192026;
+    background: linear-gradient(135deg, #c4a54d 0%, #d8b65d 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(216, 182, 93, 0.4);
+    color: #1c2228;
+}
+
+.btn-auth-primary:active {
+    transform: translateY(0);
+}
+
+.btn-auth-primary:focus {
+    box-shadow: 0 0 0 4px rgba(216, 182, 93, 0.3);
+    outline: none;
+}
+
+/* Alert Messages */
+.alert {
+    border-radius: 10px;
+    border: none;
+    padding: 1rem;
+    font-size: 0.875rem;
+}
+
+.alert-danger {
+    background: #fff5f5;
+    color: #c53030;
+    border-left: 4px solid #c53030;
+}
+
+.alert-info {
+    background: #f0f9ff;
+    color: #1c2228;
+    border-left: 4px solid #d8b65d;
+}
+
+.alert-info a {
+    color: #d8b65d;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 576px) {
+    .auth-modal {
+        margin: 0.5rem;
+    }
+    
+    .auth-modal .modal-header {
+        padding: 1.5rem 1.25rem 1.25rem;
+    }
+    
+    .auth-modal .modal-body {
+        padding: 1.5rem 1.25rem;
+    }
+    
+    .auth-modal .modal-title {
+        font-size: 1.5rem;
+    }
+    
+    .auth-field-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .btn-auth-primary {
+        padding: 0.75rem 1.5rem;
+    }
+}
+
+/* Animation Enhancement */
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -20%, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.modal.show .modal-dialog {
+    animation: slideInDown 0.4s ease-out;
+}
+
+/* Focus Visible for Accessibility */
+*:focus-visible {
+    outline: 2px solid #d8b65d;
+    outline-offset: 2px;
+}
+
+button:focus-visible {
+    outline-offset: 4px;
 }
 
 </style>
@@ -686,24 +828,75 @@ window.onclick = function(event) {
 </script>
 
 {% block script %}
-
 <script>
-    // Auto-hide success toast after a few seconds & optionally open login modal after register
-    $(document).ready(function () {
-        const toast = $('#toast-success-register');
-        if (toast.length) {
-            setTimeout(function () {
-                toast.fadeOut(400, function () {
-                    $(this).remove();
-                });
-            }, 4000);
+$(document).ready(function () {
+
+    // ------------------------
+    // 1. Auto-hide toast après inscription
+    // ------------------------
+    const toast = $('#toast-success-register');
+    if (toast.length) {
+        setTimeout(function () {
+            toast.fadeOut(400, function () {
+                $(this).remove();
+            });
+        }, 4000);
+    }
+
+    // ------------------------
+    // 2. Ouvrir login modal après register (flash)
+    // ------------------------
+    {% if app.flashes('open_login_after_register') is not empty %}
+        $('#loginModal').modal('show');
+    {% endif %}
+
+    // ------------------------
+    // 3. Gestion globale des boutons require-login
+    // ------------------------
+    const isLoggedIn = {{ app.user ? 'true' : 'false' }};
+
+    $(document).on('click', '[data-require-login]', function(e) {
+
+        // Si NON connecté → ouvrir modal login
+        if (!isLoggedIn) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('#loginModal').modal('show');
+            return false;
         }
 
-        {% if app.flashes('open_login_after_register') is not empty %}
-            $('#loginModal').modal('show');
-        {% endif %}
+        // Si connecté → on détecte l'action
+        const action = $(this).data('action');
+
+        // --- 3.1 Ouvrir modal "review" (sécurisé)
+        if (action === 'open-review-modal') {
+            const reviewModal = document.getElementById('reviewModal');
+            if (reviewModal) {
+                $(reviewModal).css('display', 'flex');
+            }
+        }
+
+        // --- 3.2 Ajouter aux favoris
+        if (action === 'add-favoris') {
+            const excursionId = $(this).data('excursion-id');
+            if (excursionId) {
+                addToFavoris(excursionId);
+            }
+        }
+
+       
+
+        // Tu peux ajouter ici d'autres actions :
+        // if (action === 'open-reservation-modal') { ... }
+        // if (action === 'open-chat-modal') { ... }
+
     });
+
+});
 </script>
+
+
+
 
 {% endblock %}
 

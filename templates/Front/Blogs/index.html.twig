@@ -43,29 +43,117 @@
 
         }
 
-        .bg-container a {
-            display: inline-block;
-            padding: 12px 25px;
-            font-size: 16px;
-            color: #fff;
-            background: linear-gradient(135deg, #D7B65D, #192026);
-            border-radius: 12px;
-            text-decoration: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            transition: all 0.3s;
+        /* --- Animated Gradient Button --- */
+        .retour-btn-container {
             margin-bottom: 50px;
         }
-
-        .bg-container a:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        .retour-btn-container .button {
+            display: inline-block !important;
+            height: 53px !important;
+            border-radius: 27px !important;
+            overflow: hidden !important;
+            position: relative !important;
+            background: none !important;
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            box-shadow: none !important;
+        }
+        .retour-btn-container .button_bcg {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 200% !important;
+            height: 100% !important;
+            background: linear-gradient(to right, #D7B65D, #192026, #D7B65D) !important;
+            z-index: 1 !important;
+            transition: all 400ms ease !important;
+        }
+        .retour-btn-container .button:hover .button_bcg {
+            left: -100% !important;
+        }
+        .retour-btn-container .button a {
+            display: block !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            color: #e6dfdf !important;
+            text-transform: uppercase !important;
+            line-height: 53px !important;
+            padding-left: 46px !important;
+            padding-right: 46px !important;
+            white-space: nowrap !important;
+            z-index: 2 !important;
+            position: relative !important;
+            text-decoration: none !important;
+            background: none !important;
+            border: none !important;
+            cursor: pointer !important;
+            text-align: center !important;
+        }
+        
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .bg-container {
+                background-size: contain;
+                padding: 20px;
+            }
+            
+            .bg-container h1 {
+                font-size: 32px;
+            }
+            
+            .bg-container p {
+                font-size: 16px;
+                padding: 0 20px;
+            }
+            
+            .retour-btn-container .button {
+                height: 48px !important;
+            }
+            
+            .retour-btn-container .button a {
+                font-size: 12px !important;
+                line-height: 48px !important;
+                padding-left: 30px !important;
+                padding-right: 30px !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .bg-container h1 {
+                font-size: 24px;
+            }
+            
+            .bg-container p {
+                font-size: 14px;
+            }
+            
+            .retour-btn-container {
+                margin-bottom: 30px;
+            }
+            
+            .retour-btn-container .button {
+                height: 45px !important;
+            }
+            
+            .retour-btn-container .button a {
+                font-size: 11px !important;
+                line-height: 45px !important;
+                padding-left: 20px !important;
+                padding-right: 20px !important;
+            }
         }
     </style>
 </head>
 <body>
     <div class="bg-container">
        
-        <a href="{{ path('app_accueil') }}">Retour à l'accueil</a>
+        <div class="retour-btn-container">
+            <div class="button">
+                <div class="button_bcg"></div>
+                <a href="{{ path('app_accueil') }}">Retour à l'accueil</a>
+            </div>
+        </div>
     </div>
 </body>
 </html>

@@ -375,6 +375,51 @@
     transform: translateY(-3px);
 }
 
+/* --- Animated Gradient Button --- */
+.reserver-btn-container .button {
+    display: inline-block !important;
+    height: 53px !important;
+    border-radius: 27px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+}
+.reserver-btn-container .button_bcg {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 200% !important;
+    height: 100% !important;
+    background: linear-gradient(to right, #D7B65D, #192026, #D7B65D) !important;
+    z-index: 1 !important;
+    transition: all 400ms ease !important;
+}
+.reserver-btn-container .button:hover .button_bcg {
+    left: -100% !important;
+}
+.reserver-btn-container .button a {
+    display: block !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #e6dfdf !important;
+    text-transform: uppercase !important;
+    line-height: 53px !important;
+    padding-left: 46px !important;
+    padding-right: 46px !important;
+    white-space: nowrap !important;
+    z-index: 2 !important;
+    position: relative !important;
+    text-decoration: none !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    text-align: center !important;
+}
+
 /* --- Responsive tablette et mobile --- */
 @media (max-width: 768px) {
 
@@ -429,6 +474,83 @@
 
     .price-badge-amount {
         font-size: 17px;
+    }
+}
+
+/* --- Responsive for animated buttons and page layout --- */
+@media (max-width: 992px) {
+    .cars-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-hero {
+        height: 300px;
+    }
+    
+    .page-hero_title {
+        font-size: 28px;
+    }
+    
+    .filters {
+        flex-direction: column;
+        padding: 20px;
+        gap: 15px;
+    }
+    
+    .filter-field {
+        min-width: 100%;
+    }
+    
+    .cars-list {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .car-card {
+        max-width: 100%;
+    }
+    
+    .reserver-btn-container .button {
+        height: 48px !important;
+    }
+    
+    .reserver-btn-container .button a {
+        font-size: 12px !important;
+        line-height: 48px !important;
+        padding-left: 30px !important;
+        padding-right: 30px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-hero {
+        height: 250px;
+    }
+    
+    .page-hero_title {
+        font-size: 24px;
+    }
+    
+    .page-hero p {
+        font-size: 0.9rem;
+    }
+    
+    .cars-page {
+        padding: 0 15px;
+    }
+    
+    .reserver-btn-container .button {
+        height: 45px !important;
+    }
+    
+    .reserver-btn-container .button a {
+        font-size: 11px !important;
+        line-height: 45px !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
     }
 }
 
@@ -537,9 +659,12 @@
                                     <span class="money-icon">💰</span>
                                     <span class="low-price-text">{{ voiture.prixMois }} TND • Prix le plus bas\ mois</span>
                                 </div>
-                                <a href="{{ path('app_reservation_voiture', { id: voiture.id }) }}" class="cta-button">
-                                    Réserver →
-                                </a>
+                                <div class="reserver-btn-container">
+                                    <div class="button">
+                                        <div class="button_bcg"></div>
+                                        <a href="{{ path('app_reservation_voiture', { id: voiture.id }) }}">Réserver →</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         {% else %}

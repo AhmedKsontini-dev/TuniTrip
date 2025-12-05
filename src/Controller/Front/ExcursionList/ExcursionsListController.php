@@ -16,14 +16,30 @@ final class ExcursionsListController extends AbstractController
         $localisation = $request->query->get('localisation');
         $categorie = $request->query->get('categorie');
         $prix = $request->query->get('prix');
+        $duree = $request->query->get('duree');
+        $rating = $request->query->get('rating');
+        $langue = $request->query->get('langue');
+        $nbrPersonnes = $request->query->get('nbr_personnes');
 
         $prix = $prix !== null && $prix !== '' ? (float) $prix : null;
+        $rating = $rating !== null && $rating !== '' ? (int) $rating : null;
+        $nbrPersonnes = $nbrPersonnes !== null && $nbrPersonnes !== '' ? (int) $nbrPersonnes : null;
 
         // 🔽 Récupère toutes les excursions avec filtres
-        $excursions = $excursionRepository->findByFilters($localisation, $categorie, $prix);
+        $excursions = $excursionRepository->findByFilters(
+            $localisation,
+            $categorie,
+            $prix,
+            $duree,
+            $rating,
+            $langue,
+            $nbrPersonnes
+        );
 
-        // 🔽 Définir l'image principale pour Twig via une propriété virtuelle
+        // 🔽 Définir l'image principale pour Twig via une propriété virtuelle (optionnelle)
+        // Ici on n'utilise pas setMainImagePath(), mais Twig fera l'affichage
         foreach ($excursions as $excursion) {
+            // Si tu veux une propriété temporaire, tu peux la définir ainsi :
             $imagePrincipale = $excursion->getImagePrincipale();
             $excursion->imagePrincipalePath = $imagePrincipale 
                 ? '/uploads/images/' . $imagePrincipale

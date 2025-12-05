@@ -491,7 +491,9 @@
                 <option value="Manuelle">Manuelle</option>
             </select>
         </div>
-        <button type="submit" class="cta-button">Filtrer</button>
+        <button type="submit" class="cta-button" aria-label="Filtrer les voitures">
+            <img src="{{ asset('filter.png') }}" alt="Filtrer" style="width:10px;height:14px;object-fit:contain;display:block;" />
+        </button>
     </form>
 
     <div class="cars-list">

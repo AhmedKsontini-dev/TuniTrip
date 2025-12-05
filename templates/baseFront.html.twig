@@ -22,7 +22,6 @@
 
 
 
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 
@@ -101,6 +100,169 @@
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
+.auth-modal .modal-content {
+    background-color: #192026;
+    color: #FFFFFF;
+    border-radius: 14px;
+    border: 1px solid rgba(215, 182, 93, 0.25);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6);
+}
+
+.auth-modal .modal-header {
+    border-bottom: 1px solid rgba(215, 182, 93, 0.5);
+}
+
+.auth-modal .modal-title {
+    color: #FFFFFF;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.auth-modal .close {
+    color: #FFFFFF;
+    opacity: 0.8;
+}
+
+.auth-modal .close:hover {
+    opacity: 1;
+}
+
+.auth-modal .form-control {
+    background-color: rgba(255, 255, 255, 0.96);
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    font-size: 13px;
+}
+
+.auth-modal .form-control:focus {
+    border-color: #D7B65D;
+    box-shadow: 0 0 0 0.12rem rgba(215, 182, 93, 0.45);
+}
+
+.fa,
+.fa-brands,
+.fa-duotone,
+.fa-light,
+.fa-regular,
+.fa-solid,
+.fa-thin,
+.fab,
+.fad,
+.fal,
+.far,
+.fas,
+.fat {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: var(--fa-display, inline-block);
+    font-style: normal;
+    font-variant: normal;
+    line-height: 0;
+    text-rendering: auto;
+    /* Centering properties */
+    vertical-align: middle;
+    text-align: center;
+}
+
+.auth-modal .form-control::placeholder {
+    color: #9da4ae;
+    font-size: 12px;
+}
+
+.auth-modal label,
+.auth-modal .form-check-label {
+    color: #FFFFFF;
+    font-weight: 500;
+}
+
+.auth-modal .form-check-input {
+    margin-top: 5px;
+    margin-left: 3px;
+}
+
+.auth-modal .form-text {
+    color: #cccccc;
+}
+
+.auth-modal .modal-dialog {
+    max-width: 420px;
+}
+
+.auth-modal .modal-body {
+    padding: 24px 26px 22px 26px;
+}
+
+.auth-modal .modal-header {
+    padding: 18px 22px 12px 22px;
+}
+
+.auth-modal .auth-title-sub {
+    font-size: 12px;
+    color: #cccccc;
+    margin-top: 4px;
+}
+
+.auth-modal .auth-field {
+    position: relative;
+    margin-bottom: 14px;
+}
+
+.auth-modal .auth-field i {
+    position: absolute;
+    left: 10px;
+    top: 62%;
+    transform: translateY(-62%);
+    color: #D7B65D;
+    font-size: 14px;
+}
+
+.auth-modal .auth-field input {
+    padding-left: 32px;
+}
+
+.auth-modal .auth-footer-text {
+    font-size: 12px;
+    color: #cccccc;
+}
+
+.auth-modal .auth-field-row {
+    display: flex;
+    gap: 10px;
+}
+
+.auth-modal .auth-field-row .auth-field {
+    flex: 1 1 0;
+}
+
+.toast-success-register {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 9999;
+    background: #1e2a33;
+    border-left: 4px solid #D7B65D;
+    color: #ffffff;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.btn-auth-primary {
+    background-color: #D7B65D;
+    border-color: #D7B65D;
+    color: #192026;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.btn-auth-primary:hover {
+    background-color: #c2a356;
+    border-color: #c2a356;
+    color: #192026;
+}
+
 </style>
 <div class="super_container">
 	
@@ -132,8 +294,8 @@
 									
 								</div>
 							{% else %}
-								<div class="user_box_login user_box_link"><a href="{{ path('app_login') }}">Login</a></div>
-								<div class="user_box_register user_box_link"><a href="{{ path('app_register') }}">Register</a></div>
+								<div class="user_box_login user_box_link"><a href="#" data-toggle="modal" data-target="#loginModal">Login</a></div>
+								<div class="user_box_register user_box_link"><a href="#" data-toggle="modal" data-target="#registerModal">Register</a></div>
 							{% endif %}
 						</div>
 
@@ -172,8 +334,8 @@
 									</div>
 								</div>
 							{% else %}
-								<div class="user_box_login user_box_link"><a href="{{ path('app_login') }}">Login</a></div>
-								<div class="user_box_register user_box_link"><a href="{{ path('app_register') }}">Register</a></div>
+								<div class="user_box_login user_box_link"><a href="#" data-toggle="modal" data-target="#loginModal">Login</a></div>
+								<div class="user_box_register user_box_link"><a href="#" data-toggle="modal" data-target="#registerModal">Register</a></div>
 							{% endif %}
 						</div>
 
@@ -206,9 +368,156 @@
 
 {% block body %}
 
-
 {% endblock %}
+
+{# Global Login Modal #}
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered auth-modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <div>
+                    <h5 class="modal-title mb-0" id="loginModalLabel">Connexion</h5>
+                    <div class="auth-title-sub">Accédez à votre compte TuniTrip</div>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                <form method="post" action="{{ path('app_login') }}">
+                    {% if error is defined and error %}
+                        <div class="alert alert-danger small mb-3">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+
+                    {% if app.user %}
+                        <div class="alert alert-info small mb-3">
+                            Vous êtes connecté en tant que {{ app.user.userIdentifier }},
+                            <a href="{{ path('app_logout') }}">se déconnecter</a>.
+                        </div>
+                    {% endif %}
+
+                    <div class="auth-field">
+                        <label for="inputEmail">Email</label>
+                        <i class="fa fa-envelope"></i>
+                        <input
+                            type="email"
+                            value="{{ last_username|default('') }}"
+                            name="email"
+                            id="inputEmail"
+                            class="form-control"
+                            autocomplete="email"
+                            required
+                            autofocus
+                        >
+                    </div>
+
+                    <div class="auth-field mb-2">
+                        <label for="inputPassword">Mot de passe</label>
+                        <i class="fa fa-lock"></i>
+                        <input
+                            type="password"
+                            name="password"
+                            id="inputPassword"
+                            class="form-control"
+                            autocomplete="current-password"
+                            required
+                        >
+                    </div>
+
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                    <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+                        <div class="auth-footer-text">
+                            Nouveau sur TuniTrip ?
+                            <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#registerModal">Créer un compte</a>
+                        </div>
+                    </div>
+
+                    <div class="mt-2">
+                        <button class="btn btn-auth-primary btn-block w-100" type="submit">
+                            Se connecter
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{# Global Register Modal #}
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered auth-modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <div>
+                    <h5 class="modal-title mb-0" id="registerModalLabel">Créer un compte</h5>
+                    <div class="auth-title-sub">Rejoignez TuniTrip en quelques secondes</div>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                <form method="post" action="{{ path('app_register') }}" id="registerFormModal">
+
+                    <div class="auth-field-row">
+                        <div class="auth-field">
+                            <label for="reg_nom">Nom</label>
+                            <i class="fa fa-user"></i>
+                            <input type="text" name="registration_form[nom]" id="reg_nom" class="form-control" required>
+                        </div>
+                        <div class="auth-field">
+                            <label for="reg_prenom">Prénom</label>
+                            <i class="fa fa-user"></i>
+                            <input type="text" name="registration_form[prenom]" id="reg_prenom" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="auth-field">
+                        <label for="reg_email">Email</label>
+                        <i class="fa fa-envelope"></i>
+                        <input type="email" name="registration_form[email]" id="reg_email" class="form-control" required>
+                    </div>
+                    <div class="auth-field-row">
+                        <div class="auth-field">
+                            <label for="reg_adresse">Adresse</label>
+                            <i class="fa fa-location-dot"></i>
+                            <input type="text" name="registration_form[adresse]" id="reg_adresse" class="form-control" required>
+                        </div>
+                        <div class="auth-field mb-1">
+                            <label for="reg_tel">Téléphone</label>
+                            <i class="fa fa-phone"></i>
+                            <input type="text" name="registration_form[tel]" id="reg_tel" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="auth-field mb-2">
+                        <label for="reg_password">Mot de passe</label>
+                        <i class="fa fa-lock"></i>
+                        <input type="password" name="registration_form[plainPassword]" id="reg_password" class="form-control" required>
+                    </div>
+                    <div class="form-group form-check mb-2">
+                        <input type="checkbox" class="form-check-input" id="reg_agree" name="registration_form[agreeTerms]" required>
+                        <label class="form-check-label" for="reg_agree">J'accepte les conditions d'utilisation</label>
+                    </div>
+
+                    <div class="auth-footer-text mb-3">
+                        Vous avez déjà un compte ?
+                        <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">Se connecter</a>
+                    </div>
+                    <input type="hidden" name="registration_form[_token]" value="{{ csrf_token('registration_form') }}">
+
+                    <div class="d-flex justify-content-end mt-2">
+                        <button type="submit" class="btn btn-auth-primary">S'inscrire</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
  <!-- Footer -->
+
+    {% for message in app.flashes('success_register') %}
+        <div class="toast-success-register" id="toast-success-register">{{ message }}</div>
+    {% endfor %}
 
 	<footer class="footer">
 		<div class="container">
@@ -377,6 +686,24 @@ window.onclick = function(event) {
 </script>
 
 {% block script %}
+
+<script>
+    // Auto-hide success toast after a few seconds & optionally open login modal after register
+    $(document).ready(function () {
+        const toast = $('#toast-success-register');
+        if (toast.length) {
+            setTimeout(function () {
+                toast.fadeOut(400, function () {
+                    $(this).remove();
+                });
+            }, 4000);
+        }
+
+        {% if app.flashes('open_login_after_register') is not empty %}
+            $('#loginModal').modal('show');
+        {% endif %}
+    });
+</script>
 
 {% endblock %}
 

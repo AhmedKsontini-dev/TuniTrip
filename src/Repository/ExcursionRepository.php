@@ -31,9 +31,17 @@ class ExcursionRepository extends ServiceEntityRepository
     }
 
     /**
-     * Recherche les excursions avec filtres localisation, catégorie et prix max
+     * Recherche les excursions avec filtres localisation, catégorie, prix max, durée, note, langue et nombre max de personnes
      */
-    public function findByFilters(?string $localisation, ?string $categorie, ?float $prix)
+    public function findByFilters(
+        ?string $localisation,
+        ?string $categorie,
+        ?float $prix,
+        ?string $duree,
+        ?int $rating,
+        ?string $langue,
+        ?int $maxPers
+    )
     {
         $qb = $this->createQueryBuilder('e')
             ->leftJoin('e.images', 'img')      // Charge les images
@@ -44,8 +52,8 @@ class ExcursionRepository extends ServiceEntityRepository
             ->addSelect('ninc')
             ->leftJoin('e.itineraires', 'it')  // Charge itinéraires
             ->addSelect('it')
-            
-            
+            ->leftJoin('e.avis', 'av')        // Pour filtrer sur la note moyenne
+            ->addSelect('av')
             ->where('e.actif = true')
             ->orderBy('e.createdAt', 'DESC');
 
@@ -62,6 +70,30 @@ class ExcursionRepository extends ServiceEntityRepository
         if ($prix) {
             $qb->andWhere('e.prixParPersonne <= :prix')
                ->setParameter('prix', $prix);
+        }
+
+        if ($duree) {
+            // On filtre simplement sur la valeur de la colonne duree ("1", "2", "3", "4+", ...)
+            $qb->andWhere('e.duree = :duree')
+               ->setParameter('duree', $duree);
+        }
+
+        if ($langue) {
+            // Le champ "guide" peut contenir le code langue (fr, en, ...)
+            $qb->andWhere('e.guide = :langue')
+               ->setParameter('langue', $langue);
+        }
+
+        if ($maxPers) {
+            $qb->andWhere('e.maxPers <= :maxPers')
+               ->setParameter('maxPers', $maxPers);
+        }
+
+        if ($rating) {
+            // Filtrer les excursions dont la moyenne des notes est >= rating
+            $qb->groupBy('e.id')
+               ->having('AVG(av.note) >= :rating')
+               ->setParameter('rating', $rating);
         }
 
         return $qb->getQuery()->getResult();

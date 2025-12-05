@@ -38,7 +38,6 @@ class AvisExcursionType extends AbstractType
                 ],
                 'placeholder' => 'Choisir...',
             ])
-
             ->add('commentaire', TextareaType::class, [
                 'required' => false,
             ]);

@@ -30,9 +30,21 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // do anything else you need here, like send an email
+            // Message de succès et ouverture automatique du modal de connexion
+            $this->addFlash('success_register', 'Votre compte a été créé avec succès.');
+            $this->addFlash('open_login_after_register', true);
 
-            return $this->redirectToRoute('app_login');
+            // Tenter de revenir à la page d'origine (utilisée par les modales)
+            // Utiliser all('registration_form') pour récupérer un tableau sans provoquer d'exception
+            $redirectData = $request->request->all('registration_form');
+            $redirectTo = $redirectData['redirectTo'] ?? $request->headers->get('referer');
+
+            if ($redirectTo) {
+                return $this->redirect($redirectTo);
+            }
+
+            // Fallback vers la page d'accueil
+            return $this->redirectToRoute('app_accueil');
         }
 
         return $this->render('registration/register.html.twig', [

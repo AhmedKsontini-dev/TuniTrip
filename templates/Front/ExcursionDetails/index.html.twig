@@ -185,7 +185,7 @@ body, p, .description, .stop-details {
     justify-content: center;
     align-items: center;
     font-size: 20px;
-    color: #0d6efd;
+   
 }
 
 .link-modern {
@@ -195,17 +195,7 @@ body, p, .description, .stop-details {
 }
 
 
-.btn-reserver {
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 12px;
-    background: #0071eb;
-    border: none;
-}
 
-.btn-reserver:hover {
-    background: #0059b8;
-}
 /* Description en noir */
 .description {
     color: #000; /* texte noir */
@@ -442,7 +432,7 @@ body, p, .description, .stop-details {
 }
 
 .modern-date-input:focus {
-    border-color: #0d6efd;
+    border-color: #2a3138;
     box-shadow: 0 0 10px rgba(13,110,253,0.2);
 }
 
@@ -697,7 +687,7 @@ body, p, .description, .stop-details {
 #reservationModal .btn {
     padding: 1rem 2.5rem;
     font-weight: 700;
-    border-radius: 12px;
+    border-radius: 30px;
     border: none;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     text-transform: uppercase;
@@ -2089,6 +2079,146 @@ body, p, .description, .stop-details {
 #avis_excursion_note{
     display: none !important;
 }
+
+#chat-widget {
+    display:none;
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    width:320px;
+    max-width:90%;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.2);
+    z-index:1050;
+    font-family:Arial,sans-serif;
+    overflow:hidden;
+    flex-direction:column;
+}
+.chat-header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#075E54;
+    color:#fff;
+    padding:10px;
+    font-weight:bold;
+}
+#close-chat {
+    background:none;
+    border:none;
+    color:#fff;
+    font-size:1rem;
+    cursor:pointer;
+}
+#chat-messages {
+    height:240px;
+    overflow-y:auto;
+    padding:10px;
+    background:#ece5dd;
+}
+.chat-footer {
+    display:flex;
+    border-top:1px solid #ccc;
+}
+#chat-input {
+    flex:1;
+    border:none;
+    padding:10px;
+}
+#send-btn {
+    background:#25D366;
+    color:#fff;
+    border:none;
+    padding:0 15px;
+    cursor:pointer;
+}
+.message-user {
+    background:#dcf8c6;
+    padding:5px 10px;
+    border-radius:10px;
+    margin-bottom:5px;
+    max-width:80%;
+    align-self:flex-end;
+}
+.message-admin {
+    background:#fff;
+    padding:5px 10px;
+    border-radius:10px;
+    margin-bottom:5px;
+    max-width:80%;
+    align-self:flex-start;
+}
+.info-box-modern .icon-circle {
+    background-color: #d8b65d; /* fond du cercle */
+    color: #2a3138; /* icône en blanc */
+}
+.btn-animated {
+    position: relative;
+    display: inline-block;
+    border: none;
+    border-radius: 27px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 12px 30px;
+    cursor: pointer;
+    overflow: hidden;
+    background: linear-gradient(270deg, #2a3138, #d8b65d, #2a3138);
+    background-size: 600% 600%;
+    animation: gradientMove 5s ease infinite;
+    transition: color 0.3s;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+/* Bouton animé primaire (Confirmer) */
+.btn-animated-primary {
+    position: relative;
+    display: inline-block;
+    border: none;
+    border-radius: 27px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 25px;
+    cursor: pointer;
+    overflow: hidden;
+    background: linear-gradient(270deg, #2a3138, #d8b65d, #2a3138);
+    background-size: 600% 600%;
+    animation: gradientMove 5s ease infinite;
+    transition: color 0.3s;
+}
+
+/* Bouton animé secondaire (Annuler) */
+.btn-animated-secondary {
+    position: relative;
+    display: inline-block;
+    border: none;
+    border-radius: 27px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 25px;
+    cursor: pointer;
+    overflow: hidden;
+    background: linear-gradient(270deg, #6c757d, #495057, #6c757d); /* gris foncé animé */
+    background-size: 600% 600%;
+    animation: gradientMove 5s ease infinite;
+    transition: color 0.3s;
+}
+
+/* Animation gradient partagé */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
 </style>
 {% endblock %}
 
@@ -2275,10 +2405,11 @@ body, p, .description, .stop-details {
 
                     <!-- BOUTON : OUVRIR MODAL -->
                     <div class="col-md-auto">
-                        <button class="btn btn-primary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#reservationModal">
+                        <button class="btn btn-animated btn-lg px-4" data-bs-toggle="modal" data-bs-target="#reservationModal">
                             Réserver maintenant
                         </button>
                     </div>
+
                 </div>
 
                 {# ================= BLOC QUESTIONS ================= #}
@@ -2292,14 +2423,34 @@ body, p, .description, .stop-details {
                         <strong class="fs-5">+216 93 313 278</strong>
                     </div>
 
+                    <!-- Bouton ouverture chat -->
                     <div class="d-flex align-items-center">
                         <div class="icon-circle me-3">
                             <i class="bi bi-chat-right-dots-fill"></i>
                         </div>
-                        <a href="#" class="link-modern">Ouvrir le chat</a>
+                        <a href="#" id="open-chat" class="link-modern">Ouvrir le chat</a>
                     </div>
                 </div>
 
+                
+
+                <!-- Fenêtre chat -->
+                <div id="chat-widget">
+                    <div class="chat-header">
+                        <div>
+                            <strong>Support</strong>
+                            <div style="font-size:0.8rem;">Contact admin via WhatsApp</div>
+                        </div>
+                        <button id="close-chat">✕</button>
+                    </div>
+                    <div id="chat-messages">
+                        <div class="text-muted small">Bonjour ! Écris ton message et appuie sur Envoyer.</div>
+                    </div>
+                    <div class="chat-footer">
+                        <input type="text" id="chat-input" placeholder="Écris ton message..." maxlength="1000">
+                        <button id="send-btn">Envoyer</button>
+                    </div>
+                </div>
             </div> <!-- FIN RIGHT COLUMN -->
 
         </div> <!-- FIN ROW -->
@@ -2499,9 +2650,10 @@ body, p, .description, .stop-details {
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                <button type="submit" class="btn btn-primary btn-lg px-4">Confirmer la réservation</button>
+                <button class="btn btn-animated-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="submit" class="btn btn-animated-primary">Confirmer la réservation</button>
             </div>
+
 
             {{ form_end(reservationForm) }}
 
@@ -2789,9 +2941,10 @@ body, p, .description, .stop-details {
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h3 class="mb-0">⭐ Avis des utilisateurs</h3>
                             {% if app.user %}
-                                <button type="button" class="btn btn-primary" id="btnAvis">
+                                <button type="button" class="btn btn-animated-primary" id="btnAvis">
                                     <i class="bi bi-plus-circle"></i> Donner mon avis
                                 </button>
+
                             {% endif %}
 
                         </div>
@@ -2858,6 +3011,11 @@ body, p, .description, .stop-details {
                 <div class="col-lg-6">
                     <section class="faq-section">
                         <h3 class="mb-3">❓ Questions fréquentes</h3>
+                         {% if not app.user %}
+                            <small class="text-danger d-block mb-3">
+                                ⚠️ Vous devez être connecté pour poser des questions.
+                            </small>
+                        {% endif %}
 
                         <div class="faq-list" style="max-height: 600px; overflow-y: auto;">
                             {% if faqs is not empty %}
@@ -2891,19 +3049,19 @@ body, p, .description, .stop-details {
                                         {{ form_row(faqForm.question, {
                                             'attr': {'class': 'form-control', 'rows': 3}
                                         }) }}
-                                        <button type="submit" class="btn btn-primary mt-2">
+                                        <button type="submit" class="btn btn-animated-primary mt-2">
                                             <i class="bi bi-send"></i> Envoyer la question
                                         </button>
+
                                     {{ form_end(faqForm) }}
                                     <small class="text-muted d-block mt-2">
                                         Votre question sera visible après qu'un administrateur y réponde.
                                     </small>
                                 </div>
                             </div>
-                        {% else %}
-                            <div class="alert alert-warning">
-                                Vous devez <a href="{{ path('app_login') }}">vous connecter</a> pour poser une question.
-                            </div>
+                     
+                           
+                           
                         {% endif %}
 
                     </section>
@@ -2956,13 +3114,14 @@ body, p, .description, .stop-details {
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <button type="button" class="btn btn-animated-secondary" data-bs-dismiss="modal">
                             <i class="bi bi-x-circle"></i> Annuler
                         </button>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-animated-primary">
                             <i class="bi bi-send-fill"></i> Envoyer mon avis
                         </button>
                     </div>
+
                     {{ form_end(avisForm) }}
 
                 </div>
@@ -3461,5 +3620,80 @@ document.getElementById('btnAvis').addEventListener('click', function() {
     }
 });
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const openBtn = document.getElementById('open-chat');
+    const chatWidget = document.getElementById('chat-widget');
+    const closeBtn = document.getElementById('close-chat');
+    const sendBtn = document.getElementById('send-btn');
+    const chatInput = document.getElementById('chat-input');
+    const messagesBox = document.getElementById('chat-messages');
+
+    openBtn?.addEventListener('click', function(e){
+        e.preventDefault();
+        chatWidget.style.display = 'flex';
+        chatWidget.style.flexDirection = 'column';
+        chatInput.focus();
+    });
+
+    closeBtn?.addEventListener('click', function(){
+        chatWidget.style.display = 'none';
+    });
+
+    function appendMessage(text, type='user') {
+        const div = document.createElement('div');
+        div.className = type === 'user' ? 'message-user' : 'message-admin';
+        div.textContent = text;
+        messagesBox.appendChild(div);
+        messagesBox.scrollTop = messagesBox.scrollHeight;
+    }
+
+    sendBtn?.addEventListener('click', function () {
+    const msg = chatInput.value.trim();
+    if (!msg) return;
+
+    sendBtn.disabled = true;
+        const formData = new URLSearchParams();
+        formData.append('message', msg);
+
+        fetch('/chat/send', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: formData.toString()
+        })
+        .then(resp => resp.json())
+        .then(json => {
+            sendBtn.disabled = false;
+            if (json.status === 'ok' && json.wa_link) {
+                appendMessage(msg, 'user');
+                chatInput.value = '';
+
+                // ✅ ouvre WhatsApp
+                window.open(json.wa_link, '_blank');
+            } else {
+                appendMessage("Erreur: " + (json.message || "Erreur inconnue"), 'admin');
+            }
+        })
+        .catch(err => {
+            sendBtn.disabled = false;
+            appendMessage('Erreur réseau.', 'admin');
+            console.error(err);
+        });
+    });
+
+
+    chatInput?.addEventListener('keydown', function(e){
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendBtn.click();
+        }
+    });
+});
+</script>
+
 {% endblock %}
 

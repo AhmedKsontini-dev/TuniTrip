@@ -449,6 +449,63 @@
     transform: translateY(-3px);
 }
 
+/* --- View All Tours Button --- */
+.view-all-container .button,
+.votre-avis-container .button,
+.envoyer-message-container .button,
+.voir-vehicules-container .button {
+    display: inline-block !important;
+    height: 53px !important;
+    border-radius: 27px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+}
+.view-all-container .button_bcg,
+.votre-avis-container .button_bcg,
+.envoyer-message-container .button_bcg,
+.voir-vehicules-container .button_bcg {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 200% !important;
+    height: 100% !important;
+    background: linear-gradient(to right, #D7B65D, #192026, #D7B65D) !important;
+    z-index: 1 !important;
+    transition: all 400ms ease !important;
+}
+.view-all-container .button:hover .button_bcg,
+.votre-avis-container .button:hover .button_bcg,
+.envoyer-message-container .button:hover .button_bcg,
+.voir-vehicules-container .button:hover .button_bcg {
+    left: -100% !important;
+}
+.view-all-container .button a,
+.votre-avis-container .button a,
+.envoyer-message-container .button a,
+.voir-vehicules-container .button a {
+    display: block !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #e6dfdf !important;
+    text-transform: uppercase !important;
+    line-height: 53px !important;
+    padding-left: 46px !important;
+    padding-right: 46px !important;
+    white-space: nowrap !important;
+    z-index: 2 !important;
+    position: relative !important;
+    text-decoration: none !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    text-align: center !important;
+}
+
 /* --- Responsive tablette et mobile --- */
 @media (max-width: 768px) {
 
@@ -503,6 +560,179 @@
 
     .price-badge-amount {
         font-size: 17px;
+    }
+}
+
+/* --- Responsive for animated buttons --- */
+@media (max-width: 768px) {
+    .view-all-container .button,
+    .votre-avis-container .button,
+    .envoyer-message-container .button,
+    .voir-vehicules-container .button {
+        height: 48px !important;
+    }
+    
+    .view-all-container .button a,
+    .votre-avis-container .button a,
+    .envoyer-message-container .button a,
+    .voir-vehicules-container .button a {
+        font-size: 12px !important;
+        line-height: 48px !important;
+        padding-left: 30px !important;
+        padding-right: 30px !important;
+    }
+    
+    /* Contact section responsive */
+    .contact-section .contact-box {
+        padding: 30px 20px !important;
+    }
+    
+    /* Transfer section responsive */
+    .transfer-section {
+        flex-direction: column;
+        gap: 30px;
+        padding: 50px 20px;
+    }
+    
+    .transfer-item {
+        max-width: 100%;
+    }
+    
+    /* Airport transfer section */
+    .airport-transfer-section {
+        flex-direction: column;
+        padding: 60px 5%;
+        gap: 40px;
+    }
+    
+    .transfer-content-left h2 {
+        font-size: 1.5rem;
+    }
+    
+    /* Hide entire car-section in responsive - content moves to comfort-section */
+    .car-section {
+        display: none !important;
+    }
+    
+    /* Hide separator section in responsive */
+    .separator-section {
+        display: none !important;
+    }
+    
+    /* Hide the chairs image in comfort-section */
+    .comfort-section .img-container {
+        display: none !important;
+    }
+    
+    /* Make the text column full width */
+    .comfort-section .col-md-6:last-child {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    /* Add the car-section content to comfort-section */
+    .comfort-section::before {
+        content: "We value the time and quality of travel for each of our clients";
+        display: block;
+        text-align: center;
+        font-style: italic;
+        color: #ccc;
+        font-size: 16px;
+        font-family: 'Beyond', serif;
+        margin-bottom: 10px;
+        padding: 0 20px;
+    }
+    
+    /* Replace the h2::before to show Incredible + comfort */
+    .comfort-section h2::before {
+        content: "Incredible";
+        display: block;
+        color: #D7B65D;
+        font-weight: bolder;
+        font-size: 40px;
+        margin-bottom: 5px;
+    }
+    
+    .comfort-section h2::after {
+        content: "comfort";
+        display: block;
+        color: white;
+        font-size: 30px;
+        font-weight: 600;
+        font-family: serif;
+        margin-bottom: 20px;
+    }
+    
+    /* Hide original h2 text */
+    .comfort-section h2 {
+        font-size: 0 !important;
+        color: transparent !important;
+        margin-bottom: 0 !important;
+    }
+    
+    .comfort-section h2 span {
+        display: none !important;
+    }
+    
+    .comfort-section {
+        padding-top: 40px !important;
+        text-align: center;
+    }
+    
+    /* Icon grid - 2 items per row */
+    .comfort-section .icon-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
+        justify-items: center;
+    }
+    
+    .comfort-section .icon-item {
+        flex: none !important;
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .view-all-container .button,
+    .votre-avis-container .button,
+    .envoyer-message-container .button,
+    .voir-vehicules-container .button {
+        height: 45px !important;
+    }
+    
+    .view-all-container .button a,
+    .votre-avis-container .button a,
+    .envoyer-message-container .button a,
+    .voir-vehicules-container .button a {
+        font-size: 11px !important;
+        line-height: 45px !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+    
+    /* Hero section */
+    .home_slider_content h1 {
+        font-size: 1.8rem;
+    }
+    
+    /* Section titles */
+    .section-title {
+        font-size: 1.5rem !important;
+    }
+    
+    /* Process section */
+    .process-section {
+        padding: 50px 15px;
+    }
+    
+    .circle-wrapper {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .step-title {
+        font-size: 16px;
     }
 }
 
@@ -3028,6 +3258,105 @@
     </div>
 </div>
 
+<style>
+/* Styles pour le bouton "Réservez maintenant" */
+.button {
+    display: inline-block;
+    height: 53px;
+    border-radius: 27px;
+    overflow: hidden;
+    position: relative;
+}
+
+.button_bcg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(to right, #D7B65D, #192026, #D7B65D);
+    z-index: -1;
+    -webkit-transition: all 400ms ease;
+    -moz-transition: all 400ms ease;
+    -ms-transition: all 400ms ease;
+    -o-transition: all 400ms ease;
+    transition: all 400ms ease;
+}
+
+.button:hover .button_bcg {
+    left: -100%;
+}
+
+.button a {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #e6dfdf;
+    text-transform: uppercase;
+    line-height: 53px;
+    padding-left: 46px;
+    padding-right: 46px;
+    white-space: nowrap;
+    z-index: 2;
+    position: relative;
+}
+
+.button span {
+    display: inline-block;
+    vertical-align: middle;
+    width: 5.75px;
+    height: 5.63px;
+    background: #FFFFFF;
+    border-radius: 50%;
+    margin-right: 2px;
+}
+
+.button span:first-child {
+    margin-left: 10px;
+}
+
+.button span:nth-child(2) {
+    opacity: 0.6;
+}
+
+.button span:last-child {
+    opacity: 0.4;
+    margin-right: 0px;
+}
+
+.home_slider_button {
+    margin-top: 70px;
+}
+.btn-animated-primary {
+    position: relative;
+    display: inline-block;
+    border: none;
+    border-radius: 27px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 25px;
+    cursor: pointer;
+    overflow: hidden;
+    background: linear-gradient(270deg, #2a3138, #d8b65d, #2a3138);
+    background-size: 600% 600%;
+    animation: gradientMove 5s ease infinite;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-animated-primary span {
+    display: inline-block;
+}
+
+/* Animation gradient partagée */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+</style>
 
 	</div>
 
@@ -3237,8 +3566,11 @@
                     </div>
                   </div>
 
-                  <div class="see-more-wrapper">
-                      <a href="{{path('app_front_list_voitures')}}" class="cta-button">Voir plus de véhicules →</a>
+                  <div class="text-center mt-4 voir-vehicules-container">
+                      <div class="btn-animated-primary voir-vehicules-btn" onclick="window.location.href='{{ path('app_front_list_voitures') }}'">
+                        <span>Voir plus de véhicules</span>
+                    </div>
+
                   </div>
             </div>
         </section>
@@ -3556,6 +3888,7 @@
                 </div>
             {% endfor %}
         </div>
+        
 
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
@@ -3563,11 +3896,14 @@
     </div>
 
     <div class="view-all-container">
-        <a class="cta-button" href="{{ path('app_front_excursions_list') }}">View all tours</a>
+        
         <div class="view-all-container">
-            <a class="cta-button" href="{{ path('app_front_excursions_list') }}">View all tours</a>
+            <div class="btn-animated-primary view-all-btn" onclick="window.location.href='{{ path('app_front_excursions_list') }}'">
+                <span>View all tours</span>
+            </div>
         </div>
 
+        
     </div>
 </div>
 
@@ -3631,17 +3967,15 @@
 
                 <!-- Button pour ouvrir modal -->
                 {% if app.user %}
-                    <button class="cta-button" onclick="document.getElementById('reviewModal').style.display='flex'">
-                        Votre avis →
-                    </button>
+                    <div class="btn-animated-primary cta-button" onclick="document.getElementById('reviewModal').style.display='flex'">
+                        <span>Votre avis →</span>
+                    </div>
                 {% else %}
-                    <button class="cta-button" data-require-login data-action="open-review-modal">
-                        Votre avis →
-                    </button>
-
-
-
+                    <div class="btn-animated-primary cta-button" data-require-login data-action="open-review-modal">
+                        <span>Votre avis →</span>
+                    </div>
                 {% endif %}
+
 
 
 
@@ -3683,7 +4017,10 @@
                     </div>
                 </div>
 
-                <button type="submit" class="cta-button">Appliquer</button>
+                <div class="btn-animated-primary cta-button">
+                    <span>Appliquer</span>
+                </div>
+
             </form>
         </div>
 </div>
@@ -3762,9 +4099,12 @@
                                 <div class="text-danger small">{{ form_errors(form.message) }}</div>
                             </div>
 
-                            <div class="col-12 mt-3">
-                                <button type="submit" class="btn btn-gradient w-100 py-3 fw-semibold">Envoyer le message</button>
+                            <div class="col-12 mt-3 envoyer-message-container">
+                                <div class="btn-animated-primary envoyer-message-btn" onclick="document.getElementById('contactForm').submit()" style="width: 100%;">
+                                    <span>Envoyer le message</span>
+                                </div>
                             </div>
+
                         </div>
                     </form>
                 </div>

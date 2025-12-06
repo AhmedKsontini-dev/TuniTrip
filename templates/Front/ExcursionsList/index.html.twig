@@ -280,6 +280,36 @@
     50% { transform: scale(1.5); }
     100% { transform: scale(1.2); }
 }
+.btn-animated-primary {
+    position: relative;
+    display: inline-block;
+    border: none;
+    border-radius: 27px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 25px;
+    cursor: pointer;
+    overflow: hidden;
+    background: linear-gradient(270deg, #2a3138, #d8b65d, #2a3138);
+    background-size: 600% 600%;
+    animation: gradientMove 5s ease infinite;
+    text-decoration: none; /* pour <a> */
+    text-align: center;
+    margin-top: 15px;
+}
+
+.btn-animated-primary i {
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+/* Animation gradient partagé */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
 </style>
 {% endblock %}
@@ -393,8 +423,8 @@
                             class="theme-input" placeholder="ex: 8">
                     </div>
 
-                    <button type="submit" class="filter-btn">
-                        <i class="fa fa-search me-1"></i>Appliquer les filtres
+                    <button type="submit" class="btn-animated-primary excursion-details-btn">
+                        Appliquer les filtres
                     </button>
 
                 </form>
@@ -437,9 +467,10 @@
                                 <span><i class="fa fa-tag"></i>{{ excursion.categorie }}</span>
                             </div>
 
-                            <a href="{{ path('app_front_excursion_details', {'id': excursion.id}) }}" class="excursion-details-btn">
+                            <a href="{{ path('app_front_excursion_details', {'id': excursion.id}) }}" class="btn-animated-primary excursion-details-btn">
                                 <i class="fa fa-info-circle me-1"></i> Voir les détails
                             </a>
+
                         </div>
                     </div>
                 {% endfor %}

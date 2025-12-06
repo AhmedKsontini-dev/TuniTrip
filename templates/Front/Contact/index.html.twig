@@ -181,12 +181,151 @@ label {
     background: #caa84f;
 }
 
+/* --- Animated Gradient Button --- */
+.contact-envoyer-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.contact-envoyer-container .button {
+    display: inline-block !important;
+    height: 53px !important;
+    border-radius: 27px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+}
+.contact-envoyer-container .button_bcg {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 200% !important;
+    height: 100% !important;
+    background: linear-gradient(to right, #D7B65D, #192026, #D7B65D) !important;
+    z-index: 1 !important;
+    transition: all 400ms ease !important;
+}
+.contact-envoyer-container .button:hover .button_bcg {
+    left: -100% !important;
+}
+.contact-envoyer-container .button a {
+    display: block !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #e6dfdf !important;
+    text-transform: uppercase !important;
+    line-height: 53px !important;
+    padding-left: 46px !important;
+    padding-right: 46px !important;
+    white-space: nowrap !important;
+    z-index: 2 !important;
+    position: relative !important;
+    text-decoration: none !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    text-align: center !important;
+}
+
 
 
 /* Responsive */
 @media (max-width: 768px) {
+    .home {
+        height: 300px;
+    }
+    
+    .home_title {
+        font-size: 30px;
+    }
+    
+    .info-line {
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .info-line::after {
+        display: none;
+    }
+    
+    .contact-info-section .info-block:not(:last-child)::after {
+        display: none;
+    }
+    
     .form_row {
         flex-direction: column;
+    }
+    
+    .contact_form_section {
+        padding: 50px 15px;
+    }
+    
+    .contact_form_section h2 {
+        font-size: 26px;
+    }
+    
+    .contact-envoyer-container .button {
+        height: 48px !important;
+    }
+    
+    .contact-envoyer-container .button a {
+        font-size: 12px !important;
+        line-height: 48px !important;
+        padding-left: 30px !important;
+        padding-right: 30px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .home {
+        height: 250px;
+    }
+    
+    .home_title {
+        font-size: 24px;
+    }
+    
+    .home_content p {
+        font-size: 0.9rem;
+    }
+    
+    .info-block h4 {
+        font-size: 18px;
+    }
+    
+    .info-block p {
+        font-size: 14px;
+    }
+    
+    .contact_form_section h2 {
+        font-size: 22px;
+    }
+    
+    .form_input {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+    
+    .contact-envoyer-container .button {
+        height: 45px !important;
+    }
+    
+    .contact-envoyer-container .button a {
+        font-size: 11px !important;
+        line-height: 45px !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+    
+    .popup-message {
+        right: 10px;
+        left: 10px;
+        padding: 12px 15px;
+        font-size: 14px;
     }
 }
 /* ✅ Messages de succès et d’erreur */
@@ -292,7 +431,12 @@ label {
             <div class="text-danger small">{{ form_errors(form.message) }}</div>
         </div>
 
-        <button type="submit" class="form_submit_button">Envoyer le message</button>
+        <div class="contact-envoyer-container">
+            <div class="button">
+                <div class="button_bcg"></div>
+                <a href="javascript:void(0)" onclick="document.getElementById('contactForm').submit()">Envoyer le message</a>
+            </div>
+        </div>
     </form>
 </section>
 

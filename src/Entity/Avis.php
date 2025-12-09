@@ -28,6 +28,11 @@ class Avis
     #[ORM\Column(type: "datetime")]
     private $dateCreation;
 
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    private ?User $user = null;
+
+
+
     public function __construct() {
         $this->dateCreation = new \DateTime();
     }
@@ -48,4 +53,16 @@ class Avis
 
     public function getDateCreation(): ?\DateTimeInterface { return $this->dateCreation; }
     public function setDateCreation(\DateTimeInterface $dateCreation): self { $this->dateCreation = $dateCreation; return $this; }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+        return $this;
+    }
+
 }

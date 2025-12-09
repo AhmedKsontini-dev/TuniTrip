@@ -518,7 +518,1577 @@ body, p, .description, .stop-details {
   margin: 0;
 }
 
+/* Style du modal de réservation */
+#reservationModal .modal-content {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 50px rgba(28, 34, 40, 0.4);
+}
 
+#reservationModal .modal-header {
+    background: linear-gradient(135deg, #1c2228 0%, #2a3139 100%);
+    color: #ffffff;
+    padding: 2rem 2.5rem;
+    border-bottom: 4px solid #d8b65d;
+    position: relative;
+}
+
+#reservationModal .modal-header::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100px;
+    height: 4px;
+    background: #ffffff;
+    box-shadow: 0 0 15px rgba(216, 182, 93, 0.6);
+}
+
+#reservationModal .modal-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#reservationModal .btn-close {
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+    transition: all 0.3s ease;
+    background-size: 60%;
+}
+
+#reservationModal .btn-close:hover {
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+#reservationModal .modal-body {
+    background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+    padding: 2.5rem;
+}
+
+/* Style des groupes de formulaire */
+#reservationModal .mb-3 {
+    margin-bottom: 1.5rem !important;
+}
+
+/* Style des labels */
+#reservationModal .form-label {
+    color: #1c2228;
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#reservationModal .form-label::before {
+    content: '';
+    width: 4px;
+    height: 16px;
+    background: linear-gradient(180deg, #d8b65d 0%, #c9a84d 100%);
+    border-radius: 2px;
+}
+
+/* Style moderne des inputs */
+#reservationModal .form-control,
+#reservationModal .form-select {
+    border: 2px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1c2228;
+    background-color: #ffffff;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(28, 34, 40, 0.05);
+}
+
+#reservationModal .form-control::placeholder {
+    color: #adb5bd;
+    font-weight: 400;
+    opacity: 0.7;
+}
+
+/* Effet focus - Bordure dorée animée */
+#reservationModal .form-control:focus,
+#reservationModal .form-select:focus {
+    border-color: #d8b65d;
+    background-color: #fffef8;
+    box-shadow: 0 0 0 4px rgba(216, 182, 93, 0.15), 0 4px 12px rgba(216, 182, 93, 0.2);
+    outline: none;
+    transform: translateY(-2px);
+}
+
+/* Effet hover */
+#reservationModal .form-control:not(:focus):hover,
+#reservationModal .form-select:not(:focus):hover {
+    border-color: #d8b65d;
+    background-color: #fafafa;
+    box-shadow: 0 4px 12px rgba(28, 34, 40, 0.08);
+}
+
+/* Style spécifique pour les selects */
+#reservationModal .form-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23d8b65d' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 12px;
+    padding-right: 3rem;
+}
+
+#reservationModal .form-select:focus {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23d8b65d' d='M6 3l5 5H1z'/%3E%3C/svg%3E");
+}
+
+/* Style pour les champs numériques (adultes/enfants) */
+#reservationModal input[type="number"] {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #1c2228;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+#reservationModal input[type="number"]::-webkit-inner-spin-button,
+#reservationModal input[type="number"]::-webkit-outer-spin-button {
+    opacity: 1;
+    height: 40px;
+    cursor: pointer;
+}
+
+/* Style pour le champ date */
+#reservationModal input[type="datetime-local"] {
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#reservationModal input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: invert(60%) sepia(50%) saturate(400%) hue-rotate(5deg);
+    width: 20px;
+    height: 20px;
+}
+
+/* Container pour champs côte à côte */
+#reservationModal .row {
+    margin: 0 -0.5rem;
+}
+
+#reservationModal .row > [class*="col-"] {
+    padding: 0 0.5rem;
+}
+
+/* Style du footer */
+#reservationModal .modal-footer {
+    background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 2rem 2.5rem;
+    border-top: 2px solid #e8e8e8;
+    gap: 1rem;
+}
+
+/* Boutons stylisés */
+#reservationModal .btn {
+    padding: 1rem 2.5rem;
+    font-weight: 700;
+    border-radius: 12px;
+    border: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-size: 0.9rem;
+    position: relative;
+    overflow: hidden;
+}
+
+#reservationModal .btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+#reservationModal .btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+#reservationModal .btn-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+}
+
+#reservationModal .btn-secondary:hover {
+    background: linear-gradient(135deg, #5a6268 0%, #4e555b 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+}
+
+#reservationModal .btn-primary {
+    background: linear-gradient(135deg, #d8b65d 0%, #c9a84d 100%);
+    color: #1c2228;
+    font-weight: 800;
+    box-shadow: 0 4px 15px rgba(216, 182, 93, 0.4);
+}
+
+#reservationModal .btn-primary:hover {
+    background: linear-gradient(135deg, #e5c673 0%, #d8b65d 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(216, 182, 93, 0.5);
+}
+
+#reservationModal .btn-primary:active {
+    transform: translateY(-1px);
+}
+
+/* Animation d'entrée du modal */
+#reservationModal.fade .modal-dialog {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(0.9) translateY(-20px);
+}
+
+#reservationModal.show .modal-dialog {
+    transform: scale(1) translateY(0);
+}
+
+/* Messages d'erreur stylisés */
+#reservationModal .invalid-feedback {
+    color: #dc3545;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #ffe6e6;
+    border-left: 4px solid #dc3545;
+    border-radius: 6px;
+}
+
+#reservationModal .form-control.is-invalid,
+#reservationModal .form-select.is-invalid {
+    border-color: #dc3545;
+    background-color: #fff5f5;
+    animation: shake 0.4s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Style responsive */
+@media (max-width: 768px) {
+    #reservationModal .modal-body {
+        padding: 1.5rem;
+    }
+    
+    #reservationModal .modal-header {
+        padding: 1.5rem;
+    }
+    
+    #reservationModal .modal-title {
+        font-size: 1.35rem;
+    }
+    
+    #reservationModal .btn {
+        padding: 0.85rem 1.75rem;
+        font-size: 0.85rem;
+    }
+    
+    #reservationModal .form-control,
+    #reservationModal .form-select {
+        padding: 0.85rem 1rem;
+        font-size: 0.95rem;
+    }
+}
+
+/* Effet de chargement pour le bouton submit */
+#reservationModal .btn-primary.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+#reservationModal .btn-primary.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid #1c2228;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spinner 0.6s linear infinite;
+}
+
+@keyframes spinner {
+    to { transform: rotate(360deg); }
+}
+
+/* Amélioration visuelle pour les champs désactivés */
+#reservationModal .form-control:disabled,
+#reservationModal .form-select:disabled {
+    background-color: #f0f0f0;
+    border-color: #d0d0d0;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Style du modal de confirmation */
+#reservationConfirmation .modal-content {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 50px rgba(28, 34, 40, 0.4);
+    animation: modalBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes modalBounce {
+    0% {
+        transform: scale(0.3) translateY(-100px);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* En-tête avec animation de succès */
+#reservationConfirmation .modal-header {
+    background: linear-gradient(135deg, #d8b65d 0%, #c9a84d 100%);
+    color: #1c2228;
+    padding: 2rem 2.5rem;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+#reservationConfirmation .modal-header::before {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: -100px;
+    transform: translateY(-50%);
+    font-size: 8rem;
+    font-weight: bold;
+    color: rgba(28, 34, 40, 0.1);
+    animation: slideCheck 0.8s ease-out 0.3s forwards;
+}
+
+@keyframes slideCheck {
+    to {
+        left: -20px;
+    }
+}
+
+#reservationConfirmation .modal-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+    animation: fadeInUp 0.6s ease-out 0.4s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Icône de succès animée */
+#reservationConfirmation .modal-header::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    right: 2.5rem;
+    transform: translateY(-50%);
+    font-size: 3rem;
+    font-weight: bold;
+    color: #1c2228;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(28, 34, 40, 0.2);
+    animation: checkPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes checkPulse {
+    0%, 100% {
+        transform: translateY(-50%) scale(1);
+        box-shadow: 0 4px 15px rgba(28, 34, 40, 0.2);
+    }
+    50% {
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 6px 20px rgba(28, 34, 40, 0.3);
+    }
+}
+
+/* Corps du modal */
+#reservationConfirmation .modal-body {
+    background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+    padding: 2.5rem;
+}
+
+#reservationConfirmation .modal-body h4 {
+    color: #1c2228;
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.6s ease-out 0.5s both;
+    position: relative;
+}
+
+#reservationConfirmation .modal-body h4::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #d8b65d, transparent);
+    border-radius: 2px;
+}
+
+/* Carte de détails */
+#reservationConfirmation .card {
+    border: 2px solid #e8e8e8;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(28, 34, 40, 0.08);
+    animation: fadeInUp 0.6s ease-out 0.6s both;
+    position: relative;
+    overflow: hidden;
+}
+
+#reservationConfirmation .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #d8b65d 0%, #c9a84d 50%, #d8b65d 100%);
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+#reservationConfirmation .card h5 {
+    color: #1c2228;
+    font-weight: 800;
+    font-size: 1.25rem;
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Style des détails de réservation */
+#reservationConfirmation .card p {
+    margin-bottom: 1.25rem;
+    padding: 0.75rem 1rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border-radius: 10px;
+    border-left: 4px solid #d8b65d;
+    transition: all 0.3s ease;
+    animation: slideInRight 0.5s ease-out both;
+    animation-delay: calc(0.7s + var(--delay));
+}
+
+#reservationConfirmation .card p:nth-child(2) { --delay: 0s; }
+#reservationConfirmation .card p:nth-child(3) { --delay: 0.1s; }
+#reservationConfirmation .card p:nth-child(4) { --delay: 0.2s; }
+#reservationConfirmation .card p:nth-child(5) { --delay: 0.3s; }
+#reservationConfirmation .card p:nth-child(6) { --delay: 0.4s; }
+#reservationConfirmation .card p:nth-child(7) { --delay: 0.5s; }
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+#reservationConfirmation .card p:hover {
+    background: linear-gradient(135deg, #fffef8 0%, #f8f9fa 100%);
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(216, 182, 93, 0.15);
+}
+
+#reservationConfirmation .card p strong {
+    color: #1c2228;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    min-width: 180px;
+}
+
+/* Icônes avant les labels */
+#reservationConfirmation .card p strong::before {
+    content: '▸';
+    color: #d8b65d;
+    font-weight: bold;
+    margin-right: 0.5rem;
+    font-size: 1.1rem;
+}
+
+/* Footer du modal */
+#reservationConfirmation .modal-footer {
+    background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 2rem 2.5rem;
+    border-top: 2px solid #e8e8e8;
+    justify-content: center;
+}
+
+/* Bouton de retour stylisé */
+#reservationConfirmation .btn-primary {
+    background: linear-gradient(135deg, #1c2228 0%, #2a3139 100%);
+    color: #d8b65d;
+    border: 3px solid #d8b65d;
+    padding: 1rem 3rem;
+    font-weight: 800;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 0.95rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(28, 34, 40, 0.3);
+    animation: fadeInUp 0.6s ease-out 1.3s both;
+}
+
+#reservationConfirmation .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(216, 182, 93, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+#reservationConfirmation .btn-primary:hover::before {
+    left: 100%;
+}
+
+#reservationConfirmation .btn-primary:hover {
+    background: linear-gradient(135deg, #d8b65d 0%, #c9a84d 100%);
+    color: #1c2228;
+    border-color: #1c2228;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(216, 182, 93, 0.5);
+}
+
+#reservationConfirmation .btn-primary:active {
+    transform: translateY(-1px) scale(1.02);
+}
+
+/* Animation de confettis (optionnel) */
+#reservationConfirmation .modal-body::after {
+    content: '★ ✦ ✧ ★ ✦ ✧';
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    color: #d8b65d;
+    opacity: 0;
+    animation: confetti 2s ease-out 0.5s;
+    letter-spacing: 1rem;
+}
+
+@keyframes confetti {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-50px) scale(0);
+    }
+    50% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(50px) scale(0.5);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #reservationConfirmation .modal-header {
+        padding: 1.5rem;
+    }
+    
+    #reservationConfirmation .modal-header::after {
+        width: 50px;
+        height: 50px;
+        font-size: 2.5rem;
+        right: 1.5rem;
+    }
+    
+    #reservationConfirmation .modal-title {
+        font-size: 1.25rem;
+        padding-right: 60px;
+    }
+    
+    #reservationConfirmation .modal-body {
+        padding: 1.5rem;
+    }
+    
+    #reservationConfirmation .modal-body h4 {
+        font-size: 1.25rem;
+    }
+    
+    #reservationConfirmation .card p strong {
+        min-width: 140px;
+        font-size: 0.8rem;
+    }
+    
+    #reservationConfirmation .btn-primary {
+        padding: 0.85rem 2rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Animation de pulsation pour attirer l'attention */
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(216, 182, 93, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 20px rgba(216, 182, 93, 0);
+    }
+}
+
+#reservationConfirmation .btn-primary {
+    animation: fadeInUp 0.6s ease-out 1.3s both, pulse 2s infinite 2s;
+}
+
+/* Bouton favoris positionné dans le coin supérieur droit de l'image */
+.favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    font-size: 1.6rem;
+    transition: transform 0.2s ease;
+}
+
+/* Couleur initiale du cœur (vide) */
+.favorite-btn i.far.fa-heart {
+    color: #fff; /* blanc pour cœur vide */
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+/* Cœur plein lorsque actif */
+.favorite-btn i.fas.fa-heart {
+    color: #d8b65d; /* couleur secondaire */
+    text-shadow: 0 0 5px rgba(0,0,0,0.7);
+    transform: scale(1.2);
+}
+
+/* Effet hover sur le bouton */
+.favorite-btn:hover i {
+    transform: scale(1.3);
+    color: #d8b65d;
+}
+
+/* Animation au clic */
+.favorite-btn.clicked i {
+    animation: pop 0.3s ease forwards;
+}
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.5); }
+    100% { transform: scale(1.2); }
+}
+
+/* Style pour les notes en étoiles dans le formulaire */
+#formAvis .form-check {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+#formAvis .form-check-label {
+    cursor: pointer;
+    padding: 8px 12px;
+    border: 2px solid #dee2e6;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+#formAvis .form-check-input:checked + .form-check-label {
+    background-color: #d8b65d;
+    color: white;
+    border-color: #d8b65d;
+}
+
+/* ========== STYLE AVIS MODERNE ========== */
+
+.avis-section {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(28, 34, 40, 0.1);
+}
+
+.avis-section h3 {
+    color: #1c2228;
+    font-weight: 700;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Bouton Donner mon avis */
+.avis-section .btn-primary {
+    background: linear-gradient(135deg, #d8b65d 0%, #c9a84d 100%);
+    border: none;
+    color: #1c2228;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(216, 182, 93, 0.2);
+}
+
+.avis-section .btn-primary:hover {
+    background: linear-gradient(135deg, #c9a84d 0%, #b8973d 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(216, 182, 93, 0.3);
+    color: #1c2228;
+}
+
+.avis-section .btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Alert Note Moyenne */
+.avis-section .alert-info {
+    background: linear-gradient(135deg, #f7f9fb 0%, #eef2f7 100%);
+    border: 2px solid #d8b65d;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 15px rgba(216, 182, 93, 0.1);
+}
+
+.avis-section .alert-info strong {
+    color: #1c2228;
+    font-size: 1.1rem;
+}
+
+.avis-section .alert-info .fs-5 {
+    color: #d8b65d;
+    font-weight: 700;
+    font-size: 1.5rem !important;
+    margin: 0 5px;
+}
+
+.avis-section .alert-info .text-warning {
+    font-size: 1.3rem;
+}
+
+.avis-section .alert-info .text-muted {
+    color: #718096 !important;
+    font-size: 0.95rem;
+}
+
+/* Liste des avis */
+.avis-list {
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.avis-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.avis-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.avis-list::-webkit-scrollbar-thumb {
+    background: #d8b65d;
+    border-radius: 10px;
+}
+
+.avis-list::-webkit-scrollbar-thumb:hover {
+    background: #c9a84d;
+}
+
+/* Carte Avis */
+.avis-list .card {
+    border: none !important;
+    border-radius: 16px !important;
+    background: #f8f9fa;
+    box-shadow: 0 4px 15px rgba(28, 34, 40, 0.08) !important;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.avis-list .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(180deg, #d8b65d 0%, #c9a84d 100%);
+}
+
+.avis-list .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(216, 182, 93, 0.2) !important;
+}
+
+.avis-list .card-body {
+    padding: 20px 20px 20px 25px;
+}
+
+/* En-tête de l'avis */
+.avis-list .card-body strong {
+    color: #1c2228;
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.avis-list .badge {
+    background: linear-gradient(135deg, #1c2228 0%, #2a3138 100%) !important;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+
+/* Étoiles */
+.avis-list .text-warning {
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.avis-list .text-dark {
+    color: #1c2228 !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+/* Commentaire */
+.avis-list .card-body p {
+    color: #4a5568;
+    line-height: 1.7;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    padding: 12px;
+    background: white;
+    border-radius: 10px;
+    border-left: 3px solid #d8b65d;
+}
+
+/* Date */
+.avis-list .text-muted {
+    color: #718096 !important;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.avis-list .text-muted i {
+    color: #d8b65d;
+}
+
+/* État vide */
+.avis-section .alert-light {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px dashed #d8b65d;
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    color: #1c2228;
+    margin-top: 20px;
+}
+
+.avis-section .alert-light::before {
+    content: "💬";
+    display: block;
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.avis-section .alert-light p {
+    font-size: 1.05rem;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .avis-section {
+        padding: 20px;
+    }
+
+    .avis-section h3 {
+        font-size: 1.5rem;
+    }
+
+    .avis-section .d-flex {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 15px;
+    }
+
+    .avis-section .btn-primary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .avis-list {
+        max-height: 400px;
+    }
+
+    .avis-list .card-body {
+        padding: 15px 15px 15px 20px;
+    }
+
+    .avis-list .d-flex {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 10px;
+    }
+}
+
+/* Animation d'apparition */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.avis-list .card {
+    animation: fadeInUp 0.4s ease-out;
+}
+/* ========== STYLE FAQ MODERNE ========== */
+
+.faq-section {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(28, 34, 40, 0.1);
+}
+
+.faq-section h3 {
+    color: #1c2228;
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 3px solid #d8b65d;
+    padding-bottom: 10px;
+}
+
+/* Liste des FAQ */
+.faq-list {
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.faq-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.faq-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.faq-list::-webkit-scrollbar-thumb {
+    background: #d8b65d;
+    border-radius: 10px;
+}
+
+.faq-list::-webkit-scrollbar-thumb:hover {
+    background: #c9a84d;
+}
+
+/* Carte FAQ */
+.faq-item {
+    background: #f8f9fa;
+    border-left: 4px solid #d8b65d !important;
+    border-radius: 12px !important;
+    padding: 20px !important;
+    margin-bottom: 1rem !important;
+    box-shadow: 0 4px 15px rgba(28, 34, 40, 0.08) !important;
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(216, 182, 93, 0.2) !important;
+    border-left-color: #1c2228 !important;
+}
+
+.faq-item .fw-bold {
+    color: #1c2228;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    position: relative;
+    padding-left: 25px;
+}
+
+.faq-item .fw-bold::before {
+    content: "Q:";
+    position: absolute;
+    left: 0;
+    color: #d8b65d;
+    font-weight: 700;
+}
+
+.faq-item p:last-child {
+    color: #4a5568;
+    line-height: 1.7;
+    padding-left: 25px;
+    position: relative;
+}
+
+.faq-item p:last-child:not(em)::before {
+    content: "R:";
+    position: absolute;
+    left: 0;
+    color: #1c2228;
+    font-weight: 700;
+}
+
+.faq-item em {
+    color: #d8b65d;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.faq-item em::before {
+    content: "⏳";
+    font-style: normal;
+}
+
+/* État vide */
+.faq-list .alert-light {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px dashed #d8b65d;
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    color: #1c2228;
+}
+
+.faq-list .alert-light::before {
+    content: "💭";
+    display: block;
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+/* Formulaire FAQ */
+.faq-section .card {
+    border: none !important;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(28, 34, 40, 0.15);
+}
+
+.faq-section .card-header {
+    background: linear-gradient(135deg, #1c2228 0%, #2a3138 100%) !important;
+    border: none;
+    padding: 20px 25px;
+}
+
+.faq-section .card-header h5 {
+    color: white;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.faq-section .card-body {
+    padding: 25px;
+    background: white;
+}
+
+.faq-section .form-control {
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.faq-section .form-control:focus {
+    border-color: #d8b65d;
+    box-shadow: 0 0 0 3px rgba(216, 182, 93, 0.15);
+    outline: none;
+}
+
+.faq-section .btn-primary {
+    background: linear-gradient(135deg, #d8b65d 0%, #c9a84d 100%);
+    border: none;
+    color: #1c2228;
+    font-weight: 600;
+    padding: 12px 30px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.faq-section .btn-primary:hover {
+    background: linear-gradient(135deg, #c9a84d 0%, #b8973d 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(216, 182, 93, 0.3);
+}
+
+.faq-section .btn-primary:active {
+    transform: translateY(0);
+}
+
+.faq-section .text-muted {
+    color: #718096 !important;
+    font-size: 0.9rem;
+    padding: 12px;
+    background: #f7fafc;
+    border-radius: 8px;
+    border-left: 3px solid #d8b65d;
+}
+
+.faq-section .text-muted::before {
+    content: "ℹ️ ";
+}
+
+/* Labels du formulaire */
+.faq-section label {
+    color: #1c2228;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .faq-section {
+        padding: 20px;
+    }
+
+    .faq-section h3 {
+        font-size: 1.5rem;
+    }
+
+    .faq-item {
+        padding: 15px !important;
+    }
+
+    .faq-list {
+        max-height: 400px;
+    }
+}
+.card-header{
+    background-color: #d8b65d;
+    border: #d8b65d;
+}
+
+
+/* ========== STYLE MODAL AVIS PROFESSIONNEL ========== */
+
+/* Fond du modal */
+#modalAvis .modal-dialog {
+    max-width: 700px;
+}
+
+#modalAvis .modal-content {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(28, 34, 40, 0.3);
+}
+
+/* Header du modal */
+#modalAvis .modal-header {
+    background: linear-gradient(135deg, #1c2228 0%, #2a3138 100%);
+    color: white;
+    padding: 25px 30px;
+    border: none;
+}
+
+#modalAvis .modal-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+}
+
+#modalAvis .modal-title i {
+    color: #d8b65d;
+    font-size: 1.6rem;
+}
+
+#modalAvis .btn-close-white {
+    filter: brightness(0) invert(1);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+#modalAvis .btn-close-white:hover {
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+/* Body du modal */
+#modalAvis .modal-body {
+    padding: 35px 30px;
+    background: #ffffff;
+}
+
+/* Système d'étoiles */
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 35px;
+    padding: 30px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #eef2f7 100%);
+    border-radius: 16px;
+    border: 2px solid #e9ecef;
+}
+
+.star-rating input[type="radio"] {
+    display: none;
+}
+
+.star-rating label {
+    cursor: pointer;
+    font-size: 2.5rem;
+    color: #cbd5e0;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.star-rating label::before {
+    content: "☆";
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #d8b65d;
+    transform: scale(1.15);
+}
+
+.star-rating input[type="radio"]:checked ~ label {
+    color: #d8b65d;
+}
+
+.star-rating input[type="radio"]:checked ~ label::before {
+    content: "★";
+}
+
+.star-rating label:hover::before,
+.star-rating label:hover ~ label::before {
+    content: "★";
+}
+
+/* Animation des étoiles */
+.star-rating label:active {
+    transform: scale(0.95);
+}
+
+/* Labels */
+#modalAvis .form-label {
+    color: #1c2228;
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#modalAvis .form-label::before {
+    content: "•";
+    color: #d8b65d;
+    font-size: 1.5rem;
+}
+
+/* Select */
+#modalAvis .form-select {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    color: #1c2228;
+    transition: all 0.3s ease;
+    background-color: white;
+    cursor: pointer;
+}
+
+#modalAvis .form-select:focus {
+    border-color: #d8b65d;
+    box-shadow: 0 0 0 4px rgba(216, 182, 93, 0.15);
+    outline: none;
+}
+
+#modalAvis .form-select:hover {
+    border-color: #d8b65d;
+}
+
+/* Textarea */
+#modalAvis .form-control {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 1rem;
+    color: #1c2228;
+    transition: all 0.3s ease;
+    resize: vertical;
+    min-height: 120px;
+}
+
+#modalAvis .form-control:focus {
+    border-color: #d8b65d;
+    box-shadow: 0 0 0 4px rgba(216, 182, 93, 0.15);
+    outline: none;
+}
+
+#modalAvis .form-control::placeholder {
+    color: #a0aec0;
+    font-style: italic;
+}
+
+/* Footer du modal */
+#modalAvis .modal-footer {
+    background: #f8f9fa;
+    padding: 20px 30px;
+    border: none;
+    gap: 12px;
+}
+
+/* Bouton Annuler */
+#modalAvis .btn-secondary {
+    background: white;
+    border: 2px solid #e2e8f0;
+    color: #1c2228;
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#modalAvis .btn-secondary:hover {
+    background: #f8f9fa;
+    border-color: #1c2228;
+    color: #1c2228;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(28, 34, 40, 0.15);
+}
+
+#modalAvis .btn-secondary:active {
+    transform: translateY(0);
+}
+
+/* Bouton Envoyer */
+#modalAvis .btn-primary {
+    background: linear-gradient(135deg, #d8b65d 0%, #c9a84d 100%);
+    border: none;
+    color: #1c2228;
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(216, 182, 93, 0.3);
+}
+
+#modalAvis .btn-primary:hover {
+    background: linear-gradient(135deg, #c9a84d 0%, #b8973d 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(216, 182, 93, 0.4);
+    color: #1c2228;
+}
+
+#modalAvis .btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Icônes des boutons */
+#modalAvis .modal-footer button i {
+    font-size: 1.1rem;
+}
+
+/* Séparateurs visuels entre sections */
+#modalAvis .mb-4 {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+/* Animation d'ouverture du modal */
+#modalAvis.fade .modal-dialog {
+    transform: scale(0.95);
+    transition: transform 0.3s ease-out;
+}
+
+#modalAvis.show .modal-dialog {
+    transform: scale(1);
+}
+
+/* Message d'aide pour les étoiles */
+.star-rating::after {
+    content: "Cliquez pour noter";
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #718096;
+    font-size: 0.85rem;
+    font-style: italic;
+    white-space: nowrap;
+}
+
+.star-rating {
+    position: relative;
+    margin-bottom: 50px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #modalAvis .modal-dialog {
+        margin: 10px;
+    }
+
+    #modalAvis .modal-header {
+        padding: 20px;
+    }
+
+    #modalAvis .modal-title {
+        font-size: 1.2rem;
+    }
+
+    #modalAvis .modal-body {
+        padding: 25px 20px;
+    }
+
+    #modalAvis .modal-footer {
+        padding: 15px 20px;
+        flex-direction: column;
+    }
+
+    #modalAvis .modal-footer button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .star-rating label {
+        font-size: 2rem;
+    }
+
+    .star-rating {
+        padding: 20px;
+        gap: 5px;
+    }
+}
+
+/* Animation de focus sur les éléments du formulaire */
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(216, 182, 93, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 4px rgba(216, 182, 93, 0.1);
+    }
+}
+
+#modalAvis .form-control:focus,
+#modalAvis .form-select:focus {
+    animation: pulse 2s ease-in-out;
+}
+
+#avis_excursion_note{
+    display: none !important;
+}
 </style>
 {% endblock %}
 
@@ -653,7 +2223,12 @@ body, p, .description, .stop-details {
                 {# ================= BLOC INFORMATIONS ================= #}
                 <div class="info-box-modern mb-4 p-4 shadow-sm">
                     <h3 class="mb-4 fw-bold">Informations</h3>
-
+                            {# Bouton favoris #}
+                            <button class="favorite-btn require-login" 
+                                    data-excursion-id="{{ excursion.id }}" 
+                                    data-action="add-favoris">
+                                <i class="far fa-heart {% if excursion.id in userFavorisIds %}fas text-warning{% endif %}"></i>
+                            </button>
                     <!-- Prix -->
                     <div class="d-flex align-items-start mb-4">
                         <div class="icon-circle me-3">
@@ -698,11 +2273,11 @@ body, p, .description, .stop-details {
                         </div>
                     {% endif %}
 
-                    <!-- BOUTON RÉSERVER -->
-                    <div class="mt-4 text-center">
-                        <a href="#section-reservation" class="btn btn-primary btn-reserver w-100 py-3">
+                    <!-- BOUTON : OUVRIR MODAL -->
+                    <div class="col-md-auto">
+                        <button class="btn btn-primary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#reservationModal">
                             Réserver maintenant
-                        </a>
+                        </button>
                     </div>
                 </div>
 
@@ -842,104 +2417,7 @@ body, p, .description, .stop-details {
         </div>
 
 
-        <!-- SECTION : Date & Voyageurs -->
-        <div class="availability-section w-100 mt-5 p-4 border rounded shadow-sm">
-
-            <div class="row align-items-center g-4">
-
-                <!-- TITRE -->
-                <div class="col-auto">
-                    <h5 class="fw-bold m-0">Sélectionner la date et les voyageurs</h5>
-                </div>
-
-                <!-- DATE PICKER -->
-                <div class="col-md-3">
-                    <input type="text" id="date-picker" class="form-control form-control-lg modern-date-input" placeholder="Choisir une date">
-                </div>
-
-                <!-- VOYAGEURS -->
-                <div class="col-md-2">
-                    <div class="dropdown" data-bs-auto-close="outside">
-
-                        <!-- BOUTON ROND AVEC BADGE -->
-                        <button class="traveler-icon-btn position-relative" type="button" data-bs-toggle="dropdown">
-                            <span id="traveler-total-badge" class="traveler-badge">1</span>
-                            <i class="bi bi-people-fill"></i>
-                        </button>
-
-                        <div class="dropdown-menu p-3 shadow traveler-dropdown">
-
-                            <!-- ADULTES -->
-                            <div class="traveler-row d-flex justify-content-between align-items-center mb-3">
-                                <div>
-                                    <strong>Adultes</strong><br>
-                                    <small class="text-muted">18 - 99 ans</small>
-                                </div>
-                                <div class="counter">
-                                    <button class="btn btn-outline-secondary btn-sm" onclick="event.stopPropagation(); changeCount('adult', -1)">-</button>
-                                    <span id="adult-count" class="mx-2">1</span>
-                                    <button class="btn btn-outline-secondary btn-sm" onclick="event.stopPropagation(); changeCount('adult', 1)">+</button>
-                                </div>
-                            </div>
-
-                            <hr>
-
-                            <!-- JEUNES -->
-                            <div class="traveler-row d-flex justify-content-between align-items-center mb-3">
-                                <div>
-                                    <strong>Jeunes</strong><br>
-                                    <small class="text-muted">13 - 17 ans</small>
-                                </div>
-                                <div class="counter">
-                                    <button class="btn btn-outline-secondary btn-sm" onclick="event.stopPropagation(); changeCount('young', -1)">-</button>
-                                    <span id="young-count" class="mx-2">0</span>
-                                    <button class="btn btn-outline-secondary btn-sm" onclick="event.stopPropagation(); changeCount('young', 1)">+</button>
-                                </div>
-                            </div>
-
-                            <hr>
-
-                            <!-- ENFANTS -->
-                            <div class="traveler-row d-flex justify-content-between align-items-center mb-3">
-                                <div>
-                                    <strong>Enfants</strong><br>
-                                    <small class="text-muted">4 - 12 ans</small>
-                                </div>
-                                <div class="counter">
-                                    <button class="btn btn-outline-secondary btn-sm" onclick="event.stopPropagation(); changeCount('child', -1)">-</button>
-                                    <span id="child-count" class="mx-2">0</span>
-                                    <button class="btn btn-outline-secondary btn-sm" onclick="event.stopPropagation(); changeCount('child', 1)">+</button>
-                                </div>
-                            </div>
-
-                            <hr>
-
-                            <!-- BÉBÉS -->
-                            <div class="traveler-row d-flex justify-content-between align-items-center mb-3">
-                                <div>
-                                    <strong>Bébés</strong><br>
-                                    <small class="text-muted">0 - 3 ans (gratuit)</small>
-                                </div>
-                                <div class="counter">
-                                    <button class="btn btn-outline-secondary btn-sm" onclick="event.stopPropagation(); changeCount('baby', -1)">-</button>
-                                    <span id="baby-count" class="mx-2">0</span>
-                                    <button class="btn btn-outline-secondary btn-sm" onclick="event.stopPropagation(); changeCount('baby', 1)">+</button>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <!-- BOUTON : OUVRIR MODAL -->
-                <div class="col-md-auto">
-                    <button class="btn btn-primary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#reservationModal">
-                        Réserver maintenant
-                    </button>
-                </div>
-
-            </div>
-        </div>
+        
 
 <!-- MODAL DE RESERVATION -->
 <div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel" aria-hidden="true">
@@ -951,54 +2429,78 @@ body, p, .description, .stop-details {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
             </div>
 
-            <div class="modal-body">
-                {{ form_start(reservationForm) }}
+            {{ form_start(reservationForm) }}
 
-                <div class="row g-3">
-                    <!-- Excursion -->
-                    <div class="col-md-6">
-                        {{ form_row(reservationForm.excursion) }}
-                    </div>
+            <div class="modal-body">
+
+                <div class="row g-4">
 
                     <!-- Nom -->
                     <div class="col-md-6">
-                        {{ form_row(reservationForm.nom) }}
+                        <label class="form-label fw-bold">{{ form_label(reservationForm.nom) }}</label>
+                        {{ form_widget(reservationForm.nom, {
+                            'attr': {'class': 'form-control form-control-lg'}
+                        }) }}
+                        {{ form_errors(reservationForm.nom) }}
                     </div>
 
                     <!-- Prénom -->
                     <div class="col-md-6">
-                        {{ form_row(reservationForm.prenom) }}
+                        <label class="form-label fw-bold">{{ form_label(reservationForm.prenom) }}</label>
+                        {{ form_widget(reservationForm.prenom, {
+                            'attr': {'class': 'form-control form-control-lg'}
+                        }) }}
+                        {{ form_errors(reservationForm.prenom) }}
                     </div>
 
                     <!-- Adultes -->
-                    <div class="col-md-3">
-                        {{ form_row(reservationForm.adult) }}
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Adultes</label>
+                        {{ form_widget(reservationForm.adult, {
+                            'attr': {'class': 'form-control form-control-lg'}
+                        }) }}
+                        {{ form_errors(reservationForm.adult) }}
                     </div>
 
                     <!-- Enfants -->
-                    <div class="col-md-3">
-                        {{ form_row(reservationForm.child) }}
-                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Enfants</label>
+                        {{ form_widget(reservationForm.child, {
+                            'attr': {'class': 'form-control form-control-lg'}
+                        }) }}
+                        {{ form_errors(reservationForm.child) }}
 
+                        <div class="form-text text-second fw-bold mt-1">
+                            Vous avez une remise de 20% pour les enfants 🎉
+                        </div>
+                    </div>
                     <!-- Date & Heure -->
                     <div class="col-md-6">
-                        {{ form_row(reservationForm.dateHeure) }}
+                        <label class="form-label fw-bold">Date & Heure</label>
+                        {{ form_widget(reservationForm.dateHeure, {
+                            'attr': {'class': 'form-control form-control-lg'}
+                        }) }}
+                        {{ form_errors(reservationForm.dateHeure) }}
                     </div>
 
                     <!-- Point de prise en charge -->
                     <div class="col-md-6">
-                        {{ form_row(reservationForm.localisationPoint) }}
+                        <label class="form-label fw-bold">Point de prise en charge</label>
+                        {{ form_widget(reservationForm.localisationPoint, {
+                            'attr': {'class': 'form-control form-control-lg', 'placeholder': 'ex: Devant hôtel Golden Tulip'}
+                        }) }}
+                        {{ form_errors(reservationForm.localisationPoint) }}
                     </div>
+
+                    <!-- Champ excursion caché -->
+                    {{ form_widget(reservationForm.excursion) }}
+
                 </div>
-
-                {{ form_widget(reservationForm.dateCreation) }}
-                {{ form_widget(reservationForm.statut) }}
-
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                <button type="submit" class="btn btn-primary">Confirmer la réservation</button>
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="submit" class="btn btn-primary btn-lg px-4">Confirmer la réservation</button>
             </div>
 
             {{ form_end(reservationForm) }}
@@ -1006,6 +2508,45 @@ body, p, .description, .stop-details {
         </div>
     </div>
 </div>
+
+<!-- MODAL CONFIRMATION -->
+<div class="modal fade" id="reservationConfirmation" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">Réservation confirmée</h5>
+            </div>
+
+            <div class="modal-body">
+
+                <h4 class="mb-3">Merci pour votre réservation !</h4>
+
+                <div class="card p-3 shadow-sm">
+                    <h5 class="fw-bold mb-3">Détails de la réservation</h5>
+
+                    <p><strong>Excursion :</strong> {{ reservation.excursion.titre }}</p>
+                    <p><strong>Nom :</strong> {{ reservation.nom }} {{ reservation.prenom }}</p>
+                    <p><strong>Adultes :</strong> {{ reservation.adult }}</p>
+                    <p><strong>Enfants :</strong> {{ reservation.child }}</p>
+                    <p><strong>Date & Heure :</strong> {{ reservation.dateHeure|date('d/m/Y H:i') }}</p>
+                    <p><strong>Point de prise en charge :</strong> {{ reservation.localisationPoint }}</p>
+                    <p><strong>Prix total :</strong> {{ reservation.prixTotal }} TND</p>
+
+
+                    
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <a href="{{ path('app_front_excursions_list') }}" class="btn btn-primary">Retour aux excursions</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 
             <!-- DEUXIÈME ROW : Contenu full-width (Accordion + Itinéraire + Map) -->
@@ -1237,6 +2778,197 @@ body, p, .description, .stop-details {
                 </div>
             </div>
         </div>
+
+
+        <div class="container mt-5">
+            <div class="row">
+                
+                <!-- ========== COLONNE GAUCHE : AVIS ========== -->
+                <div class="col-lg-6">
+                    <section class="avis-section">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3 class="mb-0">⭐ Avis des utilisateurs</h3>
+                            {% if app.user %}
+                                <button type="button" class="btn btn-primary" id="btnAvis">
+                                    <i class="bi bi-plus-circle"></i> Donner mon avis
+                                </button>
+                            {% endif %}
+
+                        </div>
+
+                        {% if noteMoyenne > 0 %}
+                            <div class="alert alert-info mb-3">
+                                <strong>Note moyenne :</strong> 
+                                <span class="fs-5">{{ noteMoyenne|number_format(1) }}/5</span>
+                                <span class="text-warning">⭐</span>
+                                <small class="text-muted">({{ avis|length }} avis)</small>
+                            </div>
+                        {% endif %}
+                        {% if not app.user %}
+                            <small class="text-danger d-block mb-3">
+                                ⚠️ Vous devez être connecté pour donner un avis.
+                            </small>
+                        {% endif %}
+
+
+                        {% if avis is not empty %}
+                            <div class="avis-list" style="max-height: 600px; overflow-y: auto;">
+                                {% for a in avis %}
+                                    <div class="card mb-3 shadow-sm">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <div>
+                                                    <strong>{{ a.user.email }}</strong>
+                                                    {% if a.compagnon %}
+                                                        <span class="badge bg-secondary ms-2">{{ a.compagnon }}</span>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="text-warning">
+                                                    {% for i in 1..5 %}
+                                                        {% if i <= a.note %}
+                                                            ⭐
+                                                        {% else %}
+                                                            ☆
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    <span class="text-dark ms-1">{{ a.note }}/5</span>
+                                                </div>
+                                            </div>
+
+                                            {% if a.commentaire %}
+                                                <p class="mt-2 mb-2">{{ a.commentaire }}</p>
+                                            {% endif %}
+
+                                            <small class="text-muted">
+                                                <i class="bi bi-clock"></i> {{ a.createdAt|date('d/m/Y à H:i') }}
+                                            </small>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-light text-center">
+                                <p class="mb-0">Aucun avis pour le moment. Soyez le premier à donner votre avis !</p>
+                            </div>
+                        {% endif %}
+                    </section>
+                </div>
+
+                <!-- ========== COLONNE DROITE : FAQ ========== -->
+                <div class="col-lg-6">
+                    <section class="faq-section">
+                        <h3 class="mb-3">❓ Questions fréquentes</h3>
+
+                        <div class="faq-list" style="max-height: 600px; overflow-y: auto;">
+                            {% if faqs is not empty %}
+                                {% for faq in faqs|reverse %}
+                                    <div class="faq-item mb-3 p-3 border rounded shadow-sm">
+                                        <p class="fw-bold mb-1">{{ faq.question }}</p>
+                                        <p class="mb-0">
+                                            {% if faq.reponse %}
+                                                {{ faq.reponse|nl2br }}
+                                            {% else %}
+                                                <em>En attente de réponse de l'administrateur...</em>
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="alert alert-light text-center">
+                                    <p class="mb-0">Aucune question pour le moment.</p>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <!-- FORMULAIRE POUR POSER UNE QUESTION -->
+                            <div class="card mt-4 ">
+                                <div class="card-header text-white">
+                                    <h5 class="mb-0">💬 Poser une question</h5>
+                                </div>
+                                <div class="card-body">
+                                    {{ form_start(faqForm, {'attr': {'id': 'faqForm'}}) }}
+                                        {{ form_row(faqForm.question, {
+                                            'attr': {'class': 'form-control', 'rows': 3}
+                                        }) }}
+                                        <button type="submit" class="btn btn-primary mt-2">
+                                            <i class="bi bi-send"></i> Envoyer la question
+                                        </button>
+                                    {{ form_end(faqForm) }}
+                                    <small class="text-muted d-block mt-2">
+                                        Votre question sera visible après qu'un administrateur y réponde.
+                                    </small>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-warning">
+                                Vous devez <a href="{{ path('app_login') }}">vous connecter</a> pour poser une question.
+                            </div>
+                        {% endif %}
+
+                    </section>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ========== MODAL AVIS ========== -->
+        <div class="modal fade" id="modalAvis" tabindex="-1" aria-labelledby="modalAvisLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header ">
+                        <h5 class="modal-title" id="modalAvisLabel">
+                            <i class="bi bi-star-fill"></i> Donner mon avis sur l'excursion
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    {{ form_start(avisForm, {'attr': {'id': 'formAvis'}}) }}
+                    <div class="modal-body">
+                        
+                    
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Avec qui avez-vous voyagé ? *</label>
+                            {{ form_widget(avisForm.compagnon, {
+                                'attr': {'class': 'form-select'}
+                            }) }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Votre commentaire</label>
+                            {{ form_widget(avisForm.commentaire, {
+                                'attr': {
+                                    'class': 'form-control',
+                                    'rows': 5,
+                                    'placeholder': 'Partagez votre expérience...'
+                                }
+                            }) }}
+                        </div>
+
+                        <div class="star-rating">
+                            {% for i in 5..1 %}
+                                <input type="radio" id="note{{ i }}" name="{{ avisForm.note.vars.full_name }}" value="{{ i }}">
+                                <label for="note{{ i }}"></label>
+                            {% endfor %}
+                        </div>
+
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="bi bi-x-circle"></i> Annuler
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-send-fill"></i> Envoyer mon avis
+                        </button>
+                    </div>
+                    {{ form_end(avisForm) }}
+
+                </div>
+            </div>
+        </div>
+
 </div>
 
 <!-- Leaflet Map -->
@@ -1559,6 +3291,174 @@ document.addEventListener('DOMContentLoaded', () => {
             bar.style.width = width;
         }, 100); // petit délai pour déclencher l'animation
     });
+});
+</script>
+{% if reservationOK %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const modalEl = document.getElementById('reservationConfirmation');
+        if (modalEl) {
+            const modal = new bootstrap.Modal(modalEl);
+            modal.show();
+        }
+    });
+</script>
+{% endif %}
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const isLoggedIn = {{ app.user ? 'true' : 'false' }};
+
+    // Utilisation de delegation pour tous les boutons favorites (y compris chargés dynamiquement)
+    document.addEventListener('click', async (e) => {
+        const btn = e.target.closest('.favorite-btn');
+
+        if (!btn) return; // Si ce n'est pas un bouton favorite, ignorer
+
+        const excursionId = btn.dataset.excursionId;
+        const icon = btn.querySelector('i');
+
+        // Si non connecté → ouvrir le modal login
+        if (!isLoggedIn) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('#loginModal').modal('show');
+            return false;
+        }
+
+        // Si connecté → exécuter la requête AJAX pour toggler le favoris
+        try {
+            const response = await fetch(`/favori/toggle/${excursionId}`, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                if (data.favori) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas', 'text-warning');
+                } else {
+                    icon.classList.remove('fas', 'text-warning');
+                    icon.classList.add('far');
+                }
+            } else if (data.message) {
+                alert(data.message);
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Une erreur est survenue.');
+        }
+    });
+});
+</script>
+
+<script>
+document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', () => {
+        const item = button.parentElement;
+        item.classList.toggle('active');
+
+        const answer = item.querySelector('.faq-answer');
+        if(item.classList.contains('active')){
+            answer.style.maxHeight = answer.scrollHeight + 'px';
+            answer.style.padding = '10px 15px';
+        } else {
+            answer.style.maxHeight = '0';
+            answer.style.padding = '0 15px';
+        }
+
+        // Toggle + / -
+        const toggle = button.querySelector('.faq-toggle');
+        toggle.textContent = item.classList.contains('active') ? '-' : '+';
+    });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    // --------- AJAX AJOUT AVIS ---------
+    const avisForm = document.getElementById('#formAvis');
+    if (avisForm) {
+        avisForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(avisForm);
+            const url = '{{ path("ajax_add_avis", {"id": excursion.id}) }}';
+
+            fetch(url, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    // Ajouter le nouvel avis au début de la liste
+                    const avisList = document.querySelector('.avis-list');
+                    avisList.insertAdjacentHTML('afterbegin', data.html);
+
+                    // Réinitialiser le formulaire
+                    avisForm.reset();
+                    // Fermer le modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('modalAvis'));
+                    modal.hide();
+                } else {
+                    alert('Erreur lors de l\'ajout de l\'avis.');
+                }
+            })
+            .catch(err => console.error(err));
+        });
+    }
+
+    // --------- AJAX AJOUT FAQ ---------
+    const faqForm = document.querySelector('faqForm');
+    if (faqForm) {
+        faqForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(faqForm);
+            const url = '{{ path("ajax_add_faq", {"id": excursion.id}) }}';
+
+            fetch(url, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    const faqAccordion = document.getElementById('faqAccordion');
+                    faqAccordion.insertAdjacentHTML('beforeend', data.html);
+
+                    // Réinitialiser le formulaire
+                    faqForm.reset();
+                } else {
+                    alert('Erreur lors de l\'ajout de la question.');
+                }
+            })
+            .catch(err => console.error(err));
+        });
+    }
+
+});
+</script>
+<script>
+document.getElementById('btnAvis').addEventListener('click', function() {
+    var isConnected = {{ is_granted('IS_AUTHENTICATED_FULLY') ? 'true' : 'false' }};
+    if (isConnected) {
+        var modal = new bootstrap.Modal(document.getElementById('modalAvis'));
+        modal.show();
+    } else {
+        window.location.href = "{{ path('app_login') }}";
+    }
 });
 </script>
 {% endblock %}

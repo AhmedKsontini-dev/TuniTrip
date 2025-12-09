@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\FAQExcursionRepository;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Excursion;
+use App\Entity\User;
 
 #[ORM\Entity(repositoryClass: FAQExcursionRepository::class)]
 class FAQExcursion
@@ -21,11 +22,17 @@ class FAQExcursion
     #[ORM\Column(length: 255)]
     private ?string $question = null;
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: "text", nullable: true)]
     private ?string $reponse = null;
+
+
 
     #[ORM\Column(nullable: true)]
     private ?int $ordre = null;
+
+    #[ORM\ManyToOne(inversedBy: 'faqExcursions')]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
+    private ?User $user = null;
 
     // -------------------- GETTERS & SETTERS --------------------
 
@@ -61,7 +68,7 @@ class FAQExcursion
         return $this->reponse;
     }
 
-    public function setReponse(string $reponse): self
+    public function setReponse(?string $reponse): self
     {
         $this->reponse = $reponse;
         return $this;
@@ -75,6 +82,17 @@ class FAQExcursion
     public function setOrdre(?int $ordre): self
     {
         $this->ordre = $ordre;
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
         return $this;
     }
 }

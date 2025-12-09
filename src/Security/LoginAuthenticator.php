@@ -44,14 +44,21 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        // 1️⃣ Si Symfony connaît la page précédente → on y retourne
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
 
-        // Rediriger vers le dashboard ou la home
+        // 2️⃣ Sinon → on retourne vers la page d’où vient le formulaire
+        $referer = $request->headers->get('referer');
+        if ($referer) {
+            return new RedirectResponse($referer);
+        }
+
+        // 3️⃣ Fallback (si vraiment aucune info) → home
         return new RedirectResponse($this->urlGenerator->generate('app_accueil'));
-       
     }
+
 
     protected function getLoginUrl(Request $request): string
     {

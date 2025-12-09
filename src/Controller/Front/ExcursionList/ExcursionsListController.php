@@ -49,10 +49,18 @@ final class ExcursionsListController extends AbstractController
         $localisations = $excursionRepository->findDistinctLocalisations();
         $categories = $excursionRepository->findDistinctCategories();
 
+        // 🔽 Récupérer les ids d'excursions favorites pour l'utilisateur connecté
+        $userFavorisIds = [];
+        $user = $this->getUser();
+        if ($user) {
+            $userFavorisIds = $user->getFavoris()->map(fn($f) => $f->getExcursion()->getId())->toArray();
+        }
+
         return $this->render('Front/ExcursionsList/index.html.twig', [
             'excursions' => $excursions,
             'localisations' => $localisations,
             'categories' => $categories,
+            'userFavorisIds' => $userFavorisIds, // <-- envoyer à Twig
         ]);
     }
 }

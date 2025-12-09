@@ -16,14 +16,18 @@ class AvisExcursionType extends AbstractType
         $builder
             ->add('note', ChoiceType::class, [
                 'choices' => [
-                    '1 - Horrible' => 1,
-                    '2 - Médiocre' => 2,
-                    '3 - Moyen' => 3,
-                    '4 - Très bon' => 4,
-                    '5 - Excellent' => 5,
+                    5 => 5,
+                    4 => 4,
+                    3 => 3,
+                    2 => 2,
+                    1 => 1,
                 ],
-                'expanded' => true, // pour afficher comme boutons radio
+                'expanded' => true,
+                'multiple' => false,
+                'label' => false,
+                'choice_label' => false,
             ])
+
             ->add('compagnon', ChoiceType::class, [
                 'choices' => [
                     'Affaires' => 'Affaires',
@@ -33,9 +37,6 @@ class AvisExcursionType extends AbstractType
                     'Solo' => 'Solo',
                 ],
                 'placeholder' => 'Choisir...',
-            ])
-            ->add('titre', TextType::class, [
-                'required' => false,
             ])
             ->add('commentaire', TextareaType::class, [
                 'required' => false,

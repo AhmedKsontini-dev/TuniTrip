@@ -32,6 +32,10 @@ class AvisExcursion
     #[ORM\Column(type: 'datetime')]
     private \DateTimeInterface $createdAt;
 
+    #[ORM\Column(type: "string", length: 50, nullable: true)]
+    private ?string $compagnon = null;
+
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -98,4 +102,16 @@ class AvisExcursion
         $this->createdAt = $createdAt;
         return $this;
     }
+
+    public function getCompagnon(): ?string
+    {
+        return $this->compagnon;
+    }
+
+    public function setCompagnon(?string $compagnon): self
+    {
+        $this->compagnon = $compagnon;
+        return $this;
+    }
+
 }

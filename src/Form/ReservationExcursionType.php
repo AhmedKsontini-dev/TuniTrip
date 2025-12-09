@@ -20,11 +20,11 @@ class ReservationExcursionType extends AbstractType
             ->add('child')
             ->add('dateHeure')
             ->add('localisationPoint')
-            ->add('dateCreation')
-            ->add('statut')
             ->add('excursion', EntityType::class, [
                 'class' => Excursion::class,
-                'choice_label' => 'id',
+                'choice_label' => 'titre',
+                'attr' => ['hidden' => true],
+                'label' => false
             ])
         ;
     }

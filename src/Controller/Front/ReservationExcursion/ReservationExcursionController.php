@@ -25,8 +25,13 @@ class ReservationExcursionController extends AbstractController
             $em->persist($reservation);
             $em->flush();
 
-            $this->addFlash('success', 'Réservation effectuée avec succès !');
-            return $this->redirectToRoute('reservation_excursion');
+           // Renvoyer l'objet pour le récap
+            return $this->render('Front/ExcursionDetails/index.html.twig', [
+                'excursion' => $excursion,
+                'reservationForm' => $form->createView(),
+                'reservationOK' => true,
+                'reservation' => $reservationExcursion
+            ]);
         }
 
         return $this->render('front/excursion/index.html.twig', [

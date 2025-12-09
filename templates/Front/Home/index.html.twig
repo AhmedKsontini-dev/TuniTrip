@@ -174,10 +174,12 @@
 .section-title {
     text-align: center;
     color: #1c2228;
-    font-size: 2.5rem;
     margin-bottom: 20px;
     font-family: 'Playfair Display', serif;
     font-weight: 700;
+    font-size: 38px;
+
+
 }
 
 .section-subtitle {
@@ -758,16 +760,31 @@
 
 
 
-/* --- Section confort --- */
+/* ========================================
+   TuniTrip - Comfort Section Styles
+   Modern & Animated Design
+   ======================================== */
+
+/* --- Section Confort Hero --- */
+
 .car-section {
     position: relative;
     background: url('../assetsFront/about-sky.png') center center / cover no-repeat;
-    overflow: visible; /* Changé de hidden à visible pour permettre le débordement */
-    height: 80vh;
+    overflow: visible;
+    min-height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-bottom: 100px; /* Espace pour l'image qui déborde */
+    padding: 80px 0 150px;
+}
+
+.car-section .car-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 }
 
 .car-section .car-bg::before {
@@ -777,113 +794,322 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.45);
+    background: linear-gradient(
+        180deg, 
+        rgba(0, 0, 0, 0.3) 0%, 
+        rgba(28, 34, 40, 0.5) 100%
+    );
     z-index: 1;
+}
+
+/* Animation de particules dorées */
+.car-section .car-bg::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20% 30%, #D7B65D, transparent),
+        radial-gradient(2px 2px at 60% 70%, #D7B65D, transparent),
+        radial-gradient(1px 1px at 50% 50%, #D7B65D, transparent),
+        radial-gradient(1px 1px at 80% 10%, #D7B65D, transparent),
+        radial-gradient(2px 2px at 90% 60%, #D7B65D, transparent);
+    background-size: 200% 200%;
+    background-position: 0% 0%;
+    animation: particlesFloat 20s ease-in-out infinite;
+    opacity: 0.3;
+    z-index: 1;
+}
+
+@keyframes particlesFloat {
+    0%, 100% {
+        background-position: 0% 0%;
+        opacity: 0.3;
+    }
+    50% {
+        background-position: 100% 100%;
+        opacity: 0.5;
+    }
 }
 
 .car-section .container {
     position: relative;
-    z-index: 2;
+    z-index: 10;
 }
 
+/* Typography avec animations */
 .small-text {
-    font-size: 1rem;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.95);
+    font-size: clamp(16px, 3vw, 20px);
+    font-family: 'Beyond', sans-serif;
     font-weight: 300;
     letter-spacing: 1px;
-    opacity: 0.9;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 0.3s forwards;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .big-title {
-    font-size: 3rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    margin-bottom: 4rem;
+    line-height: 1;
 }
 
+.big-title span:first-child {
+    display: block;
+    color: #D7B65D;
+    font-weight: 700;
+    font-size: clamp(40px, 8vw, 70px);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 4px 20px rgba(215, 182, 93, 0.4);
+    opacity: 0;
+    animation: fadeInScale 1s ease-out 0.6s forwards;
+}
+
+.big-title span:last-child {
+    display: block;
+    color: #ffffff;
+    font-size: clamp(32px, 6vw, 50px);
+    font-weight: 600;
+    font-family: 'Georgia', serif;
+    text-transform: capitalize;
+    text-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    animation: fadeInScale 1s ease-out 0.9s forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Car Container avec animation d'entrée */
 .car-container {
     position: relative;
-    height: 300px; /* Augmenté pour permettre le débordement */
-    margin-bottom: -100px; /* Déborde sur la section suivante */
+    height: 350px;
+    margin-bottom: -150px;
+    z-index: 10;
 }
 
 .car-img {
     position: absolute;
-    right: -400px;
+    right: -500px;
     max-width: 95%;
+    height: auto;
     opacity: 0;
-    transform: translateX(0);
-    transition: all 1.5s ease-out;
-    z-index: 10; /* Pour être au-dessus de la section suivante */
+    transform: translateX(0) scale(0.9);
+    filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.4));
+    z-index: 10;
+    transition: none;
 }
 
 .car-img.animate {
-    right: 50%;
-    transform: translateX(50%);
-    opacity: 1;
+    animation: carSlideIn 1.8s cubic-bezier(0.34, 1.56, 0.64, 1) 1.2s forwards,
+               carFloat 3s ease-in-out 3s infinite;
+}
+
+@keyframes carSlideIn {
+    0% {
+        right: -500px;
+        opacity: 0;
+        transform: translateX(0) scale(0.9);
+    }
+    60% {
+        right: calc(50% + 20px);
+        transform: translateX(50%) scale(1.02);
+    }
+    100% {
+        right: 50%;
+        opacity: 1;
+        transform: translateX(50%) scale(1);
+    }
+}
+
+@keyframes carFloat {
+    0%, 100% {
+        transform: translateX(50%) translateY(0px);
+    }
+    50% {
+        transform: translateX(50%) translateY(-15px);
+    }
+}
+
+/* --- Section Séparation --- */
+.separator-section {
+    background: linear-gradient(180deg, #1c2228 0%, #252b33 100%);
+    padding: 120px 0 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.separator-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        #D7B65D 30%,
+        #D7B65D 70%,
+        transparent 100%);
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% {
+        opacity: 0.5;
+        transform: scaleX(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scaleX(1.1);
+    }
 }
 
 /* --- Section Confort Plus --- */
 .comfort-section {
+    background: linear-gradient(180deg, #252b33 0%, #1c2228 100%);
+    padding: 80px 0 120px !important;
     position: relative;
-    padding-top: 120px !important; /* Espace pour l'image de la voiture */
     overflow: visible;
 }
 
-.comfort-section h2 {
-    font-size: 2rem;
-    font-weight: 700;
+/* Background animé subtil */
+.comfort-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(216, 182, 93, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(216, 182, 93, 0.04) 0%, transparent 50%);
+    animation: backgroundPulse 8s ease-in-out infinite;
 }
 
-.comfort-section .row {
-    position: relative;
+@keyframes backgroundPulse {
+    0%, 100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
 }
 
-/* Image des chaises avec débordement */
+/* Image Container avec débordement */
 .comfort-section .img-container {
     position: relative;
-    margin-bottom: -80px; /* 20% de débordement sur la section suivante */
+    margin-bottom: -80px;
     z-index: 5;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s ease-out 0.5s forwards;
 }
 
 .comfort-section .img-fluid {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
-    z-index: 5;
 }
 
-.icon-card {
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    transition: transform 0.3s;
+.comfort-section .img-fluid::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #D7B65D, transparent, #D7B65D);
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: -1;
 }
 
-.icon-card:hover {
-    transform: translateY(-5px);
+.comfort-section .img-container:hover .img-fluid {
+    transform: scale(1.03) translateY(-5px);
+    box-shadow: 
+        0 40px 100px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(215, 182, 93, 0.2);
 }
 
-.icon-card .icon {
-    font-size: 2rem;
-    color: #007bff;
+/* Content Text */
+.comfort-section h2 {
+    color: #ffffff;
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 3rem;
+    letter-spacing: -0.5px;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 0.7s forwards;
 }
 
-.icon-card h5 {
-    font-size: 1rem;
-    font-weight: 600;
+.comfort-section h2 span {
+    color: #D7B65D;
+    font-weight: 700;
+    position: relative;
+    display: inline-block;
 }
 
-/* Section suivante - ajustement du padding */
-.next-section {
-    padding-top: 100px !important; /* Espace pour l'image des chaises */
+.comfort-section h2 span::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #D7B65D, transparent);
+    animation: underlineGrow 1s ease-out 1.5s forwards;
 }
 
+@keyframes underlineGrow {
+    to {
+        width: 100%;
+    }
+}
+
+/* Icon Grid avec lignes pointillées dorées */
 .icon-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 0;
     position: relative;
     padding: 30px 0;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 1s forwards;
 }
 
-/* Ligne horizontale pointillée au milieu */
+/* Ligne horizontale pointillée animée */
 .icon-grid::before {
     content: "";
     position: absolute;
@@ -893,9 +1119,11 @@
     height: 2px;
     border-top: 2px dotted #D7B65D;
     transform: translateY(-50%);
+    opacity: 0;
+    animation: lineGrowHorizontal 1s ease-out 1.2s forwards;
 }
 
-/* Ligne verticale pointillée au milieu */
+/* Ligne verticale pointillée animée */
 .icon-grid::after {
     content: "";
     position: absolute;
@@ -905,39 +1133,251 @@
     width: 2px;
     border-left: 2px dotted #D7B65D;
     transform: translateX(-50%);
+    opacity: 0;
+    animation: lineGrowVertical 1s ease-out 1.4s forwards;
 }
 
+@keyframes lineGrowHorizontal {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) scaleX(0);
+    }
+    to {
+        opacity: 0.6;
+        transform: translateY(-50%) scaleX(1);
+    }
+}
+
+@keyframes lineGrowVertical {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) scaleY(0);
+    }
+    to {
+        opacity: 0.6;
+        transform: translateX(-50%) scaleY(1);
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Icon Items avec animations échelonnées */
 .icon-item {
     text-align: center;
     padding: 40px 20px;
     position: relative;
     z-index: 1;
+    background: transparent;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0;
+}
+
+.icon-item:nth-child(1) {
+    animation: iconFadeIn 0.6s ease-out 1.6s forwards;
+}
+
+.icon-item:nth-child(2) {
+    animation: iconFadeIn 0.6s ease-out 1.8s forwards;
+}
+
+.icon-item:nth-child(3) {
+    animation: iconFadeIn 0.6s ease-out 2s forwards;
+}
+
+.icon-item:nth-child(4) {
+    animation: iconFadeIn 0.6s ease-out 2.2s forwards;
+}
+
+@keyframes iconFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.icon-item::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(216, 182, 93, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: -1;
+}
+
+.icon-item:hover::before {
+    width: 200%;
+    height: 200%;
+}
+
+.icon-item:hover {
+    transform: translateY(-10px) scale(1.02);
+}
+
+.icon-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.icon-item:hover img {
+    transform: scale(1.15) rotateY(360deg);
+    filter: brightness(0) invert(1) drop-shadow(0 0 15px rgba(216, 182, 93, 0.6));
+    opacity: 1;
 }
 
 .icon-item h5 {
+    color: #ffffff;
+    margin-top: 1.25rem;
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
     font-weight: 500;
-    line-height: 1.4;
+    line-height: 1.5;
+    letter-spacing: 0.3px;
+    transition: all 0.3s ease;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .icon-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+.icon-item:hover h5 {
+    color: #D7B65D;
+    transform: scale(1.05);
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 991px) {
+    .car-section {
+        min-height: 70vh;
+        padding: 60px 0 120px;
     }
     
-    .icon-grid::before,
+    .car-container {
+        height: 280px;
+        margin-bottom: -120px;
+    }
+    
+    .separator-section {
+        padding: 100px 0 60px;
+    }
+    
+    .comfort-section {
+        padding: 60px 0 100px !important;
+    }
+    
+    .comfort-section .img-container {
+        margin-bottom: -60px;
+    }
+}
+
+@media (max-width: 768px) {
+    .car-section {
+        min-height: 60vh;
+        padding: 40px 0 100px;
+    }
+    
+    .big-title span:first-child {
+        font-size: 36px;
+    }
+    
+    .big-title span:last-child {
+        font-size: 28px;
+    }
+    
+    .car-container {
+        height: 220px;
+        margin-bottom: -100px;
+    }
+    
+    .car-img {
+        right: -300px;
+        max-width: 90%;
+    }
+    
+    .separator-section {
+        padding: 80px 0 40px;
+    }
+    
+    .comfort-section {
+        padding: 40px 0 80px !important;
+    }
+    
+    .comfort-section h2 {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .icon-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+        padding: 20px 0;
+    }
+    
+    .icon-grid::before {
+        display: none;
+    }
+    
     .icon-grid::after {
         display: none;
     }
     
     .icon-item {
-        padding: 20px;
-        border-bottom: 1px dotted #D7B65D;
+        padding: 30px 20px;
+        border-bottom: 1px dotted rgba(215, 182, 93, 0.3);
     }
     
     .icon-item:last-child {
         border-bottom: none;
+    }
+}
+
+@media (max-width: 575px) {
+    .small-text {
+        font-size: 14px;
+    }
+    
+    .big-title span:first-child {
+        font-size: 32px;
+    }
+    
+    .big-title span:last-child {
+        font-size: 24px;
+    }
+    
+    .car-container {
+        height: 180px;
+        margin-bottom: -80px;
+    }
+    
+    .icon-item {
+        padding: 25px 15px;
+    }
+    
+    .icon-item img {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+/* Performance optimization */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }
 /* --- END Section confort --- */
@@ -1279,11 +1719,6 @@
   background: #fff;
 }
 
-.section-title {
-  font-size: 2.2rem;
-  font-weight: 700;
-  margin-bottom: 20px;
-}
 
 .section-subtitle {
   color: #666;
@@ -1373,8 +1808,8 @@
   margin-top: 4px;
 }
 .price span {
-  color: #ddd;
-  font-size: 0.8rem;
+  color: #1c2228;
+  font-size: 17px;
 }
 .price-text {
   color: #FFD700; /* jaune doré pour le prix */
@@ -1557,6 +1992,7 @@
     background: url('../assetsFront/images/excu.jpeg') center center/cover no-repeat;
     padding: 80px 50px;
     text-align: center;
+    padding: 50px 40px;
 }
 
 .excurssion-container h1 {
@@ -1567,7 +2003,7 @@
     text-align: center;
 }
 .swiper {
-    padding-bottom: 50px;
+    padding-bottom: 20px;
 }
 
 .swiper-slide {
@@ -1829,7 +2265,6 @@
 
         .view-all-container {
             text-align: center;
-            margin-top: 40px;
         }
 
         .view-all-btn {
@@ -2618,6 +3053,143 @@
 }
 
 
+.tour-card {
+    background: #ffffff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.tour-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.35);
+}
+
+/* IMAGE */
+.image-container {
+    position: relative;
+    height: 260px;
+    overflow: hidden;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .5s;
+}
+
+.tour-card:hover img {
+    transform: scale(1.1);
+}
+
+/* CATEGORY TAG */
+.category-tag {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #d8b65d;
+    color: #1c2228;
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: bold;
+    backdrop-filter: blur(4px);
+}
+
+/* HEART ICON */
+.favorite-btn {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    background: rgba(255,255,255,0.8);
+    border: none;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background .3s;
+}
+
+.favorite-btn:hover {
+    background: #d8b65d;
+    color: #1c2228;
+}
+
+/* CONTENT */
+.card-content {
+    padding: 20px;
+}
+
+.tour-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1c2228;
+    margin-bottom: 8px;
+}
+
+/* QUICK INFO */
+.quick-info span {
+    font-size: 14px;
+    color: #555;
+    margin-right: 12px;
+}
+
+.quick-info i {
+    margin-right: 5px;
+    color: #d8b65d;
+}
+
+/* DESCRIPTION LIMITÉE À 4 LIGNES */
+.tour-description {
+    color: #444;
+    font-size: 15px;
+    margin: 12px 0 18px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* FOOTER */
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #d8b65d;
+}
+
+.per {
+    font-size: 14px;
+    color: #777;
+    margin-left: 3px;
+}
+
+/* BUTTON */
+.view-btn {
+    background: #1c2228;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-size: 14px;
+    transition: background .3s, transform .3s;
+}
+
+.view-btn:hover {
+    background: #d8b65d;
+    color: #1c2228;
+    transform: scale(1.06);
+}
+
 </style>
 
 
@@ -2846,23 +3418,23 @@
 
 <section class="transfer-section">
   <div class="transfer-item">
-    <img src="{{ asset('assetsFront/serv_01-140x140.jpg') }}" alt="Airport Transfer">
+    <img src="{{ asset('assetsFront/serv_01-140x140.jpg') }}" alt="Transfert Aéroport">
     <div class="transfer-content">
-      <h3>Airport Transfers →</h3>
-      <p>Pellentesque semper dui eget fermentum sagittis. Cur abitur bibendum id ante.</p>
+      <h3>Transferts Aéroport →</h3>
+      <p>Service de navette fiable et ponctuel entre l'aéroport et votre destination en Tunisie.</p>
     </div>
   </div>
 
   <div class="transfer-item">
-    <img src="{{ asset('assetsFront/serv_02-140x140.jpg') }}" alt="Business Transfer">
+    <img src="{{ asset('assetsFront/serv_02-140x140.jpg') }}" alt="Transfert Affaires">
     <div class="transfer-content">
-      <h3>Business Transfers →</h3>
-      <p>Sed nisi magna, rhoncus nec imperdiet non, pretium vitae odio donec scelerisque gravida.</p>
+      <h3>Transferts Affaires →</h3>
+      <p>Transport professionnel haut de gamme pour vos déplacements d'affaires en toute sérénité.</p>
     </div>
   </div>
 
   <div class="transfer-item">
-    <img src="{{ asset('assetsFront/serv_03-140x140.jpg') }}" alt="Excursions">
+    <img src="{{ asset('assetsFront/road-trip-roadtrip-explorer-exploring.jpg') }}" alt="Excursions">
     <div class="transfer-content">
       <h3>Excursions →</h3>
       <p>Découvrez nos excursions et circuits uniques à travers les plus beaux sites de Tunisie.</p>
@@ -2980,78 +3552,86 @@
 
 
 
-<!-- Section Confort -->
-<section class="car-section position-relative text-center text-white py-5">
+{# Section Confort - Hero avec voiture animée #}
+<section class="car-section position-relative text-center text-white">
     <div class="car-bg"></div>
 
     <div class="container position-relative z-10">
-        <p class="small-text mb-2" style="
-    font-style: italic;
-    color:black;
-    font-size: 20px;
-    font-family: 'Beyond';
-    ">We value the time and quality of travel for each of our clients</p>
-        <h2 class="big-title mb-5">
-          <span style="display:block;color:#D7B65D;font-weight: bolder;font-size: 70px;">Incredible</span>
-          <span style="display:block;color:#1c2228;font-size: 50px;font-weight: 600;font-family: serif;">comfort</span>
+        <p class="small-text">
+            Nous valorisons le temps et la qualité de voyage de chacun de nos clients
+        </p>
+        
+        <h2 class="big-title">
+            <span>Un confort</span>
+            <span>incroyable</span>
         </h2>
 
         <div class="car-container">
             <img src="{{ asset('assetsFront/about-limmo-large.png') }}" 
-                 alt="Car" class="car-img">
+                 alt="Luxury limousine showcasing TuniTrip comfort" 
+                 class="car-img"
+                 loading="lazy">
         </div>
     </div>
 </section>
 
-<!-- Section Séparation avec voiture qui déborde -->
-<section class="separator-section" style="background-color: #1c2228; padding-top: 50px; padding-bottom: 60px;">
-    <div class="container">
-        <!-- Cette section est vide mais accueille le débordement de la voiture -->
-    </div>
-</section>
 
-<!-- Section Confort Plus -->
-<section class="comfort-section py-5" style="background-color: #1c2228;">
+
+{# Section Confort Plus - Avantages avec grille animée #}
+<section class="comfort-section">
     <div class="container">
         <div class="row align-items-center">
-            <!-- Image à gauche avec débordement -->
-            <div class="col-md-6 mb-4 mb-md-0 text-center">
+            {# Image à gauche avec débordement #}
+            <div class="col-lg-6 mb-4 mb-lg-0">
                 <div class="img-container">
-                    <img src="{{ asset('assetsFront/about-chairs.png') }}" alt="Chairs" class="img-fluid">
+                    <img src="{{ asset('assetsFront/about-chairs.png') }}" 
+                         alt="Premium leather seats in TuniTrip vehicles" 
+                         class="img-fluid"
+                         loading="lazy">
                 </div>
             </div>
 
-            <!-- Texte à droite -->
-<div class="col-md-6">
-    <h2 class="mb-4" style="color: white;">We make sure that your every trip is <span style="color: #D7B65D;">comfortable</span></h2>
-    
-    <div class="icon-grid d-flex flex-wrap gap-3">
-        <!-- Card 1 -->
-        <div class="icon-item text-center" style="flex: 0 0 48%;">
-            <img src="{{ asset('assetsFront/icons/clock.png') }}" alt="Clock" style="width:50px; height:50px;">
-            <h5 style="color: white; margin-top: 15px; font-size: 0.95rem;">24/7 Order<br>Available</h5>
-        </div>
-        
-        <!-- Card 2 -->
-        <div class="icon-item text-center" style="flex: 0 0 48%;">
-            <img src="{{ asset('assetsFront/icons/support.png') }}" alt="Support" style="width:50px; height:50px;">
-            <h5 style="color: white; margin-top: 15px; font-size: 0.95rem;">Fast Car<br>Delivery Service</h5>
-        </div>
-        
-        <!-- Card 3 -->
-        <div class="icon-item text-center" style="flex: 0 0 48%;">
-            <img src="{{ asset('assetsFront/icons/seat.png') }}" alt="Seat" style="width:50px; height:50px;">
-            <h5 style="color: white; margin-top: 15px; font-size: 0.95rem;">High Safety<br>and Security</h5>
-        </div>
-        
-        <!-- Card 4 -->
-        <div class="icon-item text-center" style="flex: 0 0 48%;">
-            <img src="{{ asset('assetsFront/icons/chauffeur.png') }}" alt="Driver" style="width:50px; height:50px;">
-            <h5 style="color: white; margin-top: 15px; font-size: 0.95rem;">Professional Car<br>Drivers</h5>
-        </div>
-    </div>
-</div>
-
+            {# Contenu à droite avec icônes #}
+            <div class="col-lg-6">
+                <h2>
+                    Nous nous assurons que chacun de vos trajets soit 
+                    <span>confortable</span>
+                </h2>
+                
+                <div class="icon-grid">
+                    {# Service 1 - Disponibilité 24/7 #}
+                    <div class="icon-item">
+                        <img src="{{ asset('assetsFront/icons/clock.png') }}" 
+                             alt="Icône service 24/7"
+                             loading="lazy">
+                        <h5>Commande 24/7<br>Disponible</h5>
+                    </div>
+                    
+                    {# Service 2 - Livraison rapide #}
+                    <div class="icon-item">
+                        <img src="{{ asset('assetsFront/icons/support.png') }}" 
+                             alt="Icône livraison rapide"
+                             loading="lazy">
+                        <h5>Livraison<br>Rapide</h5>
+                    </div>
+                    
+                    {# Service 3 - Sécurité #}
+                    <div class="icon-item">
+                        <img src="{{ asset('assetsFront/icons/seat.png') }}" 
+                             alt="Icône sécurité"
+                             loading="lazy">
+                        <h5>Haute Sécurité<br>et Fiabilité</h5>
+                    </div>
+                    
+                    {# Service 4 - Chauffeurs professionnels #}
+                    <div class="icon-item">
+                        <img src="{{ asset('assetsFront/icons/chauffeur.png') }}" 
+                             alt="Icône chauffeur professionnel"
+                             loading="lazy">
+                        <h5>Chauffeurs<br>Professionnels</h5>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -3071,12 +3651,12 @@
 
       <!-- Card blanche sur l'image -->
       <div class="transfer-card">
-        <span class="transfer-subtitle">SHUTTLE</span>
-        <h2 class="transfer-title">Effortless Airport Transfers in Tunisia</h2>
+        <span class="transfer-subtitle">NAVETTE</span>
+        <h2 class="transfer-title">Transferts Aéroport Sans Effort en Tunisie</h2>
         <p class="transfer-text">
-          Discover the ultimate convenience of our airport transfer services from Tunis Carthage Airport in Tunisia. Whether you’re arriving or departing, our reliable and professional chauffeurs will ensure a smooth and hassle-free journey to your destination. With a diverse fleet of comfortable vehicles, we cater to solo travelers, families, and groups of any size. From popular tourist spots to business locations, our punctual and customer-focused service will exceed your expectations. Book your economy or VIP airport transfer from Tunis Carthage Airport today and enjoy a seamless travel experience in Tunis.
+          Découvrez la commodité ultime de nos services de transfert aéroport depuis l'Aéroport de Tunis-Carthage en Tunisie. Que vous arriviez ou partiez, nos chauffeurs fiables et professionnels vous garantissent un trajet fluide et sans tracas vers votre destination. Avec une flotte diversifiée de véhicules confortables, nous répondons aux besoins des voyageurs seuls, des familles et des groupes de toute taille. Des sites touristiques populaires aux lieux d'affaires, notre service ponctuel et axé sur le client dépassera vos attentes. Réservez dès aujourd'hui votre transfert aéroport économique ou VIP depuis l'Aéroport de Tunis-Carthage et profitez d'une expérience de voyage fluide à Tunis.
 
-          Enjoy a seamless and stress-free journey with our reliable Airport transfers tunisia. Our friendly chauffeurs and comfortable vehicles will ensure a smooth ride to your hotel or any other destination in the city. Let us take care of your transportation needs, allowing you to fully immerse yourself in the beauty and charm of Tunis. Start your trip on the right note by booking our trusted Tunis–Carthage airport transfer service today!
+          Profitez d'un voyage fluide et sans stress grâce à nos transferts aéroport fiables en Tunisie. Nos chauffeurs sympathiques et nos véhicules confortables vous garantissent un trajet agréable vers votre hôtel ou toute autre destination dans la ville. Laissez-nous prendre soin de vos besoins de transport, vous permettant de vous immerger pleinement dans la beauté et le charme de Tunis. Commencez votre voyage du bon pied en réservant dès aujourd'hui notre service de transfert aéroport Tunis-Carthage de confiance !
         </p>
        
       </div>
@@ -3094,26 +3674,26 @@
         <div class="process-container">
             <div class="process-step">
                 <div class="circle-wrapper">
-                    <img src="{{asset('assetsFront/route.png')}}" alt="Parking lot with cars">
+                    <img src="{{asset('assetsFront/route.png')}}" alt="Parking avec voitures">
                 </div>
-                <h3 class="step-title">Create Your Route</h3><br>
-                  <p class="step-description">Enter your pickup & dropoff locations or the number of hours you wish to book a car and driver for</p>
+                <h3 class="step-title">Créez Votre Itinéraire</h3><br>
+                  <p class="step-description">Entrez vos lieux de prise en charge et de dépose ou le nombre d'heures pour lesquelles vous souhaitez réserver une voiture avec chauffeur</p>
             </div>
 
             <div class="process-step">
                 <div class="circle-wrapper">
-                    <img src="{{asset('assetsFront/choseCar.jpg')}}" alt="Gavel and car key">
+                    <img src="{{asset('assetsFront/choseCar.jpg')}}" alt="Marteau et clé de voiture">
                 </div>
-                <h3 class="step-title">Chose your car</h3><br>
-                  <p class="step-description">Select the car that suits your style or budget. Choose your favorite from a range of options tailored to your needs.</p>
+                <h3 class="step-title">Choisissez Votre Voiture</h3><br>
+                  <p class="step-description">Sélectionnez la voiture qui correspond à votre style ou budget. Choisissez votre préférée parmi une gamme d'options adaptées à vos besoins.</p>
             </div>
 
             <div class="process-step">
                 <div class="circle-wrapper">
-                    <img src="{{asset('assetsFront/confirmation.jpg')}}" alt="Container ship">
+                    <img src="{{asset('assetsFront/confirmation.jpg')}}" alt="Porte-conteneurs">
                 </div>
-                <h3 class="step-title">Receive a confirmation</h3><br>
-                  <p class="step-description">Your booking is received, you'll receive a confirmation email or notification with all the details of your reservation.</p>
+                <h3 class="step-title">Recevez une Confirmation</h3><br>
+                  <p class="step-description">Votre réservation est reçue, vous recevrez un email ou une notification de confirmation avec tous les détails de votre réservation.</p>
             </div>
         </div>
     </section>
@@ -3127,16 +3707,16 @@
 
 	<section class="popular-locations">
   <div class="container">
-    <h2 class="section-title text-center">Transferet</h2>
+    <h2 class="section-title text-center">Transferts</h2>
     <p class="section-subtitle text-center">
-      We’ve highlighted the most popular destinations among our guests. Whether you’re heading to Tunis Carthage Airport or Enfidha Airport, take a look and plan your transfer with ease.
+      Nous avons sélectionné les destinations les plus populaires parmi nos clients. Que vous vous rendiez à l'aéroport de Tunis-Carthage ou à l'aéroport d'Enfidha, jetez un coup d'œil et planifiez votre transfert en toute simplicité.
     </p>
 
     <div class="row">
 
       <!-- Tunis Carthage Airport -->
       <div class="col-lg-6 col-md-12">
-        <h3 class="airport-title">Tunis Carthage Airport</h3>
+        <h3 class="airport-title">Aéroport de Tunis-Carthage</h3>
         <div class="cards-container">
           {% for transfere in tunisCarthageTransfers %}
             <a href="{{ path('app_reservation_transfert_new', { id: transfere.id }) }}" class="location-card-link">
@@ -3155,14 +3735,14 @@
               </div>
             </a>
           {% else %}
-            <p class="text-center text-muted">No transfers available.</p>
+            <p class="text-center text-muted">Aucun transfert disponible.</p>
           {% endfor %}
         </div>
       </div>
 
       <!-- Enfidha Airport -->
       <div class="col-lg-6 col-md-12">
-        <h3 class="airport-title">Enfidha Airport</h3>
+        <h3 class="airport-title">Aéroport d'Enfidha</h3>
         <div class="cards-container">
           {% for transfere in enfidhaTransfers %}
             <a href="{{ path('app_reservation_transfert_new', { id: transfere.id }) }}" class="location-card-link">
@@ -3181,7 +3761,7 @@
               </div>
             </a>
           {% else %}
-            <p class="text-center text-muted">No transfers available.</p>
+            <p class="text-center text-muted">Aucun transfert disponible.</p>
           {% endfor %}
         </div>
       </div>
@@ -3225,58 +3805,54 @@
 
 
 <div class="excurssion-container">
-    <h1>Trending Adventure Tours</h1>
-    
+    <h1 class="section-title">Excursions Aventure Tendance</h1>
+
     <div class="swiper toursSwiper">
         <div class="swiper-wrapper">
             {% for excursion in excursions %}
                 <div class="swiper-slide">
                     <div class="tour-card">
+
+                        <!-- IMAGE HEADER -->
                         <div class="image-container">
-                            {# Utiliser mainImagePath défini dans le controller #}
                             <img src="{{ excursion.mainImagePath }}" alt="{{ excursion.titre }}">
-                            
-                            {% if loop.index <= 3 %}
-                                <div class="badge">Populaire</div>
-                            {% else %}
-                                <div class="badge">Nouveau</div>
-                            {% endif %}
-                            
-                            <button class="favorite-btn">
-                                <i class="far fa-heart"></i>
-                            </button>
-                            <div class="play-button">
-                                <i class="fas fa-play"></i>
+
+                            <!-- Tag catégorie -->
+                            <div class="category-tag">
+                                {{ excursion.categorie }}
                             </div>
+
+                            <button class="favorite-btn" 
+                                    data-excursion-id="{{ excursion.id }}"
+                                    {% if not app.user %}onclick="window.location.href='{{ path('app_login') }}'"{% endif %}>
+                                <i class="far fa-heart {% if app.user and excursion.id in app.user.favoris|map(f => f.excursion.id) %}fas text-warning{% endif %}"></i>
+                            </button>
+
+
+
                         </div>
 
                         <div class="card-content">
-                            <div class="rating">
-                                <i class="fas fa-star"></i>
-                                <span>5</span>
-                                <span class="rating-count">(1)</span>
-                                <span class="location">{{ excursion.localisation }}</span>
-                            </div>
                             <h3 class="tour-title">{{ excursion.titre }}</h3>
-                            <div class="tour-meta">
-                                <div class="tour-meta-item">
-                                    <i class="far fa-clock"></i>
-                                    <span>{{ excursion.duree }}</span>
-                                </div>
-                                <div class="tour-meta-item">
-                                    <i class="fas fa-users"></i>
-                                    <span>0 - 15</span>
-                                </div>
+
+                            <div class="quick-info">
+                                <span><i class="far fa-clock"></i> {{ excursion.duree }}</span>
+                                <span><i class="fas fa-users"></i> Max {{ excursion.maxPers }}</span>
                             </div>
-                            <p class="tour-description">{{ excursion.description }}</p>
+
+                            <p class="tour-description">
+                                {{ excursion.description }}
+                            </p>
+
                             <div class="card-footer">
                                 <div class="price">
-                                    <span class="price-label">from</span>
-                                    {# Utiliser le getter prixParPersonne #}
-                                    <div class="price-amount">${{ excursion.prixParPersonne }} <span>/person</span></div>
+                                    <span class="price-value">${{ excursion.prixParPersonne }}</span>
+                                    <span class="per">/personne</span>
                                 </div>
-                                <button class="view-btn">View tour</button>
-                                
+
+                                <a href="{{ path('app_front_excursion_details', {id: excursion.id}) }}" class="view-btn">
+                                    Voir l'excursion
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -3285,19 +3861,17 @@
         </div>
         
 
-        <!-- Navigation Buttons -->
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
-
-        <!-- Pagination -->
         <div class="swiper-pagination"></div>
     </div>
 
     <div class="view-all-container">
+        <a class="cta-button" href="{{ path('app_front_excursions_list') }}">Voir toutes les excursions</a>
         <div class="view-all-container">
             <div class="button">
                 <div class="button_bcg"></div>
-                <a href="{{ path('app_front_excursions_list') }}">View all tours</a>
+                <a href="{{ path('app_front_excursions_list') }}">Voir toutes les excursions</a>
             </div>
         </div>
         
@@ -3316,7 +3890,7 @@
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <h2 class="section_title">What our clients say about us</h2>
+                <h2 class="section_title">Ce que disent nos clients</h2>
             </div>
         </div>
         <div class="row">
@@ -3340,8 +3914,9 @@
                                     </p>
 
                                     <div class="test_rating">
+                                     
                                         {% for i in 1..a.etoiles %} ★ {% endfor %}
-                                        {% for i in 1..(5 - a.etoiles) %} ☆ {% endfor %}
+                                       
                                     </div>
 
                                     <!-- Tooltip -->
@@ -3362,12 +3937,19 @@
                 </div>
 
                 <!-- Button pour ouvrir modal -->
-                <div class="votre-avis-container">
-                    <div class="button">
-                        <div class="button_bcg"></div>
-                        <a href="javascript:void(0)" onclick="document.getElementById('reviewModal').style.display='flex'">Votre avis →</a>
-                    </div>
-                </div>
+                {% if app.user %}
+                    <button class="cta-button" onclick="document.getElementById('reviewModal').style.display='flex'">
+                        Votre avis →
+                    </button>
+                {% else %}
+                    <button class="cta-button" data-require-login data-action="open-review-modal">
+                        Votre avis →
+                    </button>
+
+
+
+                {% endif %}
+
 
 
             </div>
@@ -3382,16 +3964,7 @@
             <h3>Laisser un avis</h3>
             
             <form id="reviewForm">
-                <div class="form-group">
-                    <label for="nom">Nom</label>
-                    <input type="text" id="nom" name="nom" class="form-control" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="prenom">Prénom</label>
-                    <input type="text" id="prenom" name="prenom" class="form-control" required>
-                </div>
-
+                
                 <div class="form-group">
                     <label for="commentaire">Commentaire</label>
                     <textarea id="commentaire" name="commentaire" class="form-control" required></textarea>
@@ -3440,14 +4013,6 @@
 
 
 
-<!-- Bloc promotion avec image de fond -->
-<section class="promo-banner">
-  <div class="promo-overlay"></div>
-  <div class="promo-content text-center">
-    <h2 class="fw-bold">To the airport<br>with maximum comfort</h2>
-    <p class="mt-3">We value the time and quality of travel for each of our clients</p>
-  </div>
-</section>
 
 
 
@@ -3569,13 +4134,6 @@ $(document).ready(function(){
 </script>
 
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const car = document.querySelector('.car-img');
-    car.classList.add('animate'); // animation directe
-});
-
-</script>
 
 
 
@@ -3766,8 +4324,6 @@ document.getElementById('reviewForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
     const formData = {
-        nom: document.getElementById('nom').value,
-        prenom: document.getElementById('prenom').value,
         commentaire: document.getElementById('commentaire').value,
         etoiles: document.querySelector('input[name="etoiles"]:checked')?.value
     };
@@ -3838,5 +4394,60 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 
+<script>
+document.querySelectorAll('.favorite-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const excursionId = this.dataset.excursionId;
+        const icon = this.querySelector('i');
 
+        fetch('/favori/toggle/' + excursionId, { method: 'POST', headers: {'X-Requested-With': 'XMLHttpRequest'} })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                if (data.favori) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas', 'text-warning');
+                } else {
+                    icon.classList.remove('fas', 'text-warning');
+                    icon.classList.add('far');
+                }
+            } else {
+                alert(data.message);
+            }
+        });
+    });
+});
+</script>
+{# JavaScript pour déclencher l'animation de la voiture #}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Animation de la voiture au chargement
+    const carImg = document.querySelector('.car-img');
+    if (carImg) {
+        // Petit délai pour s'assurer que la page est chargée
+        setTimeout(() => {
+            carImg.classList.add('animate');
+        }, 100);
+    }
+
+    // Animation au scroll pour les autres sections (optionnel)
+    const observerOptions = {
+        threshold: 0.2,
+        rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Observer les éléments qui doivent s'animer au scroll
+    const animatedElements = document.querySelectorAll('.img-container, .icon-item');
+    animatedElements.forEach(el => observer.observe(el));
+});
+</script>
 {% endblock %}

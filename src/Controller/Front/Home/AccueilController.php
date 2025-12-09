@@ -130,17 +130,34 @@ final class AccueilController extends AbstractController
             'avis' => $avis,
             'excursions' => $excursions,
             'formAvis' => $formAvis->createView(),
+            'user' => $this->getUser(),
         ]);
     }
 
     #[Route('/avis/add', name: 'avis_add', methods: ['POST'])]
     public function addAvis(Request $request, EntityManagerInterface $em): JsonResponse
     {
+        if (!$this->getUser()) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'Vous devez être connecté pour laisser un avis.'
+            ], 403);
+        }
+
         $data = json_decode($request->getContent(), true);
 
         $avis = new Avis();
-        $avis->setNom($data['nom'] ?? '');
-        $avis->setPrenom($data['prenom'] ?? '');
+
+        
+        // Rattacher l'avis à l'utilisateur connecté
+        $avis->setUser($this->getUser());
+
+        // Récupérer nom & prénom depuis l'utilisateur connecté
+        $user = $this->getUser();
+        $avis->setNom($user->getNom());
+        $avis->setPrenom($user->getPrenom());
+
+        // Données envoyées par le formulaire
         $avis->setCommentaire($data['commentaire'] ?? '');
         $avis->setEtoiles((int)($data['etoiles'] ?? 0));
         $avis->setDateCreation(new \DateTime());
@@ -160,4 +177,6 @@ final class AccueilController extends AbstractController
             ]
         ]);
     }
+
+
 }

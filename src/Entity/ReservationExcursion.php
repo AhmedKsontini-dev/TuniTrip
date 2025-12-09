@@ -39,6 +39,9 @@ class ReservationExcursion
     #[ORM\Column(type: "string", length: 50)]
     private ?string $statut = null;
 
+    #[ORM\Column(type: 'float')]
+    private ?float $prixTotal = null;
+
     // --- GETTERS & SETTERS ---
     public function getId(): ?int
     {
@@ -141,6 +144,17 @@ class ReservationExcursion
     public function setStatut(string $statut): self
     {
         $this->statut = $statut;
+        return $this;
+    }
+
+    public function getPrixTotal(): ?float
+    {
+        return $this->prixTotal;
+    }
+
+    public function setPrixTotal(float $prixTotal): self
+    {
+        $this->prixTotal = $prixTotal;
         return $this;
     }
 }

@@ -344,15 +344,9 @@
                         <label for="categorie">Catégorie</label>
                         <select name="categorie" id="categorie" class="theme-input">
                             <option value="">Toutes</option>
-                            <option value="attractions">Attractions</option>
-                            <option value="visites guidees">Visites guidées</option>
-                            <option value="excursions journee">Excursions d'une journée</option>
-                            <option value="plein air">Activités de plein air</option>
-                            <option value="concerts spect">Concerts et spectacles</option>
-                            <option value="evenement">Évènements</option>
-                            <option value="cours ateliers">Cours & ateliers</option>
-                            <option value="shopping">Shopping</option>
-                            <option value="ressources touristiques">Ressources touristiques</option>
+                            {% for cat in categories %}
+                                <option value="{{ cat }}" {% if app.request.query.get('categorie') == cat %}selected{% endif %}>{{ cat }}</option>
+                            {% endfor %}
                         </select>
                     </div>
 
@@ -362,15 +356,15 @@
                         <select name="localisation" id="localisation" class="theme-input">
                             <option value="">Toutes</option>
                             {% for loc in localisations %}
-                                <option value="{{ loc }}">{{ loc }}</option>
+                                <option value="{{ loc }}" {% if app.request.query.get('localisation') == loc %}selected{% endif %}>{{ loc }}</option>
                             {% endfor %}
                         </select>
                     </div>
 
                     <!-- Prix -->
                     <div class="filter-group">
-                        <label for="prix">Prix max : <span id="prixValue">200</span> TND</label>
-                        <input type="range" min="10" max="1000" value="200"
+                        <label for="prix">Prix max : <span id="prixValue">{{ app.request.query.get('prix', 200) }}</span> TND</label>
+                        <input type="range" min="10" max="1000" value="{{ app.request.query.get('prix', 200) }}"
                             id="prix" name="prix"
                             class="theme-slider"
                             oninput="document.getElementById('prixValue').textContent=this.value">
@@ -381,10 +375,10 @@
                         <label for="duree">Durée (jours)</label>
                         <select name="duree" id="duree" class="theme-input">
                             <option value="">Toutes</option>
-                            <option value="1">1 jour</option>
-                            <option value="2">2 jours</option>
-                            <option value="3">3 jours</option>
-                            <option value="4+">4 jours et +</option>
+                            <option value="1" {% if app.request.query.get('duree') == '1' %}selected{% endif %}>1 jour</option>
+                            <option value="2" {% if app.request.query.get('duree') == '2' %}selected{% endif %}>2 jours</option>
+                            <option value="3" {% if app.request.query.get('duree') == '3' %}selected{% endif %}>3 jours</option>
+                            <option value="4+" {% if app.request.query.get('duree') == '4+' %}selected{% endif %}>4 jours et +</option>
                         </select>
                     </div>
 
@@ -394,7 +388,7 @@
                         <div class="ratings-filter">
                             {% for n in [5,4,3,2,1] %}
                                 <label class="rating-option">
-                                    <input type="radio" name="rating" value="{{ n }}">
+                                    <input type="radio" name="rating" value="{{ n }}" {% if app.request.query.get('rating') == n %}checked{% endif %}>
                                     <span class="stars">
                                         {% for i in 1..n %}★{% endfor %}
                                     </span>
@@ -408,11 +402,11 @@
                         <label for="langue">Langue du guide</label>
                         <select name="langue" id="langue" class="theme-input">
                             <option value="">Toutes</option>
-                            <option value="fr">Français</option>
-                            <option value="en">Anglais</option>
-                            <option value="de">Allemand</option>
-                            <option value="it">Italien</option>
-                            <option value="es">Espagnol</option>
+                            <option value="Français" {% if app.request.query.get('langue') == 'Français' %}selected{% endif %}>Français</option>
+                            <option value="Anglais" {% if app.request.query.get('langue') == 'Anglais' %}selected{% endif %}>Anglais</option>
+                            <option value="Allemand" {% if app.request.query.get('langue') == 'Allemand' %}selected{% endif %}>Allemand</option>
+                            <option value="Italien" {% if app.request.query.get('langue') == 'Italien' %}selected{% endif %}>Italien</option>
+                            <option value="Espagnol" {% if app.request.query.get('langue') == 'Espagnol' %}selected{% endif %}>Espagnol</option>
                         </select>
                     </div>
 

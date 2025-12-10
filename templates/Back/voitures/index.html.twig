@@ -35,8 +35,8 @@
                 <th>Marque</th>
                 <th>Modèle</th>
                 <th>Immatricule</th>
-                <th>Prix j</th>
                 <th>Boîte de vitesse</th>
+                <th>Prix j</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -54,8 +54,8 @@
                     <td>{{ voiture.marque }}</td>
                     <td>{{ voiture.modele }}</td>
                     <td>{{ voiture.immatriculation }}</td>
-                    <td>{{ voiture.prixJour }}</td>
                     <td>{{ voiture.boiteVitesse }}</td>
+                    <td>{{ voiture.prixJour }}</td>
                     <td>
                         <a href="{{ path('app_voitures_show', {'id': voiture.id}) }}" class="btn btn-sm btn-info">👁️</a>
                         <a href="{{ path('app_voitures_edit', {'id': voiture.id}) }}" class="btn btn-sm btn-warning">✏️</a>

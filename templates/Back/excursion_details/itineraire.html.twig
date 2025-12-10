@@ -1,12 +1,12 @@
 {% extends 'baseBack.html.twig' %}
 
-{% block title %}Nouvel Itinéraire{% endblock %}
+{% block title %}{{ itineraire.id ? 'Modifier Itinéraire' : 'Nouvel Itinéraire' }}{% endblock %}
 
 {% block body %}
 <div class="container mt-5">
-    <h1 class="mb-4 fw-bold">Ajouter une étape d'itinéraire</h1>
+    <h1 class="mb-4 fw-bold">{{ itineraire.id ? 'Modifier l\'étape d\'itinéraire' : 'Ajouter une étape d\'itinéraire' }}</h1>
 
-    {{ form_start(form, {'attr': {'class': 'needs-validation'}}) }}
+    {{ form_start(form, {'attr': {'class': 'needs-validation', 'enctype': 'multipart/form-data'}}) }}
 
     <div class="row g-3">
         <div class="col-md-6">
@@ -15,11 +15,8 @@
         <div class="col-md-6">
             {{ form_row(form.ordre, {'attr': {'class': 'form-control form-control-lg shadow-sm rounded-3'}}) }}
         </div>
-        <div class="col-md-6">
-            {{ form_row(form.latitude, {'attr': {'class': 'form-control form-control-lg shadow-sm rounded-3'}}) }}
-        </div>
-        <div class="col-md-6">
-            {{ form_row(form.longitude, {'attr': {'class': 'form-control form-control-lg shadow-sm rounded-3'}}) }}
+        <div class="col-md-12">
+            {{ form_row(form.coordinates, {'attr': {'class': 'form-control form-control-lg shadow-sm rounded-3', 'placeholder': 'Latitude,Longitude'}}) }}
         </div>
         <div class="col-12">
             {{ form_row(form.descriptionEtape, {'attr': {'class': 'form-control shadow-sm rounded-3', 'rows': 4}}) }}
@@ -37,65 +34,53 @@
         {% for photoForm in form.photos %}
             <div class="col-md-4 photo-item">
                 <div class="card shadow-sm rounded-3 p-3 position-relative">
-                    {{ form_row(photoForm.imageUrl, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_row(photoForm.imageFile, {'attr': {'class': 'form-control'}}) }}
                     {{ form_row(photoForm.legende, {'attr': {'class': 'form-control mt-2'}}) }}
                     {{ form_row(photoForm.ordre, {'attr': {'class': 'form-control mt-2'}}) }}
-                    <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2 remove-photo">
-                        ❌
-                    </button>
+                    <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2 remove-photo">❌</button>
                 </div>
             </div>
         {% endfor %}
     </div>
 
-    <button type="button" class="btn btn-primary mt-3 mb-4" id="add-photo">
-        ➕ Ajouter une photo
-    </button>
+    <button type="button" class="btn btn-primary mt-3 mb-4" id="add-photo">➕ Ajouter une photo</button>
 
     <div class="mt-4">
-        <button class="btn btn-success btn-lg px-4">Enregistrer</button>
+        <button class="btn btn-success btn-lg px-4">{{ itineraire.id ? 'Modifier' : 'Enregistrer' }}</button>
     </div>
 
     {{ form_end(form) }}
 </div>
 
 <style>
-    h1, h3 {
-        color: #2c3e50;
+.photos-collection .photo-item .card {
+    transition: transform 0.2s;
+}
+.photos-collection .photo-item .card:hover {
+    transform: scale(1.03);
+}
+.remove-photo {
+    border-radius: 50%;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.9rem;
+}
+@media (max-width: 767px) {
+    .photos-collection .photo-item {
+        flex: 0 0 100%;
     }
-
-    .photos-collection .photo-item .card {
-        transition: transform 0.2s;
-    }
-
-    .photos-collection .photo-item .card:hover {
-        transform: scale(1.03);
-    }
-
-    .remove-photo {
-        border-radius: 50%;
-        padding: 0.25rem 0.5rem;
-        font-size: 0.9rem;
-    }
-
-    @media (max-width: 767px) {
-        .photos-collection .photo-item {
-            flex: 0 0 100%;
-        }
-    }
+}
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    let collectionHolder = document.querySelector('.photos-collection');
-    let addButton = document.getElementById('add-photo');
-
+    const collectionHolder = document.querySelector('.photos-collection');
+    const addButton = document.getElementById('add-photo');
     let index = collectionHolder.querySelectorAll('.photo-item').length;
 
     addButton.addEventListener('click', () => {
-        let prototype = collectionHolder.dataset.prototype;
-        let newForm = prototype.replace(/__name__/g, index);
-        let div = document.createElement('div');
+        const prototype = collectionHolder.dataset.prototype;
+        const newForm = prototype.replace(/__name__/g, index);
+        const div = document.createElement('div');
         div.classList.add('col-md-4', 'photo-item');
         div.innerHTML = `<div class="card shadow-sm rounded-3 p-3 position-relative">${newForm}<button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2 remove-photo">❌</button></div>`;
         collectionHolder.appendChild(div);

@@ -43,16 +43,12 @@ class ItineraireExcursionType extends AbstractType
                     'min' => 1,
                 ],
             ])
-            ->add('latitude', NumberType::class, [
-                'label' => 'Latitude',
+            ->add('coordinates', TextType::class, [
+                'label' => 'Coordonnées (latitude,longitude)',
                 'required' => true,
                 'attr' => ['class' => 'form-control'],
             ])
-            ->add('longitude', NumberType::class, [
-                'label' => 'Longitude',
-                'required' => true,
-                'attr' => ['class' => 'form-control'],
-            ])
+
             ->add('dureeVisite', TextType::class, [
                 'label' => 'Durée de visite',
                 'required' => false,

@@ -1,0 +1,95 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Itinéraire de l'excursion{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4 fw-bold">Itinéraire de l'excursion : {{ excursion.titre }}</h1>
+
+    <a href="{{ path('itineraire_new', {id: excursion.id}) }}" class="btn btn-primary mb-4">
+        ➕ Ajouter une étape
+    </a>
+
+    {% if itineraires|length > 0 %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Ordre</th>
+                        <th>Titre de l'étape</th>
+                        <th>Coordonnées</th>
+                        <th>Durée visite</th>
+                        <th>Admission</th>
+                        <th>Photos</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for etape in itineraires %}
+                        <tr>
+                            <td>{{ etape.ordre }}</td>
+                            <td>{{ etape.titreEtape }}</td>
+                            <td>{{ etape.coordinates }}</td>
+                            <td>{{ etape.dureeVisite ?: '-' }}</td>
+                            <td>{{ etape.admission ?: '-' }}</td>
+                            <td>
+                                {% if etape.photos|length > 0 %}
+                                    <div class="d-flex flex-wrap gap-2">
+                                        {% for photo in etape.photos %}
+                                            <img src="{{ asset('uploads/itineraire_photos/' ~ photo.imageUrl) }}" 
+                                                 alt="{{ photo.legende }}" 
+                                                 style="width:50px; height:50px; object-fit:cover; border-radius:4px; cursor:pointer;"
+                                                 onclick="openPhotoModal('{{ asset('uploads/itineraire_photos/' ~ photo.imageUrl) }}', '{{ photo.legende }}')">
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{{ path('itineraire_edit', {id: excursion.id, etapeId: etape.id}) }}" class="btn btn-sm btn-warning">✏️ </a>
+                                <form method="post" action="{{ path('itineraire_delete', {id: etape.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer cette étape ?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ etape.id) }}">
+                                    <button class="btn btn-sm btn-danger">🗑️</button>
+                                </form>
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-muted">Aucune étape d'itinéraire pour cette excursion.</p>
+    {% endif %}
+</div>
+
+<script>
+function openPhotoModal(url, legende) {
+    const modalHtml = `
+        <div class="modal fade" id="photoModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">${legende || ''}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img src="${url}" style="max-width:100%; max-height:80vh;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    const modalContainer = document.createElement('div');
+    modalContainer.innerHTML = modalHtml;
+    document.body.appendChild(modalContainer);
+    const modal = new bootstrap.Modal(modalContainer.querySelector('#photoModal'));
+    modal.show();
+    modalContainer.querySelector('#photoModal').addEventListener('hidden.bs.modal', () => {
+        modalContainer.remove();
+    });
+}
+</script>
+
+{% endblock %}

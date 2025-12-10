@@ -63,12 +63,35 @@ final class VoituresController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_voitures_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Voitures $voiture, EntityManagerInterface $entityManager): Response
+    public function edit(
+        Request $request,
+        Voitures $voiture,
+        EntityManagerInterface $entityManager,
+        FileUploader $fileUploader // 🔹 injecter le service FileUploader
+    ): Response
     {
         $form = $this->createForm(VoituresType::class, $voiture);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var UploadedFile $imageVoiture */
+            $imageVoiture = $form->get('image')->getData();
+
+            if ($imageVoiture) {
+                // Supprimer l’ancienne image si nécessaire
+                if ($voiture->getImage()) {
+                    $oldImagePath = $this->getParameter('images_directory') . '/' . $voiture->getImage();
+                    if (file_exists($oldImagePath)) {
+                        @unlink($oldImagePath);
+                    }
+                }
+
+                // Upload de la nouvelle image
+                $imageVoitureName = $fileUploader->upload($imageVoiture);
+                $voiture->setImage($imageVoitureName);
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_voitures_index', [], Response::HTTP_SEE_OTHER);
@@ -79,6 +102,7 @@ final class VoituresController extends AbstractController
             'form' => $form,
         ]);
     }
+
 
     #[Route('/{id}', name: 'app_voitures_delete', methods: ['POST'])]
     public function delete(Request $request, Voitures $voiture, EntityManagerInterface $entityManager): Response

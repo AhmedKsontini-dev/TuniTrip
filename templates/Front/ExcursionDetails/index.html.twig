@@ -2720,16 +2720,19 @@ body, p, .description, .stop-details {
                                     <div class="itinerary-icon-trip start-icon">Départ</div>
                                     <div class="itinerary-content-trip">
                                         <h5 class="fw-bold">On passera vous prendre</h5>
-                                        <a href="#" class="itinerary-link">Voir les détails du départ</a>
+                                        
                                     </div>
                                 </div>
 
                                 {% set steps = excursion.itineraires|sort((a,b) => a.ordre <=> b.ordre) %}
                                 {% for etape in steps %}
+                                    {% set lat = etape.coordinates ? etape.coordinates|split(',')[0] : '' %}
+                                    {% set lng = etape.coordinates ? etape.coordinates|split(',')[1] : '' %}
+
                                     <!-- Étape de l'itinéraire -->
                                     <div class="itinerary-step-trip etape-box"
-                                        data-lat="{{ etape.latitude }}"
-                                        data-lng="{{ etape.longitude }}">
+                                        data-lat="{{ lat }}"
+                                        data-lng="{{ lng }}">
 
                                         <div class="itinerary-icon-trip number-icon">{{ loop.index }}</div>
 
@@ -2762,7 +2765,7 @@ body, p, .description, .stop-details {
                                                                         class="img-fluid rounded" 
                                                                         alt="{{ photo.legende }}"
                                                                         style="width: 100%; height: 150px; object-fit: cover; cursor: pointer;"
-                                                                        onclick="openPhotoModal('{{ asset('uploads/images/' ~ photo.imageUrl) }}', '{{ photo.legende }}')">
+                                                                        onclick="openPhotoModal('{{ asset('uploads/itineraire_photos/' ~ photo.imageUrl) }}', '{{ photo.legende }}')">
                                                                     {% if photo.legende %}
                                                                         <small class="text-muted d-block mt-1">{{ photo.legende }}</small>
                                                                     {% endif %}
@@ -2781,6 +2784,7 @@ body, p, .description, .stop-details {
                                         </div>
                                     </div>
                                 {% endfor %}
+
 
                                 <!-- Point de Retour -->
                                 <div class="itinerary-step-trip">

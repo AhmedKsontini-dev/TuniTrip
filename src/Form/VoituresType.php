@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class VoituresType extends AbstractType
 {
@@ -17,12 +18,18 @@ class VoituresType extends AbstractType
             ->add('modele')
             ->add('immatriculation')
             ->add('prixJour')
+            ->add('prixMois', NumberType::class, [
+                'label' => 'Prix / Mois (TND)',
+                'scale' => 2,       // nombre de décimales
+                'required' => true,
+                'attr' => ['class' => 'form-control'],
+            ])
+
             ->add('image', FileType::class, [
                 'mapped' => false,    // ✅ Le champ ne correspond pas directement à la propriété "image"
                 'required' => false,  // ✅ Le fichier n’est pas obligatoire
             ])
             ->add('disponible')
-            ->add('description')
             ->add('boiteVitesse')
             ->add('climatiseur')
             ->add('passengers')

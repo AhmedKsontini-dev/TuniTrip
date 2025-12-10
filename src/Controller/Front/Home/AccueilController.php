@@ -32,6 +32,8 @@ final class AccueilController extends AbstractController
         $tunisCarthageTransfers = [];
         $enfidhaTransfers = [];
 
+
+
         foreach ($transferes as $t) {
             $lieuDepart = strtolower(trim($t->getLieuDepart()));
             if (str_contains($lieuDepart, 'tunis carthage')) {
@@ -41,8 +43,9 @@ final class AccueilController extends AbstractController
             }
         }
 
-        // ====================== VOITURES ======================
-        $voitures = $voituresRepository->findBy(['disponible' => true]);
+        $voitures = $voituresRepository->findLatestAvailable(3);
+
+
 
         // ====================== AVIS ======================
         $avisRepository = $em->getRepository(Avis::class);
@@ -114,6 +117,8 @@ final class AccueilController extends AbstractController
 
         // ====================== EXCURSIONS ======================
         $excursions = $excursionRepository->findLastExcursions(4);
+
+
 
         foreach ($excursions as $excursion) {
             $excursion->mainImagePath = $excursion->getImagePrincipale()

@@ -48,4 +48,17 @@ class VoituresRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findLatestAvailable(int $limit = 3): array
+    {
+        return $this->createQueryBuilder('v')
+            ->where('v.disponible = :dispo')
+            ->setParameter('dispo', true)
+            ->orderBy('v.id', 'DESC') // ou par date de création si existante
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
 }

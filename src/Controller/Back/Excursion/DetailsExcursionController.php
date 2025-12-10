@@ -6,7 +6,7 @@ use App\Entity\Excursion;
 use App\Entity\ExcursionDetail;
 use App\Entity\InclusExcursion;
 use App\Entity\NonInclusExcursion;
-use App\Repository\DetailsExcursionRepository;
+use App\Repository\ExcursionDetailRepository;
 use App\Repository\ExcursionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,14 +17,38 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin/details_excursion')]
 class DetailsExcursionController extends AbstractController
 {
+    // -------------------- Liste tous les détails --------------------
     #[Route('/', name: 'excursion_details_list', methods: ['GET'])]
-    public function index(DetailsExcursionRepository $repository): Response
+    public function index(ExcursionDetailRepository $repository): Response
     {
         return $this->render('Back/excursion_details/index.html.twig', [
             'details' => $repository->findAll(),
+            'excursion' => null
         ]);
     }
 
+    // -------------------- Liste des détails pour une excursion spécifique --------------------
+    #[Route('/excursion/{id}', name: 'excursion_details_list_by_excursion', methods: ['GET'])]
+    public function listByExcursion(int $id, EntityManagerInterface $em): Response
+    {
+        $excursion = $em->getRepository(Excursion::class)->find($id);
+
+        if (!$excursion) {
+            throw $this->createNotFoundException("Excursion introuvable");
+        }
+
+        $details = $em->getRepository(ExcursionDetail::class)->findBy(
+            ['excursion' => $excursion],
+            ['ordre' => 'ASC']
+        );
+
+        return $this->render('Back/excursion_details/index.html.twig', [
+            'details' => $details,
+            'excursion' => $excursion
+        ]);
+    }
+
+    // -------------------- Formulaire pour ajouter un détail --------------------
     #[Route('/add/{id}', name: 'excursion_details_add', methods: ['GET'])]
     public function add(int $id, ExcursionRepository $excRepo): Response
     {
@@ -39,12 +63,10 @@ class DetailsExcursionController extends AbstractController
         ]);
     }
 
-
-    // ⭐ TRAITEMENT FORMULAIRE
+    // -------------------- Création d'un détail --------------------
     #[Route('/create', name: 'excursion_details_create', methods: ['POST'])]
     public function create(Request $request, EntityManagerInterface $em): Response
     {
-        // --- Excursion associée ---
         $excursion = $em->getRepository(Excursion::class)->find(
             $request->request->get('excursion_id')
         );
@@ -54,18 +76,114 @@ class DetailsExcursionController extends AbstractController
             return $this->redirectToRoute('excursion_details_list');
         }
 
-
-        // -------------------- 1️⃣ Sauvegarde du Détail Excursion --------------------
+        // -------------------- 1️⃣ Sauvegarde du détail --------------------
         $detail = new ExcursionDetail();
         $detail->setExcursion($excursion);
         $detail->setTitre($request->request->get('titre'));
         $detail->setDescription($request->request->get('description'));
-        $detail->setOrdre($request->request->get('ordre'));
+        $detail->setOrdre($request->request->get('ordre', 1));
 
         $em->persist($detail);
 
-
         // -------------------- 2️⃣ Sauvegarde des éléments INCLUS --------------------
+        $inclusItems = $request->request->all('inclus_items');
+        $inclusOrdres = $request->request->all('inclus_ordres');
+
+        if (!empty($inclusItems)) {
+            foreach ($inclusItems as $index => $item) {
+                if (trim($item) === '') continue;
+
+                $inclus = new InclusExcursion();
+                $inclus->setExcursion($excursion); // ✅ correct
+                $inclus->setItem($item);
+                $inclus->setOrdre($inclusOrdres[$index] ?? 1);
+
+                $em->persist($inclus);
+            }
+        }
+
+        // -------------------- 3️⃣ Sauvegarde des éléments NON INCLUS --------------------
+        $nonInclusItems = $request->request->all('non_inclus_items');
+        $nonInclusOrdres = $request->request->all('non_inclus_ordres');
+
+        if (!empty($nonInclusItems)) {
+            foreach ($nonInclusItems as $index => $item) {
+                if (trim($item) === '') continue;
+
+                $nonInclus = new NonInclusExcursion();
+                $nonInclus->setExcursion($excursion); // ✅ correct
+                $nonInclus->setItem($item);
+                $nonInclus->setOrdre($nonInclusOrdres[$index] ?? 1);
+
+                $em->persist($nonInclus);
+            }
+        }
+
+        $em->flush();
+
+        $this->addFlash('success', 'Détail ajouté avec succès !');
+
+        return $this->redirectToRoute('excursion_details_list_by_excursion', [
+            'id' => $excursion->getId()
+        ]);
+    }
+
+    // -------------------- Formulaire d'édition d'un détail --------------------
+    #[Route('/edit/{id}', name: 'excursion_details_edit', methods: ['GET'])]
+    public function edit(int $id, EntityManagerInterface $em): Response
+    {
+        $detail = $em->getRepository(ExcursionDetail::class)->find($id);
+
+        if (!$detail) {
+            throw $this->createNotFoundException("Détail introuvable");
+        }
+
+        $excursion = $detail->getExcursion();
+
+        // Récupérer les inclus/non-inclus liés à l'excursion
+        $inclusList = $em->getRepository(InclusExcursion::class)->findBy(['excursion' => $excursion], ['ordre' => 'ASC']);
+        $nonInclusList = $em->getRepository(NonInclusExcursion::class)->findBy(['excursion' => $excursion], ['ordre' => 'ASC']);
+
+        return $this->render('Back/excursion_details/edit.html.twig', [
+            'detail'        => $detail,
+            'excursion'     => $excursion,
+            'inclus_list'   => $inclusList,
+            'non_inclus_list' => $nonInclusList,
+        ]);
+    }
+
+
+    // -------------------- Mise à jour d'un détail --------------------
+    #[Route('/update/{id}', name: 'excursion_details_update', methods: ['POST'])]
+    public function update(
+        int $id,
+        Request $request,
+        EntityManagerInterface $em
+    ): Response {
+        $detail = $em->getRepository(ExcursionDetail::class)->find($id);
+
+        if (!$detail) {
+            $this->addFlash('error', 'Détail introuvable.');
+            return $this->redirectToRoute('excursion_details_list');
+        }
+
+        $excursion = $detail->getExcursion();
+
+        // 1️⃣ Mise à jour du détail
+        $detail->setTitre($request->request->get('titre'));
+        $detail->setDescription($request->request->get('description'));
+        $detail->setOrdre($request->request->get('ordre', 1));
+
+        // 2️⃣ Supprimer tous les anciens INCLUS / NON-INCLUS
+        foreach ($em->getRepository(InclusExcursion::class)->findBy(['excursion' => $excursion]) as $inclus) {
+            $em->remove($inclus);
+        }
+
+        foreach ($em->getRepository(NonInclusExcursion::class)->findBy(['excursion' => $excursion]) as $non) {
+            $em->remove($non);
+        }
+
+        // 3️⃣ Réinsérer les nouveaux INCLUS
         $inclusItems = $request->request->all('inclus_items');
         $inclusOrdres = $request->request->all('inclus_ordres');
 
@@ -82,31 +200,67 @@ class DetailsExcursionController extends AbstractController
             }
         }
 
+        // 4️⃣ Réinsérer les nouveaux NON INCLUS
+        $nonItems = $request->request->all('non_inclus_items');
+        $nonOrdres = $request->request->all('non_inclus_ordres');
 
-        // -------------------- 3️⃣ Sauvegarde des éléments NON INCLUS --------------------
-        $nonInclusItems = $request->request->all('non_inclus_items');
-        $nonInclusOrdres = $request->request->all('non_inclus_ordres');
-
-        if (!empty($nonInclusItems)) {
-            foreach ($nonInclusItems as $index => $item) {
+        if (!empty($nonItems)) {
+            foreach ($nonItems as $index => $item) {
                 if (trim($item) === '') continue;
 
-                $nonInclus = new NonInclusExcursion();
-                $nonInclus->setExcursion($excursion);
-                $nonInclus->setItem($item);
-                $nonInclus->setOrdre($nonInclusOrdres[$index] ?? 1);
+                $non = new NonInclusExcursion();
+                $non->setExcursion($excursion);
+                $non->setItem($item);
+                $non->setOrdre($nonOrdres[$index] ?? 1);
 
-                $em->persist($nonInclus);
+                $em->persist($non);
             }
         }
 
-
-        // -------------------- ENREGISTREMENT --------------------
         $em->flush();
 
+        $this->addFlash('success', 'Détail mis à jour avec succès !');
 
-        $this->addFlash('success', 'Détail ajouté avec succès (inclus et non inclus aussi) !');
+        return $this->redirectToRoute('excursion_details_list_by_excursion', [
+            'id' => $excursion->getId()
+        ]);
+    }
 
-        return $this->redirectToRoute('excursion_details_list');
+
+
+    // -------------------- Suppression d'un détail --------------------
+    #[Route('/delete/{id}', name: 'excursion_details_delete', methods: ['POST'])]
+    public function delete(int $id, EntityManagerInterface $em, Request $request): Response
+    {
+        $detail = $em->getRepository(ExcursionDetail::class)->find($id);
+
+        if (!$detail) {
+            $this->addFlash('error', 'Détail introuvable.');
+            return $this->redirectToRoute('excursion_details_list');
+        }
+
+        // Vérification CSRF
+        $submittedToken = $request->request->get('_token');
+        if (!$this->isCsrfTokenValid('delete'.$detail->getId(), $submittedToken)) {
+            $this->addFlash('error', 'Token CSRF invalide.');
+            return $this->redirectToRoute('excursion_details_list');
+        }
+
+        // Supprimer les éléments liés au détail
+        foreach ($detail->getExcursion()->getInclusExcursions() as $inclus) {
+            $em->remove($inclus);
+        }
+        foreach ($detail->getExcursion()->getNonInclusExcursions() as $nonInclus) {
+            $em->remove($nonInclus);
+        }
+
+        $em->remove($detail);
+        $em->flush();
+
+        $this->addFlash('success', 'Détail supprimé avec succès !');
+
+        return $this->redirectToRoute('excursion_details_list_by_excursion', [
+            'id' => $detail->getExcursion()->getId()
+        ]);
     }
 }

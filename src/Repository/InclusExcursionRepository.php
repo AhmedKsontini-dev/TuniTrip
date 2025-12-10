@@ -1,14 +1,14 @@
 <?php
 namespace App\Repository;
 
-use App\Entity\ExcursionDetail;
+use App\Entity\InclusExcursion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-class DetailsExcursionRepository extends ServiceEntityRepository
+class InclusExcursionRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ExcursionDetail::class);
+        parent::__construct($registry, InclusExcursion::class);
     }
 }

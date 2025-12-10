@@ -25,7 +25,7 @@
     {% endfor %}
 
     <!-- ➕ Bouton Ajouter -->
-    <a href="{{ path('admin_excursion_new') }}" class="btn btn-success mb-3">➕ Ajouter une excursion</a>
+    <a href="{{ path('admin_excursion_new') }}" class="btn btn-primary mb-3">➕ Ajouter une excursion</a>
 
     <!-- 📊 Tableau des excursions -->
     <table class="table table-bordered table-hover align-middle datatable">
@@ -68,40 +68,51 @@
                     </td>
                     <td>
                         <div class="dropdown">
-                            <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton{{ excursion.id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-sm btn-primary dropdown-toggle" 
+                                    type="button" 
+                                    id="dropdownMenuButton{{ excursion.id }}" 
+                                    data-bs-toggle="dropdown" 
+                                    aria-expanded="false">
                                 Actions
                             </button>
+
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ excursion.id }}">
+
+                                <!-- Groupe 1 : Voir / Modifier -->
                                 <li><a class="dropdown-item" href="{{ path('admin_excursion_show', {id: excursion.id}) }}">👁️ Voir</a></li>
                                 <li><a class="dropdown-item" href="{{ path('admin_excursion_edit', {id: excursion.id}) }}">✏️ Modifier</a></li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ path('excursion_details_add', {id: excursion.id}) }}">
-                                        📄 Ajouter détail
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ path('itineraire_new', {id: excursion.id}) }}">
-                                        🗺️ Ajouter itinéraire
-                                    </a>
-                                </li>
 
+                                <li><hr class="dropdown-divider"></li>
 
+                                <!-- Groupe 2 : Détails -->
+                                <li><a class="dropdown-item" href="{{ path('excursion_details_add', {id: excursion.id}) }}">📄 Ajouter détail</a></li>
+                                <li><a class="dropdown-item" href="{{ path('excursion_details_list_by_excursion', {id: excursion.id}) }}">📋 Voir détails</a></li>
 
+                                <li><hr class="dropdown-divider"></li>
+
+                                <!-- Groupe 3 : Itinéraire -->
+                                <li><a class="dropdown-item" href="{{ path('itineraire_new', {id: excursion.id}) }}">🗺️ Ajouter itinéraire</a></li>
+                                <li><a class="dropdown-item" href="{{ path('itineraire_table', {id: excursion.id}) }}">👁️ Voir itinéraire</a></li>
+
+                                <li><hr class="dropdown-divider"></li>
+
+                                <!-- Groupe 4 : Images & suppression -->
                                 <li><a class="dropdown-item" href="{{ path('admin_image_excursion_new', {excursionId: excursion.id}) }}">🖼️ Gérer images</a></li>
 
-                            
+                                <li><hr class="dropdown-divider"></li>
+
                                 <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <form method="post" action="{{ path('admin_excursion_delete', {id: excursion.id}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer cette excursion ?');">
+                                    <form method="post" action="{{ path('admin_excursion_delete', {id: excursion.id}) }}" 
+                                        onsubmit="return confirm('Voulez-vous vraiment supprimer cette excursion ?');">
                                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ excursion.id) }}">
                                         <button class="dropdown-item text-danger" type="submit">🗑️ Supprimer</button>
                                     </form>
                                 </li>
+
                             </ul>
                         </div>
                     </td>
+
                 </tr>
             {% else %}
                 <tr>

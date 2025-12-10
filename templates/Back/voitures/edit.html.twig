@@ -29,39 +29,35 @@
 
             <!-- 🧱 Colonne gauche -->
             <div class="col-lg-6">
+
                 <div class="mb-3">
-                    {{ form_label(form.image, 'Changer l’image') }}
-                    {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.image) }}
-                </div>
-                <div class="mb-3">
-                    {{ form_label(form.marque) }}
+                    {{ form_label(form.marque, 'Marque') }}
                     {{ form_widget(form.marque, {'attr': {'class': 'form-control'}}) }}
                     {{ form_errors(form.marque) }}
                 </div>
 
                 <div class="mb-3">
-                    {{ form_label(form.modele) }}
+                    {{ form_label(form.modele, 'Modèle') }}
                     {{ form_widget(form.modele, {'attr': {'class': 'form-control'}}) }}
                     {{ form_errors(form.modele) }}
                 </div>
 
                 <div class="mb-3">
-                    {{ form_label(form.immatriculation) }}
+                    {{ form_label(form.immatriculation, 'Immatriculation') }}
                     {{ form_widget(form.immatriculation, {'attr': {'class': 'form-control'}}) }}
                     {{ form_errors(form.immatriculation) }}
                 </div>
 
-                <div class="mb-3">
-                    {{ form_label(form.prixJour, 'Prix / Jour (TND)') }}
-                    {{ form_widget(form.prixJour, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.prixJour) }}
-                </div>
-
+                
                 <div class="mb-3">
                     {{ form_label(form.boiteVitesse, 'Boîte de vitesse') }}
                     {{ form_widget(form.boiteVitesse, {'attr': {'class': 'form-control'}}) }}
                     {{ form_errors(form.boiteVitesse) }}
+                </div>
+
+                <div class="form-check mb-3">
+                    {{ form_widget(form.climatiseur, {'attr': {'class': 'form-check-input'}}) }}
+                    {{ form_label(form.climatiseur, 'Climatiseur', {'label_attr': {'class': 'form-check-label'}}) }}
                 </div>
 
             </div>
@@ -69,21 +65,6 @@
             <!-- 🧱 Colonne droite -->
             <div class="col-lg-6">
 
-                <div class="mb-3">
-                    {{ form_label(form.description) }}
-                    {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': 5}}) }}
-                    {{ form_errors(form.description) }}
-                </div>
-
-                <div class="form-check mb-3">
-                    {{ form_widget(form.disponible, {'attr': {'class': 'form-check-input'}}) }}
-                    {{ form_label(form.disponible, 'Disponible', {'label_attr': {'class': 'form-check-label'}}) }}
-                </div>
-
-                <div class="form-check mb-3">
-                    {{ form_widget(form.climatiseur, {'attr': {'class': 'form-check-input'}}) }}
-                    {{ form_label(form.climatiseur, 'Climatiseur', {'label_attr': {'class': 'form-check-label'}}) }}
-                </div>
 
                 <div class="mb-3">
                     {{ form_label(form.passengers, 'Nombre de passagers') }}
@@ -96,12 +77,36 @@
                     {{ form_widget(form.suitcases, {'attr': {'class': 'form-control'}}) }}
                     {{ form_errors(form.suitcases) }}
                 </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.prixJour, 'Prix / Jour (TND)') }}
+                    {{ form_widget(form.prixJour, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.prixJour) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.prixMois, 'Prix / Mois (TND)') }}
+                    {{ form_widget(form.prixMois, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.prixMois) }}
+                </div>
+
+                <div class="form-check mb-3">
+                    {{ form_widget(form.disponible, {'attr': {'class': 'form-check-input'}}) }}
+                    {{ form_label(form.disponible, 'Disponible', {'label_attr': {'class': 'form-check-label'}}) }}
+                </div>
+
+                
             </div>
         </div>
 
         <hr class="my-4">
 
-        
+        <!-- 🖼️ Section image -->
+        <h5 class="text-primary mb-3">📸 Image de la voiture</h5>
+        <div class="mb-3">
+            {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.image) }}
+        </div>
 
        
 

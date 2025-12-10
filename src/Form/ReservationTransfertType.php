@@ -22,35 +22,38 @@ class ReservationTransfertType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('pickupDate', DateType::class, ['widget' => 'single_text'])
-            ->add('pickupTime', null, ['widget' => 'single_text'])
+            ->add('pickupDate', DateType::class, ['widget' => 'single_text', 'label' => 'Date de prise en charge'])
+            ->add('pickupTime', null, ['widget' => 'single_text', 'label' => 'Heure de prise en charge'])
             ->add('pickupLocation', TextType::class, [
                     'attr' => ['readonly' => true],
+                    'label' => 'Lieu de départ',
                 ])
             ->add('dropoffLocation', TextType::class, [
                     'attr' => ['readonly' => true],
+                    'label' => 'Lieu d\'arrivée',
                 ])
 
             ->add('transferType', ChoiceType::class, [
                 'choices' => [
-                    'One Way' => 'one_way',
-                    'Return (new ride)' => 'return',
+                    'Aller simple' => 'one_way',
+                    'Aller-retour' => 'return',
                 ],
                 'expanded' => false,
                 'multiple' => false,
+                'label' => 'Type de transfert',
             ])
-            ->add('persons', NumberType::class)
-            ->add('returnPickupDate', DateType::class, ['widget' => 'single_text', 'required' => false])
-            ->add('returnPickupTime', null, ['widget' => 'single_text', 'required' => false])
+            ->add('persons', NumberType::class, ['label' => 'Nombre de personnes'])
+            ->add('returnPickupDate', DateType::class, ['widget' => 'single_text', 'required' => false, 'label' => 'Date de retour'])
+            ->add('returnPickupTime', null, ['widget' => 'single_text', 'required' => false, 'label' => 'Heure de retour'])
             ->add('returnPickupLocation', HiddenType::class, ['required' => false])
             ->add('returnDropoffLocation', HiddenType::class, ['required' => false])
-            ->add('firstName', TextType::class)
-            ->add('lastName', TextType::class)
-            ->add('email', EmailType::class)
-            ->add('tel', TelType::class)
-            ->add('whatsappNumber', TextType::class, ['required' => false])
-            ->add('flightNumber', TextType::class, ['required' => false])
-            ->add('comments', TextareaType::class, ['required' => false])
+            ->add('firstName', TextType::class, ['label' => 'Prénom'])
+            ->add('lastName', TextType::class, ['label' => 'Nom'])
+            ->add('email', EmailType::class, ['label' => 'Email'])
+            ->add('tel', TelType::class, ['label' => 'Téléphone'])
+            ->add('whatsappNumber', TextType::class, ['required' => false, 'label' => 'Numéro WhatsApp'])
+            ->add('flightNumber', TextType::class, ['required' => false, 'label' => 'Numéro de vol'])
+            ->add('comments', TextareaType::class, ['required' => false, 'label' => 'Commentaires'])
         ;
 
         // Transformer pour convertir string <-> enum

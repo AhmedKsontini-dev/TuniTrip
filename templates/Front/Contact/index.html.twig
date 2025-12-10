@@ -366,8 +366,8 @@ label {
 <!-- === HEADER === -->
 <div class="home">
     <div class="home_content">
-        <div class="home_title">Contact Us</div>
-        <p>Home // Contact </p>
+        <div class="home_title">Contactez-nous</div>
+        <p>Accueil // Contact </p>
     </div>
 </div>
 
@@ -376,7 +376,7 @@ label {
     <div class="info-line">
         <div class="info-block">
             <img src="{{ asset('assetsFront/icons/phone-call.png') }}" alt="Phone Icon" class="info-icon">
-            <h4>Phone</h4>
+            <h4>Téléphone</h4>
             <p>+216 55 123 456</p>
         </div>
         <div class="info-block">
@@ -386,15 +386,15 @@ label {
         </div>
         <div class="info-block">
             <img src="{{ asset('assetsFront/icons/clock (1).png') }}" alt="Clock Icon" class="info-icon">
-            <h4>Working Hours</h4>
-            <p>Mon - Fri: 8:00 - 18:00</p>
+            <h4>Horaires</h4>
+            <p>Lun - Ven: 8:00 - 18:00</p>
         </div>
     </div>
 </section>
 
 <!-- === FORMULAIRE SIMPLE STYLE HTML === -->
 <section class="contact_form_section">
-    <h2>Send Message</h2>
+    <h2>Envoyer un Message</h2>
 
     <form id="contactForm" action="{{ path('app_front_contact') }}" method="POST" class="contact_form">
         {{ form_widget(form._token) }}

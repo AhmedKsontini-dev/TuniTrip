@@ -11,6 +11,7 @@ use App\Entity\NonInclusExcursion;
 use App\Entity\ImageExcursion;
 use App\Entity\ItineraireExcursion;
 use App\Entity\AvisExcursion;
+use App\Entity\FAQExcursion;
 
 #[ORM\Entity(repositoryClass: ExcursionRepository::class)]
 class Excursion
@@ -85,6 +86,9 @@ class Excursion
     #[ORM\OneToMany(mappedBy: "excursion", targetEntity: ReservationExcursion::class, cascade: ["persist", "remove"])]
     private Collection $reservations;
 
+    #[ORM\OneToMany(mappedBy: "excursion", targetEntity: FAQExcursion::class, cascade: ["persist", "remove"])]
+    private Collection $faq;
+
 
 
     public function __construct()
@@ -97,7 +101,7 @@ class Excursion
         $this->details = new ArrayCollection();
         $this->avis = new ArrayCollection();
         $this->reservations = new ArrayCollection();
-
+        $this->faq = new ArrayCollection();
     }
 
     // ------------------ GETTERS & SETTERS ------------------
@@ -318,5 +322,28 @@ class Excursion
         return $this;
     }
 
+    // ------------------- FAQ -------------------
+    public function getFaq(): Collection
+    {
+        return $this->faq;
+    }
 
+    public function addFaq(FAQExcursion $faqExcursion): self
+    {
+        if (!$this->faq->contains($faqExcursion)) {
+            $this->faq->add($faqExcursion);
+            $faqExcursion->setExcursion($this);
+        }
+        return $this;
+    }
+
+    public function removeFaq(FAQExcursion $faqExcursion): self
+    {
+        if ($this->faq->removeElement($faqExcursion)) {
+            if ($faqExcursion->getExcursion() === $this) {
+                $faqExcursion->setExcursion(null);
+            }
+        }
+        return $this;
+    }
 }

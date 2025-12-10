@@ -1726,7 +1726,7 @@
 }
 .price span {
   color: #1c2228;
-  font-size: 17px;
+
 }
 .price-text {
   color: #FFD700; /* jaune doré pour le prix */
@@ -3642,12 +3642,12 @@
 
     <div class="container position-relative z-10">
         <p class="small-text">
-            We value the time and quality of travel for each of our clients
+            Nous valorisons le temps et la qualité de voyage de chacun de nos clients
         </p>
         
         <h2 class="big-title">
-            <span>Incredible</span>
-            <span>comfort</span>
+            <span>Un confort</span>
+            <span>incroyable</span>
         </h2>
 
         <div class="car-container">
@@ -3678,41 +3678,41 @@
             {# Contenu à droite avec icônes #}
             <div class="col-lg-6">
                 <h2>
-                    We make sure that your every trip is 
-                    <span>comfortable</span>
+                    Nous nous assurons que chacun de vos trajets soit 
+                    <span>confortable</span>
                 </h2>
                 
                 <div class="icon-grid">
                     {# Service 1 - Disponibilité 24/7 #}
                     <div class="icon-item">
                         <img src="{{ asset('assetsFront/icons/clock.png') }}" 
-                             alt="24/7 service icon"
+                             alt="Icône service 24/7"
                              loading="lazy">
-                        <h5>24/7 Order<br>Available</h5>
+                        <h5>Commande 24/7<br>Disponible</h5>
                     </div>
                     
                     {# Service 2 - Livraison rapide #}
                     <div class="icon-item">
                         <img src="{{ asset('assetsFront/icons/support.png') }}" 
-                             alt="Fast delivery icon"
+                             alt="Icône livraison rapide"
                              loading="lazy">
-                        <h5>Fast Car<br>Delivery Service</h5>
+                        <h5>Livraison<br>Rapide</h5>
                     </div>
                     
                     {# Service 3 - Sécurité #}
                     <div class="icon-item">
                         <img src="{{ asset('assetsFront/icons/seat.png') }}" 
-                             alt="Safety icon"
+                             alt="Icône sécurité"
                              loading="lazy">
-                        <h5>High Safety<br>and Security</h5>
+                        <h5>Haute Sécurité<br>et Fiabilité</h5>
                     </div>
                     
                     {# Service 4 - Chauffeurs professionnels #}
                     <div class="icon-item">
                         <img src="{{ asset('assetsFront/icons/chauffeur.png') }}" 
-                             alt="Professional driver icon"
+                             alt="Icône chauffeur professionnel"
                              loading="lazy">
-                        <h5>Professional Car<br>Drivers</h5>
+                        <h5>Chauffeurs<br>Professionnels</h5>
                     </div>
                 </div>
             </div>
@@ -3808,7 +3808,7 @@
 
       <!-- Tunis Carthage Airport -->
       <div class="col-lg-6 col-md-12">
-        <h3 class="airport-title">Tunis Carthage Airport</h3>
+        <h3 class="airport-title">Aéroport de Tunis-Carthage</h3>
         <div class="cards-container">
           {% for transfere in tunisCarthageTransfers %}
             <a href="{{ path('app_reservation_transfert_new', { id: transfere.id }) }}" class="location-card-link">
@@ -3827,14 +3827,14 @@
               </div>
             </a>
           {% else %}
-            <p class="text-center text-muted">No transfers available.</p>
+            <p class="text-center text-muted">Aucun transfert disponible.</p>
           {% endfor %}
         </div>
       </div>
 
       <!-- Enfidha Airport -->
       <div class="col-lg-6 col-md-12">
-        <h3 class="airport-title">Enfidha Airport</h3>
+        <h3 class="airport-title">Aéroport d'Enfidha</h3>
         <div class="cards-container">
           {% for transfere in enfidhaTransfers %}
             <a href="{{ path('app_reservation_transfert_new', { id: transfere.id }) }}" class="location-card-link">
@@ -3853,7 +3853,7 @@
               </div>
             </a>
           {% else %}
-            <p class="text-center text-muted">No transfers available.</p>
+            <p class="text-center text-muted">Aucun transfert disponible.</p>
           {% endfor %}
         </div>
       </div>
@@ -3941,11 +3941,11 @@
                             <div class="card-footer">
                                 <div class="price">
                                     <span class="price-value">${{ excursion.prixParPersonne }}</span>
-                                    <span class="per">/person</span>
+                                    <span class="per">/personne</span>
                                 </div>
 
                                 <a href="{{ path('app_front_excursion_details', {id: excursion.id}) }}" class="view-btn">
-                                    View tour
+                                    Voir l'excursion
                                 </a>
                             </div>
                         </div>
@@ -3961,10 +3961,11 @@
     </div>
 
     <div class="view-all-container">
-        
+       
         <div class="view-all-container">
-            <div class="btn-animated-primary view-all-btn" onclick="window.location.href='{{ path('app_front_excursions_list') }}'">
-                <span>View all tours</span>
+            <div class="button">
+                <div class="button_bcg"></div>
+                <a href="{{ path('app_front_excursions_list') }}">Voir toutes les excursions</a>
             </div>
         </div>
 
@@ -3979,7 +3980,7 @@
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <h2 class="section_title">Ce que nos clients disent de nous</h2>
+                <h2 class="section_title">Ce que disent nos clients</h2>
             </div>
         </div>
         <div class="row">
@@ -4035,7 +4036,6 @@
                         <span>Votre avis →</span>
                     </div>
                 {% endif %}
-
 
 
 

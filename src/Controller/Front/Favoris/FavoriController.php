@@ -6,10 +6,23 @@ use App\Entity\Excursion;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class FavoriController extends AbstractController
 {
+    #[Route('/favoris', name: 'app_front_favoris_index')]
+    public function index(): Response
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login'); // Rediriger vers login si non connecté
+        }
+
+        return $this->render('Front/Favoris/index.html.twig', [
+            'favoris' => $user->getFavoris(),
+        ]);
+    }
     #[Route('/favori/toggle/{id}', name: 'favori_toggle', methods: ['POST'])]
     public function toggle(Excursion $excursion, EntityManagerInterface $em): JsonResponse
     {

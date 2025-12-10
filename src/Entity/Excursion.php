@@ -140,6 +140,12 @@ class Excursion
     public function setAPropos(?string $aPropos): self { $this->aPropos = $aPropos; return $this; }
 
     public function getImagePrincipale(): ?string { return $this->imagePrincipale; }
+    
+    public function getImagePrincipalePath(): ?string 
+    {
+        return $this->imagePrincipale ? '/uploads/images/' . $this->imagePrincipale : null; 
+    }
+
     public function setImagePrincipale(?string $imagePrincipale): self { $this->imagePrincipale = $imagePrincipale; return $this; }
 
     public function isActif(): bool { return $this->actif; }

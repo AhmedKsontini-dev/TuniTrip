@@ -1,0 +1,340 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}Mes Favoris{% endblock %}
+
+{% block body %}
+<style>
+    /* Hero Section */
+    .favorites-hero {
+        position: relative;
+        height: 60vh;
+        min-height: 400px;
+        background-color: #1c2228;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    .favorites-hero-bg {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background-image: url("{{ asset('assetsFront/images/about_background.jpg') }}");
+        background-size: cover;
+        background-position: center;
+        filter: brightness(0.6);
+        z-index: 1;
+    }
+    .favorites-hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: white;
+        animation: fadeInDown 1s ease-out;
+    }
+    .favorites-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .favorites-subtitle {
+        font-size: 1.2rem;
+        font-weight: 300;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Cards Grid */
+    .favorites-container {
+        margin-top: -80px;
+        position: relative;
+        z-index: 3;
+        padding-bottom: 80px;
+    }
+    .fav-card {
+        background: #fff;
+        border: none;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        transition: all 0.4s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .fav-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+    .fav-card-img-wrapper {
+        position: relative;
+        height: 220px;
+        overflow: hidden;
+    }
+    .fav-card-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+    }
+    .fav-card:hover .fav-card-img {
+        transform: scale(1.05);
+    }
+    .fav-badge {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background: rgba(255, 255, 255, 0.95);
+        color: #1c2228;
+        padding: 6px 14px;
+        border-radius: 30px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        z-index: 2;
+    }
+    .fav-remove-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        background: white;
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+        z-index: 2;
+    }
+    .fav-remove-btn:hover {
+        background: #fff5f5;
+        transform: scale(1.1) rotate(90deg);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    }
+    .fav-remove-btn i {
+        color: #ff4757;
+        font-size: 1.1rem;
+        transition: color 0.3s;
+    }
+
+    .fav-card-body {
+        padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .fav-card-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: #1c2228;
+    }
+    .fav-price {
+        color: #d8b65d;
+        font-weight: 800;
+        font-size: 1.35rem;
+        margin-bottom: 1rem;
+    }
+    .fav-price span {
+        font-size: 0.85rem;
+        color: #888;
+        font-weight: 400;
+    }
+    .fav-desc {
+        color: #6c757d;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        flex-grow: 1;
+    }
+    .fav-meta {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 1.5rem;
+        font-size: 0.85rem;
+        color: #555;
+    }
+    .fav-meta-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .fav-meta-item i {
+        color: #d8b65d;
+    }
+    
+    .fav-btn {
+        background: #1c2228;
+        color: white;
+        text-align: center;
+        padding: 12px;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: block;
+        margin-top: auto;
+    }
+    .fav-btn:hover {
+        background: #d8b65d;
+        color: #1c2228;
+        transform: translateY(-3px);
+    }
+
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+    }
+    .empty-icon {
+        font-size: 4rem;
+        color: #e9ecef;
+        margin-bottom: 1.5rem;
+    }
+    .empty-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1c2228;
+        margin-bottom: 1rem;
+    }
+    .empty-text {
+        color: #6c757d;
+        margin-bottom: 2rem;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<!-- Hero Section -->
+<div class="favorites-hero">
+    <div class="favorites-hero-bg"></div>
+    <div class="favorites-hero-content">
+        <h1 class="favorites-title">Mes Favoris</h1>
+        <p class="favorites-subtitle">Retrouvez toutes vos excursions préférées et planifiez votre prochaine aventure en Tunisie.</p>
+    </div>
+</div>
+
+<div class="container favorites-container">
+    <div class="row">
+        {% if favoris|length > 0 %}
+            {% for favori in favoris %}
+                {% set excursion = favori.excursion %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="fav-card">
+                        <div class="fav-card-img-wrapper">
+                            <img src="{{ excursion.imagePrincipalePath }}" alt="{{ excursion.titre }}" class="fav-card-img">
+                            <span class="fav-badge">{{ excursion.categorie }}</span>
+                            
+                            <!-- Remove/Unlike Button -->
+                            <button class="fav-remove-btn favorite-btn" 
+                                    data-excursion-id="{{ excursion.id }}" 
+                                    data-action="remove-favoris"
+                                    title="Retirer des favoris">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="fav-card-body">
+                            <h3 class="fav-card-title">{{ excursion.titre }}</h3>
+                            <div class="fav-price">{{ excursion.prixParPersonne }} TND <span>/pers</span></div>
+                            
+                            <p class="fav-desc">{{ excursion.description|slice(0, 100) }}...</p>
+                            
+                            <div class="fav-meta">
+                                <span class="fav-meta-item"><i class="fas fa-map-marker-alt"></i> {{ excursion.localisation }}</span>
+                                <span class="fav-meta-item"><i class="far fa-clock"></i> {{ excursion.duree }} jours</span>
+                            </div>
+                            
+                            <a href="{{ path('app_front_excursion_details', {'id': excursion.id}) }}" class="fav-btn">
+                                Voir les détails <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="far fa-heart"></i>
+                    </div>
+                    <h2 class="empty-title">Votre liste d'envies est vide</h2>
+                    <p class="empty-text">Vous n'avez pas encore sauvegardé d'excursions. Explorez nos offres incroyables et gardez vos préférées ici pour plus tard.</p>
+                    <a href="{{ path('app_front_excursions_list') }}" class="btn-animated-primary excursion-details-btn">
+                        Découvrir les excursions
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Only handle remove/toggle logic
+    document.addEventListener('click', async (e) => {
+        const btn = e.target.closest('.favorite-btn');
+        if (!btn) return;
+        
+        e.preventDefault();
+        const excursionId = btn.dataset.excursionId;
+        const cardCol = btn.closest('.col-lg-4');
+
+        // Confirm removal for better UX? Or just do it. Let's just do it smoothly.
+        if(!confirm("Voulez-vous retirer cette excursion de vos favoris ?")) return;
+
+        try {
+            const response = await fetch(`/favori/toggle/${excursionId}`, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                // If it was removed (favori: false), remove the card
+                if (!data.favori) {
+                    // Animate removal
+                    cardCol.style.transition = 'all 0.5s ease';
+                    cardCol.style.opacity = '0';
+                    cardCol.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        cardCol.remove();
+                        // If no cards left, show empty state (optional reload or dom manipulation)
+                        if(document.querySelectorAll('.col-lg-4').length === 0) {
+                            location.reload(); 
+                        }
+                    }, 500);
+                }
+            } else if (data.message) {
+                alert(data.message);
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Une erreur est survenue lors de la mise à jour des favoris.");
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -873,6 +873,10 @@ button:focus-visible {
 								<div class="user_box_dropdown">
 									<div class="avatar_circle" onclick="toggleDropdown()">{{ initials }}</div>
 									<div id="dropdownMenu" class="dropdown_content">
+										{% if is_granted('ROLE_ADMIN') %}
+											<a href="{{ path('admin_dashboard') }}">Dashboard</a>
+										{% endif %}
+										<a href="{{ path('app_front_favoris_index') }}">Mes Favoris</a>
 										<a href="{{ path('app_logout') }}">Déconnexion</a>
 									</div>
 								</div>

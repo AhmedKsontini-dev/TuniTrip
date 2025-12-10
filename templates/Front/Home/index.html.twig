@@ -97,20 +97,36 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* Dégradé vertical du noir vers le blanc vers 70-100% */
-  background: linear-gradient(to bottom, #1c2228 0%, #1c2228 70%, #ffffff 100%);
-  background-image: linear-gradient(to bottom, rgba(28,34,40,1) 0%, rgba(28,34,40,1) 85%, rgba(255,255,255,1) 120%), 
-                    url('../assetsFront/about-map.png');
-  background-blend-mode: overlay; /* pour mélanger le dégradé et l’image de fond */
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  background: #1c2228 url('../assetsFront/about-map.png') center/cover no-repeat;
   padding: 100px 8%;
   gap: 60px;
   flex-wrap: wrap;
   position: relative;
 }
 
+/* Dégradé uniquement pour les petites dimensions */
+@media (max-width: 768px) {
+  .airport-transfer-section {
+    background: linear-gradient(to bottom, #1c2228 0%, #1c2228 85%, #ffffff 120%), 
+                url('../assetsFront/about-map.png') center/cover no-repeat;
+    background-blend-mode: overlay;
+    padding: 60px 5%;
+  }
+
+  .transfer-content-left {
+    text-align: center;
+  }
+
+  .transfer-image-right {
+    flex: 1 1 100%;
+    margin-top: 30px;
+  }
+
+  .transfer-image-right img {
+    max-width: 100%;
+  }
+}
+/* Texte + image responsive */
 .transfer-content-left {
   flex: 1 1 500px;
   color: #d1d1d1;
@@ -141,20 +157,11 @@
   width: 100%;
   max-width: 500px;
   height: auto;
-  animation: slideInRight 1.2s ease-out;
+  opacity: 0; /* cache initialement pour l'animation au scroll */
+  transform: translateX(150px);
+  transition: all 1s ease-out;
 }
 
-/* Animation de la voiture */
-@keyframes slideInRight {
-  0% {
-    transform: translateX(150px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
 /* --- END Votre Meilleure Option pour les Transferts Aéroport à Tunis --- */
 
 
@@ -619,78 +626,7 @@
         display: none !important;
     }
     
-    /* Hide the chairs image in comfort-section */
-    .comfort-section .img-container {
-        display: none !important;
-    }
-    
-    /* Make the text column full width */
-    .comfort-section .col-md-6:last-child {
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
-    
-    /* Add the car-section content to comfort-section */
-    .comfort-section::before {
-        content: "We value the time and quality of travel for each of our clients";
-        display: block;
-        text-align: center;
-        font-style: italic;
-        color: #ccc;
-        font-size: 16px;
-        font-family: 'Beyond', serif;
-        margin-bottom: 10px;
-        padding: 0 20px;
-    }
-    
-    /* Replace the h2::before to show Incredible + comfort */
-    .comfort-section h2::before {
-        content: "Incredible";
-        display: block;
-        color: #D7B65D;
-        font-weight: bolder;
-        font-size: 40px;
-        margin-bottom: 5px;
-    }
-    
-    .comfort-section h2::after {
-        content: "comfort";
-        display: block;
-        color: white;
-        font-size: 30px;
-        font-weight: 600;
-        font-family: serif;
-        margin-bottom: 20px;
-    }
-    
-    /* Hide original h2 text */
-    .comfort-section h2 {
-        font-size: 0 !important;
-        color: transparent !important;
-        margin-bottom: 0 !important;
-    }
-    
-    .comfort-section h2 span {
-        display: none !important;
-    }
-    
-    .comfort-section {
-        padding-top: 40px !important;
-        text-align: center;
-    }
-    
-    /* Icon grid - 2 items per row */
-    .comfort-section .icon-grid {
-        display: grid !important;
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 20px !important;
-        justify-items: center;
-    }
-    
-    .comfort-section .icon-item {
-        flex: none !important;
-        width: 100% !important;
-    }
+   
 }
 
 @media (max-width: 480px) {
@@ -989,28 +925,6 @@
     }
 }
 
-/* --- Section Confort Plus --- */
-.comfort-section {
-    background: linear-gradient(180deg, #252b33 0%, #1c2228 100%);
-    padding: 80px 0 120px !important;
-    position: relative;
-    overflow: visible;
-}
-
-/* Background animé subtil */
-.comfort-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        radial-gradient(circle at 20% 30%, rgba(216, 182, 93, 0.04) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(216, 182, 93, 0.04) 0%, transparent 50%);
-    animation: backgroundPulse 8s ease-in-out infinite;
-}
-
 @keyframes backgroundPulse {
     0%, 100% {
         opacity: 0.5;
@@ -1020,83 +934,99 @@
     }
 }
 
-/* Image Container avec débordement */
-.comfort-section .img-container {
-    position: relative;
-    margin-bottom: -80px;
-    z-index: 5;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 1s ease-out 0.5s forwards;
-}
-
-.comfort-section .img-fluid {
-    width: 100%;
-    height: auto;
-    border-radius: 20px;
-    box-shadow: 
-        0 30px 80px rgba(0, 0, 0, 0.4),
-        0 0 0 1px rgba(255, 255, 255, 0.05);
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    position: relative;
-}
-
-.comfort-section .img-fluid::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, #D7B65D, transparent, #D7B65D);
-    border-radius: 20px;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    z-index: -1;
-}
-
-.comfort-section .img-container:hover .img-fluid {
-    transform: scale(1.03) translateY(-5px);
-    box-shadow: 
-        0 40px 100px rgba(0, 0, 0, 0.5),
-        0 0 40px rgba(215, 182, 93, 0.2);
-}
-
-/* Content Text */
-.comfort-section h2 {
-    color: #ffffff;
-    font-size: clamp(24px, 4vw, 36px);
-    font-weight: 700;
-    line-height: 1.4;
-    margin-bottom: 3rem;
-    letter-spacing: -0.5px;
-    opacity: 0;
-    animation: fadeInUp 1s ease-out 0.7s forwards;
-}
-
-.comfort-section h2 span {
-    color: #D7B65D;
-    font-weight: 700;
-    position: relative;
-    display: inline-block;
-}
-
-.comfort-section h2 span::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #D7B65D, transparent);
-    animation: underlineGrow 1s ease-out 1.5s forwards;
-}
-
 @keyframes underlineGrow {
     to {
         width: 100%;
     }
 }
+
+
+/* --- Comfort Section --- */
+.comfort-section {
+  position: relative;
+  padding: 100px 8%;
+  background: #1c2228;
+}
+
+.comfort-section h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+  line-height: 1.3;
+  color: white;
+}
+
+.comfort-section h2 span {
+  color: #d8b65d;
+}
+
+/* Image container */
+.comfort-section .img-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.comfort-section .img-container img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  opacity: 0; /* animation au scroll */
+  transform: translateX(-150px);
+  transition: all 1s ease-out;
+}
+
+/* Icon Grid */
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+}
+
+.icon-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.icon-item img {
+  width: 50px;
+  height: 50px;
+}
+
+.icon-item h5 {
+  margin: 0;
+  font-size: 1rem;
+  color: #1c2228;
+  line-height: 1.3;
+}
+
+/* --- Responsive Mobile --- */
+@media (max-width: 768px) {
+  .comfort-section {
+    padding: 60px 5%;
+  }
+
+  .row.align-items-center {
+    flex-direction: column; /* image en haut, texte en dessous */
+    text-align: center;
+  }
+
+  .icon-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    justify-items: center;
+  }
+
+  .icon-item {
+    justify-content: center;
+  }
+
+  .img-container img {
+    max-width: 300px; /* réduire l'image pour mobile */
+    margin-bottom: 30px;
+  }
+}
+
 
 /* Icon Grid avec lignes pointillées dorées */
 .icon-grid {
@@ -1272,13 +1202,7 @@
         padding: 100px 0 60px;
     }
     
-    .comfort-section {
-        padding: 60px 0 100px !important;
-    }
-    
-    .comfort-section .img-container {
-        margin-bottom: -60px;
-    }
+  
 }
 
 @media (max-width: 768px) {
@@ -1309,14 +1233,7 @@
         padding: 80px 0 40px;
     }
     
-    .comfort-section {
-        padding: 40px 0 80px !important;
-    }
-    
-    .comfort-section h2 {
-        text-align: center;
-        margin-bottom: 2rem;
-    }
+   
     
     .icon-grid {
         grid-template-columns: 1fr;
@@ -2492,6 +2409,7 @@
     background: rgba(20, 20, 20, 0.85);
     border: 1px solid rgba(255, 255, 255, 0.1);
     animation: slideInRight 1s ease;
+    border-radius: 30px;
 }
 
 /* Champs et bouton (inchangés) */
@@ -3189,76 +3107,6 @@
     color: #1c2228;
     transform: scale(1.06);
 }
-
-</style>
-
-
-
-	<div class="home">
-		
-		<!-- Home Slider -->
-
-		<div class="home_slider_container">
-    <div class="owl-carousel owl-theme home_slider">
-
-        <!-- Slider Item 1 -->
-        <div class="home_slider_item">
-            <div class="home_slider_background zoom" style="background-image:url({{ asset('assetsFront/SLIDE_05.jpg') }})"></div>
-            <div class="home_slider_content text-center">
-                <div class="home_slider_content_inner" data-animation-in="fadeInUp" data-animation-out="fadeOut">
-                    <h1>Explorez</h1>
-                    <h1>la Tunisie</h1>
-                    <div class="button home_slider_button">
-                        <div class="button_bcg"></div>
-                        <a href="#">Réservez maintenant<span></span><span></span><span></span></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slider Item 2 -->
-        <div class="home_slider_item">
-            <div class="home_slider_background zoom" style="background-image:url({{ asset('assetsFront/SLIDE_04.jpg') }})"></div>
-            <div class="home_slider_content text-center">
-                <div class="home_slider_content_inner" data-animation-in="fadeInUp" data-animation-out="fadeOut">
-                    <h1>Découvrez</h1>
-                    <h1>de nouvelles aventures</h1>
-                    <div class="button home_slider_button">
-                        <div class="button_bcg"></div>
-                        <a href="#">Explorez maintenant<span></span><span></span><span></span></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slider Item 3 -->
-        <div class="home_slider_item">
-            <div class="home_slider_background zoom" style="background-image:url({{ asset('assetsFront/SLIDE_02.jpg') }})"></div>
-            <div class="home_slider_content text-center">
-                <div class="home_slider_content_inner" data-animation-in="fadeInUp" data-animation-out="fadeOut">
-                    <h1>Voyagez</h1>
-                    <h1>en toute sérénité</h1>
-                    <div class="button home_slider_button">
-                        <div class="button_bcg"></div>
-                        <a href="#">Commencez maintenant<span></span><span></span><span></span></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- Dots -->
-    <div class="home_slider_dots">
-        <ul id="home_slider_custom_dots" class="home_slider_custom_dots">
-            <li class="home_slider_custom_dot active"><div></div>01.</li>
-            <li class="home_slider_custom_dot"><div></div>02.</li>
-            <li class="home_slider_custom_dot"><div></div>03.</li>
-        </ul>
-    </div>
-</div>
-
-<style>
 /* Styles pour le bouton "Réservez maintenant" */
 .button {
     display: inline-block;
@@ -3356,123 +3204,330 @@
     100% { background-position: 0% 50%; }
 }
 
+.reservation-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(28, 34, 40, 0.9);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.reservation-modal-content {
+    background-color: #1c2228;
+    margin: 5% auto;
+    padding: 0;
+    border: 2px solid #d8b65d;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 700px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    animation: slideDown 0.4s ease;
+    overflow: hidden;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.reservation-modal-header {
+    background: linear-gradient(135deg, #d8b65d 0%, #c9a84a 100%);
+    padding: 25px 30px;
+    color: #1c2228;
+}
+
+.reservation-modal-header h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.reservation-modal-body {
+    padding: 35px 30px;
+    color: #ffffff;
+}
+
+.modal-intro {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 35px;
+    line-height: 1.6;
+}
+
+.modal-intro strong {
+    color: #d8b65d;
+}
+
+.reservation-types {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.reservation-type-item {
+    background-color: rgba(216, 182, 93, 0.1);
+    border: 2px solid #d8b65d;
+    border-radius: 12px;
+    padding: 25px 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.reservation-type-item:hover {
+    transform: translateY(-5px);
+    background-color: rgba(216, 182, 93, 0.2);
+    box-shadow: 0 5px 20px rgba(216, 182, 93, 0.3);
+}
+
+.reservation-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.reservation-type-item h3 {
+    color: #d8b65d;
+    font-size: 20px;
+    margin: 10px 0;
+    font-weight: 600;
+}
+
+.reservation-type-item p {
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.modal-cta {
+    text-align: center;
+    font-size: 17px;
+    font-weight: 500;
+    color: #d8b65d;
+    margin-top: 25px;
+}
+
+.reservation-modal-footer {
+    background-color: rgba(216, 182, 93, 0.05);
+    padding: 20px 30px;
+    text-align: center;
+    border-top: 1px solid rgba(216, 182, 93, 0.3);
+}
+
+.modal-btn {
+    padding: 14px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal-btn-primary {
+    background: linear-gradient(135deg, #d8b65d 0%, #c9a84a 100%);
+    color: #1c2228;
+}
+
+.modal-btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(216, 182, 93, 0.4);
+}
+
+.reservation-modal-close {
+    color: #d8b65d;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 32px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.reservation-modal-close:hover,
+.reservation-modal-close:focus {
+    color: #ffffff;
+    transform: rotate(90deg);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .reservation-modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+    
+    .reservation-modal-header h2 {
+        font-size: 22px;
+    }
+    
+    .reservation-types {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-intro {
+        font-size: 16px;
+    }
+}
+
+
 </style>
+
+
+
+	<div class="home">
+		
+		<!-- Home Slider -->
+
+		<div class="home_slider_container">
+                <div class="owl-carousel owl-theme home_slider">
+
+                    <!-- Slider Item 1 -->
+                    <div class="home_slider_item">
+                        <div class="home_slider_background zoom" style="background-image:url({{ asset('assetsFront/SLIDE_05.jpg') }})"></div>
+                        <div class="home_slider_content text-center">
+                            <div class="home_slider_content_inner" data-animation-in="fadeInUp" data-animation-out="fadeOut">
+                                <h1>Explorez</h1>
+                                <h1>la Tunisie</h1>
+                                <div class="button home_slider_button">
+                                    <div class="button_bcg"></div>
+                                    <a href="javascript:void(0);" onclick="openReservationModal()">Réservez maintenant<span></span><span></span><span></span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slider Item 2 -->
+                    <div class="home_slider_item">
+                        <div class="home_slider_background zoom" style="background-image:url({{ asset('assetsFront/SLIDE_04.jpg') }})"></div>
+                        <div class="home_slider_content text-center">
+                            <div class="home_slider_content_inner" data-animation-in="fadeInUp" data-animation-out="fadeOut">
+                                <h1>Découvrez</h1>
+                                <h1>de nouvelles aventures</h1>
+                                <div class="button home_slider_button">
+                                    <div class="button_bcg"></div>
+                                    <a href="javascript:void(0);" onclick="openReservationModal()">Explorez maintenant<span></span><span></span><span></span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slider Item 3 -->
+                    <div class="home_slider_item">
+                        <div class="home_slider_background zoom" style="background-image:url({{ asset('assetsFront/SLIDE_02.jpg') }})"></div>
+                        <div class="home_slider_content text-center">
+                            <div class="home_slider_content_inner" data-animation-in="fadeInUp" data-animation-out="fadeOut">
+                                <h1>Voyagez</h1>
+                                <h1>en toute sérénité</h1>
+                                <div class="button home_slider_button">
+                                    <div class="button_bcg"></div>
+                                    <a href="javascript:void(0);" onclick="openReservationModal()">Commencez maintenant<span></span><span></span><span></span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Dots -->
+                <div class="home_slider_dots">
+                    <ul id="home_slider_custom_dots" class="home_slider_custom_dots">
+                        <li class="home_slider_custom_dot active"><div></div>01.</li>
+                        <li class="home_slider_custom_dot"><div></div>02.</li>
+                        <li class="home_slider_custom_dot"><div></div>03.</li>
+                    </ul>
+                </div>
+            </div>
 
 	</div>
 
-	<!-- Formulaire de réservation 
-	<section class="reservation-section py-5" style="background: url('{{ asset('assetsFront/about-map.png') }}') ;">>
-		<div class="container">
-			<div class="text-center mb-4">
-				<h2 class="fw-bold">Réserver un transfert</h2>
-				<p class="text-muted">Choisissez vos trajets et planifiez votre transfert facilement.</p>
-			</div>
-
-			<form id="formReservation" class="card shadow p-4 bg-white rounded">
-	
-				<div class="mb-3 text-center">
-					<label class="form-label fw-semibold d-block mb-2">Type de trajet :</label>
-					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="typeTrajet" id="allerSimple" value="simple" checked>
-						<label class="form-check-label" for="allerSimple">Aller simple</label>
-					</div>
-					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="typeTrajet" id="allerRetour" value="retour">
-						<label class="form-check-label" for="allerRetour">Aller-retour</label>
-					</div>
-				</div>
-
-	
-				<div id="trajetAller" class="row g-3 align-items-end">
-					<div class="col-md-4">
-						<label for="depart" class="form-label">Localisation départ</label>
-						<input type="text" id="depart" name="depart" class="form-control" placeholder="Ex: Tunis aéroport" required>
-					</div>
-					<div class="col-md-4">
-						<label for="destination" class="form-label">Localisation arrivée</label>
-						<input type="text" id="destination" name="destination" class="form-control" placeholder="Ex: Hammamet hôtel" required>
-					</div>
-					<div class="col-md-2">
-						<label for="dateDepart" class="form-label">Date départ</label>
-						<input type="date" id="dateDepart" name="dateDepart" class="form-control" required>
-					</div>
-					<div class="col-md-2">
-						<label for="heureDepart" class="form-label">Heure</label>
-						<input type="time" id="heureDepart" name="heureDepart" class="form-control" required>
-					</div>
-				</div>
-
-
-				<div id="trajetRetour" class="row g-3 align-items-end mt-3 d-none">
-					<hr>
-					<div class="col-md-4">
-						<label for="departRetour" class="form-label">Localisation départ (retour)</label>
-						<input type="text" id="departRetour" name="departRetour" class="form-control" placeholder="Ex: Hammamet hôtel">
-					</div>
-					<div class="col-md-4">
-						<label for="destinationRetour" class="form-label">Localisation arrivée (retour)</label>
-						<input type="text" id="destinationRetour" name="destinationRetour" class="form-control" placeholder="Ex: Tunis aéroport">
-					</div>
-					<div class="col-md-2">
-						<label for="dateRetour" class="form-label">Date retour</label>
-						<input type="date" id="dateRetour" name="dateRetour" class="form-control">
-					</div>
-					<div class="col-md-2">
-						<label for="heureRetour" class="form-label">Heure</label>
-						<input type="time" id="heureRetour" name="heureRetour" class="form-control">
-					</div>
-				</div>
-
-	
-				<div class="row mt-4">
-					<div class="col-md-4">
-						<label for="nbPersonnes" class="form-label">Nombre de personnes (adultes + enfants)</label>
-						<input type="number" id="nbPersonnes" name="nbPersonnes" class="form-control" min="1" value="1" required>
-					</div>
-				</div>
-
-			
-				<div class="text-center mt-4">
-					<button type="submit" class="btn btn-primary px-5 py-2 rounded-pill fw-semibold">
-						Réserver maintenant
-					</button>
-				</div>
-			</form>
-		</div>
-	</section>-->
-
-
-
-<!-- block de services -->
-
-<section class="transfer-section">
-  <div class="transfer-item">
-    <img src="{{ asset('assetsFront/serv_01-140x140.jpg') }}" alt="Airport Transfer">
-    <div class="transfer-content">
-      <h3>Airport Transfers →</h3>
-      <p>Pellentesque semper dui eget fermentum sagittis. Cur abitur bibendum id ante.</p>
+    <!-- Modal HTML à ajouter avant la fermeture du body -->
+    <div id="reservationModal" class="reservation-modal">
+        <div class="reservation-modal-content">
+            <span class="reservation-modal-close">&times;</span>
+            <div class="reservation-modal-header">
+                <h2>Bienvenue sur notre plateforme de réservation</h2>
+            </div>
+            <div class="reservation-modal-body">
+                <p class="modal-intro">Notre site vous offre <strong>3 types de services</strong> pour rendre votre séjour en Tunisie inoubliable :</p>
+                
+                <div class="reservation-types">
+                    <div class="reservation-type-item">
+                        <div class="reservation-icon">🚗</div>
+                        <h3>Location de Voitures</h3>
+                        <p>Explorez la Tunisie à votre rythme avec notre flotte de véhicules</p>
+                    </div>
+                    
+                    <div class="reservation-type-item">
+                        <div class="reservation-icon">🏖️</div>
+                        <h3>Excursions</h3>
+                        <p>Découvrez les merveilles de la Tunisie avec nos circuits guidés</p>
+                    </div>
+                    
+                    <div class="reservation-type-item">
+                        <div class="reservation-icon">🚕</div>
+                        <h3>Transferts</h3>
+                        <p>Déplacements confortables entre l'aéroport et votre destination</p>
+                    </div>
+                </div>
+                
+                <p class="modal-cta">Parcourez notre site pour choisir le service qui correspond à vos besoins !</p>
+            </div>
+            <div class="reservation-modal-footer">
+                <button class="modal-btn modal-btn-primary" onclick="closeReservationModal()">J'ai compris</button>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div class="transfer-item">
-    <img src="{{ asset('assetsFront/serv_02-140x140.jpg') }}" alt="Business Transfer">
-    <div class="transfer-content">
-      <h3>Business Transfers →</h3>
-      <p>Sed nisi magna, rhoncus nec imperdiet non, pretium vitae odio donec scelerisque gravida.</p>
-    </div>
-  </div>
+        <!-- block de services -->
 
-  <div class="transfer-item">
-    <img src="{{ asset('assetsFront/road-trip-roadtrip-explorer-exploring.jpg') }}" alt="Excursions">
-    <div class="transfer-content">
-      <h3>Excursions →</h3>
-      <p>Découvrez nos excursions et circuits uniques à travers les plus beaux sites de Tunisie.</p>
-    </div>
-  </div>
-</section>
+        <section class="transfer-section">
+        <div class="transfer-item">
+            <img src="{{ asset('assetsFront/serv_01-140x140.jpg') }}" alt="Airport Transfer">
+            <div class="transfer-content">
+            <h3>Transferts Aéroport </h3>
+                <p>Voyagez sans stress avec nos transferts rapides et fiables depuis et vers tous les aéroports de Tunisie.</p>
+            </div>
+        </div>
+
+        <div class="transfer-item">
+            <img src="{{ asset('assetsFront/serv_02-140x140.jpg') }}" alt="Business Transfer">
+            <div class="transfer-content">
+            <h3>Transferts Professionnels </h3>
+                <p>Profitez d’un service élégant et ponctuel pour vos déplacements professionnels, réunions ou événements d’entreprise.</p>
+            </div>
+        </div>
+
+        <div class="transfer-item">
+            <img src="{{ asset('assetsFront/road-trip-roadtrip-explorer-exploring.jpg') }}" alt="Excursions">
+            <div class="transfer-content">
+            <h3>Excursions & Circuits </h3>
+                <p>Explorez la Tunisie avec nos excursions guidées et découvrez ses paysages, sites historiques et trésors cachés.</p>
+            </div>
+        </div>
+        </section>
 
 
-<!-- end block de services -->
+        <!-- end block de services -->
 
 
 
@@ -3679,16 +3734,16 @@
       <img src="{{ asset('assetsFront/mercedess.jpg') }}" alt="Airport shuttle bus">
 
       <!-- Card blanche sur l'image -->
-      <div class="transfer-card">
-        <span class="transfer-subtitle">SHUTTLE</span>
-        <h2 class="transfer-title">Effortless Airport Transfers in Tunisia</h2>
-        <p class="transfer-text">
-          Discover the ultimate convenience of our airport transfer services from Tunis Carthage Airport in Tunisia. Whether you’re arriving or departing, our reliable and professional chauffeurs will ensure a smooth and hassle-free journey to your destination. With a diverse fleet of comfortable vehicles, we cater to solo travelers, families, and groups of any size. From popular tourist spots to business locations, our punctual and customer-focused service will exceed your expectations. Book your economy or VIP airport transfer from Tunis Carthage Airport today and enjoy a seamless travel experience in Tunis.
+        <div class="transfer-card">
+            <span class="transfer-subtitle">NAVETTE</span>
+            <h2 class="transfer-title">Transferts Aéroport Sans Effort en Tunisie</h2>
+            <p class="transfer-text">
+                Découvrez la commodité ultime de nos services de transfert aéroportuaire depuis l'aéroport de Tunis-Carthage en Tunisie. Que vous arriviez ou partiez, nos chauffeurs fiables et professionnels garantiront un trajet fluide et sans souci jusqu'à votre destination. Avec une flotte variée de véhicules confortables, nous accueillons les voyageurs seuls, les familles et les groupes de toutes tailles. Des lieux touristiques populaires aux destinations professionnelles, notre service ponctuel et orienté client dépassera vos attentes. Réservez dès aujourd’hui votre transfert aéroport économique ou VIP depuis Tunis-Carthage et profitez d’une expérience de voyage sans encombre à Tunis.
 
-          Enjoy a seamless and stress-free journey with our reliable Airport transfers tunisia. Our friendly chauffeurs and comfortable vehicles will ensure a smooth ride to your hotel or any other destination in the city. Let us take care of your transportation needs, allowing you to fully immerse yourself in the beauty and charm of Tunis. Start your trip on the right note by booking our trusted Tunis–Carthage airport transfer service today!
-        </p>
-       
-      </div>
+                Profitez d’un trajet fluide et sans stress grâce à nos transferts aéroport fiables en Tunisie. Nos chauffeurs accueillants et nos véhicules confortables assureront un transport agréable jusqu’à votre hôtel ou toute autre destination dans la ville. Laissez-nous prendre en charge vos besoins en transport et profitez pleinement de la beauté et du charme de Tunis. Commencez votre voyage du bon pied en réservant dès maintenant notre service de transfert de confiance entre Tunis et l’aéroport de Carthage !
+            </p>
+        </div>
+
     </div>
 
   </div>
@@ -3698,35 +3753,42 @@
 
 
 
-<!-- Steps -->
-<section class="process-section">
-        <div class="process-container">
-            <div class="process-step">
-                <div class="circle-wrapper">
-                    <img src="{{asset('assetsFront/route.png')}}" alt="Parking lot with cars">
+        <!-- Étapes -->
+        <section class="process-section">
+            <div class="process-container">
+                <div class="process-step">
+                    <div class="circle-wrapper">
+                        <img src="{{asset('assetsFront/route.png')}}" alt="Parking avec voitures">
+                    </div>
+                    <h3 class="step-title">Créez votre itinéraire</h3><br>
+                    <p class="step-description">
+                        Saisissez vos lieux de prise en charge et de dépôt, ou indiquez le nombre d’heures pour lesquelles vous souhaitez réserver une voiture avec chauffeur.
+                    </p>
                 </div>
-                <h3 class="step-title">Create Your Route</h3><br>
-                  <p class="step-description">Enter your pickup & dropoff locations or the number of hours you wish to book a car and driver for</p>
-            </div>
 
-            <div class="process-step">
-                <div class="circle-wrapper">
-                    <img src="{{asset('assetsFront/choseCar.jpg')}}" alt="Gavel and car key">
+                <div class="process-step">
+                    <div class="circle-wrapper">
+                        <img src="{{asset('assetsFront/choseCar.jpg')}}" alt="Marteau et clé de voiture">
+                    </div>
+                    <h3 class="step-title">Choisissez votre voiture</h3><br>
+                    <p class="step-description">
+                        Sélectionnez la voiture qui correspond à votre style ou à votre budget. Choisissez votre préférée parmi une gamme d’options adaptées à vos besoins.
+                    </p>
                 </div>
-                <h3 class="step-title">Chose your car</h3><br>
-                  <p class="step-description">Select the car that suits your style or budget. Choose your favorite from a range of options tailored to your needs.</p>
-            </div>
 
-            <div class="process-step">
-                <div class="circle-wrapper">
-                    <img src="{{asset('assetsFront/confirmation.jpg')}}" alt="Container ship">
+                <div class="process-step">
+                    <div class="circle-wrapper">
+                        <img src="{{asset('assetsFront/confirmation.jpg')}}" alt="Réservation confirmée">
+                    </div>
+                    <h3 class="step-title">Recevez votre confirmation</h3><br>
+                    <p class="step-description">
+                        Votre réservation est enregistrée. Vous recevrez un email ou une notification avec tous les détails de votre réservation.
+                    </p>
                 </div>
-                <h3 class="step-title">Receive a confirmation</h3><br>
-                  <p class="step-description">Your booking is received, you'll receive a confirmation email or notification with all the details of your reservation.</p>
             </div>
-        </div>
-    </section>
-<!-- End Steps -->
+        </section>
+        <!-- Fin des étapes -->
+
 
 
 
@@ -3734,12 +3796,13 @@
 	
 	
 
-	<section class="popular-locations">
+	<section class="popular-locations"  id="transfers-section">
   <div class="container">
-    <h2 class="section-title text-center">Transferet</h2>
-    <p class="section-subtitle text-center">
-      We’ve highlighted the most popular destinations among our guests. Whether you’re heading to Tunis Carthage Airport or Enfidha Airport, take a look and plan your transfer with ease.
+    <h2 class="section-title text-center">Transfert</h2>
+        <p class="section-subtitle text-center">
+        Nous avons sélectionné les destinations les plus populaires auprès de nos clients. Que vous vous rendiez à l’aéroport de Tunis-Carthage ou à celui d’Enfidha, consultez nos options et planifiez votre transfert en toute simplicité.
     </p>
+
 
     <div class="row">
 
@@ -3820,10 +3883,11 @@
     <div class="propos-info-card">
       <h2 class="propos-title">Navette Aéroport Carthage Transfer</h2>
       <p class="propos-description">
-        Découvrez l’excellence du service <strong>Carthage Transfer</strong>, votre partenaire de confiance pour les transferts entre l’aéroport et votre destination à Tunis.
-        Nos chauffeurs expérimentés et ponctuels vous accueillent dès votre arrivée et assurent un trajet confortable, dans des véhicules modernes et parfaitement entretenus.
-        Chaque détail est pensé pour vous offrir une expérience fluide et sécurisée, à la hauteur de vos attentes.
-      </p>
+        Découvrez l’excellence du service <strong>TuniTrip</strong>, votre partenaire de confiance pour tous vos transferts entre l’aéroport et votre destination à Tunis.  
+        Nos chauffeurs expérimentés et ponctuels vous accueillent dès votre arrivée et vous garantissent un trajet confortable à bord de véhicules modernes et parfaitement entretenus.  
+        Chaque détail est pensé pour vous offrir une expérience fluide, sécurisée et à la hauteur de vos attentes.
+    </p>
+
     </div>
   </div>
 </section>
@@ -3834,7 +3898,8 @@
 
 
 <div class="excurssion-container">
-    <h1 class="section-title">Trending Adventure Tours</h1>
+    <h1 class="section-title">Excursions Aventure en Vedette</h1>
+
 
     <div class="swiper toursSwiper">
         <div class="swiper-wrapper">
@@ -3909,17 +3974,12 @@
 
 
 
-
-
-
-
-
 <!-- Testimonials -->
 <div class="testimonials">
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <h2 class="section_title">What our clients say about us</h2>
+                <h2 class="section_title">Ce que nos clients disent de nous</h2>
             </div>
         </div>
         <div class="row">
@@ -4017,9 +4077,10 @@
                     </div>
                 </div>
 
-                <div class="btn-animated-primary cta-button">
+                <button type="submit" class="btn-animated-primary cta-button">
                     <span>Appliquer</span>
-                </div>
+                </button>
+
 
             </form>
         </div>
@@ -4048,70 +4109,7 @@
 
 
 
-<section class="contact-section position-relative">
-    <div class="contact-bg" style="background-image: url({{ asset('assetsFront/images/contact.png') }})"></div>
 
-    <div class="container-fluid h-100">
-        <div class="row h-100 align-items-center">
-            
-            <!-- 🖼️ Côté gauche -->
-            <div class="col-lg-6 d-flex align-items-center justify-content-center contact-left text-center text-white">
-                <!-- Tu peux mettre une image ou du texte ici -->
-            </div>
-
-            <!-- 📩 Formulaire à droite -->
-            <div class="col-lg-6 d-flex align-items-center justify-content-center contact-right">
-                <div class="contact-box p-5 rounded-4 shadow-lg">
-                    <div class="text-center mb-4">
-                        <h2 class="text-white fw-bold">Contactez-nous</h2>
-                        <p class="text-secondary mb-0">Nous vous répondrons dans les plus brefs délais.</p>
-                    </div>
-
-                    <form id="contactForm" action="{{ path('app_accueil') }}" method="POST" class="contact_form">
-                        {{ form_widget(form._token) }}
-
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label class="form-label text-light">Nom et Prénom</label>
-                                <input type="text" class="form-control form-control-modern" name="{{ form.nom.vars.full_name }}"
-                                       placeholder="Ex : Ahmed Ben Salah" value="{{ form.nom.vars.value|default('') }}" required>
-                                <div class="text-danger small">{{ form_errors(form.nom) }}</div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label text-light">Email</label>
-                                <input type="email" class="form-control form-control-modern" name="{{ form.email.vars.full_name }}"
-                                       placeholder="Ex : ahmed@gmail.com" value="{{ form.email.vars.value|default('') }}" required>
-                                <div class="text-danger small">{{ form_errors(form.email) }}</div>
-                            </div>
-
-                            <div class="col-12">
-                                <label class="form-label text-light">Sujet</label>
-                                <input type="text" class="form-control form-control-modern" name="{{ form.sujet.vars.full_name }}"
-                                       placeholder="Sujet de votre message" value="{{ form.sujet.vars.value|default('') }}" required>
-                                <div class="text-danger small">{{ form_errors(form.sujet) }}</div>
-                            </div>
-
-                            <div class="col-12">
-                                <label class="form-label text-light">Message</label>
-                                <textarea name="{{ form.message.vars.full_name }}" class="form-control form-control-modern" rows="5"
-                                          placeholder="Écrivez votre message ici..." required>{{ form.message.vars.value|default('') }}</textarea>
-                                <div class="text-danger small">{{ form_errors(form.message) }}</div>
-                            </div>
-
-                            <div class="col-12 mt-3 envoyer-message-container">
-                                <div class="btn-animated-primary envoyer-message-btn" onclick="document.getElementById('contactForm').submit()" style="width: 100%;">
-                                    <span>Envoyer le message</span>
-                                </div>
-                            </div>
-
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
 
 
@@ -4131,20 +4129,26 @@
 <!-- Script pour banniere -->
 <script>
 $(document).ready(function(){
-    $('.home_slider').owlCarousel({
+
+    var homeSlider = $('.home_slider');
+
+    homeSlider.owlCarousel({
         items: 1,
         loop: true,
-        autoplay: true,         // ✅ active le défilement automatique
-        autoplayTimeout: 6000,  // délai entre les slides (6 secondes)
+        autoplay: true,
+        autoplayTimeout: 5000,
+        autoplaySpeed: 1000,
+        smartSpeed: 1200,
         autoplayHoverPause: false,
-        animateOut: 'fadeOut',
-        animateIn: 'fadeIn',
-        smartSpeed: 1500,
         dots: true,
-        nav: false,             // supprime les flèches
+        nav: false,
+        margin: 0
     });
+
 });
 </script>
+
+
 
 
 <!-- Script pour afficher/masquer le retour -->
@@ -4480,4 +4484,77 @@ document.addEventListener('DOMContentLoaded', function() {
     animatedElements.forEach(el => observer.observe(el));
 });
 </script>
+<script>
+// Fonction pour ouvrir le modal
+function openReservationModal() {
+    document.getElementById('reservationModal').style.display = 'block';
+    document.body.style.overflow = 'hidden'; // Empêche le scroll de la page
+}
+
+// Fonction pour fermer le modal
+function closeReservationModal() {
+    document.getElementById('reservationModal').style.display = 'none';
+    document.body.style.overflow = 'auto'; // Réactive le scroll
+}
+
+// Fermer le modal en cliquant sur le X
+document.addEventListener('DOMContentLoaded', function() {
+    const closeBtn = document.querySelector('.reservation-modal-close');
+    if (closeBtn) {
+        closeBtn.onclick = closeReservationModal;
+    }
+    
+    // Fermer le modal en cliquant en dehors
+    window.onclick = function(event) {
+        const modal = document.getElementById('reservationModal');
+        if (event.target == modal) {
+            closeReservationModal();
+        }
+    }
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const image = document.querySelector('.transfer-image-right img');
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting){
+                image.style.transform = 'translateX(0)';
+                image.style.opacity = '1';
+                observer.unobserve(entry.target); // pour que ça n’anime qu’une fois
+            }
+        });
+    }, {
+        threshold: 0.5 // déclenche l'animation quand 50% de l'image est visible
+    });
+
+    if(image){
+        observer.observe(image);
+    }
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const comfortImage = document.querySelector('.comfort-section .img-container img');
+
+    if(comfortImage){
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting){
+                    comfortImage.style.transform = 'translateX(0)';
+                    comfortImage.style.opacity = '1';
+                    observer.unobserve(entry.target); // animation une seule fois
+                }
+            });
+        }, {
+            threshold: 0.5 // déclenche quand 50% de l'image est visible
+        });
+
+        observer.observe(comfortImage);
+    }
+});
+</script>
+
+
 {% endblock %}

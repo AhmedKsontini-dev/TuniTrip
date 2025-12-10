@@ -12,16 +12,32 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
+        // Si l'utilisateur est déjà connecté, rediriger vers l'accueil
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_accueil');
+        }
 
-        // get the login error if there is one
+        // Récupérer l'erreur de connexion s'il y en a une
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
+        
+        // Dernier nom d'utilisateur (email) saisi
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        // Rediriger vers la page précédente (referer) avec les variables d'erreur
+        // Cela permet d'afficher le modal avec le message d'erreur
+        $referer = $this->container->get('request_stack')->getCurrentRequest()->headers->get('referer');
+        
+        if ($referer && $error) {
+            // Si erreur et referer existe, on redirige vers la page précédente
+            // Les flash messages seront gérés par le LoginAuthenticator
+            return $this->redirect($referer);
+        }
+
+        // Si pas de referer ou pas d'erreur, afficher la page de login classique
+        return $this->render('security/login.html.twig', [
+            'error' => $authenticationUtils->getLastAuthenticationError(),
+            'last_username' => $authenticationUtils->getLastUsername(),
+        ]);
     }
 
     #[Route(path: '/logout', name: 'app_logout')]

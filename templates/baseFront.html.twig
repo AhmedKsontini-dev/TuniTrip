@@ -37,48 +37,96 @@
 
 <body>
 <style>
-.avatar_circle {
-    width: 40px;
-    height: 40px;
-    background-color: #4CAF50; /* couleur du cercle */
-    color: white; /* couleur des initiales */
-    border-radius: 50%; /* cercle parfait */
+/* Container */
+.user_box {
     display: flex;
     align-items: center;
+    gap: 12px;
+}
+
+/* ------------------------------
+   MODE CONNECTÉ
+--------------------------------*/
+
+/* Avatar rond moderne */
+.avatar_circle {
+    width: 42px;
+    height: 42px;
+    background: #1c2228;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
     justify-content: center;
-    font-weight: bold;
+    align-items: center;
     font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
-    user-select: none;
+    transition: 0.3s ease;
 }
 
-/* Dropdown */
-.user_box_dropdown {
-    position: relative;
-    display: inline-block;
+.avatar_circle:hover {
+    background: #2e363d;
+    transform: scale(1.05);
 }
 
+/* Dropdown Menu */
 .dropdown_content {
     display: none;
     position: absolute;
+    background: #fff;
     right: 0;
-    background-color: #f9f9f9;
-    min-width: 120px;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-    z-index: 1;
-    border-radius: 4px;
+    margin-top: 8px;
+    min-width: 160px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.15);
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 9999;
+    animation: fadeIn 0.25s ease-out;
 }
 
 .dropdown_content a {
-    color: black;
-    padding: 10px 16px;
-    text-decoration: none;
     display: block;
+    padding: 12px 16px;
+    color: #1c2228;
+    text-decoration: none;
+    font-size: 15px;
+    transition: 0.3s;
 }
 
 .dropdown_content a:hover {
-    background-color: #f1f1f1;
+    background: #f3f4f6;
 }
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ------------------------------
+   MODE DÉCONNECTÉ
+--------------------------------*/
+
+/* Boutons login/register modernes */
+.btn-user {
+    background: #ffffff;
+    color: #1c2228;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid #1c2228;
+    transition: 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-user:hover {
+    background: #1c2228;
+    color: #ffffff;
+    border-color: #1c2228;
+    transform: translateY(-2px);
+}
+
 
 /* Style du badge */
 .main_nav_item.soon {
@@ -325,18 +373,74 @@
     outline: none;
 }
 
-/* Alert Messages */
+/* ============================================
+   VALIDATION STYLES
+   ============================================ */
+
+/* Message d'erreur sous les champs */
+.error-message {
+    display: none;
+    color: #c53030;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    background: #fff5f5;
+    border-left: 3px solid #c53030;
+    border-radius: 4px;
+}
+
+/* Input invalide */
+.auth-field input.is-invalid {
+    border-color: #c53030 !important;
+    background-color: #fff5f5;
+}
+
+.auth-field input.is-invalid:focus {
+    border-color: #c53030 !important;
+    box-shadow: 0 0 0 0.2rem rgba(197, 48, 48, 0.25);
+}
+
+/* Input valide */
+.auth-field input.is-valid {
+    border-color: #15803d !important;
+    background-color: #f0fdf4;
+}
+
+.auth-field input.is-valid:focus {
+    border-color: #15803d !important;
+    box-shadow: 0 0 0 0.2rem rgba(21, 128, 61, 0.25);
+}
+
+/* Alert Messages avec animation de fermeture */
 .alert {
     border-radius: 10px;
     border: none;
     padding: 1rem;
     font-size: 0.875rem;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .alert-danger {
     background: #fff5f5;
-    color: #c53030;
+    color: #f0fdf4;
     border-left: 4px solid #c53030;
+}
+
+.alert-success {
+    background: #f0fdf4;
+    color: #f0fdf4;
+    border-left: 4px solid #15803d;
 }
 
 .alert-info {
@@ -493,6 +597,208 @@ button:focus-visible {
     100% { background-position: 0% 50%; }
 }
 
+/* Numéro */
+.phone {
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+.phone i {
+    margin-right: 5px;
+    font-size: 20px; /* Icône téléphone */
+}
+
+/* Hover numéro */
+.phone:hover {
+    color: #1c2228;
+}
+
+/* User name */
+.user_box .user_name {
+    color: white !important;
+    font-weight: 600;
+}
+
+/* Hover Login / Register / User Name */
+.user_box a:hover {
+    color: #1c2228 !important;
+}
+.user_link{
+    color: white;
+}
+
+/* FOOTER BACKGROUND */
+.modern-footer {
+    position: relative;
+    background: linear-gradient(to bottom, #1c2228 0%, #1c2228 70%, #ffffff 100%);
+    padding: 60px 0 20px;
+    color: #fff;
+    z-index: 1;
+}
+
+/* OVERLAY (pour rendre le texte lisible) */
+.modern-footer .footer-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(28, 34, 40, 0.85);
+    z-index: -1;
+}
+
+/* LOGO */
+.footer-logo img {
+    width: 55px;
+    margin-bottom: 10px;
+}
+.footer-logo h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #d8b65d;
+}
+
+/* TITRE SECTIONS */
+.footer-title {
+    color: #d8b65d;
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+/* TEXTE */
+.footer-text {
+    font-size: 14px;
+    opacity: 0.85;
+    color: white;
+}
+
+/* LIENS */
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+.footer-links li {
+    margin-bottom: 8px;
+}
+.footer-links a {
+    color: #ffffffc7;
+    text-decoration: none;
+    transition: 0.2s;
+}
+.footer-links a:hover {
+    color: #d8b65d;
+}
+
+/* CONTACT */
+.footer-contact li {
+    margin-bottom: 10px;
+    list-style: none;
+}
+.footer-contact i {
+    color: #d8b65d;
+    margin-right: 8px;
+}
+
+/* SOCIAL ICONS */
+.footer-social a {
+    display: inline-block;
+    width: 38px; height: 38px;
+    line-height: 38px;
+    text-align: center;
+    background: #d8b65d;
+    border-radius: 50%;
+    margin-right: 10px;
+    color: #1c2228;
+    font-size: 16px;
+    transition: 0.3s;
+}
+.footer-social a:hover {
+    transform: translateY(-4px);
+    background: #fff;
+}
+
+/* BOTTOM COPYRIGHT */
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: 30px;
+    padding-top: 15px;
+    text-align: center;
+}
+.footer-bottom a {
+    color: #d8b65d;
+    text-decoration: none;
+}
+.footer-bottom a:hover {
+    text-decoration: underline;
+}
+/* Image du petit personnage */
+.footer-man {
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+}
+
+.footer-man img {
+    width: 190px;    /* taille de l'image, à ajuster */
+    height: auto;
+    opacity: 0.9;
+    transition: 0.3s ease;
+}
+
+.footer-man img:hover {
+    transform: scale(1.05);
+    opacity: 1;
+}
+
+/* Responsive Footer Mobile */
+@media (max-width: 768px) {
+    .modern-footer .row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .modern-footer .col-lg-3,
+    .modern-footer .col-md-6 {
+        width: 100%;
+        margin-bottom: 25px;
+    }
+
+    .footer-logo {
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    .footer-logo img {
+        margin-bottom: 10px;
+    }
+
+    .footer-social {
+        justify-content: center;
+    }
+
+    .footer-links,
+    .footer-contact {
+        padding: 0;
+        margin: 0 auto;
+    }
+
+    .footer-links li,
+    .footer-contact li {
+        margin-bottom: 10px;
+    }
+
+    .footer-bottom {
+        text-align: center;
+        margin-top: 30px;
+    }
+    .footer-man {
+        display: none;
+    }
+
+    
+}
+
 </style>
 <div class="super_container">
 	
@@ -503,36 +809,42 @@ button:focus-visible {
 		<!-- Top Bar -->
 
 		<div class="top_bar">
-			<div class="container">
-				<div class="row">
-					<div class="col d-flex flex-row">
-						<div class="phone">+45 345 3324 56789</div>
-						<div class="social">
-							<ul class="social_list">
-								<li class="social_list_item"><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-								<li class="social_list_item"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-								<li class="social_list_item"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-								<li class="social_list_item"><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
-								<li class="social_list_item"><a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a></li>
-								<li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-							</ul>
-						</div>
-						<div class="user_box ml-auto" style="margin-top: 5px;">
-							{% if app.user %}
-								<div class="user_box_dropdown">
-									<a href="#" class="user_name" style= "color: white;">{{ app.user.nom }} {{ app.user.prenom }}</a>
-									
-								</div>
-							{% else %}
-								<div class="user_box_login user_box_link"><a href="#" data-toggle="modal" data-target="#loginModal">Login</a></div>
-								<div class="user_box_register user_box_link"><a href="#" data-toggle="modal" data-target="#registerModal">Register</a></div>
-							{% endif %}
-						</div>
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col d-flex justify-content-between align-items-center">
 
-					</div>
-				</div>
-			</div>		
-		</div>
+                        <!-- Phone -->
+                        <div class="phone">
+                            <i class="fa-solid fa-phone"></i> +45 345 3324 56789
+                        </div>
+
+                        <!-- Social Icons -->
+                        <div class="social">
+                            <ul class="social_list">
+                                <li class="social_list_item">
+                                    <a href="#" class="facebook"><i class="fa-brands fa-facebook-f" style="font-size:20px"></i></a>
+                                </li>
+                                <li class="social_list_item">
+                                    <a href="#" class="whatsapp"><i class="fa-brands fa-whatsapp" style="font-size:20px"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- User Box -->
+                        <div class="user_box">
+                            {% if app.user %}
+                                <a href="#" class="user_name">{{ app.user.email }}</a>
+                            {% else %}
+                                <a href="#" data-toggle="modal" data-target="#loginModal" class="user_link">Connexion</a>
+                                <a href="#" data-toggle="modal" data-target="#registerModal" class="user_link">Inscription</a>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
 		<!-- Main Navigation -->
 
@@ -541,17 +853,18 @@ button:focus-visible {
 				<div class="row">
 					<div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
 						<div class="logo_container">
-							<div class="logo"><a href="#"><img src="{{ asset('assetsFront/logo.png') }}" alt=""></a></div>
+							<div class="logo"><a href="#"><img src="#" alt=""></a></div>
 						</div>
 						<div class="main_nav_container ml-auto">
 							<ul class="main_nav_list">
-								<li class="main_nav_item"><a href="{{path('app_accueil')}}">home</a></li>
-								<li class="main_nav_item"><a href="{{path('app_front_about')}}">about us</a></li>
-								<li class="main_nav_item"><a href="{{path('app_front_list_voitures')}}">List vehicule</a></li>
-								<li class="main_nav_item"><a href="{{path('app_front_excursions_list')}}">List Excursions</a></li>
-								<li class="main_nav_item soon"><a href="{{path('app_front_blogs')}}">Blogs</a></li>
-								<li class="main_nav_item"><a href="{{path('app_front_contact')}}">contact</a></li>
-							</ul>
+                                <li class="main_nav_item"><a href="{{path('app_accueil')}}">Accueil</a></li>
+                                <li class="main_nav_item"><a href="{{path('app_front_about')}}">À propos</a></li>
+                                <li class="main_nav_item"><a href="{{path('app_front_list_voitures')}}">Liste des véhicules</a></li>
+                                <li class="main_nav_item"><a href="{{path('app_front_excursions_list')}}">Liste des excursions</a></li>
+                                <li class="main_nav_item soon"><a href="{{path('app_front_blogs')}}">Blogs</a></li>
+                                <li class="main_nav_item"><a href="{{path('app_front_contact')}}">Contact</a></li>
+                            </ul>
+
 						</div>
 						<div class="user_box ml-auto">
 							{% if app.user %}
@@ -564,8 +877,8 @@ button:focus-visible {
 									</div>
 								</div>
 							{% else %}
-								<div class="user_box_login user_box_link"><a href="#" data-toggle="modal" data-target="#loginModal">Login</a></div>
-								<div class="user_box_register user_box_link"><a href="#" data-toggle="modal" data-target="#registerModal">Register</a></div>
+								<div class="user_box_login user_box_link"><a href="#" data-toggle="modal" data-target="#loginModal">Connexion</a></div>
+								<div class="user_box_register user_box_link"><a href="#" data-toggle="modal" data-target="#registerModal">Inscription</a></div>
 							{% endif %}
 						</div>
 
@@ -585,7 +898,7 @@ button:focus-visible {
 	<div class="menu trans_500">
 		<div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
 			<div class="menu_close_container"><div class="menu_close"></div></div>
-			<div class="logo menu_logo"><a href="#"><img src="{{ asset('assetsFront/logo.png' ) }}" alt=""></a></div>
+			<div class="logo menu_logo"><a href="#"><img src="#" alt=""></a></div>
 			<ul>
 				<li class="menu_item"><a href="#">home</a></li>
 				<li class="menu_item"><a href="about.html">about us</a></li>
@@ -614,11 +927,27 @@ button:focus-visible {
                 </button>
             </div>
             <div class="modal-body pt-0">
-                <form method="post" action="{{ path('app_login') }}">
-                    {% if error is defined and error %}
-                        <div class="alert alert-danger small mb-3">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                    {% endif %}
+                {# Messages flash pour les erreurs de login #}
+                {% for message in app.flashes('error_login') %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
 
+                {# Message de succès après inscription #}
+                {% for message in app.flashes('success_register') %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+
+                <form method="post" action="{{ path('app_login') }}">
                     {% if app.user %}
                         <div class="alert alert-info small mb-3">
                             Vous êtes connecté en tant que {{ app.user.userIdentifier }},
@@ -631,7 +960,7 @@ button:focus-visible {
                         <i class="fa fa-envelope"></i>
                         <input
                             type="email"
-                            value="{{ last_username|default('') }}"
+                            value="{{ app.session.get('_security.last_username') }}"
                             name="email"
                             id="inputEmail"
                             class="form-control"
@@ -688,8 +1017,26 @@ button:focus-visible {
                 </button>
             </div>
             <div class="modal-body pt-0">
-                <form method="post" action="{{ path('app_register') }}" id="registerFormModal">
+                {# Messages flash pour le register #}
+                {% for message in app.flashes('success_register') %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
 
+                {% for message in app.flashes('error_register') %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+
+                <form method="post" action="{{ path('app_register') }}" id="registerFormModal">
                     <div class="auth-field-row">
                         <div class="auth-field">
                             <label for="reg_nom">Nom</label>
@@ -743,156 +1090,85 @@ button:focus-visible {
         </div>
     </div>
 </div>
+
+
  <!-- Footer -->
+	<footer class="modern-footer">
+        <div class="footer-overlay"></div>
+            <div class="container footer-content">
 
-    {% for message in app.flashes('success_register') %}
-        <div class="toast-success-register" id="toast-success-register">{{ message }}</div>
-    {% endfor %}
+                <div class="row">
 
-	<footer class="footer">
-    <div class="container">
-        <div class="row">
-
-            <!-- LOGO + DESCRIPTION + SOCIAL -->
-            <div class="col-lg-3 footer_column">
-                <div class="footer_col">
-                    <div class="footer_content footer_about">
-                        <div class="logo_container footer_logo">
-                            <div class="logo">
-                                <a href="">
-                                    <img src="{{ asset('assetsFront/images/logo.png') }}" alt=""> TuniTrip
-                                </a>
-                            </div>
+                    <!-- LOGO & DESCRIPTION -->
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="footer-logo">
+                            <img src="#" alt="TuniTrip">
+                            <h3>TuniTrip</h3>
                         </div>
 
-                        <p class="footer_about_text">
-                            Votre plateforme tunisienne dédiée aux excursions, locations de voitures
-                            et transferts.
+                        <p class="footer-text">
+                            Votre plateforme tunisienne dédiée aux excursions,
+                            transferts et locations de voitures.
                         </p>
 
-                        <ul class="footer_social_list">
-                            <li class="footer_social_item">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li class="footer_social_item">
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                            </li>
-                            <li class="footer_social_item">
-                                <a href="#"><i class="fa fa-whatsapp"></i></a>
-                            </li>
+                        <div class="footer-social">
+                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+                        </div>
+
+                    </div>
+
+                    <!-- NAVIGATION -->
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <h4 class="footer-title">Navigation</h4>
+                        <ul class="footer-links">
+                            <li><a href="{{path('app_accueil')}}">Accueil</a></li>
+                            <li><a href="{{path('app_front_list_voitures')}}">Voitures</a></li>
+                            <li><a href="{{path('app_front_excursions_list')}}">Excursions</a></li>
+                            <li><a href="{{path('app_front_blogs')}}">Blogs</a></li>
+                            <li><a href="{{path('app_front_about')}}">À propos</a></li>
+                            <li><a href="{{path('app_front_contact')}}">Contact</a></li>
                         </ul>
                     </div>
-                </div>
-            </div>
 
-            <!-- NOS SERVICES -->
-            <div class="col-lg-3 footer_column">
-                <div class="footer_col">
-                    <div class="footer_title">Nos Services</div>
-                    <div class="footer_links">
-                        <ul>
-                            <li><a href="">Réservation voitures</a></li>
-                            <li><a href="">Transferts</a></li>
-                            <li><a href="">Excursions</a></li>
+                    <!-- SERVICES -->
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <h4 class="footer-title">Services</h4>
+                        <ul class="footer-links">
+                            <li><a href="{{path('app_front_list_voitures')}}">Réservation voitures</a></li>
+                            <li><a href="{{path('app_front_excursions_list')}}">Excursions</a></li>
+                            <li><a href="{{path('app_accueil')}}#transfers-section">Transferts privés</a></li>
                         </ul>
                     </div>
-                </div>
-            </div>
 
-            <!-- NAVIGATION -->
-            <div class="col-lg-3 footer_column">
-                <div class="footer_col">
-                    <div class="footer_title">Navigation</div>
-                    <div class="footer_links">
-                        <ul>
-                            <li><a href="">Accueil</a></li>
-                            <li><a href="">Voitures</a></li>
-                            <li><a href="">Excursions</a></li>
-                            <li><a href="">Contact</a></li>
-                            <li><a href="">À propos</a></li>
+                    <!-- CONTACT -->
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <h4 class="footer-title">Contact</h4>
+                        <ul class="footer-contact">
+                            <li><i class="fa fa-map-marker"></i> Hammamet, Tunisie</li>
+                            <li><i class="fa fa-phone"></i> +216 93 313 278</li>
+                            <li><i class="fa fa-envelope"></i> contact@tunitrip.com</li>
+                            <li><i class="fa fa-globe"></i> www.tunitrip.com</li>
                         </ul>
                     </div>
+
                 </div>
-            </div>
 
-            <!-- CONTACT -->
-            <div class="col-lg-3 footer_column">
-                <div class="footer_col">
-                    <div class="footer_title">Contact</div>
-                    <div class="footer_content footer_contact">
-                        <ul class="contact_info_list">
-
-                            <li class="contact_info_item">
-                                <div class="contact_info_icon">
-                                    <i class="fa fa-map-marker"></i>
-                                </div>
-                                <div class="contact_info_text">Tunis, Tunisie</div>
-                            </li>
-
-                            <li class="contact_info_item">
-                                <div class="contact_info_icon">
-                                    <i class="fa fa-phone"></i>
-                                </div>
-                                <div class="contact_info_text">+216 XX XXX XXX</div>
-                            </li>
-
-                            <li class="contact_info_item">
-                                <div class="contact_info_icon">
-                                    <i class="fa fa-envelope"></i>
-                                </div>
-                                <div class="contact_info_text">
-                                    <a href="mailto:contact@tunitrip.com">contact@tunitrip.com</a>
-                                </div>
-                            </li>
-
-                            <li class="contact_info_item">
-                                <div class="contact_info_icon">
-                                    <i class="fa fa-globe"></i>
-                                </div>
-                                <div class="contact_info_text">
-                                    <a href="#">www.tunitrip.com</a>
-                                </div>
-                            </li>
-
-                        </ul>
-                    </div>
+                <!-- Copy -->
+                <div class="footer-bottom">
+                    <p>© 2025 TuniTrip – Tous droits réservés. Développé par 
+                        <a href="https://www.linkedin.com/in/ahmed-ksontini-9530112bb/" target="_blank">Ksontini Ahmed</a>
+                    </p>
                 </div>
+                
+
+
             </div>
+            <div class="footer-man">
+                <img src="{{ asset('assetsFront/images/man_copie.png') }}" alt="man-image">
+            </div>
+    </footer>
 
-        </div>
-    </div>
-</footer>
-
-
-
-	<!-- Copyright -->
-
-	<div class="copyright">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3 order-lg-1 order-2  ">
-					<div class="copyright_content d-flex flex-row align-items-center">
-						<div><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy; 2025 All rights reserved | This template is made by <a href="https://www.linkedin.com/in/ahmed-ksontini-9530112bb/" target="_blank">Ksontini Ahmed</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
-					</div>
-				</div>
-				<div class="col-lg-9 order-lg-2 order-1">
-					<div class="footer_nav_container d-flex flex-row align-items-center justify-content-lg-end">
-						<div class="footer_nav">
-							<ul class="footer_nav_list">
-								<li class="footer_nav_item"><a href="#">home</a></li>
-								<li class="footer_nav_item"><a href="about.html">about us</a></li>
-								<li class="footer_nav_item"><a href="offers.html">offers</a></li>
-								<li class="footer_nav_item"><a href="blog.html">news</a></li>
-								<li class="footer_nav_item"><a href="contact.html">contact</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 </div>
 
@@ -990,8 +1266,235 @@ $(document).ready(function () {
 </script>
 
 
+<script>
+function toggleDropdown() {
+    const menu = document.getElementById("dropdownMenu");
+    menu.style.display = (menu.style.display === "block") ? "none" : "block";
+}
 
+document.addEventListener("click", function(event) {
+    const menu = document.getElementById("dropdownMenu");
+    const avatar = document.querySelector(".avatar_circle");
 
+    if (!avatar.contains(event.target)) {
+        menu.style.display = "none";
+    }
+});
+</script>
+
+{# Script pour ouvrir automatiquement le modal de login après l'inscription #}
+{% if app.flashes('open_login_after_register')|length > 0 %}
+    <script>
+        $(document).ready(function() {
+            $('#loginModal').modal('show');
+        });
+    </script>
+{% endif %}
+
+{# Script pour ouvrir automatiquement le modal de login en cas d'erreur de connexion #}
+{% if app.flashes('open_login_modal')|length > 0 %}
+    <script>
+        $(document).ready(function() {
+            $('#loginModal').modal('show');
+        });
+    </script>
+{% endif %}
+
+{# Script pour ouvrir automatiquement le modal de register en cas d'erreur #}
+{% if app.flashes('error_register')|length > 0 %}
+    <script>
+        $(document).ready(function() {
+            $('#registerModal').modal('show');
+        });
+    </script>
+{% endif %}
+<script>
+// ============================================
+// AUTO-HIDE ALERTS AFTER 4 SECONDS
+// ============================================
+$(document).ready(function() {
+    // Masquer automatiquement les alertes après 4 secondes
+    setTimeout(function() {
+        $('.alert').fadeOut('slow', function() {
+            $(this).remove();
+        });
+    }, 4000);
+});
+
+// ============================================
+// VALIDATION EN TEMPS RÉEL DU FORMULAIRE
+// ============================================
+$(document).ready(function() {
+    
+    // Fonction pour afficher les messages d'erreur
+    function showError(input, message) {
+        const formGroup = input.closest('.auth-field, .auth-field-row > div');
+        let errorDiv = formGroup.find('.error-message');
+        
+        if (errorDiv.length === 0) {
+            errorDiv = $('<div class="error-message"></div>');
+            formGroup.append(errorDiv);
+        }
+        
+        errorDiv.text(message).show();
+        input.addClass('is-invalid');
+    }
+    
+    // Fonction pour masquer les messages d'erreur
+    function hideError(input) {
+        const formGroup = input.closest('.auth-field, .auth-field-row > div');
+        formGroup.find('.error-message').hide();
+        input.removeClass('is-invalid');
+    }
+    
+    // ============================================
+    // VALIDATION NOM ET PRÉNOM (lettres uniquement)
+    // ============================================
+    $('#reg_nom, #reg_prenom').on('blur', function() {
+        const value = $(this).val().trim();
+        const fieldName = $(this).attr('id') === 'reg_nom' ? 'nom' : 'prénom';
+        const regex = /^[a-zA-ZÀ-ÿ\s'-]+$/;
+        
+        if (value === '') {
+            showError($(this), `Le ${fieldName} est requis.`);
+        } else if (!regex.test(value)) {
+            showError($(this), `Le ${fieldName} ne doit contenir que des lettres.`);
+        } else if (value.length < 2) {
+            showError($(this), `Le ${fieldName} doit contenir au moins 2 caractères.`);
+        } else {
+            hideError($(this));
+        }
+    });
+    
+    // ============================================
+    // VALIDATION EMAIL
+    // ============================================
+    $('#reg_email').on('blur', function() {
+        const value = $(this).val().trim();
+        const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        
+        if (value === '') {
+            showError($(this), 'L\'email est requis.');
+        } else if (!regex.test(value)) {
+            showError($(this), 'Veuillez entrer un email valide (ex: exemple@domaine.com).');
+        } else {
+            hideError($(this));
+        }
+    });
+    
+    // ============================================
+    // VALIDATION TÉLÉPHONE (chiffres uniquement)
+    // ============================================
+    $('#reg_tel').on('blur', function() {
+        const value = $(this).val().trim();
+        const regex = /^[0-9]{8,15}$/;
+        
+        if (value === '') {
+            showError($(this), 'Le téléphone est requis.');
+        } else if (!/^[0-9]+$/.test(value)) {
+            showError($(this), 'Le téléphone ne doit contenir que des chiffres.');
+        } else if (!regex.test(value)) {
+            showError($(this), 'Le téléphone doit contenir entre 8 et 15 chiffres.');
+        } else {
+            hideError($(this));
+        }
+    });
+    
+    // Empêcher la saisie de caractères non numériques dans le téléphone
+    $('#reg_tel').on('keypress', function(e) {
+        const charCode = e.which ? e.which : e.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            e.preventDefault();
+            return false;
+        }
+    });
+    
+    // ============================================
+    // VALIDATION MOT DE PASSE
+    // ============================================
+    $('#reg_password').on('blur', function() {
+        const value = $(this).val();
+        
+        if (value === '') {
+            showError($(this), 'Le mot de passe est requis.');
+            return;
+        }
+        
+        // Vérifications individuelles
+        const hasUpperCase = /[A-Z]/.test(value);
+        const hasLowerCase = /[a-z]/.test(value);
+        const hasNumber = /[0-9]/.test(value);
+        const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(value);
+        const validLength = value.length >= 8 && value.length <= 12;
+        
+        let errors = [];
+        
+        if (!validLength) {
+            errors.push('entre 8 et 12 caractères');
+        }
+        if (!hasUpperCase) {
+            errors.push('une lettre majuscule');
+        }
+        if (!hasLowerCase) {
+            errors.push('une lettre minuscule');
+        }
+        if (!hasNumber) {
+            errors.push('un chiffre');
+        }
+        if (!hasSpecialChar) {
+            errors.push('un caractère spécial (!@#$%...)');
+        }
+        
+        if (errors.length > 0) {
+            showError($(this), 'Le mot de passe doit contenir : ' + errors.join(', ') + '.');
+        } else {
+            hideError($(this));
+        }
+    });
+    
+    // ============================================
+    // VALIDATION À LA SOUMISSION DU FORMULAIRE
+    // ============================================
+    $('#registerFormModal').on('submit', function(e) {
+        let hasError = false;
+        
+        // Valider tous les champs
+        $('#reg_nom, #reg_prenom, #reg_email, #reg_tel, #reg_password').each(function() {
+            $(this).trigger('blur');
+            if ($(this).hasClass('is-invalid')) {
+                hasError = true;
+            }
+        });
+        
+        // Vérifier les conditions d'utilisation
+        if (!$('#reg_agree').is(':checked')) {
+            alert('Vous devez accepter les conditions d\'utilisation.');
+            hasError = true;
+        }
+        
+        // Empêcher la soumission si erreur
+        if (hasError) {
+            e.preventDefault();
+            return false;
+        }
+    });
+    
+    // Réinitialiser les erreurs lors de la modification
+    $('#reg_nom, #reg_prenom, #reg_email, #reg_tel, #reg_password, #reg_adresse').on('input', function() {
+        if ($(this).val().trim() !== '') {
+            hideError($(this));
+        }
+    });
+});
+</script>
+{# Script pour ouvrir automatiquement le modal de register en cas d'erreur #}
+{% if app.flashes('open_register_modal')|length > 0 %}
+    <script>
+        $(document).ready(function() {
+            $('#registerModal').modal('show');
+        });
+    </script>
+{% endif %}
 {% endblock %}
 
 </body>

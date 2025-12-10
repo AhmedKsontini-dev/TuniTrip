@@ -35,7 +35,6 @@ class RegistrationController extends AbstractController
             $this->addFlash('open_login_after_register', true);
 
             // Tenter de revenir à la page d'origine (utilisée par les modales)
-            // Utiliser all('registration_form') pour récupérer un tableau sans provoquer d'exception
             $redirectData = $request->request->all('registration_form');
             $redirectTo = $redirectData['redirectTo'] ?? $request->headers->get('referer');
 
@@ -45,6 +44,29 @@ class RegistrationController extends AbstractController
 
             // Fallback vers la page d'accueil
             return $this->redirectToRoute('app_accueil');
+        }
+
+        // Si le formulaire est soumis mais invalide, collecter les erreurs
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $errors = [];
+            foreach ($form->getErrors(true) as $error) {
+                $errors[] = $error->getMessage();
+            }
+            
+            if (!empty($errors)) {
+                $this->addFlash('error_register', implode(' ', $errors));
+            } else {
+                $this->addFlash('error_register', 'Veuillez corriger les erreurs dans le formulaire.');
+            }
+            
+            // Marquer pour rouvrir le modal
+            $this->addFlash('open_register_modal', true);
+            
+            // Rediriger vers la page précédente
+            $referer = $request->headers->get('referer');
+            if ($referer) {
+                return $this->redirect($referer);
+            }
         }
 
         return $this->render('registration/register.html.twig', [

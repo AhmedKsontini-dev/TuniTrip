@@ -1,0 +1,96 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Calendrier des Réservations{% endblock %}
+
+{% block stylesheet %}
+    <!-- FullCalendar CSS -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <style>
+        #calendar {
+            max-width: 100%;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            min-height: 800px; /* Ensure enough height */
+        }
+        .fc-event {
+            cursor: pointer;
+        }
+        .fc-daygrid-event {
+            white-space: normal !important; /* Allow wrapping */
+        }
+        /* Custom header toolbar to look more like bootstrap */
+        .fc-toolbar-title {
+            font-size: 1.5rem !important;
+            font-weight: 700;
+            color: #4e73df;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Calendrier Global</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Vue d'ensemble des réservations</h6>
+                </div>
+                <div class="card-body">
+                    <div id='calendar'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        
+        // Les événements viennent du contrôleur encodés en JSON
+        var eventsData = {{ events|raw }};
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'fr', // Langue française
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+            },
+            buttonText: {
+                today:    "Aujourd'hui",
+                month:    'Mois',
+                week:     'Semaine',
+                day:      'Jour',
+                list:     'Liste'
+            },
+            events: eventsData,
+            eventClick: function(info) {
+                var props = info.event.extendedProps;
+                var msg = '----- DÉTAILS RÉSERVATION -----\n\n';
+                if (props.type) msg += 'Type : ' + props.type + '\n';
+                if (props.reservationId) msg += 'ID : #' + props.reservationId + '\n';
+                msg += 'Titre : ' + info.event.title + '\n';
+                msg += 'Date : ' + info.event.start.toLocaleString();
+                
+                alert(msg);
+            },
+            editable: false, // Lecture seule pour l'instant
+            selectable: true
+        });
+
+        calendar.render();
+    });
+</script>
+{% endblock %}

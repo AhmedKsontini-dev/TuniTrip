@@ -36,28 +36,7 @@ class ReservationVoitureController extends AbstractController
             $dateDebut = $reservation->getDateDebut();
             $dateFin = $reservation->getDateFin();
 
-            // Vérifier la disponibilité
-            $existingReservation = $em->getRepository(ReservationVoiture::class)
-                ->createQueryBuilder('r')
-                ->where('r.voiture = :voiture')
-                ->andWhere('(:dateDebut <= r.dateFin AND :dateFin >= r.dateDebut)')
-                ->setParameter('voiture', $voiture->getId())
-                ->setParameter('dateDebut', $dateDebut)
-                ->setParameter('dateFin', $dateFin)
-                ->setMaxResults(1)
-                ->getQuery()
-                ->getOneOrNullResult();
-
-            if ($existingReservation) {
-                $existingDebut = $existingReservation->getDateDebut()->format('d/m/Y');
-                $existingFin = $existingReservation->getDateFin()->format('d/m/Y');
-
-                $message = "Cette voiture n’est pas disponible du $existingDebut au $existingFin.";
-
-                $form->get('dateDebut')->addError(new FormError($message));
-                $form->get('dateFin')->addError(new FormError($message));
-                $form->addError(new FormError($message));
-            } else {
+            
                 // ======== CALCUL DU PRIX TOTAL ==========
                 $nbJours = $dateDebut->diff($dateFin)->days;
 
@@ -91,7 +70,7 @@ class ReservationVoitureController extends AbstractController
                 return $this->redirectToRoute('app_reservation_voiture', [
                     'id' => $voiture->getId()
                 ]);
-            }
+            
         }
 
         return $this->render('Front/reservation_voiture/form.html.twig', [

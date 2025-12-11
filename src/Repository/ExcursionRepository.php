@@ -68,7 +68,7 @@ class ExcursionRepository extends ServiceEntityRepository
         }
 
         if ($prix) {
-            $qb->andWhere('e.prixParPersonne <= :prix')
+            $qb->andWhere('ABS(e.prixParPersonne) <= :prix')
                ->setParameter('prix', $prix);
         }
 

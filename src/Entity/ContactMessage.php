@@ -14,21 +14,25 @@ class ContactMessage
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 100)]
-    #[Assert\NotBlank(message: "Veuillez entrer votre nom.")]
+    #[Assert\NotBlank(message: "Le nom est obligatoire.")]
+    #[Assert\Regex(
+        pattern: "/^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/u",
+        message: "Le nom ne doit contenir que des lettres."
+    )]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 150)]
-    #[Assert\NotBlank(message: "Veuillez entrer votre adresse e-mail.")]
-    #[Assert\Email(message: "L'adresse e-mail '{{ value }}' n'est pas valide.")]
+    #[Assert\NotBlank(message: "L'email est obligatoire.")]
+    #[Assert\Email(message: "L'email n'est pas valide.")]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Veuillez entrer un sujet.")]
+    #[Assert\NotBlank(message: "Le sujet est obligatoire.")]
     private ?string $sujet = null;
 
-    #[ORM\Column(type: 'text')]
-    #[Assert\NotBlank(message: "Veuillez écrire un message.")]
+    #[Assert\NotBlank(message: "Le message est obligatoire.")]
+    #[Assert\Length(
+        min: 10,
+        minMessage: "Votre message doit contenir au moins 10 caractères."
+    )]
     private ?string $message = null;
 
     #[ORM\Column(type: 'boolean')]

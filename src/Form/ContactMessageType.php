@@ -16,21 +16,26 @@ class ContactMessageType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'label' => 'Votre nom',  // <- ici le label
+                'label' => 'Votre nom',
+                'required' => true,
                 'attr' => ['placeholder' => 'Entrez votre nom']
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Votre email',
+                'required' => true,
                 'attr' => ['placeholder' => 'Entrez votre email']
             ])
             ->add('sujet', TextType::class, [
                 'label' => 'Sujet',
+                'required' => true,
                 'attr' => ['placeholder' => 'Objet de votre message']
             ])
             ->add('message', TextareaType::class, [
                 'label' => 'Message',
+                'required' => true,
                 'attr' => ['placeholder' => 'Votre message', 'rows' => 4]
             ]);
+
 
     }
 

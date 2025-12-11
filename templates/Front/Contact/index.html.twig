@@ -394,6 +394,14 @@ label {
 
 <!-- === FORMULAIRE SIMPLE STYLE HTML === -->
 <section class="contact_form_section">
+    <!-- Flash messages (fallback non-AJAX) -->
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success fw-semibold popup-message">{{ message }}</div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger fw-semibold popup-message">{{ message }}</div>
+    {% endfor %}
+
     <h2>Envoyer un Message</h2>
 
     <form id="contactForm" action="{{ path('app_front_contact') }}" method="POST" class="contact_form">

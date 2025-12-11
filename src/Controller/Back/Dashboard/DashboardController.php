@@ -6,12 +6,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 #[Route('/admin')]
 class DashboardController extends AbstractController
 {
     #[Route('/dashboard', name: 'admin_dashboard')]
-    public function index(EntityManagerInterface $em): Response
+    public function index(EntityManagerInterface $em, SessionInterface $session): Response
     {
         // Période actuelle (ce mois)
         $dateDebut = new \DateTime('first day of this month');
@@ -246,10 +247,19 @@ class DashboardController extends AbstractController
         ->setMaxResults(2)
         ->getResult();
 
+        $reservationsRecentesExcursions = $em->createQuery(
+            'SELECT r.id, r.nom, r.prenom, r.prixTotal, r.dateCreation
+             FROM App\Entity\ReservationExcursion r
+             ORDER BY r.dateCreation DESC'
+        )
+        ->setMaxResults(2)
+        ->getResult();
+
         // Combiner et formatter
         $reservationsRecentes = [];
         foreach ($reservationsRecentesVoitures as $res) {
             $reservationsRecentes[] = [
+                'id' => $res['id'],
                 'type' => 'voiture',
                 'nom' => $res['nom'],
                 'prenom' => $res['prenom'],
@@ -259,6 +269,7 @@ class DashboardController extends AbstractController
         }
         foreach ($reservationsRecentesTransferts as $res) {
             $reservationsRecentes[] = [
+                'id' => $res['id'],
                 'type' => 'transfert',
                 'nom' => $res['lastName'],
                 'prenom' => $res['firstName'],
@@ -266,6 +277,24 @@ class DashboardController extends AbstractController
                 'created_at' => $res['createdAt']
             ];
         }
+
+        foreach ($reservationsRecentesExcursions as $res) {
+            $reservationsRecentes[] = [
+                'id' => $res['id'],
+                'type' => 'excursion',
+                'nom' => $res['nom'],
+                'prenom' => $res['prenom'],
+                'prix_total' => $res['prixTotal'],
+                'created_at' => $res['dateCreation']
+            ];
+        }
+
+        // Exclure les notifications déjà vues (stockées en session)
+        $seenNotifications = $session->get('seen_notifications', []);
+        $reservationsRecentes = array_filter($reservationsRecentes, function ($res) use ($seenNotifications) {
+            $key = $res['type'] . '-' . $res['id'];
+            return !in_array($key, $seenNotifications, true);
+        });
 
         // Trier par date décroissante
         usort($reservationsRecentes, function($a, $b) {
@@ -356,5 +385,33 @@ class DashboardController extends AbstractController
             'messagesRecents' => $messagesRecents,
             'messagesNonLus' => $messagesNonLus,
         ]);
+    }
+
+    #[Route('/dashboard/notification/{type}/{id}', name: 'admin_notification_open', requirements: ['id' => '\\d+'])]
+    public function openNotification(string $type, int $id, SessionInterface $session): Response
+    {
+        // Marquer la notification comme vue dans la session
+        $seenNotifications = $session->get('seen_notifications', []);
+        $key = $type . '-' . $id;
+        if (!in_array($key, $seenNotifications, true)) {
+            $seenNotifications[] = $key;
+            $session->set('seen_notifications', $seenNotifications);
+        }
+
+        // Rediriger vers la page de détail correspondante
+        if ($type === 'voiture') {
+            return $this->redirectToRoute('app_reservation_voiture_show', ['id' => $id]);
+        }
+
+        if ($type === 'transfert') {
+            return $this->redirectToRoute('admin_reservation_transfert_show', ['id' => $id]);
+        }
+
+        if ($type === 'excursion') {
+            return $this->redirectToRoute('app_reservation_excursion_show', ['id' => $id]);
+        }
+
+        // Par défaut, retour au dashboard
+        return $this->redirectToRoute('admin_dashboard');
     }
 }

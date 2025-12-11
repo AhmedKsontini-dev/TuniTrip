@@ -1,54 +1,94 @@
-<!DOCTYPE html>
+{% extends 'baseBack.html.twig' %}
 
-<title>ReservationExcursion</title>
+{% block title %}Détails Réservation Excursion #{{ reservation_excursion.id }}{% endblock %}
 
 {% block body %}
-    <h1>ReservationExcursion</h1>
+<div class="container my-5">
+    <div class="card shadow-lg border-0 rounded-4 p-4">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ reservation_excursion.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ reservation_excursion.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ reservation_excursion.prenom }}</td>
-            </tr>
-            <tr>
-                <th>Adult</th>
-                <td>{{ reservation_excursion.adult }}</td>
-            </tr>
-            <tr>
-                <th>Child</th>
-                <td>{{ reservation_excursion.child }}</td>
-            </tr>
-            <tr>
-                <th>DateHeure</th>
-                <td>{{ reservation_excursion.dateHeure ? reservation_excursion.dateHeure|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>LocalisationPoint</th>
-                <td>{{ reservation_excursion.localisationPoint }}</td>
-            </tr>
-            <tr>
-                <th>DateCreation</th>
-                <td>{{ reservation_excursion.dateCreation ? reservation_excursion.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Statut</th>
-                <td>{{ reservation_excursion.statut }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <!-- 🏷️ Titre principal -->
+        <h1 class="text-center mb-4 text-primary fw-bold">
+            🌍 Réservation Excursion #{{ reservation_excursion.id }}
+        </h1>
 
-    <a href="{{ path('app_reservation_excursion_index') }}">back to list</a>
+        <!-- 👤 Informations Client -->
+        <hr>
+        <h4 class="text-primary mb-3">Informations Client</h4>
+        <div class="row text-center">
+            <div class="col-md-4 mb-3">
+                <h6 class="text-muted">Nom complet</h6>
+                <p class="fw-semibold">{{ reservation_excursion.nom }} {{ reservation_excursion.prenom }}</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h6 class="text-muted">Adultes</h6>
+                <p class="fw-semibold">{{ reservation_excursion.adult }}</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h6 class="text-muted">Enfants</h6>
+                <p class="fw-semibold">{{ reservation_excursion.child }}</p>
+            </div>
+        </div>
 
-    <a href="{{ path('app_reservation_excursion_edit', {'id': reservation_excursion.id}) }}">edit</a>
+        <!-- 🗺️ Détails de l'excursion -->
+        <hr>
+        <h4 class="text-primary mb-3">Détails de l'excursion</h4>
+        <div class="row text-center">
+            <div class="col-md-4 mb-3">
+                <h6 class="text-muted">Excursion</h6>
+                <p class="fw-semibold">{{ reservation_excursion.excursion ? reservation_excursion.excursion.titre : '—' }}</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h6 class="text-muted">Point de départ</h6>
+                <p class="fw-semibold">{{ reservation_excursion.localisationPoint }}</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h6 class="text-muted">Date & heure</h6>
+                <p class="fw-semibold">{{ reservation_excursion.dateHeure ? reservation_excursion.dateHeure|date('d/m/Y H:i') : '—' }}</p>
+            </div>
+        </div>
 
-    {{ include('Front/reservation_excursion/_delete_form.html.twig') }}
+        <!-- 💰 Prix total -->
+        <div class="text-center mb-4 mt-2">
+            <span class="badge bg-success fs-6 px-3 py-2">
+                💰 {{ reservation_excursion.prixTotal }} TND
+            </span>
+        </div>
+
+        <!-- 🕒 Informations système -->
+        <hr>
+        <h4 class="text-primary mb-3">Suivi de la réservation</h4>
+        <div class="row text-center">
+            <div class="col-md-4 mb-3">
+                <h6 class="text-muted">Créée le</h6>
+                <p class="fw-semibold">{{ reservation_excursion.dateCreation ? reservation_excursion.dateCreation|date('d/m/Y H:i') : '—' }}</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h6 class="text-muted">Statut</h6>
+                {% if reservation_excursion.statut == 'en_attente' %}
+                    <span class="badge bg-warning text-dark fs-6 px-3 py-2">⏳ En attente</span>
+                {% elseif reservation_excursion.statut == 'confirmee' %}
+                    <span class="badge bg-success fs-6 px-3 py-2">✅ Confirmée</span>
+                {% else %}
+                    <span class="badge bg-danger fs-6 px-3 py-2">❌ Annulée</span>
+                {% endif %}
+            </div>
+            <div class="col-md-4 mb-3">
+                <h6 class="text-muted">ID interne</h6>
+                <p class="fw-semibold">#{{ reservation_excursion.id }}</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 🔙 Boutons d’action -->
+    <div class="text-center mt-4">
+        <a href="{{ path('app_reservation_excursion_index') }}" class="btn btn-secondary px-4 me-2">
+            ↩️ Retour à la liste
+        </a>
+        <a href="{{ path('app_reservation_excursion_edit', {'id': reservation_excursion.id}) }}" class="btn btn-warning px-4 me-2">
+            ✏️ Modifier
+        </a>
+        {{ include('Back/reservation_excursion/_delete_form.html.twig') }}
+    </div>
+</div>
 {% endblock %}

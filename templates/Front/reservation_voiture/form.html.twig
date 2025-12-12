@@ -358,6 +358,12 @@
                 {{ form_widget(form.tel, {'attr': {'class': 'form-control step1-field'}}) }}
                 {{ form_errors(form.tel) }}
             </div>
+            
+            <div class="col-md-6 mb-3">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control step1-field', 'pattern': '[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$', 'placeholder': 'exemple@domaine.com'}}) }}
+                {{ form_errors(form.email) }}
+            </div>
         </div>
 
         <!-- BTN SUIVANT -->
@@ -431,8 +437,7 @@
 
       <div class="modal-body p-4">
         <p class="text-center mb-3">
-            Votre réservation a été enregistrée avec succès 🎉  
-            Merci de vous présenter à notre agence pour finaliser la prise en charge de la voiture.
+            Un email de confirmation vous sera envoyé à <strong>{{ data.email }}</strong> dans les 24 heures. Notre équipe vous contactera pour finaliser les détails.
         </p>
 
         <hr>
@@ -549,11 +554,23 @@ document.addEventListener('DOMContentLoaded', function() {
         let valid = true;
 
         step1Fields.forEach(input => {
+            // Check empty
             if (input.value.trim() === '') {
                 valid = false;
                 input.classList.add('is-invalid');
             } else {
-                input.classList.remove('is-invalid');
+                 // Custom email validation check if pattern exists
+                 if (input.type === 'email' && input.pattern) {
+                    const regex = new RegExp(input.pattern);
+                    if (!regex.test(input.value)) {
+                        valid = false;
+                        input.classList.add('is-invalid');
+                    } else {
+                        input.classList.remove('is-invalid');
+                    }
+                 } else {
+                    input.classList.remove('is-invalid');
+                 }
             }
         });
 
@@ -571,6 +588,42 @@ document.addEventListener('DOMContentLoaded', function() {
         step1.classList.add('active');
         step2Indicator.classList.remove('active');
         step1Indicator.classList.add('active');
+    });
+
+    // Date Validation
+    const dateDebutInput = document.querySelector('input[name="reservation_voiture[dateDebut]"]');
+    const dateFinInput = document.querySelector('input[name="reservation_voiture[dateFin]"]');
+    
+    // Fallback if not found by name attribute (assuming standard Symfony naming)
+    const dDebut = dateDebutInput || document.getElementById('reservation_voiture_dateDebut');
+    const dFin = dateFinInput || document.getElementById('reservation_voiture_dateFin');
+
+    if (dDebut && dFin) {
+        dDebut.addEventListener('change', function() {
+            if (this.value) {
+                dFin.min = this.value;
+                if (dFin.value && dFin.value < this.value) {
+                    dFin.value = this.value; // Reset or clear if invalid
+                }
+            }
+        });
+
+        dFin.addEventListener('change', function() {
+            if (dDebut.value && this.value < dDebut.value) {
+                alert("La date de fin ne peut pas être antérieure à la date de début.");
+                this.value = dDebut.value;
+            }
+        });
+    }
+
+    // Submit Validation
+    const form = document.getElementById('reservationForm');
+    form.addEventListener('submit', function(e) {
+        if (dDebut && dFin && dFin.value < dDebut.value) {
+            e.preventDefault();
+            alert("La date de fin doit être supérieure ou égale à la date de début.");
+            dFin.focus();
+        }
     });
 
 });

@@ -1,0 +1,19 @@
+<p>Bonjour {{ reservation.firstName }} {{ reservation.lastName }},</p>
+
+<p>Votre réservation de transfert avec <strong>TuniTrip</strong> a été <strong>confirmée</strong> ! 🎉</p>
+
+<p>Détails :</p>
+
+<ul>
+    <li><strong>Date :</strong> {{ reservation.pickupDate|date('d/m/Y') }}</li>
+    <li><strong>Heure :</strong> {{ reservation.pickupTime|date('H:i') }}</li>
+    <li><strong>Départ :</strong> {{ reservation.pickupLocation }}</li>
+    <li><strong>Arrivée :</strong> {{ reservation.dropoffLocation }}</li>
+    <li><strong>Nombre de personnes :</strong> {{ reservation.persons }}</li>
+</ul>
+
+<p>Prix total : <strong>{{ reservation.prixTotal }} €</strong></p>
+
+<p>Nous vous remercions pour votre confiance.</p>
+
+<p>Cordialement,<br>L’équipe TuniTrip</p>

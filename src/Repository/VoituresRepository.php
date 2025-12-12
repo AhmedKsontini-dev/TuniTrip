@@ -20,33 +20,39 @@ class VoituresRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('v');
 
+        // ---- PASSENGERS ----
         if ($passengers) {
-            if ($passengers === '5') {
-                $qb->andWhere('v.passengers >= :passengers')
-                ->setParameter('passengers', 5);
+            if ($passengers === '6plus') {
+                $qb->andWhere('v.passengers >= :p')
+                ->setParameter('p', 6);
+
             } else {
-                $qb->andWhere('v.passengers = :passengers')
-                ->setParameter('passengers', (int)$passengers);
+                $qb->andWhere('v.passengers = :p')
+                ->setParameter('p', (int)$passengers);
             }
         }
 
+        // ---- SUITCASES ----
         if ($suitcases) {
-            if ($suitcases === '3') {
-                $qb->andWhere('v.suitcases >= :suitcases')
-                ->setParameter('suitcases', 3);
+            if ($suitcases === '4plus') {
+                $qb->andWhere('v.suitcases >= :s')
+                ->setParameter('s', 4);
+
             } else {
-                $qb->andWhere('v.suitcases = :suitcases')
-                ->setParameter('suitcases', (int)$suitcases);
+                $qb->andWhere('v.suitcases = :s')
+                ->setParameter('s', (int)$suitcases);
             }
         }
 
+        // ---- BOITE VITESSE ----
         if ($boiteVitesse) {
-            $qb->andWhere('v.boiteVitesse = :boiteVitesse')
-            ->setParameter('boiteVitesse', $boiteVitesse);
+            $qb->andWhere('v.boiteVitesse = :b')
+            ->setParameter('b', $boiteVitesse);
         }
 
         return $qb->getQuery()->getResult();
     }
+
 
     public function findLatestAvailable(int $limit = 3): array
     {

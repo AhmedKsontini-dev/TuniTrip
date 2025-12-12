@@ -20,6 +20,10 @@ class ReservationVoitureType extends AbstractType
                 'attr' => ['required' => true]
             ])
             ->add('prenom', TextType::class, ['label' => 'Prénom'])
+            ->add('email', \Symfony\Component\Form\Extension\Core\Type\EmailType::class, [
+                'label' => 'Email',
+                'attr' => ['placeholder' => 'exemple@email.com']
+            ])
             ->add('dateNaissance', DateType::class, [
                 'label' => 'Date de naissance',
                 'widget' => 'single_text',

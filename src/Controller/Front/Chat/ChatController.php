@@ -41,7 +41,7 @@ class ChatController extends AbstractController
         $em->flush();
 
         // Génération lien WhatsApp
-        $adminNumber = "21693313278"; // numéro admin sans +
+        $adminNumber = "21626341186"; // numéro admin sans +
         $text = "$message";
         $waLink = "https://wa.me/$adminNumber?text=" . rawurlencode($text);
 

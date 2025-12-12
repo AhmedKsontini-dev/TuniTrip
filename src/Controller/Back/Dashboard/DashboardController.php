@@ -206,10 +206,10 @@ class DashboardController extends AbstractController
         // ============================================
         
         $topVoituresData = $em->createQuery(
-            'SELECT v.id, v.marque, v.modele, v.immatriculation, v.disponible, COUNT(r.id) as nbReservations
+            'SELECT v.id, v.marque, v.modele, v.disponible, COUNT(r.id) as nbReservations
              FROM App\Entity\Voitures v
              LEFT JOIN App\Entity\ReservationVoiture r WITH r.voiture = v
-             GROUP BY v.id, v.marque, v.modele, v.immatriculation, v.disponible
+             GROUP BY v.id, v.marque, v.modele, v.disponible
              ORDER BY nbReservations DESC'
         )
         ->setMaxResults(5)
@@ -221,7 +221,6 @@ class DashboardController extends AbstractController
             $topVoitures[] = [
                 'marque' => $voiture['marque'],
                 'modele' => $voiture['modele'],
-                'immatriculation' => $voiture['immatriculation'],
                 'disponible' => $voiture['disponible'],
                 'nbReservations' => $voiture['nbReservations']
             ];

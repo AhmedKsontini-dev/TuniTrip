@@ -42,6 +42,12 @@ class ReservationExcursion
     #[ORM\Column(type: 'float')]
     private ?float $prixTotal = null;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $email = null;
+
+    #[ORM\Column(type: 'string', length: 20, nullable: true)]
+    private ?string $tel = null;
+
     // --- GETTERS & SETTERS ---
     public function getId(): ?int
     {
@@ -155,6 +161,28 @@ class ReservationExcursion
     public function setPrixTotal(float $prixTotal): self
     {
         $this->prixTotal = $prixTotal;
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): self
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    public function getTel(): ?string
+    {
+        return $this->tel;
+    }
+
+    public function setTel(?string $tel): self
+    {
+        $this->tel = $tel;
         return $this;
     }
 }

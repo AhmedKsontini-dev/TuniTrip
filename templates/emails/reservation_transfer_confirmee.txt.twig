@@ -1,0 +1,14 @@
+Bonjour {{ reservation.firstName }} {{ reservation.lastName }},
+
+Votre réservation de transfert avec TuniTrip a été confirmée.
+
+Détails :
+Date : {{ reservation.pickupDate|date('d/m/Y') }}
+Heure : {{ reservation.pickupTime|date('H:i') }}
+Départ : {{ reservation.pickupLocation }}
+Arrivée : {{ reservation.dropoffLocation }}
+Personnes : {{ reservation.persons }}
+Prix total : {{ reservation.prixTotal }} €
+
+Merci pour votre confiance.
+– Équipe TuniTrip

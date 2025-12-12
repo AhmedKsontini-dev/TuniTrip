@@ -1,49 +1,149 @@
-<!DOCTYPE html>
+{% extends 'baseBack.html.twig' %}
 
-<title>ReservationExcursion index</title>
+{% block title %}Gestion des réservations d'excursion{% endblock %}
 
 {% block body %}
-    <h1>ReservationExcursion index</h1>
+<style>
+.dataTables_wrapper .dataTables_filter {
+    float: right;
+    text-align: right;
+}
+.dataTables_wrapper .dataTables_paginate {
+    float: right;
+    text-align: right;
+}
+</style>
 
-    <table class="table">
-        <thead>
+<div class="container mt-4">
+    <h1 class="mb-3">🏕️ Réservations des excursions</h1>
+
+    <!-- 🔔 Messages flash -->
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">{{ message }}</div>
+        {% endfor %}
+    {% endfor %}
+
+    <!-- ➕ Bouton Ajouter -->
+    <a href="{{ path('app_reservation_excursion_new') }}" class="btn btn-primary mb-3">
+        ➕ Nouvelle réservation
+    </a>
+
+    <!-- 📊 Tableau des réservations -->
+    <table class="table table-bordered table-hover align-middle datatable">
+        <thead class="table-dark">
             <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Adult</th>
-                <th>Child</th>
-                <th>DateHeure</th>
-                <th>LocalisationPoint</th>
-                <th>DateCreation</th>
+                <th>#</th>
+                <th>Image</th>
+                <th>Excursion</th>
+                <th>Client</th>
+                <th>Date Excursion</th>
+                <th>PAX</th>
+                <th>Lieu</th>
+                <th>Prix Total</th>
                 <th>Statut</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
-        {% for reservation_excursion in reservation_excursions %}
-            <tr>
-                <td>{{ reservation_excursion.id }}</td>
-                <td>{{ reservation_excursion.nom }}</td>
-                <td>{{ reservation_excursion.prenom }}</td>
-                <td>{{ reservation_excursion.adult }}</td>
-                <td>{{ reservation_excursion.child }}</td>
-                <td>{{ reservation_excursion.dateHeure ? reservation_excursion.dateHeure|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ reservation_excursion.localisationPoint }}</td>
-                <td>{{ reservation_excursion.dateCreation ? reservation_excursion.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ reservation_excursion.statut }}</td>
-                <td>
-                    <a href="{{ path('app_reservation_excursion_show', {'id': reservation_excursion.id}) }}">show</a>
-                    <a href="{{ path('app_reservation_excursion_edit', {'id': reservation_excursion.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_reservation_excursion_new') }}">Create new</a>
+        <tbody>
+            {% for reservation in reservation_excursions %}
+                <tr>
+                    <td>{{ reservation.id }}</td>
+
+                    <!-- Image Excursion -->
+                    <td>
+                        {% if reservation.excursion and reservation.excursion.imagePrincipale %}
+                            <img src="{{ asset('uploads/images/' ~ reservation.excursion.imagePrincipale) }}"
+                                alt="Excursion"
+                                style="width: 70px; height: 50px; object-fit: cover; border-radius: 6px;">
+                        {% else %}
+                            <span class="text-muted">—</span>
+                        {% endif %}
+                    </td>
+
+                    <!-- Excursion -->
+                    <td>
+                        {% if reservation.excursion %}
+                            <strong>{{ reservation.excursion.titre }}</strong>
+                        {% else %}
+                            <span class="text-muted">Non spécifié</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {{ reservation.nom }} {{ reservation.prenom }}<br>
+                        <!-- <small class="text-muted">{{ reservation.dateCreation ? reservation.dateCreation|date('d/m/Y') : '' }}</small> -->
+                    </td>
+
+                    <td>{{ reservation.dateHeure ? reservation.dateHeure|date('Y-m-d H:i') : '—' }}</td>
+
+                    <td>
+                        <span class="badge bg-light text-dark border">{{ reservation.adult }} Adultes</span>
+                        <span class="badge bg-light text-dark border">{{ reservation.child }} Enfants</span>
+                    </td>
+
+                    <td>{{ reservation.localisationPoint }}</td>
+
+                    <!-- 💰 Prix total -->
+                    <td>
+                        {% if reservation.prixTotal %}
+                            <strong>{{ reservation.prixTotal }} TND</strong>
+                        {% else %}
+                            —
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if reservation.statut == 'en attente' %}
+                            <span class="badge bg-warning text-dark">⏳ En attente</span>
+                        {% elseif reservation.statut == 'confirmee' %}
+                            <span class="badge bg-success">✅ Confirmée</span>
+                        {% else %}
+                            <span class="badge bg-danger">❌ Annulée</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Actions
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_reservation_excursion_show', {'id': reservation.id}) }}">👁️ Voir</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_reservation_excursion_edit', {'id': reservation.id}) }}">✏️ Modifier</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-success" href="{{ path('app_reservation_excursion_update_statut', {'id': reservation.id, 'statut': 'confirmee'}) }}">
+                                        ✅ Confirmer
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-warning" href="{{ path('app_reservation_excursion_update_statut', {'id': reservation.id, 'statut': 'annulee'}) }}">
+                                        🚫 Annuler
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                     <a class="dropdown-item text-danger" href="#" onclick="if(confirm('Supprimer ?')) document.getElementById('delete-form-{{ reservation.id }}').submit();">🗑️ Supprimer</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <form id="delete-form-{{ reservation.id }}" method="post" action="{{ path('app_reservation_excursion_delete', {'id': reservation.id}) }}" style="display: none;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reservation.id) }}">
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9" class="text-center text-muted">Aucune réservation enregistrée.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</div>
 {% endblock %}

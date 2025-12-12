@@ -70,7 +70,7 @@ class ReservationTransfert
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $comments = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    #[ORM\Column(type: 'float', nullable: true)]
     private ?float $prixTotal = null;
 
     #[ORM\Column(length: 50)]

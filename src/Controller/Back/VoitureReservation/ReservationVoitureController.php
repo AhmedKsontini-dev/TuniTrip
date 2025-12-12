@@ -18,8 +18,28 @@ final class ReservationVoitureController extends AbstractController
     public function index(ReservationVoitureRepository $reservationVoitureRepository): Response
     {
         return $this->render('Back/reservation_voitu/index.html.twig', [
-            'reservation_voitures' => $reservationVoitureRepository->findAll(),
+            'reservation_voitures' => $reservationVoitureRepository->findBy([], ['createdAt' => 'DESC']),
         ]);
+    }
+
+    #[Route('/{id}/statut/{statut}', name: 'app_reservation_voiture_update_statut', methods: ['POST', 'GET'])]
+    public function updateStatut(
+        ReservationVoiture $reservation,
+        string $statut,
+        EntityManagerInterface $entityManager,
+        \App\Service\TuniTripMailer $mailer
+    ): Response {
+        $reservation->setStatut($statut);
+        $entityManager->flush();
+
+        if ($statut === 'confirmee') {
+            $mailer->sendCarReservationConfirmation($reservation);
+            $this->addFlash('success', "Réservation confirmée et email envoyé. ✅");
+        } else {
+            $this->addFlash('success', "Statut mis à jour en : $statut");
+        }
+
+        return $this->redirectToRoute('app_reservation_voiture_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/new', name: 'app_reservation_voiture_new', methods: ['GET', 'POST'])]
@@ -65,6 +85,14 @@ final class ReservationVoitureController extends AbstractController
         return $this->render('Back/reservation_voitu/edit.html.twig', [
             'reservation_voiture' => $reservationVoiture,
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}/voucher', name: 'app_reservation_voiture_voucher', methods: ['GET'])]
+    public function voucher(ReservationVoiture $reservationVoiture): Response
+    {
+        return $this->render('Back/reservation_voitu/voucher.html.twig', [
+            'reservation_voiture' => $reservationVoiture,
         ]);
     }
 

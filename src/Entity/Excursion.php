@@ -89,11 +89,7 @@ class Excursion
     #[ORM\OneToMany(mappedBy: "excursion", targetEntity: FAQExcursion::class, cascade: ["persist", "remove"])]
     private Collection $faq;
 
-    #[ORM\OneToMany(mappedBy: "excursion", targetEntity: InclusExcursion::class, cascade: ["remove"])]
-    private Collection $inclusExcursions;
 
-    #[ORM\OneToMany(mappedBy: "excursion", targetEntity: NonInclusExcursion::class, cascade: ["remove"])]
-    private Collection $nonInclusExcursions;
 
 
 
@@ -110,8 +106,7 @@ class Excursion
         $this->avis = new ArrayCollection();
         $this->reservations = new ArrayCollection();
         $this->faq = new ArrayCollection();
-        $this->inclusExcursions = new ArrayCollection();
-        $this->nonInclusExcursions = new ArrayCollection();
+
     }
 
     // ------------------ GETTERS & SETTERS ------------------
@@ -363,15 +358,7 @@ class Excursion
         return $this;
     }
 
-    public function getInclusExcursions(): Collection
-    {
-        return $this->inclusExcursions;
-    }
 
-    public function getNonInclusExcursions(): Collection
-    {
-        return $this->nonInclusExcursions;
-    }
 
     
 }

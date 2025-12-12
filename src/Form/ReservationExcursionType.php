@@ -8,6 +8,9 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ReservationExcursionType extends AbstractType
 {
@@ -16,6 +19,11 @@ class ReservationExcursionType extends AbstractType
         $builder
             ->add('nom')
             ->add('prenom')
+            ->add('email', \Symfony\Component\Form\Extension\Core\Type\EmailType::class, [
+                'label' => 'Email',
+                'attr' => ['placeholder' => 'exemple@email.com']
+            ])
+            ->add('tel')
             ->add('adult')
             ->add('child')
             ->add('dateHeure')

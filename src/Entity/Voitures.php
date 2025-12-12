@@ -22,9 +22,6 @@ class Voitures
     #[ORM\Column(length: 255)]
     private ?string $modele = null;
 
-    #[ORM\Column(length: 30)]
-    private ?string $immatriculation = null;
-
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 0)]
     private ?string $prixJour = null;
 
@@ -49,8 +46,8 @@ class Voitures
     #[ORM\Column]
     private ?int $suitcases = null;
 
-    #[ORM\Column (type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?int $prixMois = null;
+    #[ORM\Column (type: 'float', precision: 10, scale: 2)]
+    private ?float $prixMois = null;
 
     // ---------- Getters & Setters ----------
 
@@ -59,8 +56,6 @@ class Voitures
     public function setMarque(string $marque): static { $this->marque = $marque; return $this; }
     public function getModele(): ?string { return $this->modele; }
     public function setModele(string $modele): static { $this->modele = $modele; return $this; }
-    public function getImmatriculation(): ?string { return $this->immatriculation; }
-    public function setImmatriculation(string $immatriculation): static { $this->immatriculation = $immatriculation; return $this; }
     public function getPrixJour(): ?string { return $this->prixJour; }
     public function setPrixJour(string $prixJour): static { $this->prixJour = $prixJour; return $this; }
     public function getImage(): ?string { return $this->image; }
@@ -77,8 +72,8 @@ class Voitures
     public function setPassengers(int $passengers): static { $this->passengers = $passengers; return $this; }
     public function getSuitcases(): ?int { return $this->suitcases; }
     public function setSuitcases(int $suitcases): static { $this->suitcases = $suitcases; return $this; }
-    public function getPrixMois(): ?int { return $this->prixMois; }
-    public function setPrixMois(int $prixMois): static { $this->prixMois = $prixMois; return $this; }
+    public function getPrixMois(): ?float { return $this->prixMois; }
+    public function setPrixMois(float $prixMois): static { $this->prixMois = $prixMois; return $this; }
 
 
 

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation de Réservation</title>
+</head>
+<body style="font-family: Arial, sans-serif; color: #333;">
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee;">
+        <h2 style="color: #d32f2f; text-align: center;">TuniTrip - Réservation Confirmée 🚗</h2>
+        
+        <p>Bonjour <strong>{{ reservation.prenom }} {{ reservation.nom }}</strong>,</p>
+        
+        <p>Nous avons le plaisir de vous informer que votre réservation de voiture a été validée avec succès.</p>
+        
+        <h3 style="background: #f5f5f5; padding: 10px;">Détails de la réservation</h3>
+        <ul>
+            <li><strong>Voiture :</strong> {{ reservation.voiture.marque }} {{ reservation.voiture.modele }}</li>
+            <li><strong>Date de début :</strong> {{ reservation.dateDebut|date('d/m/Y') }}</li>
+            <li><strong>Date de fin :</strong> {{ reservation.dateFin|date('d/m/Y') }}</li>
+            <li><strong>Prix Total :</strong> {{ reservation.prixTotal }} TND</li>
+        </ul>
+
+        <p>Vous pouvez accéder à votre espace client ou nous contacter pour toute modification.</p>
+        
+        <p style="text-align: center; margin-top: 30px; font-size: 12px; color: #888;">
+            L'équipe TuniTrip<br>
+            <a href="https://tunitrip.com" style="color: #d32f2f;">www.tunitrip.com</a>
+        </p>
+    </div>
+</body>
+</html>

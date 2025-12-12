@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation de réservation d'excursion</title>
+</head>
+<body style="font-family: Arial, sans-serif; color: #333;">
+    <div style="max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; padding: 20px;">
+        <h2 style="color: #d8b65d; text-align: center;">TuniTrip - Confirmation</h2>
+        
+        <p>Bonjour <strong>{{ reservation.prenom }} {{ reservation.nom }}</strong>,</p>
+        
+        <p>Nous avons le plaisir de vous confirmer votre réservation pour l'excursion <strong>{{ reservation.excursion.titre }}</strong> ! 🏕️</p>
+        
+        <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin: 20px 0;">
+            <h3 style="margin-top: 0; color: #555;">Détails de la réservation :</h3>
+            <ul style="list-style: none; padding: 0;">
+                <li><strong>Numéro de réservation :</strong> #{{ reservation.id }}</li>
+                <li><strong>Date & Heure :</strong> {{ reservation.dateHeure|date('d/m/Y H:i') }}</li>
+                <li><strong>Point de rendez-vous :</strong> {{ reservation.localisationPoint }}</li>
+                <li><strong>Personnes :</strong> {{ reservation.adult }} Adulte(s), {{ reservation.child }} Enfant(s)</li>
+                <li><strong>Prix Total :</strong> {{ reservation.prixTotal }} TND</li>
+            </ul>
+        </div>
+
+        <p>Si vous avez des questions, n'hésitez pas à nous contacter à <a href="mailto:contact@tunitrip.com">contact@tunitrip.com</a>.</p>
+        
+        <p style="text-align: center; margin-top: 30px; font-size: 12px; color: #999;">
+            Merci de faire confiance à TuniTrip !<br>
+            Bonne excursion ! 🚐
+        </p>
+    </div>
+</body>
+</html>

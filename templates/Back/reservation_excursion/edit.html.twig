@@ -1,13 +1,71 @@
-<!DOCTYPE html>
+{% extends 'baseBack.html.twig' %}
 
-<title>Edit ReservationExcursion</title>
+{% block title %}Modifier la réservation{% endblock %}
 
 {% block body %}
-    <h1>Edit ReservationExcursion</h1>
+<div class="container my-5">
+    <div class="card shadow-lg border-0 rounded-4 p-4">
 
-    {{ include('Front/reservation_excursion/_form.html.twig', {'button_label': 'Update'}) }}
+        <!-- 🏷️ Titre principal -->
+        <h2 class="text-center text-primary fw-bold mb-4">
+            ✏️ Modifier la réservation : "{{ reservation_excursion.nom }} {{ reservation_excursion.prenom }}"
+        </h2>
 
-    <a href="{{ path('app_reservation_excursion_index') }}">back to list</a>
+        {{ form_start(form) }}
 
-    {{ include('Front/reservation_excursion/_delete_form.html.twig') }}
+        <!-- 📌 Bloc 1 : Informations Client -->
+        <h4 class="text-secondary mb-3">👤 Informations Client</h4>
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                {{ form_label(form.nom) }}
+                {{ form_widget(form.nom, {'attr': {'class':'form-control'}}) }}
+                {{ form_errors(form.nom) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_label(form.prenom) }}
+                {{ form_widget(form.prenom, {'attr': {'class':'form-control'}}) }}
+                {{ form_errors(form.prenom) }}
+            </div>
+        </div>
+
+        <!-- 📌 Bloc 2 : Détails Excursion -->
+        <h4 class="text-secondary mb-3">⛺ Détails Excursion</h4>
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                {{ form_label(form.dateHeure) }}
+                {{ form_widget(form.dateHeure, {'attr': {'class':'form-control'}}) }}
+                {{ form_errors(form.dateHeure) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_label(form.localisationPoint) }}
+                {{ form_widget(form.localisationPoint, {'attr': {'class':'form-control'}}) }}
+                {{ form_errors(form.localisationPoint) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_label(form.adult) }}
+                {{ form_widget(form.adult, {'attr': {'class':'form-control'}}) }}
+                {{ form_errors(form.adult) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_label(form.child) }}
+                {{ form_widget(form.child, {'attr': {'class':'form-control'}}) }}
+                {{ form_errors(form.child) }}
+            </div>
+        </div>
+
+        <!-- Hidden Excursion Field -->
+        {{ form_widget(form.excursion) }}
+
+        <hr class="my-4">
+
+        <!-- 🔘 Boutons -->
+        <div class="text-center">
+            <button class="btn btn-success px-4 me-2">💾 Enregistrer</button>
+            <a href="{{ path('app_reservation_excursion_index') }}" class="btn btn-secondary px-4">↩️ Retour à la liste</a>
+        </div>
+
+        {{ form_end(form) }}
+
+    </div>
+</div>
 {% endblock %}

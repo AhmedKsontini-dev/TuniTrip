@@ -39,14 +39,23 @@ class BackReservationTransfertController extends AbstractController
     public function updateStatut(
         ReservationTransfert $reservation,
         string $statut,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        \App\Service\TuniTripMailer $mailer
     ): Response {
         $reservation->setStatut($statut);
         $em->flush();
 
-        $this->addFlash('success', "Statut mis à jour en : $statut ✅");
+        // 📩 Envoi automatique si confirmé
+        if ($statut === 'confirmee') {
+            $mailer->sendReservationConfirmation($reservation);
+            $this->addFlash('success', "Réservation confirmée et email envoyé au client. ✅");
+        } else {
+            $this->addFlash('success', "Statut mis à jour en : $statut");
+        }
+
         return $this->redirectToRoute('back_reservation_transfert_index');
     }
+
 
     #[Route('/{id}/recalculate-price', name: 'admin_reservation_transfert_recalculate_price', methods: ['POST'])]
     public function recalculatePrice(
@@ -126,6 +135,16 @@ class BackReservationTransfertController extends AbstractController
         return $this->redirectToRoute('back_reservation_transfert_index');
     }
 
+    
 
 
+
+
+    #[Route('/{id}/voucher', name: 'app_reservation_transfert_voucher', methods: ['GET'])]
+    public function voucher(ReservationTransfert $reservation): Response
+    {
+        return $this->render('Back/reservation_trans/voucher.html.twig', [
+            'reservation' => $reservation,
+        ]);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\ReservationTransfert;
+use App\Entity\ReservationVoiture;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Twig\Environment;
@@ -34,6 +35,35 @@ class TuniTripMailer
         $this->mailer->send($email);
     }
 
+    public function sendCarReservationConfirmation(ReservationVoiture $reservation)
+    {
+        $html = $this->twig->render('emails/reservation_voiture_confirmee.html.twig', [
+            'reservation' => $reservation
+        ]);
+
+        $email = (new Email())
+            ->from('contact@tunitrip.com')
+            ->to($reservation->getEmail())
+            ->subject('Votre réservation de voiture est confirmée 🚗')
+            ->html($html);
+
+        $this->mailer->send($email);
+    }
 
 
+
+    public function sendExcursionReservationConfirmation(\App\Entity\ReservationExcursion $reservation)
+    {
+        $html = $this->twig->render('emails/reservation_excursion_confirmee.html.twig', [
+            'reservation' => $reservation
+        ]);
+
+        $email = (new Email())
+            ->from('contact@tunitrip.com')
+            ->to($reservation->getEmail())
+            ->subject('Votre réservation d\'excursion est confirmée 🏕️')
+            ->html($html);
+
+        $this->mailer->send($email);
+    }
 }

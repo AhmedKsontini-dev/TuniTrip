@@ -377,7 +377,7 @@ label {
         <div class="info-block">
             <img src="{{ asset('assetsFront/icons/phone-call.png') }}" alt="Phone Icon" class="info-icon">
             <h4>Téléphone</h4>
-            <p>+216 26 341 186</p>
+            <p>+216 55 123 456</p>
         </div>
         <div class="info-block">
             <img src="{{ asset('assetsFront/icons/email.png') }}" alt="Email Icon" class="info-icon">
@@ -434,12 +434,7 @@ label {
         <div class="contact-envoyer-container">
             <div class="button">
                 <div class="button_bcg"></div>
-                <a href="javascript:void(0)"
-                    onclick="document.getElementById('contactForm')
-                            .dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }))">
-                        Envoyer le message
-                    </a>
-
+                <a href="javascript:void(0)" onclick="document.getElementById('contactForm').submit()">Envoyer le message</a>
             </div>
         </div>
     </form>
@@ -495,89 +490,6 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => msg.remove(), 500);
         }, 5000);
     }
-});
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-    const nom = document.getElementById("name");
-    const email = document.getElementById("email");
-    const sujet = document.getElementById("subject");
-    const message = document.getElementById("message");
-
-    const errors = {
-        nom: document.getElementById("error-nom"),
-        email: document.getElementById("error-email"),
-        sujet: document.getElementById("error-sujet"),
-        message: document.getElementById("error-message")
-    };
-
-    // Fonction pour afficher l'erreur
-    function showError(field, msg) {
-        errors[field].textContent = msg;
-    }
-
-    function clearError(field) {
-        errors[field].textContent = "";
-    }
-
-    // Validation du nom (lettres uniquement)
-    nom.addEventListener("blur", () => {
-        const regex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/;
-        if (!nom.value.trim()) {
-            showError("nom", "Le nom est obligatoire.");
-        } else if (!regex.test(nom.value)) {
-            showError("nom", "Le nom ne doit contenir que des lettres.");
-        } else {
-            clearError("nom");
-        }
-    });
-
-    // Validation email
-    email.addEventListener("blur", () => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!email.value.trim()) {
-            showError("email", "L'email est obligatoire.");
-        } else if (!regex.test(email.value)) {
-            showError("email", "L'email n'est pas valide.");
-        } else {
-            clearError("email");
-        }
-    });
-
-    // Validation sujet
-    sujet.addEventListener("blur", () => {
-        if (!sujet.value.trim()) {
-            showError("sujet", "Le sujet est obligatoire.");
-        } else {
-            clearError("sujet");
-        }
-    });
-
-    // Validation message
-    message.addEventListener("blur", () => {
-        if (!message.value.trim()) {
-            showError("message", "Le message est obligatoire.");
-        } else if (message.value.trim().length < 10) {
-            showError("message", "Le message doit contenir au moins 10 caractères.");
-        } else {
-            clearError("message");
-        }
-    });
-
-    // Validation globale avant envoi
-    const form = document.getElementById("contactForm");
-    form.addEventListener("submit", (e) => {
-        // On peut relancer toutes les validations
-        nom.dispatchEvent(new Event("blur"));
-        email.dispatchEvent(new Event("blur"));
-        sujet.dispatchEvent(new Event("blur"));
-        message.dispatchEvent(new Event("blur"));
-
-        // Empêcher l'envoi si une erreur existe
-        const hasError = Object.values(errors).some(div => div.textContent !== "");
-        if (hasError) e.preventDefault();
-    });
 });
 </script>
 {% endblock %}

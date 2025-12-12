@@ -14,6 +14,27 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/back/reservation/excursion')]
 final class BackReservationExcurController extends AbstractController
 {
+    #[Route('/{id}/statut/{statut}', name: 'app_reservation_excursion_update_statut', methods: ['POST', 'GET'])]
+    public function updateStatut(
+        ReservationExcursion $reservation,
+        string $statut,
+        EntityManagerInterface $em,
+        \App\Service\TuniTripMailer $mailer
+    ): Response {
+        $reservation->setStatut($statut);
+        $em->flush();
+
+        // 📩 Envoi automatique si confirmé
+        if ($statut === 'confirmee') {
+            $mailer->sendExcursionReservationConfirmation($reservation);
+            $this->addFlash('success', "Réservation confirmée et email envoyé au client. ✅");
+        } else {
+            $this->addFlash('success', "Statut mis à jour en : $statut");
+        }
+
+        return $this->redirectToRoute('app_reservation_excursion_index');
+    }
+
     #[Route(name: 'app_reservation_excursion_index', methods: ['GET'])]
     public function index(ReservationExcursionRepository $reservationExcursionRepository): Response
     {

@@ -81,6 +81,14 @@ class ReservationVoiture
     )]
     private ?\DateTimeInterface $dateFin = null;
 
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Veuillez saisir votre email.")]
+    #[Assert\Email(message: "L'email '{{ value }}' n'est pas valide.")]
+    private ?string $email = null;
+
+    #[ORM\Column(length: 20)]
+    private ?string $statut = 'en_attente';
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
@@ -164,4 +172,9 @@ class ReservationVoiture
         $this->prixTotal = $prixTotal;
         return $this;
     }
+    public function getEmail(): ?string { return $this->email; }
+    public function setEmail(string $email): static { $this->email = $email; return $this; }
+
+    public function getStatut(): ?string { return $this->statut; }
+    public function setStatut(string $statut): static { $this->statut = $statut; return $this; }
 }

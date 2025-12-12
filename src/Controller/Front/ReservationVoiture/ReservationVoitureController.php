@@ -40,7 +40,7 @@ class ReservationVoitureController extends AbstractController
                 // ======== CALCUL DU PRIX TOTAL ==========
                 $nbJours = $dateDebut->diff($dateFin)->days;
 
-                if ($nbJours > 25) {
+                if ($nbJours >= 28 && $nbJours <= 31) {
                     $prixTotal = $voiture->getPrixMois(); // prix mensuel si plus de 25 jours
                 } else {
                     $prixTotal = $nbJours * $voiture->getPrixJour(); // prix journalier sinon
@@ -65,6 +65,7 @@ class ReservationVoitureController extends AbstractController
                     'modele' => $voiture->getModele(),
                     'prixJour' => $voiture->getPrixJour(),
                     'prixTotal' => $prixTotal,
+                    'email' => $reservation->getEmail(),
                 ]);
 
                 return $this->redirectToRoute('app_reservation_voiture', [

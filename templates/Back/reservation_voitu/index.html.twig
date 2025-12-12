@@ -36,7 +36,6 @@
                 <th>#</th>
                 <th>Image voiture</th>
                 <th>Nom</th>
-                <th>Prénom</th>
                 <th>Date de naissance</th>
                 <th>Nationalité</th>
                 <th>Adresse</th>
@@ -44,6 +43,7 @@
                 <th>Date début</th>
                 <th>Date fin</th>
                 <th>Prix Total</th>
+                <th>Statut</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -64,8 +64,7 @@
                         {% endif %}
                     </td>
 
-                    <td>{{ reservation.nom }}</td>
-                    <td>{{ reservation.prenom }}</td>
+                    <td>{{ reservation.nom }} {{ reservation.prenom }}</td>
                     <td>{{ reservation.dateNaissance ? reservation.dateNaissance|date('Y-m-d') : '—' }}</td>
                     <td>{{ reservation.nationalite }}</td>
                     <td>{{ reservation.adresse }}</td>
@@ -83,15 +82,45 @@
                     </td>
 
                     <td>
-                        <a href="{{ path('app_reservation_voiture_show', {'id': reservation.id}) }}" class="btn btn-sm btn-info">👁️</a>
-                        <a href="{{ path('app_reservation_voiture_edit', {'id': reservation.id}) }}" class="btn btn-sm btn-warning">✏️</a>
+                        {% if reservation.statut == 'en_attente' %}
+                            <span class="badge bg-warning text-dark">⏳ En attente</span>
+                        {% elseif reservation.statut == 'confirmee' %}
+                            <span class="badge bg-success">✅ Confirmée</span>
+                        {% else %}
+                            <span class="badge bg-danger">❌ Annulée</span>
+                        {% endif %}
+                    </td>
 
-                        <form method="post"
-                            action="{{ path('app_reservation_voiture_delete', {'id': reservation.id}) }}"
-                            style="display:inline-block;"
-                            onsubmit="return confirm('Supprimer cette réservation ?');">
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Actions
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_reservation_voiture_show', {'id': reservation.id}) }}">👁️ Voir</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_reservation_voiture_edit', {'id': reservation.id}) }}">✏️ Modifier</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_reservation_voiture_voucher', {'id': reservation.id}) }}" target="_blank">🖨️ Voucher</a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-success" href="{{ path('app_reservation_voiture_update_statut', {'id': reservation.id, 'statut': 'confirmee'}) }}">✅ Confirmer</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="{{ path('app_reservation_voiture_update_statut', {'id': reservation.id, 'statut': 'annulee'}) }}">❌ Annuler</a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                     <a class="dropdown-item text-danger" href="#" onclick="if(confirm('Supprimer ?')) document.getElementById('delete-form-{{ reservation.id }}').submit();">🗑️ Supprimer</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <form id="delete-form-{{ reservation.id }}" method="post" action="{{ path('app_reservation_voiture_delete', {'id': reservation.id}) }}" style="display: none;">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reservation.id) }}">
-                            <button class="btn btn-sm btn-danger">🗑️</button>
                         </form>
                     </td>
                 </tr>

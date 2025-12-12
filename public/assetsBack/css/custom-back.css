@@ -98,3 +98,11 @@ h1, h2, h3, h4, h5, h6 {
     background-color: #d8b65d !important;
     border-color: #1c2228 !important;
 }
+
+.topbar .dropdown-list .dropdown-header {
+    background-color: #d8b65d !important;
+    border: 1px solid #d8b65d !important;
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    color: #fff;
+}

@@ -140,4 +140,11 @@ class BackReservationTransfertController extends AbstractController
 
 
 
+    #[Route('/{id}/voucher', name: 'app_reservation_transfert_voucher', methods: ['GET'])]
+    public function voucher(ReservationTransfert $reservation): Response
+    {
+        return $this->render('Back/reservation_trans/voucher.html.twig', [
+            'reservation' => $reservation,
+        ]);
+    }
 }

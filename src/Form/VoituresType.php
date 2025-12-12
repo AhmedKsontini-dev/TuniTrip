@@ -16,7 +16,6 @@ class VoituresType extends AbstractType
         $builder
             ->add('marque')
             ->add('modele')
-            ->add('immatriculation')
             ->add('prixJour')
             ->add('prixMois', NumberType::class, [
                 'label' => 'Prix / Mois (TND)',

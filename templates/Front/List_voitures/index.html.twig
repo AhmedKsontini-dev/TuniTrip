@@ -631,6 +631,42 @@
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
+.car-info-box {
+    background: #f7f9fc;
+    border-left: 4px solid #192026;
+    padding: 15px 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.car-info-box h4 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: #d8b65d;
+}
+
+.car-info-box ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.car-info-box li {
+    margin-bottom: 6px;
+    font-size: 15px;
+    color: #333;
+}
+
+.whatsapp-link {
+    color: #25d366;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.whatsapp-link:hover {
+    text-decoration: underline;
+}
 
 </style>
 
@@ -646,24 +682,26 @@
 <div class="cars-page">
     <form method="GET" action="{{ path('app_front_list_voitures') }}" class="filters">
         <h3>Filtrer les voitures</h3>
+
         <div class="filter-field">
             <label for="passengers">Passagers</label>
             <select name="passengers" id="passengers">
                 <option value="">Tous</option>
-                <option value="2">2</option>
-                <option value="4">4</option>
-                <option value="5">5+</option>
+                <option value="5">5</option>
+                <option value="6plus">6+</option>
             </select>
         </div>
+
         <div class="filter-field">
             <label for="suitcases">Valises</label>
             <select name="suitcases" id="suitcases">
                 <option value="">Tous</option>
-                <option value="1">1</option>
                 <option value="2">2</option>
-                <option value="3">3+</option>
+                <option value="3">3</option>
+                <option value="4plus">4+</option>
             </select>
         </div>
+
         <div class="filter-field">
             <label for="boiteVitesse">Boîte de vitesse</label>
             <select name="boiteVitesse" id="boiteVitesse">
@@ -672,10 +710,25 @@
                 <option value="Manuelle">Manuelle</option>
             </select>
         </div>
+
         <button type="submit" class="btn-animated-primary excursion-details-btn" aria-label="Filtrer les voitures">
             <img src="{{ asset('filter.png') }}" alt="Filtrer" style="width:20px;height:18px;object-fit:contain;display:block;" />
         </button>
     </form>
+
+
+<div class="car-info-box">
+    <h4>Bon à savoir 🚗</h4>
+    <ul>
+        <li>📍 Livraison de la voiture possible à l’aéroport ou à n’importe quelle localisation.</li>
+        <li>💰 Paiement à la livraison avec un cautionnement sécurisé.</li>
+        <li>💬 Pour toute question, contactez-nous sur WhatsApp : 
+            <a href="https://wa.me/21626341186" target="_blank" class="whatsapp-link">
+                +216 26 341 186
+            </a>
+        </li>
+    </ul>
+</div>
 
     <div class="cars-list">
         {% for voiture in voitures %}
@@ -720,8 +773,8 @@
                                 </div>
                                 <div class="reserver-btn-container">
                                     <div style="width:100%;" class="btn-animated-primary reservation-btn" onclick="window.location.href='{{ path('app_reservation_voiture', { id: voiture.id }) }}'">
-    <span>Réserver →</span>
-</div>
+                                    <span>Réserver →</span>
+                                </div>
 
                                 </div>
                             </div>

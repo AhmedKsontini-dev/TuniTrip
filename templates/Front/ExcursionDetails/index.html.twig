@@ -2604,6 +2604,31 @@ body, p, .description, .stop-details {
                         {{ form_errors(reservationForm.prenom) }}
                     </div>
 
+                    <!-- Email -->
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Email</label>
+                        {{ form_widget(reservationForm.email, {
+                            'attr': {
+                                'class': 'form-control form-control-lg', 
+                                'placeholder': 'exemple@email.com', 
+                                'type': 'email',
+                                'pattern': '[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$',
+                                'title': 'Veuillez entrer une adresse email valide (ex: exemple@domaine.com)',
+                                'id': 'clientEmail'
+                            }
+                        }) }}
+                        {{ form_errors(reservationForm.email) }}
+                    </div>
+
+                    <!-- Téléphone -->
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">WhatsApp</label>
+                        {{ form_widget(reservationForm.tel, {
+                            'attr': {'class': 'form-control form-control-lg', 'placeholder': '+216 00 000 000'}
+                        }) }}
+                        {{ form_errors(reservationForm.tel) }}
+                    </div>
+
                     <!-- Adultes -->
                     <div class="col-md-4">
                         <label class="form-label fw-bold">Adultes</label>
@@ -2629,7 +2654,11 @@ body, p, .description, .stop-details {
                     <div class="col-md-6">
                         <label class="form-label fw-bold">Date & Heure</label>
                         {{ form_widget(reservationForm.dateHeure, {
-                            'attr': {'class': 'form-control form-control-lg'}
+                            'attr': {
+                                'class': 'form-control form-control-lg',
+                                'min': "now"|date("Y-m-d\\TH:i"),
+                                'id': 'dateReservation'
+                            }
                         }) }}
                         {{ form_errors(reservationForm.dateHeure) }}
                     </div>
@@ -2673,6 +2702,9 @@ body, p, .description, .stop-details {
             <div class="modal-body">
 
                 <h4 class="mb-3">Merci pour votre réservation !</h4>
+                <p class="text-center mb-3">
+                    Un email de confirmation vous sera envoyé à <strong>{{ reservation.email }}</strong> dans les 24 heures. Notre équipe vous contactera pour finaliser les détails.
+                </p>
 
                 <div class="card p-3 shadow-sm">
                     <h5 class="fw-bold mb-3">Détails de la réservation</h5>
@@ -2683,6 +2715,8 @@ body, p, .description, .stop-details {
                     <p><strong>Enfants :</strong> {{ reservation.child }}</p>
                     <p><strong>Date & Heure :</strong> {{ reservation.dateHeure|date('d/m/Y H:i') }}</p>
                     <p><strong>Point de prise en charge :</strong> {{ reservation.localisationPoint }}</p>
+                    <p><strong>Email :</strong> {{ reservation.email }}</p>
+                    <p><strong>WhatsApp :</strong> {{ reservation.tel }}</p>
                     <p><strong>Prix total :</strong> {{ reservation.prixTotal }} TND</p>
 
 
@@ -3698,6 +3732,71 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
+
+    <!-- Validation Date Dynamique et Modal Auto -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Empêcher la sélection de dates passées
+            const dateInput = document.getElementById('dateReservation');
+            if (dateInput) {
+                const now = new Date();
+                now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                dateInput.min = now.toISOString().slice(0, 16);
+
+                dateInput.addEventListener('focus', function() {
+                    const freshNow = new Date();
+                    freshNow.setMinutes(freshNow.getMinutes() - freshNow.getTimezoneOffset());
+                    this.min = freshNow.toISOString().slice(0, 16);
+                });
+            }
+
+            {% if reservationOK %}
+                var myModal = new bootstrap.Modal(document.getElementById('reservationConfirmation'));
+                myModal.show();
+            {% endif %}
+
+            // Validation Email Instantanée (Blur)
+            const emailField = document.getElementById('clientEmail');
+            if (emailField) {
+                emailField.addEventListener('blur', function() {
+                    const email = this.value;
+                    // Regex simple pour valider le format email
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    
+                    // Nettoyer l'ancien message d'erreur s'il existe
+                    let existingError = this.parentNode.querySelector('.js-email-error');
+                    if (existingError) {
+                        existingError.remove();
+                    }
+
+                    // Si le champ n'est pas vide et que l'email est invalide
+                    if (email && !emailRegex.test(email)) {
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'text-danger mt-1 small js-email-error fw-bold';
+                        errorDiv.innerHTML = '<i class="bi bi-exclamation-circle"></i> Veuillez entrer une adresse email valide (ex: nom@domaine.com)';
+                        this.parentNode.appendChild(errorDiv);
+                        this.classList.add('is-invalid');
+                    } else {
+                        this.classList.remove('is-invalid');
+                        if (email) {
+                             this.classList.add('is-valid');
+                        } else {
+                             this.classList.remove('is-valid');
+                        }
+                    }
+                });
+
+                // Enlever l'erreur quand on recommence à écrire
+                emailField.addEventListener('input', function() {
+                    this.classList.remove('is-invalid');
+                    let existingError = this.parentNode.querySelector('.js-email-error');
+                    if (existingError) {
+                        existingError.remove();
+                    }
+                });
+            }
+        });
+    </script>
 
 {% endblock %}
 

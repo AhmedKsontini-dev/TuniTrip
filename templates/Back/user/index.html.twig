@@ -1,0 +1,112 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Gestion des utilisateurs{% endblock %}
+
+{% block body %}
+<style>
+.dataTables_wrapper .dataTables_filter {
+    float: right;
+    text-align: right;
+}
+.dataTables_wrapper .dataTables_paginate {
+    float: right;
+    text-align: right;
+}
+.role-badge {
+    font-size: 0.85rem;
+    padding: 5px 12px;
+}
+</style>
+
+<div class="container mt-4">
+    <h1 class="mb-3">👥 Gestion des utilisateurs</h1>
+
+    <!-- 🔔 Messages flash -->
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }} alert-dismissible fade show">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <!-- 📊 Tableau des utilisateurs -->
+    <table class="table table-bordered table-hover align-middle datatable">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Nom complet</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+                <th>Adresse</th>
+                <th>Rôle</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>
+                        <strong>{{ user.nom }} {{ user.prenom }}</strong>
+                    </td>
+                    <td>
+                        <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+                    </td>
+                    <td>
+                        {% if user.tel %}
+                            <a href="tel:{{ user.tel }}">{{ user.tel }}</a>
+                        {% else %}
+                            <span class="text-muted">—</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ user.adresse ?: '—' }}</td>
+                    <td>
+                        {% if 'ROLE_ADMIN' in user.roles %}
+                            <span class="badge bg-danger role-badge" style="font-size: 0.95rem; padding: 8px 15px;">👑 </span>
+                        {% else %}
+                            <span class="badge bg-info role-badge" style="font-size: 0.95rem; padding: 8px 15px;">👤 </span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Actions
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('admin_user_show', {'id': user.id}) }}">👁️ Voir</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('admin_user_edit', {'id': user.id}) }}">✏️ Modifier</a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    {% if 'ROLE_ADMIN' in user.roles %}
+                                        <a class="dropdown-item text-warning" href="{{ path('admin_user_toggle_admin', {'id': user.id}) }}">👤 Retirer Admin</a>
+                                    {% else %}
+                                        <a class="dropdown-item text-success" href="{{ path('admin_user_toggle_admin', {'id': user.id}) }}">👑 Promouvoir Admin</a>
+                                    {% endif %}
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="#" onclick="if(confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) document.getElementById('delete-form-{{ user.id }}').submit();">🗑️ Supprimer</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <form id="delete-form-{{ user.id }}" method="post" action="{{ path('admin_user_delete', {'id': user.id}) }}" style="display: none;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center text-muted">Aucun utilisateur enregistré.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

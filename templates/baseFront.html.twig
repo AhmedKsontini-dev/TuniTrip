@@ -1187,14 +1187,16 @@ button:focus-visible {
 <script>
 function toggleDropdown() {
     var dropdown = document.getElementById("dropdownMenu");
-    dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+    if (dropdown) {
+        dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+    }
 }
 
 // Optionnel : fermer le dropdown si l'utilisateur clique en dehors
 window.onclick = function(event) {
     if (!event.target.matches('.avatar_circle')) {
         var dropdown = document.getElementById("dropdownMenu");
-        if (dropdown.style.display === "block") {
+        if (dropdown && dropdown.style.display === "block") {
             dropdown.style.display = "none";
         }
     }

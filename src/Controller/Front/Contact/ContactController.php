@@ -35,8 +35,9 @@ final class ContactController extends AbstractController
                     ]);
                 }
 
-                // Sinon, affichage classique
+                // Sinon, affichage classique + redirection pour vider le formulaire
                 $this->addFlash('success', '✅ Votre message a été envoyé avec succès !');
+                return $this->redirectToRoute('app_front_contact');
             } else {
                 // ❌ En cas d’erreurs de validation
                 if ($request->isXmlHttpRequest()) {
@@ -50,6 +51,8 @@ final class ContactController extends AbstractController
                         'message' => '❌ Le formulaire contient des erreurs.',
                         'errors' => $errors,
                     ]);
+                } else {
+                    $this->addFlash('error', '❌ Le formulaire contient des erreurs. Merci de vérifier les champs.');
                 }
             }
         }

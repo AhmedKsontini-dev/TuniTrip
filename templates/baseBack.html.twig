@@ -59,18 +59,18 @@
                     <span>Dashboard</span></a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_accueil') }}">
-                    <i class="fas fa-house-user"></i>
-                    <span>TuniTrip</span></a>
-
-            </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('admin_calendar_index') }}">
                     <i class="fas fa-fw fa-calendar-alt"></i>
                     <span>Calendrier</span></a>
 
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_user_index') }}">
+                    <i class="fas fa-users"></i>
+                    <span>Utilisateurs</span>
+                </a>
             </li>
 
             <!-- Divider -->
@@ -86,26 +86,60 @@
             
             
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('admin_excursion_index') }}">Table excursions</a>
+                <a class="nav-link" href="{{ path('app_transfere_index') }}">
+                    <i class="fas fa-route"></i>
+                    <span>Liste Transfert</span>
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('back_reservation_transfert_index') }}">Reservation Trans</a>
+                <a class="nav-link" href="{{ path('back_reservation_transfert_index') }}">
+                    <i class="fas fa-shuttle-van"></i>
+                    <span>Reservation Transfert</span>
+                </a>
+            </li>
+            
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+            
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_voitures_index') }}">
+                    <i class="fas fa-car"></i>
+                    <span>Liste Voitures</span>
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_reservation_voiture_index') }}">Reservation Voitures</a>
+                <a class="nav-link" href="{{ path('app_reservation_voiture_index') }}">
+                    <i class="fas fa-car-side"></i>
+                    <span>Reservation Voitures</span>
+                </a>
+            </li>
+            
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+            
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_excursion_index') }}">
+                    <i class="fas fa-mountain"></i>
+                    <span>Liste Excursions</span>
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_reservation_excursion_index') }}">Reservation Excursion</a>
+                <a class="nav-link" href="{{ path('app_reservation_excursion_index') }}">
+                    <i class="fas fa-hiking"></i>
+                    <span>Reservation Excursion</span>
+                </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_transfere_index') }}">Trajet Transfert</a>
+            
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+             <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_contact_message_index') }}">
+                    <i class="fas fa-envelope"></i>
+                    <span>Message contact</span>
+                </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_contact_message_index') }}">Message contact</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_voitures_index') }}">Voitures</a>
-            </li>
+           
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -174,54 +208,65 @@
                             </div>
                         </li>
 
-                        <!-- Nav Item - Alerts -->
+                        <!-- Nav Item - Alerts (Reservations notifications) -->
                         <li class="nav-item dropdown no-arrow mx-1">
+                            {% set nbReservationsRecentes = reservationsRecentes|default([])|length %}
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
+                                <span id="reservations-counter" class="badge badge-danger badge-counter" {% if nbReservationsRecentes == 0 %}style="display:none"{% endif %}>{{ nbReservationsRecentes }}</span>
                             </a>
                             <!-- Dropdown - Alerts -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
-                                    Alerts Center
+                                    Nouvelles réservations
                                 </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
+                                <div id="reservations-list">
+                                {% for res in reservationsRecentes|default([]) %}
+                                    <a class="dropdown-item d-flex align-items-center notification-reservation-item" 
+                                       href="{{ path('admin_notification_open', {type: res.type, id: res.id}) }}"
+                                       data-type="{{ res.type }}" 
+                                       data-id="{{ res.id }}">
+                                        <div class="mr-3">
+                                            {% if res.type == 'voiture' %}
+                                                <div class="icon-circle bg-primary">
+                                                    <i class="fas fa-car text-white"></i>
+                                                </div>
+                                            {% elseif res.type == 'transfert' %}
+                                                <div class="icon-circle bg-success">
+                                                    <i class="fas fa-shuttle-van text-white"></i>
+                                                </div>
+                                            {% elseif res.type == 'excursion' %}
+                                                <div class="icon-circle bg-warning">
+                                                    <i class="fas fa-hiking text-white"></i>
+                                                </div>
+                                            {% else %}
+                                                <div class="icon-circle bg-secondary">
+                                                    <i class="fas fa-calendar-check text-white"></i>
+                                                </div>
+                                            {% endif %}
                                         </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
+                                        <div>
+                                            <div class="small text-gray-500">{{ res.created_at|date('d/m/Y H:i') }}</div>
+                                            <span class="font-weight-bold">
+                                                {% if res.type == 'voiture' %}
+                                                    🚗 Location voiture
+                                                {% elseif res.type == 'transfert' %}
+                                                    🚐 Transfert
+                                                {% elseif res.type == 'excursion' %}
+                                                    🏔️ Excursion
+                                                {% else %}
+                                                    📅 Réservation
+                                                {% endif %}
+                                                - {{ res.prenom }} {{ res.nom }} ({{ res.prix_total }} TND)
+                                            </span>
                                         </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                                    </a>
+                                {% endfor %}
+                                </div>
+                                <span id="no-reservations-message" class="dropdown-item text-center small text-gray-500" {% if nbReservationsRecentes > 0 %}style="display:none"{% endif %}>Aucune nouvelle réservation</span>
                             </div>
                         </li>
 
@@ -230,9 +275,7 @@
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw"></i>
 
-                                {% if unreadCount > 0 %}
-                                    <span class="badge badge-danger badge-counter">{{ unreadCount }}</span>
-                                {% endif %}
+                                <span id="messages-counter" class="badge badge-danger badge-counter" {% if unreadCount|default(0) == 0 %}style="display:none"{% endif %}>{{ unreadCount|default(0) }}</span>
                             </a>
 
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -240,15 +283,19 @@
 
                                 <h6 class="dropdown-header">Message Center</h6>
 
-                                {% for message in unreadMessages %}
-                                    <a class="dropdown-item d-flex align-items-center" href="{{ path('app_contact_message_index') }}">
-                                        
+                                <div id="messages-list">
+                                {% for message in unreadMessages|default([]) %}
+                                    <a class="dropdown-item d-flex align-items-center notification-message-item" 
+                                       href="{{ path('app_contact_message_index') }}"
+                                       data-message-id="{{ message.id }}">
                                         <div class="font-weight-bold">
                                             <div class="text-truncate">{{ message.email}}</div>
                                             <div class="small text-gray-500">{{ message.sujet }} · {{ message.dateEnvoi|date('Y-m-d H:i') }}</div>
                                         </div>
                                     </a>
                                 {% endfor %}
+                                </div>
+                                <span id="no-messages-message" class="dropdown-item text-center small text-gray-500" {% if unreadMessages|default([])|length > 0 %}style="display:none"{% endif %}>Aucun nouveau message</span>
 
                                 <a class="dropdown-item text-center small text-gray-500" 
                                 href="{{ path('app_contact_message_index') }}">
@@ -264,29 +311,20 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                <i class="fas fa-user-circle fa-lg mr-2 text-gray-600"></i>
+                                <span class="d-none d-lg-inline text-gray-600 small font-weight-bold">{{ app.user ? app.user.email : 'Admin' }}</span>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
+                                <a class="dropdown-item" href="{{ path('app_accueil') }}">
+                                    <i class="fas fa-home fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Accueil TuniTrip
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="{{ path('app_logout') }}">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    Déconnexion
                                 </a>
                             </div>
                         </li>
@@ -373,7 +411,256 @@
             });
         });
     </script>
-    
+
+    <!-- ✅ Script pour mise à jour en temps réel des notifications -->
+    <script>
+    $(document).ready(function() {
+        // Gestion des notifications de réservations
+        $(document).on('click', '.notification-reservation-item', function(e) {
+            e.preventDefault();
+            var $item = $(this);
+            var type = $item.data('type');
+            var id = $item.data('id');
+            var href = $item.attr('href');
+            
+            // Appel AJAX pour marquer la notification comme vue
+            $.ajax({
+                url: '{{ path("admin_notification_mark_seen") }}',
+                method: 'POST',
+                data: { type: type, id: id },
+                success: function() {
+                    // Supprimer l'élément de la liste
+                    $item.fadeOut(200, function() {
+                        $(this).remove();
+                        
+                        // Mettre à jour le compteur
+                        var $counter = $('#reservations-counter');
+                        var count = parseInt($counter.text()) - 1;
+                        
+                        if (count <= 0) {
+                            $counter.hide();
+                            $('#no-reservations-message').show();
+                        } else {
+                            $counter.text(count);
+                        }
+                    });
+                },
+                complete: function() {
+                    // Rediriger vers la page de détail
+                    window.location.href = href;
+                }
+            });
+        });
+
+        // Gestion des notifications de messages
+        $(document).on('click', '.notification-message-item', function(e) {
+            e.preventDefault();
+            var $item = $(this);
+            var messageId = $item.data('message-id');
+            var href = $item.attr('href');
+            
+            // Appel AJAX pour marquer le message comme lu
+            $.ajax({
+                url: '{{ path("admin_message_mark_read") }}',
+                method: 'POST',
+                data: { id: messageId },
+                success: function() {
+                    // Supprimer l'élément de la liste
+                    $item.fadeOut(200, function() {
+                        $(this).remove();
+                        
+                        // Mettre à jour le compteur
+                        var $counter = $('#messages-counter');
+                        var count = parseInt($counter.text()) - 1;
+                        
+                        if (count <= 0) {
+                            $counter.hide();
+                            $('#no-messages-message').show();
+                        } else {
+                            $counter.text(count);
+                        }
+                    });
+                },
+                complete: function() {
+                    // Rediriger vers la page des messages
+                    window.location.href = href;
+                }
+            });
+        });
+    });
+    </script>
+
+    <!-- ✅ Script de polling pour les notifications en temps réel -->
+    <script>
+    $(document).ready(function() {
+        // Configuration du polling
+        var pollingInterval = 10000; // 10 secondes
+        var lastReservationsCount = parseInt($('#reservations-counter').text()) || 0;
+        var lastMessagesCount = parseInt($('#messages-counter').text()) || 0;
+
+        function getIconHtml(type) {
+            switch(type) {
+                case 'voiture':
+                    return '<div class="icon-circle bg-primary"><i class="fas fa-car text-white"></i></div>';
+                case 'transfert':
+                    return '<div class="icon-circle bg-success"><i class="fas fa-shuttle-van text-white"></i></div>';
+                case 'excursion':
+                    return '<div class="icon-circle bg-warning"><i class="fas fa-hiking text-white"></i></div>';
+                default:
+                    return '<div class="icon-circle bg-secondary"><i class="fas fa-calendar-check text-white"></i></div>';
+            }
+        }
+
+        function getTypeLabel(type) {
+            switch(type) {
+                case 'voiture': return '🚗 Location voiture';
+                case 'transfert': return '🚐 Transfert';
+                case 'excursion': return '🏔️ Excursion';
+                default: return '📅 Réservation';
+            }
+        }
+
+        function pollNotifications() {
+            $.ajax({
+                url: '{{ path("admin_notifications_poll") }}',
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    // Mise à jour des compteurs de réservations
+                    var $resCounter = $('#reservations-counter');
+                    if (data.reservationsCount > 0) {
+                        $resCounter.text(data.reservationsCount).show();
+                        $('#no-reservations-message').hide();
+                        
+                        // Notification sonore si nouveau
+                        if (data.reservationsCount > lastReservationsCount) {
+                            playNotificationSound();
+                            showToast('🔔 Nouvelle réservation reçue!', 'success');
+                        }
+                    } else {
+                        $resCounter.hide();
+                        $('#no-reservations-message').show();
+                    }
+                    lastReservationsCount = data.reservationsCount;
+
+                    // Mise à jour de la liste des réservations
+                    var $resList = $('#reservations-list');
+                    $resList.empty();
+                    data.reservations.forEach(function(res) {
+                        var itemHtml = `
+                            <a class="dropdown-item d-flex align-items-center notification-reservation-item" 
+                               href="{{ path('admin_notification_open', {type: 'PLACEHOLDER_TYPE', id: 0}) }}"
+                               data-type="${res.type}" 
+                               data-id="${res.id}">
+                                <div class="mr-3">
+                                    ${getIconHtml(res.type)}
+                                </div>
+                                <div>
+                                    <div class="small text-gray-500">${res.created_at}</div>
+                                    <span class="font-weight-bold">
+                                        ${getTypeLabel(res.type)} - ${res.prenom} ${res.nom} (${res.prix_total} TND)
+                                    </span>
+                                </div>
+                            </a>
+                        `;
+                        // Fix the href
+                        itemHtml = itemHtml.replace('PLACEHOLDER_TYPE', res.type).replace('id: 0', 'id: ' + res.id);
+                        $resList.append(itemHtml);
+                    });
+
+                    // Correction des hrefs après insertion
+                    $resList.find('.notification-reservation-item').each(function() {
+                        var type = $(this).data('type');
+                        var id = $(this).data('id');
+                        $(this).attr('href', '/admin/dashboard/notification/' + type + '/' + id);
+                    });
+
+                    // Mise à jour des compteurs de messages
+                    var $msgCounter = $('#messages-counter');
+                    if (data.messagesCount > 0) {
+                        $msgCounter.text(data.messagesCount).show();
+                        $('#no-messages-message').hide();
+                        
+                        // Notification sonore si nouveau
+                        if (data.messagesCount > lastMessagesCount) {
+                            playNotificationSound();
+                            showToast('📧 Nouveau message reçu!', 'info');
+                        }
+                    } else {
+                        $msgCounter.hide();
+                        $('#no-messages-message').show();
+                    }
+                    lastMessagesCount = data.messagesCount;
+
+                    // Mise à jour de la liste des messages
+                    var $msgList = $('#messages-list');
+                    $msgList.empty();
+                    data.messages.forEach(function(msg) {
+                        var itemHtml = `
+                            <a class="dropdown-item d-flex align-items-center notification-message-item" 
+                               href="{{ path('app_contact_message_index') }}"
+                               data-message-id="${msg.id}">
+                                <div class="font-weight-bold">
+                                    <div class="text-truncate">${msg.email}</div>
+                                    <div class="small text-gray-500">${msg.sujet} · ${msg.dateEnvoi}</div>
+                                </div>
+                            </a>
+                        `;
+                        $msgList.append(itemHtml);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.log('Polling error:', error);
+                }
+            });
+        }
+
+        // Fonction pour jouer un son de notification
+        function playNotificationSound() {
+            try {
+                var audio = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU' + 
+                    'AAAAAAAAAAGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgAAAAAAAAA');
+                audio.volume = 0.3;
+                audio.play().catch(function(){});
+            } catch(e) {}
+        }
+
+        // Fonction pour afficher un toast
+        function showToast(message, type) {
+            var bgColor = type === 'success' ? '#28a745' : '#17a2b8';
+            var $toast = $('<div class="notification-toast">' + message + '</div>');
+            $toast.css({
+                'position': 'fixed',
+                'top': '80px',
+                'right': '20px',
+                'background': bgColor,
+                'color': 'white',
+                'padding': '15px 25px',
+                'border-radius': '8px',
+                'box-shadow': '0 4px 12px rgba(0,0,0,0.3)',
+                'z-index': '9999',
+                'font-weight': 'bold',
+                'animation': 'slideIn 0.3s ease-out'
+            });
+            $('body').append($toast);
+            
+            setTimeout(function() {
+                $toast.fadeOut(300, function() { $(this).remove(); });
+            }, 5000);
+        }
+
+        // Ajouter les styles d'animation
+        $('<style>')
+            .text('@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }')
+            .appendTo('head');
+
+        // Démarrer le polling
+        setInterval(pollNotifications, pollingInterval);
+        
+        // Premier appel après 5 secondes (laisser le temps de charger la page)
+        setTimeout(pollNotifications, 5000);
+    });
+    </script>
 
 {% block javascripts  %}
 

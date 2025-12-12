@@ -6,12 +6,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 #[Route('/admin')]
 class DashboardController extends AbstractController
 {
     #[Route('/dashboard', name: 'admin_dashboard')]
-    public function index(EntityManagerInterface $em): Response
+    public function index(EntityManagerInterface $em, SessionInterface $session): Response
     {
         // Période actuelle (ce mois)
         $dateDebut = new \DateTime('first day of this month');
@@ -234,7 +235,7 @@ class DashboardController extends AbstractController
              FROM App\Entity\ReservationVoiture r
              ORDER BY r.createdAt DESC'
         )
-        ->setMaxResults(3)
+        ->setMaxResults(5)
         ->getResult();
 
         $reservationsRecentesTransferts = $em->createQuery(
@@ -242,13 +243,22 @@ class DashboardController extends AbstractController
              FROM App\Entity\ReservationTransfert r
              ORDER BY r.createdAt DESC'
         )
-        ->setMaxResults(2)
+        ->setMaxResults(5)
+        ->getResult();
+
+        $reservationsRecentesExcursions = $em->createQuery(
+            'SELECT r.id, r.nom, r.prenom, r.prixTotal, r.dateCreation
+             FROM App\Entity\ReservationExcursion r
+             ORDER BY r.dateCreation DESC'
+        )
+        ->setMaxResults(5)
         ->getResult();
 
         // Combiner et formatter
         $reservationsRecentes = [];
         foreach ($reservationsRecentesVoitures as $res) {
             $reservationsRecentes[] = [
+                'id' => $res['id'],
                 'type' => 'voiture',
                 'nom' => $res['nom'],
                 'prenom' => $res['prenom'],
@@ -258,6 +268,7 @@ class DashboardController extends AbstractController
         }
         foreach ($reservationsRecentesTransferts as $res) {
             $reservationsRecentes[] = [
+                'id' => $res['id'],
                 'type' => 'transfert',
                 'nom' => $res['lastName'],
                 'prenom' => $res['firstName'],
@@ -265,6 +276,24 @@ class DashboardController extends AbstractController
                 'created_at' => $res['createdAt']
             ];
         }
+
+        foreach ($reservationsRecentesExcursions as $res) {
+            $reservationsRecentes[] = [
+                'id' => $res['id'],
+                'type' => 'excursion',
+                'nom' => $res['nom'],
+                'prenom' => $res['prenom'],
+                'prix_total' => $res['prixTotal'],
+                'created_at' => $res['dateCreation']
+            ];
+        }
+
+        // Exclure les notifications déjà vues (stockées en session)
+        $seenNotifications = $session->get('seen_notifications', []);
+        $reservationsRecentes = array_filter($reservationsRecentes, function ($res) use ($seenNotifications) {
+            $key = $res['type'] . '-' . $res['id'];
+            return !in_array($key, $seenNotifications, true);
+        });
 
         // Trier par date décroissante
         usort($reservationsRecentes, function($a, $b) {
@@ -356,4 +385,204 @@ class DashboardController extends AbstractController
             'messagesNonLus' => $messagesNonLus,
         ]);
     }
+
+    #[Route('/dashboard/notification/{type}/{id}', name: 'admin_notification_open', requirements: ['id' => '\\d+'])]
+    public function openNotification(string $type, int $id, SessionInterface $session): Response
+    {
+        // Marquer la notification comme vue dans la session
+        $seenNotifications = $session->get('seen_notifications', []);
+        $key = $type . '-' . $id;
+        if (!in_array($key, $seenNotifications, true)) {
+            $seenNotifications[] = $key;
+            $session->set('seen_notifications', $seenNotifications);
+        }
+
+        // Rediriger vers la page de détail correspondante
+        if ($type === 'voiture') {
+            return $this->redirectToRoute('app_reservation_voiture_show', ['id' => $id]);
+        }
+
+        if ($type === 'transfert') {
+            return $this->redirectToRoute('admin_reservation_transfert_show', ['id' => $id]);
+        }
+
+        if ($type === 'excursion') {
+            return $this->redirectToRoute('app_reservation_excursion_show', ['id' => $id]);
+        }
+
+        // Par défaut, retour au dashboard
+        return $this->redirectToRoute('admin_dashboard');
+    }
+
+    /**
+     * Endpoint AJAX pour marquer une notification de réservation comme vue
+     */
+    #[Route('/dashboard/notification/mark-seen', name: 'admin_notification_mark_seen', methods: ['POST'])]
+    public function markNotificationSeen(SessionInterface $session): Response
+    {
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $type = $request->request->get('type');
+        $id = $request->request->get('id');
+
+        if ($type && $id) {
+            $seenNotifications = $session->get('seen_notifications', []);
+            $key = $type . '-' . $id;
+            if (!in_array($key, $seenNotifications, true)) {
+                $seenNotifications[] = $key;
+                $session->set('seen_notifications', $seenNotifications);
+            }
+        }
+
+        return $this->json(['success' => true]);
+    }
+
+    /**
+     * Endpoint AJAX pour marquer un message comme lu
+     */
+    #[Route('/dashboard/message/mark-read', name: 'admin_message_mark_read', methods: ['POST'])]
+    public function markMessageRead(EntityManagerInterface $em): Response
+    {
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+        $id = $request->request->get('id');
+
+        if ($id) {
+            $message = $em->getRepository(\App\Entity\ContactMessage::class)->find($id);
+            if ($message) {
+                $message->setLus(true);
+                $em->flush();
+            }
+        }
+
+        return $this->json(['success' => true]);
+    }
+
+    /**
+     * Endpoint API pour le polling des notifications en temps réel
+     * Retourne les compteurs et les dernières notifications
+     */
+    #[Route('/dashboard/notifications/poll', name: 'admin_notifications_poll', methods: ['GET'])]
+    public function pollNotifications(EntityManagerInterface $em, SessionInterface $session): Response
+    {
+        // Récupérer les notifications vues
+        $seenNotifications = $session->get('seen_notifications', []);
+
+        // Récupérer les réservations récentes (non vues)
+        $reservationsRecentes = $this->getReservationsRecentesForPoll($em, $seenNotifications);
+
+        // Récupérer les messages non lus
+        $unreadMessages = $em->createQuery(
+            'SELECT m.id, m.email, m.sujet, m.dateEnvoi
+             FROM App\Entity\ContactMessage m
+             WHERE m.lus = false
+             ORDER BY m.dateEnvoi DESC'
+        )
+        ->setMaxResults(5)
+        ->getResult();
+
+        $unreadCount = $em->createQuery(
+            'SELECT COUNT(m.id) FROM App\Entity\ContactMessage m WHERE m.lus = false'
+        )->getSingleScalarResult();
+
+        // Formater les messages
+        $messagesFormatted = [];
+        foreach ($unreadMessages as $msg) {
+            $messagesFormatted[] = [
+                'id' => $msg['id'],
+                'email' => $msg['email'],
+                'sujet' => $msg['sujet'],
+                'dateEnvoi' => $msg['dateEnvoi']->format('Y-m-d H:i')
+            ];
+        }
+
+        return $this->json([
+            'reservationsCount' => count($reservationsRecentes),
+            'reservations' => $reservationsRecentes,
+            'messagesCount' => (int)$unreadCount,
+            'messages' => $messagesFormatted,
+            'timestamp' => (new \DateTime())->format('Y-m-d H:i:s')
+        ]);
+    }
+
+    /**
+     * Helper pour récupérer les réservations récentes pour le polling
+     */
+    private function getReservationsRecentesForPoll(EntityManagerInterface $em, array $seenNotifications): array
+    {
+        // Réservations voitures récentes
+        $reservationsVoitures = $em->createQuery(
+            'SELECT r.id, r.nom, r.prenom, r.prixTotal, r.createdAt
+             FROM App\Entity\ReservationVoiture r
+             ORDER BY r.createdAt DESC'
+        )
+        ->setMaxResults(5)
+        ->getResult();
+
+        // Réservations transferts récentes
+        $reservationsTransferts = $em->createQuery(
+            'SELECT r.id, r.firstName, r.lastName, r.prixTotal, r.createdAt
+             FROM App\Entity\ReservationTransfert r
+             ORDER BY r.createdAt DESC'
+        )
+        ->setMaxResults(5)
+        ->getResult();
+
+        // Réservations excursions récentes
+        $reservationsExcursions = $em->createQuery(
+            'SELECT r.id, r.nom, r.prenom, r.prixTotal, r.dateCreation
+             FROM App\Entity\ReservationExcursion r
+             ORDER BY r.dateCreation DESC'
+        )
+        ->setMaxResults(5)
+        ->getResult();
+
+        // Combiner et formater
+        $reservationsRecentes = [];
+        
+        foreach ($reservationsVoitures as $res) {
+            $reservationsRecentes[] = [
+                'id' => $res['id'],
+                'type' => 'voiture',
+                'nom' => $res['nom'],
+                'prenom' => $res['prenom'],
+                'prix_total' => $res['prixTotal'],
+                'created_at' => $res['createdAt']->format('d/m/Y H:i')
+            ];
+        }
+        
+        foreach ($reservationsTransferts as $res) {
+            $reservationsRecentes[] = [
+                'id' => $res['id'],
+                'type' => 'transfert',
+                'nom' => $res['lastName'],
+                'prenom' => $res['firstName'],
+                'prix_total' => $res['prixTotal'],
+                'created_at' => $res['createdAt']->format('d/m/Y H:i')
+            ];
+        }
+
+        foreach ($reservationsExcursions as $res) {
+            $reservationsRecentes[] = [
+                'id' => $res['id'],
+                'type' => 'excursion',
+                'nom' => $res['nom'],
+                'prenom' => $res['prenom'],
+                'prix_total' => $res['prixTotal'],
+                'created_at' => $res['dateCreation']->format('d/m/Y H:i')
+            ];
+        }
+
+        // Exclure les notifications déjà vues
+        $reservationsRecentes = array_filter($reservationsRecentes, function ($res) use ($seenNotifications) {
+            $key = $res['type'] . '-' . $res['id'];
+            return !in_array($key, $seenNotifications, true);
+        });
+
+        // Trier par date décroissante et limiter
+        usort($reservationsRecentes, function($a, $b) {
+            return strcmp($b['created_at'], $a['created_at']);
+        });
+
+        return array_slice(array_values($reservationsRecentes), 0, 5);
+    }
 }
+

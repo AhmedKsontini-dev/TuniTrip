@@ -4151,12 +4151,16 @@ $(document).ready(function(){
         const allerRetour = document.getElementById('allerRetour');
         const trajetRetour = document.getElementById('trajetRetour');
 
-        allerSimple.addEventListener('change', () => {
-            trajetRetour.classList.add('d-none');
-        });
-        allerRetour.addEventListener('change', () => {
-            trajetRetour.classList.remove('d-none');
-        });
+        if (allerSimple && trajetRetour) {
+            allerSimple.addEventListener('change', () => {
+                trajetRetour.classList.add('d-none');
+            });
+        }
+        if (allerRetour && trajetRetour) {
+            allerRetour.addEventListener('change', () => {
+                trajetRetour.classList.remove('d-none');
+            });
+        }
     });
 </script>
 
@@ -4500,8 +4504,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fermer le modal en cliquant en dehors
     window.onclick = function(event) {
         const modal = document.getElementById('reservationModal');
-        if (event.target == modal) {
+        if (modal && event.target == modal) {
             closeReservationModal();
+        }
+        
+        // Fermer aussi le dropdown du baseFront si présent
+        var dropdown = document.getElementById("dropdownMenu");
+        if (dropdown && dropdown.style.display === "block" && !event.target.matches('.avatar_circle')) {
+            dropdown.style.display = "none";
         }
     }
 });

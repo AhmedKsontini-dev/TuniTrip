@@ -22,7 +22,7 @@ final class ContactMessageController extends AbstractController
     public function index(ContactMessageRepository $contactMessageRepository): Response
     {
         return $this->render('Back/contact_message/index.html.twig', [
-            'contact_messages' => $contactMessageRepository->findAll(),
+            'contact_messages' => $contactMessageRepository->findBy([], ['dateEnvoi' => 'DESC']),
         ]);
     }
 

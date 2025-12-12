@@ -681,6 +681,38 @@ document.addEventListener('DOMContentLoaded', function() {
     input.setAttribute('min', today);
   });
 
+  // Récupérer les champs de date
+  const pickupDateField = document.querySelector('[name*="pickupDate"]');
+  const returnPickupDateField = document.querySelector('[name*="returnPickupDate"]');
+
+  // Validation: returnPickupDate >= pickupDate
+  if (pickupDateField && returnPickupDateField) {
+    pickupDateField.addEventListener('change', function() {
+      if (this.value) {
+        // Définir la date minimum de retour = date de prise en charge
+        returnPickupDateField.min = this.value;
+        
+        // Si la date de retour est déjà sélectionnée et est antérieure, la réinitialiser
+        if (returnPickupDateField.value && returnPickupDateField.value < this.value) {
+          alert('La date de retour ne peut pas être antérieure à la date de prise en charge. Elle a été ajustée.');
+          returnPickupDateField.value = this.value;
+        }
+      }
+    });
+
+    returnPickupDateField.addEventListener('change', function() {
+      if (pickupDateField.value && this.value < pickupDateField.value) {
+        alert('La date de retour ne peut pas être antérieure à la date de prise en charge.');
+        this.value = pickupDateField.value;
+      }
+    });
+
+    // Initialisation au chargement si pickupDate a déjà une valeur
+    if (pickupDateField.value) {
+      returnPickupDateField.min = pickupDateField.value;
+    }
+  }
+
   // Gestion du transferType
   const transferTypeField = document.querySelector('[name*="transferType"]');
   const returnFields = document.getElementById('returnFields');

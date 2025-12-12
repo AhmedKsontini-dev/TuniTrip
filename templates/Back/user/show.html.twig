@@ -1,0 +1,101 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Détails de l'utilisateur{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+
+    <!-- 🏷️ Titre principal -->
+    <h1 class="text-center mb-5 text-primary fw-bold">
+        Détails de l'utilisateur : {{ user.nom }} {{ user.prenom }}
+    </h1>
+
+    <!-- 📌 Bloc : Informations personnelles -->
+    <div class="card mb-4 shadow-sm rounded-4 border-left-primary">
+        <div class="card-header bg-primary text-white fw-bold">
+            👤 Informations personnelles
+        </div>
+        <div class="card-body row text-center">
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">🆔 ID</h6>
+                <p class="fw-semibold">{{ user.id }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">👤 Nom</h6>
+                <p class="fw-semibold">{{ user.nom }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">👤 Prénom</h6>
+                <p class="fw-semibold">{{ user.prenom }}</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <h6 class="text-muted">📧 Email</h6>
+                <p class="fw-semibold">
+                    <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 📌 Bloc : Contact & Adresse -->
+    <div class="card mb-4 shadow-sm rounded-4 border-left-info">
+        <div class="card-header bg-info text-white fw-bold">
+            📞 Contact & Adresse
+        </div>
+        <div class="card-body row text-center">
+            <div class="col-md-6 mb-3">
+                <h6 class="text-muted">📞 Téléphone</h6>
+                <p class="fw-semibold">
+                    {% if user.tel %}
+                        <a href="tel:{{ user.tel }}">{{ user.tel }}</a>
+                    {% else %}
+                        <span class="text-muted">Non renseigné</span>
+                    {% endif %}
+                </p>
+            </div>
+            <div class="col-md-6 mb-3">
+                <h6 class="text-muted">🏠 Adresse</h6>
+                <p class="fw-semibold">{{ user.adresse ?: 'Non renseignée' }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 📌 Bloc : Rôle & Sécurité -->
+    <div class="card mb-4 shadow-sm rounded-4 border-left-success">
+        <div class="card-header bg-success text-white fw-bold">
+            🔐 Rôle & Sécurité
+        </div>
+        <div class="card-body row text-center">
+            <div class="col-md-6 mb-3">
+                <h6 class="text-muted">👑 Rôle</h6>
+                <p class="fw-semibold">
+                    {% if 'ROLE_ADMIN' in user.roles %}
+                        <span class="badge bg-danger fs-6 px-4 py-2">👑 Administrateur</span>
+                    {% else %}
+                        <span class="badge bg-info fs-6 px-4 py-2">👤 Client</span>
+                    {% endif %}
+                </p>
+            </div>
+            <div class="col-md-6 mb-3">
+                <h6 class="text-muted">📋 Tous les rôles</h6>
+                <p class="fw-semibold">
+                    {% for role in user.roles %}
+                        <span class="badge bg-primary me-1">{{ role }}</span>
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔙 Boutons d'action -->
+    <div class="text-center mt-4">
+        <a href="{{ path('admin_user_index') }}" class="btn btn-secondary px-4 me-2">↩️ Retour à la liste</a>
+        <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-warning px-4 me-2">✏️ Modifier</a>
+        {% if 'ROLE_ADMIN' in user.roles %}
+            <a href="{{ path('admin_user_toggle_admin', {'id': user.id}) }}" class="btn btn-outline-warning px-4">👤 Retirer Admin</a>
+        {% else %}
+            <a href="{{ path('admin_user_toggle_admin', {'id': user.id}) }}" class="btn btn-outline-success px-4">👑 Promouvoir Admin</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

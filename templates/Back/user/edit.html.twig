@@ -1,0 +1,76 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Modifier l'utilisateur{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+
+    <h1 class="text-center mb-5 text-primary fw-bold">
+        ✏️ Modifier l'utilisateur : {{ user.nom }} {{ user.prenom }}
+    </h1>
+
+    <!-- 🔔 Messages flash -->
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }} alert-dismissible fade show">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="card shadow-sm rounded-4">
+        <div class="card-header bg-primary text-white fw-bold">
+            👤 Informations de l'utilisateur
+        </div>
+        <div class="card-body">
+            <form method="post" action="{{ path('admin_user_edit', {'id': user.id}) }}">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="nom" class="form-label fw-bold">Nom</label>
+                        <input type="text" class="form-control" id="nom" name="nom" value="{{ user.nom }}" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="prenom" class="form-label fw-bold">Prénom</label>
+                        <input type="text" class="form-control" id="prenom" name="prenom" value="{{ user.prenom }}" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="email" class="form-label fw-bold">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="tel" class="form-label fw-bold">Téléphone</label>
+                        <input type="text" class="form-control" id="tel" name="tel" value="{{ user.tel }}">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="adresse" class="form-label fw-bold">Adresse</label>
+                    <textarea class="form-control" id="adresse" name="adresse" rows="2">{{ user.adresse }}</textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Rôle actuel</label>
+                    <div>
+                        {% if 'ROLE_ADMIN' in user.roles %}
+                            <span class="badge bg-danger fs-6 px-3 py-2">👑 Administrateur</span>
+                            <a href="{{ path('admin_user_toggle_admin', {'id': user.id}) }}" class="btn btn-sm btn-outline-warning ms-2">Retirer Admin</a>
+                        {% else %}
+                            <span class="badge bg-secondary fs-6 px-3 py-2">👤 Utilisateur</span>
+                            <a href="{{ path('admin_user_toggle_admin', {'id': user.id}) }}" class="btn btn-sm btn-outline-success ms-2">Promouvoir Admin</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="{{ path('admin_user_index') }}" class="btn btn-secondary px-4 me-2">↩️ Annuler</a>
+                    <button type="submit" class="btn btn-success px-4">💾 Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

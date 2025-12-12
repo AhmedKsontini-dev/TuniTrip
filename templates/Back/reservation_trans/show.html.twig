@@ -53,11 +53,7 @@
             </div>
         </div>
 
-        <div class="text-center mb-4">
-            <span class="badge bg-success fs-6 px-3 py-2">
-                💰 {{ reservation.prixTotal }} TND
-            </span>
-        </div>
+        
 
         <!-- 📅 Pick-up -->
         <hr>
@@ -131,7 +127,7 @@
 
         <!-- 📌 Statut -->
         <hr>
-        <div class="text-center mt-4">
+        <div class="text-left mt-4">
             <h6 class="text-muted">Statut actuel</h6>
             {% if reservation.statut == 'en_attente' %}
                 <span class="badge bg-warning text-dark fs-6 px-3 py-2">⏳ En attente</span>
@@ -140,6 +136,12 @@
             {% else %}
                 <span class="badge bg-danger fs-6 px-3 py-2">❌ Annulée</span>
             {% endif %}
+        </div>
+        <div class="text-center mb-4">
+        <h6 class="text-muted">Prix total</h6>
+            <span class="badge bg-success fs-6 px-3 py-2">
+                💰 {{ reservation.prixTotal }} TND
+            </span>
         </div>
 
     </div>

@@ -1,6 +1,5 @@
 {% extends 'baseBack.html.twig' %}
 
-<<<<<<< HEAD
 {% block title %}Détails Réservation Excursion #{{ reservation_excursion.id }}{% endblock %}
 
 {% block body %}
@@ -79,7 +78,6 @@
             </div>
         </div>
 
-=======
 {% block title %}Détails de la réservation{% endblock %}
 
 {% block body %}
@@ -174,20 +172,22 @@
                 {% endif %}
             </div>
             <div class="col-md-4 mb-3">
-                <h6 class="text-muted">Prix Total</h6>
-                <p class="fw-semibold fs-4 text-success">{{ reservation_excursion.prixTotal }} TND</p>
+                <h6 class="text-muted">💰 Prix Total</h6>
+                <p class="fw-semibold">
+                    <span class="badge bg-success fs-5 px-4 py-2">{{ reservation_excursion.prixTotal }} TND</span>
+                </p>
             </div>
             <div class="col-md-4 mb-3">
                 <h6 class="text-muted">Date Création</h6>
                 <p class="fw-semibold">{{ reservation_excursion.dateCreation ? reservation_excursion.dateCreation|date('Y-m-d H:i') : '' }}</p>
             </div>
         </div>
->>>>>>> d4f75fb3e94b8e3bf0e00d9960ba53a6fb2b366f
+
     </div>
 
     <!-- 🔙 Boutons d’action -->
     <div class="text-center mt-4">
-<<<<<<< HEAD
+
         <a href="{{ path('app_reservation_excursion_index') }}" class="btn btn-secondary px-4 me-2">
             ↩️ Retour à la liste
         </a>
@@ -195,11 +195,15 @@
             ✏️ Modifier
         </a>
         {{ include('Back/reservation_excursion/_delete_form.html.twig') }}
-=======
         <a href="{{ path('app_reservation_excursion_index') }}" class="btn btn-secondary px-4 me-2">↩️ Retour à la liste</a>
         <a href="{{ path('app_reservation_excursion_edit', {'id': reservation_excursion.id}) }}" class="btn btn-warning px-4 me-2">✏️ Modifier</a>
         
->>>>>>> d4f75fb3e94b8e3bf0e00d9960ba53a6fb2b366f
+
+
+        <a href="{{ path('app_reservation_excursion_index') }}" class="btn btn-secondary px-4 me-2">↩️ Retour à la liste</a>
+        <a href="{{ path('app_reservation_excursion_edit', {'id': reservation_excursion.id}) }}" class="btn btn-warning px-4 me-2">✏️ Modifier</a>
+        
+
     </div>
 </div>
 {% endblock %}

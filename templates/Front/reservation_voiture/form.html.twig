@@ -380,7 +380,8 @@
             </div>
             <div class="col-md-6 mb-3">
                 {{ form_label(form.cinDelivreLe) }}
-                {{ form_widget(form.cinDelivreLe, {'attr': {'class': 'form-control'}}) }}
+                {{ form_widget(form.cinDelivreLe, {'attr': {'class': 'form-control', 'max': 'now'|date('Y-m-d')}}) }}
+                <div class="invalid-feedback">La date de délivrance du CIN ne peut pas être dans le futur.</div>
             </div>
 
             <div class="col-md-6 mb-3">
@@ -618,7 +619,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Submit Validation
     const form = document.getElementById('reservationForm');
+    
+    // Validation du champ CIN délivré le - pas de dates futures
+    const cinDelivreLe = document.getElementById('reservation_voiture_cinDelivreLe');
+    const today = new Date().toISOString().split('T')[0];
+    
+    if (cinDelivreLe) {
+        cinDelivreLe.max = today;
+        cinDelivreLe.addEventListener('change', function() {
+            if (this.value > today) {
+                this.classList.add('is-invalid');
+                alert("La date de délivrance du CIN ne peut pas être dans le futur.");
+                this.value = '';
+            } else {
+                this.classList.remove('is-invalid');
+            }
+        });
+    }
+    
     form.addEventListener('submit', function(e) {
+        // Validation CIN délivré le
+        if (cinDelivreLe && cinDelivreLe.value > today) {
+            e.preventDefault();
+            alert("La date de délivrance du CIN ne peut pas être dans le futur.");
+            cinDelivreLe.focus();
+            return;
+        }
+        
+        // Validation dates de réservation
         if (dDebut && dFin && dFin.value < dDebut.value) {
             e.preventDefault();
             alert("La date de fin doit être supérieure ou égale à la date de début.");

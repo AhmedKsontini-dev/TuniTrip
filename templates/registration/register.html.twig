@@ -1,5 +1,147 @@
 {% extends 'baseFront.html.twig' %}
 
-{% block title %}Inscription{% endblock %}
+{% block title %}Inscription - TuniTrip{% endblock %}
 
-{% block body %}{% endblock %}
+{% block body %}
+<div class="container-fluid py-5" style="background-color: #f8f9fa;">
+    <div class="container text-center mb-5 mt-5">
+        <h2 class="section-title text-center text-primary-dark">Créer un <span class="text-gold">Compte</span></h2>
+        <p class="text-muted">Rejoignez TuniTrip pour réserver vos séjours facilement</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-6">
+            <div class="auth-modal shadow-lg animate__animated animate__fadeInUp" style="max-width: 100%; margin: 0;">
+                <div class="modal-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="modal-title mb-0">Inscription 📝</h5>
+                        <p class="auth-title-sub mb-0">Remplissez le formulaire ci-dessous</p>
+                    </div>
+                </div>
+                
+                <div class="modal-body p-4 p-md-5">
+                    {{ form_start(registrationForm, {'attr': {'class': 'needs-validation'}}) }}
+                        
+                        {# Erreurs globales #}
+                        {{ form_errors(registrationForm) }}
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="auth-field">
+                                    {{ form_label(registrationForm.prenom, 'Prénom') }}
+                                    <i class="fas fa-user"></i>
+                                    {{ form_widget(registrationForm.prenom, {'attr': {'class': 'form-control', 'placeholder': 'Votre prénom'}}) }}
+                                    {{ form_errors(registrationForm.prenom) }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="auth-field">
+                                    {{ form_label(registrationForm.nom, 'Nom') }}
+                                    <i class="fas fa-user"></i>
+                                    {{ form_widget(registrationForm.nom, {'attr': {'class': 'form-control', 'placeholder': 'Votre nom'}}) }}
+                                    {{ form_errors(registrationForm.nom) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="auth-field">
+                            {{ form_label(registrationForm.email, 'Email') }}
+                            <i class="fas fa-envelope"></i>
+                            {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'exemple@email.com'}}) }}
+                            {{ form_errors(registrationForm.email) }}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="auth-field">
+                                    {{ form_label(registrationForm.tel, 'Téléphone') }}
+                                    <i class="fas fa-phone"></i>
+                                    {{ form_widget(registrationForm.tel, {'attr': {'class': 'form-control', 'placeholder': '+216 00 000 000'}}) }}
+                                    {{ form_errors(registrationForm.tel) }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="auth-field">
+                                    {{ form_label(registrationForm.adresse, 'Adresse') }}
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    {{ form_widget(registrationForm.adresse, {'attr': {'class': 'form-control', 'placeholder': 'Votre adresse'}}) }}
+                                    {{ form_errors(registrationForm.adresse) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="auth-field">
+                            {{ form_label(registrationForm.plainPassword, 'Mot de passe') }}
+                            <i class="fas fa-lock"></i>
+                            {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder': '8 caractères min, Maj, Min, Chiffre, Spécial'}}) }}
+                            {{ form_errors(registrationForm.plainPassword) }}
+                            <small class="text-muted d-block mt-1"><i class="fas fa-info-circle text-gold mr-1"></i>Min 8 caractères, 1 Majuscule, 1 Chiffre, 1 Spécial</small>
+                        </div>
+
+                        <div class="form-check mb-4 pl-4">
+                            {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
+                            <label class="form-check-label" for="{{ registrationForm.agreeTerms.vars.id }}">
+                                J'accepte les <a href="#" class="text-gold text-decoration-none">conditions d'utilisation</a>
+                            </label>
+                            {{ form_errors(registrationForm.agreeTerms) }}
+                        </div>
+
+                        <button type="submit" class="btn btn-auth-primary btn-block w-100 py-3 mb-4 font-weight-bold">
+                            S'INSCRIRE
+                        </button>
+
+                        <div class="auth-footer-text text-center text-muted">
+                            Vous avez déjà un compte ? <a href="{{ path('app_login') }}" class="font-weight-bold">Se connecter</a>
+                        </div>
+                    {{ form_end(registrationForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Styles spécifiques pour écraser ou compléter baseFront si nécessaire */
+    .text-gold { color: #d8b65d !important; }
+    .text-primary-dark { color: #1c2228; font-weight: 700; }
+    .section-title { font-size: 2.5rem; margin-bottom: 1rem; }
+    
+    .auth-field label {
+        color: #1c2228;
+        font-weight: 600;
+        margin-left: 0.2rem;
+    }
+    
+    .auth-field .form-control {
+        background-color: #f8f9fa;
+        border: 2px solid #e9ecef;
+        height: 50px;
+        padding-left: 3rem;
+    }
+    
+    .auth-field .form-control:focus {
+        border-color: #d8b65d;
+        box-shadow: 0 0 0 0.2rem rgba(216, 182, 93, 0.25);
+    }
+    
+    .auth-field i {
+        position: absolute;
+        top: 45px;
+        left: 15px;
+        color: #d8b65d;
+        z-index: 5;
+    }
+
+    /* Style pour les erreurs de formulaire Symfony */
+    ul li {
+        color: #dc3545;
+        font-size: 0.875rem;
+        list-style: none;
+        margin-top: 5px;
+    }
+    ul {
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+</style>
+{% endblock %}

@@ -1,6 +1,100 @@
 {% extends 'baseFront.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Connexion - TuniTrip{% endblock %}
 
-{% block body %}{% endblock %}
+{% block body %}
+<div class="container-fluid py-5" style="background-color: #f8f9fa;">
+    <div class="container text-center mb-5 mt-5">
+        <h2 class="section-title text-center text-primary-dark">Espace <span class="text-gold">Connexion</span></h2>
+        <p class="text-muted">Accédez à votre espace pour gérer vos réservations</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5 col-xl-4">
+            <div class="auth-modal shadow-lg animate__animated animate__fadeInUp" style="max-width: 100%; margin: 0;">
+                <div class="modal-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="modal-title mb-0">Bienvenue 👋</h5>
+                        <p class="auth-title-sub mb-0">Connectez-vous à TuniTrip</p>
+                    </div>
+                </div>
+                
+                <div class="modal-body p-4 p-md-5">
+                    <form method="post" action="{{ path('app_login') }}">
+                        {% if error %}
+                            <div class="alert alert-danger mb-4 d-flex align-items-center" role="alert">
+                                <i class="fas fa-exclamation-circle mr-2"></i>
+                                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                            </div>
+                        {% endif %}
+
+                        <div class="auth-field">
+                            <label for="inputEmail">Email</label>
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" value="{{ last_username }}" name="_username" id="inputEmail" class="form-control" autocomplete="email" required autofocus placeholder="votre@email.com">
+                        </div>
+
+                        <div class="auth-field">
+                            <label for="inputPassword">Mot de passe</label>
+                            <i class="fas fa-lock"></i>
+                            <input type="password" name="_password" id="inputPassword" class="form-control" autocomplete="current-password" required placeholder="••••••••">
+                        </div>
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="form-check">
+                                <input type="checkbox" name="_remember_me" id="_remember_me" class="form-check-input">
+                                <label for="_remember_me" class="form-check-label">Se souvenir de moi</label>
+                            </div>
+                            <a href="#" class="small text-gold text-decoration-none">Mot de passe oublié ?</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-auth-primary btn-block w-100 py-3 mb-4 font-weight-bold">
+                            SE CONNECTER
+                        </button>
+
+                        <div class="auth-footer-text text-center text-muted">
+                            Pas encore de compte ? <a href="{{ path('app_register') }}" class="font-weight-bold">Créer un compte</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Styles spécifiques pour écraser ou compléter baseFront si nécessaire */
+    .text-gold { color: #d8b65d !important; }
+    .text-primary-dark { color: #1c2228; font-weight: 700; }
+    .section-title { font-size: 2.5rem; margin-bottom: 1rem; }
+    
+    .auth-field label {
+        color: #1c2228;
+        font-weight: 600;
+        margin-left: 0.2rem;
+    }
+    
+    .auth-field .form-control {
+        background-color: #f8f9fa;
+        border: 2px solid #e9ecef;
+        height: 50px;
+        padding-left: 3rem;
+    }
+    
+    .auth-field .form-control:focus {
+        border-color: #d8b65d;
+        box-shadow: 0 0 0 0.2rem rgba(216, 182, 93, 0.25);
+    }
+    
+    .auth-field i {
+        position: absolute;
+        top: 45px;
+        left: 15px;
+        color: #d8b65d;
+        z-index: 5;
+    }
+</style>
+{% endblock %}
 

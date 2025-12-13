@@ -84,7 +84,7 @@ class ReservationNotificationSubscriber implements EventSubscriberInterface
              FROM App\Entity\ReservationVoiture r
              ORDER BY r.createdAt DESC'
         )
-        ->setMaxResults(5)
+        ->setMaxResults(20)
         ->getResult();
 
         // Réservations transferts récentes
@@ -93,7 +93,7 @@ class ReservationNotificationSubscriber implements EventSubscriberInterface
              FROM App\Entity\ReservationTransfert r
              ORDER BY r.createdAt DESC'
         )
-        ->setMaxResults(5)
+        ->setMaxResults(20)
         ->getResult();
 
         // Réservations excursions récentes
@@ -102,7 +102,7 @@ class ReservationNotificationSubscriber implements EventSubscriberInterface
              FROM App\Entity\ReservationExcursion r
              ORDER BY r.dateCreation DESC'
         )
-        ->setMaxResults(5)
+        ->setMaxResults(20)
         ->getResult();
 
         // Combiner et formater
@@ -144,7 +144,7 @@ class ReservationNotificationSubscriber implements EventSubscriberInterface
         // Exclure les notifications déjà vues
         $reservationsRecentes = array_filter($reservationsRecentes, function ($res) use ($seenNotifications) {
             $key = $res['type'] . '-' . $res['id'];
-            return !in_array($key, $seenNotifications, true);
+            return !in_array($key, $seenNotifications);
         });
 
         // Trier par date décroissante
@@ -152,8 +152,7 @@ class ReservationNotificationSubscriber implements EventSubscriberInterface
             return $b['created_at'] <=> $a['created_at'];
         });
 
-        // Limiter à 5 notifications
-        return array_slice($reservationsRecentes, 0, 5);
+        return $reservationsRecentes;
     }
 
     public static function getSubscribedEvents(): array

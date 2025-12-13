@@ -235,7 +235,7 @@ class DashboardController extends AbstractController
              FROM App\Entity\ReservationVoiture r
              ORDER BY r.createdAt DESC'
         )
-        ->setMaxResults(5)
+        ->setMaxResults(20)
         ->getResult();
 
         $reservationsRecentesTransferts = $em->createQuery(
@@ -243,7 +243,7 @@ class DashboardController extends AbstractController
              FROM App\Entity\ReservationTransfert r
              ORDER BY r.createdAt DESC'
         )
-        ->setMaxResults(5)
+        ->setMaxResults(20)
         ->getResult();
 
         $reservationsRecentesExcursions = $em->createQuery(
@@ -251,7 +251,7 @@ class DashboardController extends AbstractController
              FROM App\Entity\ReservationExcursion r
              ORDER BY r.dateCreation DESC'
         )
-        ->setMaxResults(5)
+        ->setMaxResults(20)
         ->getResult();
 
         // Combiner et formatter
@@ -299,7 +299,7 @@ class DashboardController extends AbstractController
         usort($reservationsRecentes, function($a, $b) {
             return $b['created_at'] <=> $a['created_at'];
         });
-        $reservationsRecentes = array_slice($reservationsRecentes, 0, 5);
+        //$reservationsRecentes = array_slice($reservationsRecentes, 0, 5);
 
         // ============================================
         // EXCURSIONS POPULAIRES
@@ -392,7 +392,7 @@ class DashboardController extends AbstractController
         // Marquer la notification comme vue dans la session
         $seenNotifications = $session->get('seen_notifications', []);
         $key = $type . '-' . $id;
-        if (!in_array($key, $seenNotifications, true)) {
+        if (!in_array($key, $seenNotifications)) {
             $seenNotifications[] = $key;
             $session->set('seen_notifications', $seenNotifications);
         }
@@ -427,7 +427,7 @@ class DashboardController extends AbstractController
         if ($type && $id) {
             $seenNotifications = $session->get('seen_notifications', []);
             $key = $type . '-' . $id;
-            if (!in_array($key, $seenNotifications, true)) {
+            if (!in_array($key, $seenNotifications)) {
                 $seenNotifications[] = $key;
                 $session->set('seen_notifications', $seenNotifications);
             }
@@ -514,7 +514,7 @@ class DashboardController extends AbstractController
              FROM App\Entity\ReservationVoiture r
              ORDER BY r.createdAt DESC'
         )
-        ->setMaxResults(5)
+        ->setMaxResults(20)
         ->getResult();
 
         // Réservations transferts récentes
@@ -523,7 +523,7 @@ class DashboardController extends AbstractController
              FROM App\Entity\ReservationTransfert r
              ORDER BY r.createdAt DESC'
         )
-        ->setMaxResults(5)
+        ->setMaxResults(20)
         ->getResult();
 
         // Réservations excursions récentes
@@ -532,7 +532,7 @@ class DashboardController extends AbstractController
              FROM App\Entity\ReservationExcursion r
              ORDER BY r.dateCreation DESC'
         )
-        ->setMaxResults(5)
+        ->setMaxResults(20)
         ->getResult();
 
         // Combiner et formater
@@ -574,7 +574,7 @@ class DashboardController extends AbstractController
         // Exclure les notifications déjà vues
         $reservationsRecentes = array_filter($reservationsRecentes, function ($res) use ($seenNotifications) {
             $key = $res['type'] . '-' . $res['id'];
-            return !in_array($key, $seenNotifications, true);
+            return !in_array($key, $seenNotifications);
         });
 
         // Trier par date décroissante et limiter
@@ -582,7 +582,7 @@ class DashboardController extends AbstractController
             return strcmp($b['created_at'], $a['created_at']);
         });
 
-        return array_slice(array_values($reservationsRecentes), 0, 5);
+        return array_values($reservationsRecentes);
     }
 }
 

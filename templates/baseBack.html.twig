@@ -224,7 +224,7 @@
                                     Nouvelles réservations
                                 </h6>
                                 <div id="reservations-list">
-                                {% for res in reservationsRecentes|default([]) %}
+                                {% for res in reservationsRecentes|default([])|slice(0, 5) %}
                                     <a class="dropdown-item d-flex align-items-center notification-reservation-item" 
                                        href="{{ path('admin_notification_open', {type: res.type, id: res.id}) }}"
                                        data-type="{{ res.type }}" 
@@ -415,43 +415,11 @@
     <!-- ✅ Script pour mise à jour en temps réel des notifications -->
     <script>
     $(document).ready(function() {
-        // Gestion des notifications de réservations
-        $(document).on('click', '.notification-reservation-item', function(e) {
-            e.preventDefault();
-            var $item = $(this);
-            var type = $item.data('type');
-            var id = $item.data('id');
-            var href = $item.attr('href');
-            
-            // Appel AJAX pour marquer la notification comme vue
-            $.ajax({
-                url: '{{ path("admin_notification_mark_seen") }}',
-                method: 'POST',
-                data: { type: type, id: id },
-                success: function() {
-                    // Supprimer l'élément de la liste
-                    $item.fadeOut(200, function() {
-                        $(this).remove();
-                        
-                        // Mettre à jour le compteur
-                        var $counter = $('#reservations-counter');
-                        var count = parseInt($counter.text()) - 1;
-                        
-                        if (count <= 0) {
-                            $counter.hide();
-                            $('#no-reservations-message').show();
-                        } else {
-                            $counter.text(count);
-                        }
-                    });
-                },
-                complete: function() {
-                    // Rediriger vers la page de détail
-                    window.location.href = href;
-                }
-            });
-        });
-
+        // Gestion des notifications de réservations - OPTIMISATION :
+        // La gestion du click est maintenant gérée directement par le lien href qui pointe vers 
+        // la route 'admin_notification_open'. Cette route marque la notification comme vue 
+        // et redirige vers le détail, évitant ainsi les problèmes de synchronisation AJAX/Redirection.
+        
         // Gestion des notifications de messages
         $(document).on('click', '.notification-message-item', function(e) {
             e.preventDefault();
@@ -546,10 +514,13 @@
                     // Mise à jour de la liste des réservations
                     var $resList = $('#reservations-list');
                     $resList.empty();
-                    data.reservations.forEach(function(res) {
+                    // Limiter l'affichage à 5 notifications comme en PHP
+                    var recentReservations = data.reservations.slice(0, 5);
+                    
+                    recentReservations.forEach(function(res) {
                         var itemHtml = `
                             <a class="dropdown-item d-flex align-items-center notification-reservation-item" 
-                               href="{{ path('admin_notification_open', {type: 'PLACEHOLDER_TYPE', id: 0}) }}"
+                               href="/admin/dashboard/notification/${res.type}/${res.id}"
                                data-type="${res.type}" 
                                data-id="${res.id}">
                                 <div class="mr-3">
@@ -563,8 +534,6 @@
                                 </div>
                             </a>
                         `;
-                        // Fix the href
-                        itemHtml = itemHtml.replace('PLACEHOLDER_TYPE', res.type).replace('id: 0', 'id: ' + res.id);
                         $resList.append(itemHtml);
                     });
 

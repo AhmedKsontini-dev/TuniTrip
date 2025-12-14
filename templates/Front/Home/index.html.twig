@@ -3406,11 +3406,11 @@
                         <div class="home_slider_background zoom" style="background-image:url({{ asset('assetsFront/SLIDE_05.jpg') }})"></div>
                         <div class="home_slider_content text-center">
                             <div class="home_slider_content_inner" data-animation-in="fadeInUp" data-animation-out="fadeOut">
-                                <h1>Explorez</h1>
-                                <h1>la Tunisie</h1>
+                                <h1>{{ 'home.hero.slide1.line1'|trans }}</h1>
+                                <h1>{{ 'home.hero.slide1.line2'|trans }}</h1>
                                 <div class="button home_slider_button">
                                     <div class="button_bcg"></div>
-                                    <a href="javascript:void(0);" onclick="openReservationModal()">Réservez maintenant<span></span><span></span><span></span></a>
+                                    <a href="javascript:void(0);" onclick="openReservationModal()">{{ 'home.hero.cta.bookNow'|trans }}<span></span><span></span><span></span></a>
                                 </div>
                             </div>
                         </div>
@@ -3421,11 +3421,11 @@
                         <div class="home_slider_background zoom" style="background-image:url({{ asset('assetsFront/SLIDE_04.jpg') }})"></div>
                         <div class="home_slider_content text-center">
                             <div class="home_slider_content_inner" data-animation-in="fadeInUp" data-animation-out="fadeOut">
-                                <h1>Découvrez</h1>
-                                <h1>de nouvelles aventures</h1>
+                                <h1>{{ 'home.hero.slide2.line1'|trans }}</h1>
+                                <h1>{{ 'home.hero.slide2.line2'|trans }}</h1>
                                 <div class="button home_slider_button">
                                     <div class="button_bcg"></div>
-                                    <a href="javascript:void(0);" onclick="openReservationModal()">Explorez maintenant<span></span><span></span><span></span></a>
+                                    <a href="javascript:void(0);" onclick="openReservationModal()">{{ 'home.hero.cta.exploreNow'|trans }}<span></span><span></span><span></span></a>
                                 </div>
                             </div>
                         </div>
@@ -3436,11 +3436,11 @@
                         <div class="home_slider_background zoom" style="background-image:url({{ asset('assetsFront/SLIDE_02.jpg') }})"></div>
                         <div class="home_slider_content text-center">
                             <div class="home_slider_content_inner" data-animation-in="fadeInUp" data-animation-out="fadeOut">
-                                <h1>Voyagez</h1>
-                                <h1>en toute sérénité</h1>
+                                <h1>{{ 'home.hero.slide3.line1'|trans }}</h1>
+                                <h1>{{ 'home.hero.slide3.line2'|trans }}</h1>
                                 <div class="button home_slider_button">
                                     <div class="button_bcg"></div>
-                                    <a href="javascript:void(0);" onclick="openReservationModal()">Commencez maintenant<span></span><span></span><span></span></a>
+                                    <a href="javascript:void(0);" onclick="openReservationModal()">{{ 'home.hero.cta.startNow'|trans }}<span></span><span></span><span></span></a>
                                 </div>
                             </div>
                         </div>
@@ -3465,35 +3465,35 @@
         <div class="reservation-modal-content">
             <span class="reservation-modal-close">&times;</span>
             <div class="reservation-modal-header">
-                <h2>Bienvenue sur notre plateforme de réservation</h2>
+                <h2>{{ 'home.modal.title'|trans }}</h2>
             </div>
             <div class="reservation-modal-body">
-                <p class="modal-intro">Notre site vous offre <strong>3 types de services</strong> pour rendre votre séjour en Tunisie inoubliable :</p>
+                <p class="modal-intro">{{ 'home.modal.intro'|trans|raw }}</p>
                 
                 <div class="reservation-types">
                     <div class="reservation-type-item">
-                        <div class="reservation-icon">🚗</div>
-                        <h3>Location de Voitures</h3>
-                        <p>Explorez la Tunisie à votre rythme avec notre flotte de véhicules</p>
+                        <div class="reservation-icon">&#x1F697;</div>
+                        <h3>{{ 'home.modal.service.cars.title'|trans }}</h3>
+                        <p>{{ 'home.modal.service.cars.text'|trans }}</p>
                     </div>
                     
                     <div class="reservation-type-item">
-                        <div class="reservation-icon">🏖️</div>
-                        <h3>Excursions</h3>
-                        <p>Découvrez les merveilles de la Tunisie avec nos circuits guidés</p>
+                        <div class="reservation-icon">&#x1F3D6;</div>
+                        <h3>{{ 'home.modal.service.excursions.title'|trans }}</h3>
+                        <p>{{ 'home.modal.service.excursions.text'|trans }}</p>
                     </div>
                     
                     <div class="reservation-type-item">
-                        <div class="reservation-icon">🚕</div>
-                        <h3>Transferts</h3>
-                        <p>Déplacements confortables entre l'aéroport et votre destination</p>
+                        <div class="reservation-icon">&#x1F695;</div>
+                        <h3>{{ 'home.modal.service.transfers.title'|trans }}</h3>
+                        <p>{{ 'home.modal.service.transfers.text'|trans }}</p>
                     </div>
                 </div>
                 
-                <p class="modal-cta">Parcourez notre site pour choisir le service qui correspond à vos besoins !</p>
+                <p class="modal-cta">{{ 'home.modal.cta'|trans }}</p>
             </div>
             <div class="reservation-modal-footer">
-                <button class="modal-btn modal-btn-primary" onclick="closeReservationModal()">J'ai compris</button>
+                <button class="modal-btn modal-btn-primary" onclick="closeReservationModal()">{{ 'home.modal.button.ok'|trans }}</button>
             </div>
         </div>
     </div>
@@ -3504,28 +3504,27 @@
         <div class="transfer-item">
             <img src="{{ asset('assetsFront/serv_01-140x140.jpg') }}" alt="Airport Transfer">
             <div class="transfer-content">
-            <h3>Transferts Aéroport </h3>
-                <p>Voyagez sans stress avec nos transferts rapides et fiables depuis et vers tous les aéroports de Tunisie.</p>
+            <h3>{{ 'home.services.airportTransfer.title'|trans }}</h3>
+                <p>{{ 'home.services.airportTransfer.text'|trans }}</p>
             </div>
         </div>
 
         <div class="transfer-item">
             <img src="{{ asset('assetsFront/serv_02-140x140.jpg') }}" alt="Business Transfer">
             <div class="transfer-content">
-            <h3>Transferts Professionnels </h3>
-                <p>Profitez d’un service élégant et ponctuel pour vos déplacements professionnels, réunions ou événements d’entreprise.</p>
+            <h3>{{ 'home.services.businessTransfer.title'|trans }}</h3>
+                <p>{{ 'home.services.businessTransfer.text'|trans }}</p>
             </div>
         </div>
 
         <div class="transfer-item">
             <img src="{{ asset('assetsFront/road-trip-roadtrip-explorer-exploring.jpg') }}" alt="Excursions">
             <div class="transfer-content">
-            <h3>Excursions & Circuits </h3>
-                <p>Explorez la Tunisie avec nos excursions guidées et découvrez ses paysages, sites historiques et trésors cachés.</p>
+            <h3>{{ 'home.services.excursions.title'|trans }}</h3>
+                <p>{{ 'home.services.excursions.text'|trans }}</p>
             </div>
         </div>
         </section>
-
 
         <!-- end block de services -->
 
@@ -3537,18 +3536,9 @@
 
 <section class="airport-transfer-section">
   <div class="transfer-content-left">
-    <h2>Votre Meilleure Option pour les Transferts Aéroport à Tunis</h2>
-    <p>
-      Arriver à un aéroport, surtout après un long vol, peut souvent être une expérience stressante. 
-      C’est là que <strong>TuniTrip</strong> intervient pour transformer ce moment en une transition fluide et agréable. 
-      Que vous voyagiez seul pour affaires ou avec votre famille pour des vacances, nos services de transfert sont adaptés 
-      pour répondre à tous vos besoins.
-    </p>
-    <p>
-      Depuis le centre-ville ou des destinations périphériques, nos chauffeurs professionnels vous assurent une arrivée à 
-      l’aéroport en temps et en heure, avec tout le confort que vous méritez. 
-      L’excellence de notre service de transfert à Tunis a fait de nous le choix préféré de nombreux voyageurs.
-    </p>
+    <h2>{{ 'home.airportIntro.title'|trans }}</h2>
+    <p>{{ 'home.airportIntro.paragraph1'|trans|raw }}</p>
+    <p>{{ 'home.airportIntro.paragraph2'|trans }}</p>
   </div>
 
   <div class="transfer-image-right">
@@ -3562,8 +3552,8 @@
         <!-- list voiture -->
         <section class="cars-section">
             <div class="container">
-                <h2 class="section-title">Nos Voitures de Prestige</h2>
-                <p class="section-subtitle">Découvrez notre flotte de véhicules premium pour vos déplacements</p>
+                <h2 class="section-title">{{ 'home.cars.title'|trans }}</h2>
+                <p class="section-subtitle">{{ 'home.cars.subtitle'|trans }}</p>
                   <div class="cars-slider-wrapper">
                     <div class="cars-grid">
                         {% for voiture in voitures %}
@@ -3585,38 +3575,38 @@
                                 
                                 <div class="car-features">
                                     <div class="feature">
-                                        <span class="feature-icon">👥</span>
+                                        <span class="feature-icon">&#x1F465;</span>
                                         <span class="feature-text">{{ voiture.passengers }} places</span>
                                     </div>
                                     <div class="feature">
-                                        <span class="feature-icon">⚙️</span>
+                                        <span class="feature-icon">&#x2699;</span>
                                         <span class="feature-text">{{ voiture.boiteVitesse }}</span>
                                     </div>
                                     <div class="feature">
-                                        <span class="feature-icon">🌡️</span>
+                                        <span class="feature-icon">&#x1F321;</span>
                                         <span class="feature-text">{{ voiture.climatiseur ? 'Climatisée' : 'Sans clim.' }}</span>
                                     </div>
                                     <div class="feature">
-                                        <span class="feature-icon">🧳</span>
+                                        <span class="feature-icon">&#x1F4E4;</span>
                                         <span class="feature-text">{{ voiture.suitcases }} valises</span>
                                     </div>
                                 </div>
                                 <div class="divider"></div>
                                 <div class="car-low-price">
-                                    <span class="money-icon">💰</span>
-                                    <span class="low-price-text">{{ voiture.prixMois }} TND • Prix le plus bas\ mois</span>
+                                    <span class="money-icon">&#x1F4B0;</span>
+                                    <span class="low-price-text">{{ 'home.cars.lowestPrice'|trans({'%price%': voiture.prixMois}) }}</span>
                                 </div>
                             </div>
                         </div>
                         {% else %}
-                            <p style="grid-column: 1/-1; text-align: center; color: #7f8c8d; font-size: 18px; padding: 40px;">Aucune voiture disponible pour le moment.</p>
+                            <p style="grid-column: 1/-1; text-align: center; color: #7f8c8d; font-size: 18px; padding: 40px;">{{ 'home.cars.empty'|trans }}</p>
                         {% endfor %}
                     </div>
                   </div>
 
                   <div class="text-center mt-4 voir-vehicules-container">
                       <div class="btn-animated-primary voir-vehicules-btn" onclick="window.location.href='{{ path('app_front_list_voitures') }}'">
-                        <span>Voir plus de véhicules</span>
+                        <span>{{ 'home.cars.moreButton'|trans }}</span>
                     </div>
 
                   </div>
@@ -3635,12 +3625,12 @@
 
     <div class="container position-relative z-10">
         <p class="small-text">
-            Nous valorisons le temps et la qualité de voyage de chacun de nos clients
+            {{ 'home.comfort.hero.smallText'|trans }}
         </p>
         
         <h2 class="big-title">
-            <span>Un confort</span>
-            <span>incroyable</span>
+            <span>{{ 'home.comfort.hero.title.line1'|trans }}</span>
+            <span>{{ 'home.comfort.hero.title.line2'|trans }}</span>
         </h2>
 
         <div class="car-container">
@@ -3651,8 +3641,6 @@
         </div>
     </div>
 </section>
-
-
 
 {# Section Confort Plus - Avantages avec grille animée #}
 <section class="comfort-section">
@@ -3671,8 +3659,8 @@
             {# Contenu à droite avec icônes #}
             <div class="col-lg-6">
                 <h2>
-                    Nous nous assurons que chacun de vos trajets soit 
-                    <span>confortable</span>
+                    {{ 'home.comfort.plus.title.base'|trans }}
+                    <span>{{ 'home.comfort.plus.title.highlight'|trans }}</span>
                 </h2>
                 
                 <div class="icon-grid">
@@ -3681,31 +3669,31 @@
                         <img src="{{ asset('assetsFront/icons/clock.png') }}" 
                              alt="Icône service 24/7"
                              loading="lazy">
-                        <h5>Commande 24/7<br>Disponible</h5>
+                        <h5>{{ 'home.comfort.plus.item1'|trans|raw }}</h5>
                     </div>
                     
                     {# Service 2 - Livraison rapide #}
                     <div class="icon-item">
                         <img src="{{ asset('assetsFront/icons/support.png') }}" 
-                             alt="Icône livraison rapide"
+                             alt="{{ 'home.comfort.plus.item2.alt'|trans }}"
                              loading="lazy">
-                        <h5>Livraison<br>Rapide</h5>
+                        <h5>{{ 'home.comfort.plus.item2'|trans|raw }}</h5>
                     </div>
                     
                     {# Service 3 - Sécurité #}
                     <div class="icon-item">
                         <img src="{{ asset('assetsFront/icons/seat.png') }}" 
-                             alt="Icône sécurité"
+                             alt="{{ 'home.comfort.plus.item3.alt'|trans }}"
                              loading="lazy">
-                        <h5>Haute Sécurité<br>et Fiabilité</h5>
+                        <h5>{{ 'home.comfort.plus.item3'|trans|raw }}</h5>
                     </div>
                     
                     {# Service 4 - Chauffeurs professionnels #}
                     <div class="icon-item">
                         <img src="{{ asset('assetsFront/icons/chauffeur.png') }}" 
-                             alt="Icône chauffeur professionnel"
+                             alt="{{ 'home.comfort.plus.item4.alt'|trans }}"
                              loading="lazy">
-                        <h5>Chauffeurs<br>Professionnels</h5>
+                        <h5>{{ 'home.comfort.plus.item4'|trans|raw }}</h5>
                     </div>
                 </div>
             </div>
@@ -3728,13 +3716,9 @@
 
       <!-- Card blanche sur l'image -->
         <div class="transfer-card">
-            <span class="transfer-subtitle">NAVETTE</span>
-            <h2 class="transfer-title">Transferts Aéroport Sans Effort en Tunisie</h2>
-            <p class="transfer-text">
-                Découvrez la commodité ultime de nos services de transfert aéroportuaire depuis l'aéroport de Tunis-Carthage en Tunisie. Que vous arriviez ou partiez, nos chauffeurs fiables et professionnels garantiront un trajet fluide et sans souci jusqu'à votre destination. Avec une flotte variée de véhicules confortables, nous accueillons les voyageurs seuls, les familles et les groupes de toutes tailles. Des lieux touristiques populaires aux destinations professionnelles, notre service ponctuel et orienté client dépassera vos attentes. Réservez dès aujourd’hui votre transfert aéroport économique ou VIP depuis Tunis-Carthage et profitez d’une expérience de voyage sans encombre à Tunis.
-
-                Profitez d’un trajet fluide et sans stress grâce à nos transferts aéroport fiables en Tunisie. Nos chauffeurs accueillants et nos véhicules confortables assureront un transport agréable jusqu’à votre hôtel ou toute autre destination dans la ville. Laissez-nous prendre en charge vos besoins en transport et profitez pleinement de la beauté et du charme de Tunis. Commencez votre voyage du bon pied en réservant dès maintenant notre service de transfert de confiance entre Tunis et l’aéroport de Carthage !
-            </p>
+            <span class="transfer-subtitle">{{ 'home.bap.subtitle'|trans }}</span>
+            <h2 class="transfer-title">{{ 'home.bap.title'|trans }}</h2>
+            <p class="transfer-text">{{ 'home.bap.text'|trans }}</p>
         </div>
 
     </div>
@@ -3753,29 +3737,29 @@
                     <div class="circle-wrapper">
                         <img src="{{asset('assetsFront/route.png')}}" alt="Parking avec voitures">
                     </div>
-                    <h3 class="step-title">Créez votre itinéraire</h3><br>
+                    <h3 class="step-title">{{ 'home.steps.step1.title'|trans }}</h3><br>
                     <p class="step-description">
-                        Saisissez vos lieux de prise en charge et de dépôt, ou indiquez le nombre d’heures pour lesquelles vous souhaitez réserver une voiture avec chauffeur.
+                        {{ 'home.steps.step1.text'|trans }}
                     </p>
                 </div>
 
                 <div class="process-step">
                     <div class="circle-wrapper">
-                        <img src="{{asset('assetsFront/choseCar.jpg')}}" alt="Marteau et clé de voiture">
+                        <img src="{{asset('assetsFront/choseCar.jpg')}}" alt="{{ 'home.steps.step2.alt'|trans }}">
                     </div>
-                    <h3 class="step-title">Choisissez votre voiture</h3><br>
+                    <h3 class="step-title">{{ 'home.steps.step2.title'|trans }}</h3><br>
                     <p class="step-description">
-                        Sélectionnez la voiture qui correspond à votre style ou à votre budget. Choisissez votre préférée parmi une gamme d’options adaptées à vos besoins.
+                        {{ 'home.steps.step2.text'|trans }}
                     </p>
                 </div>
 
                 <div class="process-step">
                     <div class="circle-wrapper">
-                        <img src="{{asset('assetsFront/confirmation.jpg')}}" alt="Réservation confirmée">
+                        <img src="{{asset('assetsFront/confirmation.jpg')}}" alt="{{ 'home.steps.step3.alt'|trans }}">
                     </div>
-                    <h3 class="step-title">Recevez votre confirmation</h3><br>
+                    <h3 class="step-title">{{ 'home.steps.step3.title'|trans }}</h3><br>
                     <p class="step-description">
-                        Votre réservation est enregistrée. Vous recevrez un email ou une notification avec tous les détails de votre réservation.
+                        {{ 'home.steps.step3.text'|trans }}
                     </p>
                 </div>
             </div>
@@ -3791,9 +3775,9 @@
 
 	<section class="popular-locations"  id="transfers-section">
   <div class="container">
-    <h2 class="section-title text-center">Transfert</h2>
+    <h2 class="section-title text-center">{{ 'home.transfers.title'|trans }}</h2>
         <p class="section-subtitle text-center">
-        Nous avons sélectionné les destinations les plus populaires auprès de nos clients. Que vous vous rendiez à l’aéroport de Tunis-Carthage ou à celui d’Enfidha, consultez nos options et planifiez votre transfert en toute simplicité.
+        {{ 'home.transfers.text'|trans }}
     </p>
 
 
@@ -3820,7 +3804,7 @@
               </div>
             </a>
           {% else %}
-            <p class="text-center text-muted">Aucun transfert disponible.</p>
+            <p class="text-center text-muted">{{ 'home.transfers.empty'|trans }}</p>
           {% endfor %}
         </div>
       </div>
@@ -3874,12 +3858,8 @@
     
     <!-- Texte et bouton -->
     <div class="propos-info-card">
-      <h2 class="propos-title">Navette Aéroport Carthage Transfer</h2>
-      <p class="propos-description">
-        Découvrez l’excellence du service <strong>TuniTrip</strong>, votre partenaire de confiance pour tous vos transferts entre l’aéroport et votre destination à Tunis.  
-        Nos chauffeurs expérimentés et ponctuels vous accueillent dès votre arrivée et vous garantissent un trajet confortable à bord de véhicules modernes et parfaitement entretenus.  
-        Chaque détail est pensé pour vous offrir une expérience fluide, sécurisée et à la hauteur de vos attentes.
-    </p>
+      <h2 class="propos-title">{{ 'home.carthageShuttle.title'|trans }}</h2>
+      <p class="propos-description">{{ 'home.carthageShuttle.text'|trans|raw }}</p>
 
     </div>
   </div>
@@ -3891,7 +3871,7 @@
 
 
 <div class="excurssion-container">
-    <h1 class="section-title">Excursions Aventure en Vedette</h1>
+    <h1 class="section-title">{{ 'home.excursions.title'|trans }}</h1>
 
 
     <div class="swiper toursSwiper">
@@ -3958,7 +3938,7 @@
         <div class="view-all-container">
             <div class="button">
                 <div class="button_bcg"></div>
-                <a href="{{ path('app_front_excursions_list') }}">Voir toutes les excursions</a>
+                <a href="{{ path('app_front_excursions_list') }}">{{ 'home.excursions.allButton'|trans }}</a>
             </div>
         </div>
 
@@ -3973,7 +3953,7 @@
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <h2 class="section_title">Ce que disent nos clients</h2>
+                <h2 class="section_title">{{ 'home.testimonials.title'|trans }}</h2>
             </div>
         </div>
         <div class="row">
@@ -4003,13 +3983,13 @@
                                     </div>
 
                                     <!-- Tooltip -->
-                                    <div class="tooltip">Cliquer sur le commentaire pour lire tout</div>
+                                    <div class="tooltip">{{ 'home.testimonials.tooltip'|trans }}</div>
                                 </div>
 
                             </div>
                         </div>
                         {% else %}
-                        <p>Aucun avis pour le moment.</p>
+                        <p>{{ 'home.testimonials.empty'|trans }}</p>
                         {% endfor %}
 
                     </div>
@@ -4022,11 +4002,11 @@
                 <!-- Button pour ouvrir modal -->
                 {% if app.user %}
                     <div class="btn-animated-primary cta-button" onclick="document.getElementById('reviewModal').style.display='flex'">
-                        <span>Votre avis →</span>
+                        <span>{{ 'home.testimonials.button'|trans }}</span>
                     </div>
                 {% else %}
                     <div class="btn-animated-primary cta-button" data-require-login data-action="open-review-modal">
-                        <span>Votre avis →</span>
+                        <span>{{ 'home.testimonials.button'|trans }}</span>
                     </div>
                 {% endif %}
 
@@ -4039,39 +4019,39 @@
 <!-- Modal -->
     <div id="reviewModal" class="review-modal-overlay" style="display: none;">
         <div class="review-modal-card">
-            <button class="close-btn" onclick="document.getElementById('reviewModal').style.display='none'" aria-label="Fermer"></button>
+            <button class="close-btn" onclick="document.getElementById('reviewModal').style.display='none'" aria-label="{{ 'home.review.close'|trans }}"></button>
             
-            <h3>Laisser un avis</h3>
+            <h3>{{ 'home.review.title'|trans }}</h3>
             
             <form id="reviewForm">
                 
                 <div class="form-group">
-                    <label for="commentaire">Commentaire</label>
+                    <label for="commentaire">{{ 'home.review.commentLabel'|trans }}</label>
                     <textarea id="commentaire" name="commentaire" class="form-control" required></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label>Note</label>
+                    <label>{{ 'home.review.ratingLabel'|trans }}</label>
                     <div class="star-rating">
                         <input type="radio" id="star5" name="etoiles" value="5" required>
-                        <label for="star5" title="5 étoiles">★</label>
+                        <label for="star5" title="{{ 'home.review.rating5'|trans }}">★</label>
                         
                         <input type="radio" id="star4" name="etoiles" value="4">
-                        <label for="star4" title="4 étoiles">★</label>
+                        <label for="star4" title="{{ 'home.review.rating4'|trans }}">★</label>
                         
                         <input type="radio" id="star3" name="etoiles" value="3">
-                        <label for="star3" title="3 étoiles">★</label>
+                        <label for="star3" title="{{ 'home.review.rating3'|trans }}">★</label>
                         
                         <input type="radio" id="star2" name="etoiles" value="2">
-                        <label for="star2" title="2 étoiles">★</label>
+                        <label for="star2" title="{{ 'home.review.rating2'|trans }}">★</label>
                         
                         <input type="radio" id="star1" name="etoiles" value="1">
-                        <label for="star1" title="1 étoile">★</label>
+                        <label for="star1" title="{{ 'home.review.rating1'|trans }}">★</label>
                     </div>
                 </div>
 
                 <button type="submit" class="btn-animated-primary cta-button">
-                    <span>Appliquer</span>
+                    <span>{{ 'home.review.submit'|trans }}</span>
                 </button>
 
 
@@ -4083,7 +4063,7 @@
 <!-- Modal Commentaire complet -->
 <div id="commentModal" class="review-modal-overlay" style="display: none;">
     <div class="review-modal-card">
-        <button class="close-btn" onclick="document.getElementById('commentModal').style.display='none'" aria-label="Fermer"></button>
+        <button class="close-btn" onclick="document.getElementById('commentModal').style.display='none'" aria-label="{{ 'home.comment.close'|trans }}"></button>
         <h3 id="modalName">Nom Prénom</h3>
         <div class="test_rating" id="modalRating">★★★★★</div>
         <p id="modalCommentaire">Commentaire complet ici...</p>

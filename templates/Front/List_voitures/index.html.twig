@@ -1,6 +1,6 @@
 {% extends 'baseFront.html.twig' %}
 
-{% block title %}TinuTrip - Liste Voitures{% endblock %}
+{% block title %}{{ 'vehicles.list.title'|trans }}{% endblock %}
 
 {% block body %}
 <style>
@@ -673,29 +673,29 @@
 <!-- HERO IMAGE EN HAUT -->
 <div class="page-hero">
     <div class="page-hero_content">
-        <div class="page-hero_title">Nos véhicules</div>
-        <p>Choisissez votre prochaine location parmi notre flotte premium</p>
+        <div class="page-hero_title">{{ 'vehicles.hero.title'|trans }}</div>
+        <p>{{ 'vehicles.hero.subtitle'|trans }}</p>
     </div>
 </div>
 
 
 <div class="cars-page">
     <form method="GET" action="{{ path('app_front_list_voitures') }}" class="filters">
-        <h3>Filtrer les voitures</h3>
+        <h3>{{ 'vehicles.filter.title'|trans }}</h3>
 
         <div class="filter-field">
-            <label for="passengers">Passagers</label>
+            <label for="passengers">{{ 'vehicles.filter.passengers'|trans }}</label>
             <select name="passengers" id="passengers">
-                <option value="">Tous</option>
+                <option value="">{{ 'common.all'|trans }}</option>
                 <option value="5">5</option>
                 <option value="6plus">6+</option>
             </select>
         </div>
 
         <div class="filter-field">
-            <label for="suitcases">Valises</label>
+            <label for="suitcases">{{ 'vehicles.filter.suitcases'|trans }}</label>
             <select name="suitcases" id="suitcases">
-                <option value="">Tous</option>
+                <option value="">{{ 'common.all'|trans }}</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4plus">4+</option>
@@ -703,26 +703,26 @@
         </div>
 
         <div class="filter-field">
-            <label for="boiteVitesse">Boîte de vitesse</label>
+            <label for="boiteVitesse">{{ 'vehicles.filter.transmission'|trans }}</label>
             <select name="boiteVitesse" id="boiteVitesse">
-                <option value="">Toutes</option>
-                <option value="Auto">Automatique</option>
-                <option value="Manuelle">Manuelle</option>
+                <option value="">{{ 'common.all'|trans }}</option>
+                <option value="Auto">{{ 'vehicles.filter.automatic'|trans }}</option>
+                <option value="Manuelle">{{ 'vehicles.filter.manual'|trans }}</option>
             </select>
         </div>
 
-        <button type="submit" class="btn-animated-primary excursion-details-btn" aria-label="Filtrer les voitures">
+        <button type="submit" class="btn-animated-primary excursion-details-btn" aria-label="{{ 'vehicles.filter.aria_label'|trans }}">
             <img src="{{ asset('filter.png') }}" alt="Filtrer" style="width:20px;height:18px;object-fit:contain;display:block;" />
         </button>
     </form>
 
 
 <div class="car-info-box">
-    <h4>Bon à savoir 🚗</h4>
+    <h4>{{ 'vehicles.know.title'|trans }} 🚗</h4>
     <ul>
-        <li>📍 Livraison de la voiture possible à l’aéroport ou à n’importe quelle localisation.</li>
-        <li>💰 Paiement à la livraison avec un cautionnement sécurisé.</li>
-        <li>💬 Pour toute question, contactez-nous sur WhatsApp : 
+        <li>📍 {{ 'vehicles.know.delivery'|trans }}</li>
+        <li>💰 {{ 'vehicles.know.payment'|trans }}</li>
+        <li>💬 {{ 'vehicles.know.contact'|trans }}: 
             <a href="https://wa.me/21626341186" target="_blank" class="whatsapp-link">
                 +216 26 341 186
             </a>
@@ -737,7 +737,7 @@
                                 <span class="car-brand">Tuni<span style="color: #d8b65d;">Trip</span></span>
                                 <div class="price-badge">
                                     <span class="price-badge-amount">{{ voiture.prixJour }} TND</span>
-                                    <span class="price-badge-label">par jour</span>
+                                    <span class="price-badge-label">{{ 'vehicles.price_per_day'|trans }}</span>
                                 </div>
                                 {% if voiture.image %}
                                     <img src="{{ asset('uploads/images/' ~ voiture.image) }}" alt="{{ voiture.marque }} {{ voiture.modele }}" class="car-image">
@@ -751,36 +751,48 @@
                                 <div class="car-features">
                                     <div class="feature">
                                         <span class="feature-icon">👥</span>
-                                        <span class="feature-text">{{ voiture.passengers }} places</span>
+                                        <span class="feature-text">{{ voiture.passengers }} {{ 'vehicles.features.seats'|trans }}</span>
                                     </div>
                                     <div class="feature">
                                         <span class="feature-icon">⚙️</span>
-                                        <span class="feature-text">{{ voiture.boiteVitesse }}</span>
+                                        <span class="feature-text">
+    {% if voiture.boiteVitesse == 'Auto' %}
+        {{ 'vehicles.filter.automatic'|trans }}
+    {% else %}
+        {{ 'vehicles.filter.manual'|trans }}
+    {% endif %}
+</span>
                                     </div>
                                     <div class="feature">
                                         <span class="feature-icon">🌡️</span>
-                                        <span class="feature-text">{{ voiture.climatiseur ? 'Climatisée' : 'Sans clim.' }}</span>
+                                        <span class="feature-text">
+    {% if voiture.climatiseur %}
+        {{ 'vehicles.features.air_conditioning'|trans }}
+    {% else %}
+        {{ 'vehicles.features.no_air_conditioning'|trans }}
+    {% endif %}
+</span>
                                     </div>
                                     <div class="feature">
                                         <span class="feature-icon">🧳</span>
-                                        <span class="feature-text">{{ voiture.suitcases }} valises</span>
+                                        <span class="feature-text">{{ voiture.suitcases }} {{ 'vehicles.features.suitcases'|trans }}</span>
                                     </div>
                                 </div>
                                 <div class="divider"></div>
                                 <div class="car-low-price">
                                     <span class="money-icon">💰</span>
-                                    <span class="low-price-text">{{ voiture.prixMois }} TND • Prix le plus bas\ mois</span>
+                                    <span class="low-price-text">{{ voiture.prixMois }} TND • {{ 'vehicles.lowest_price'|trans }}</span>
                                 </div>
                                 <div class="reserver-btn-container">
                                     <div style="width:100%;" class="btn-animated-primary reservation-btn" onclick="window.location.href='{{ path('app_reservation_voiture', { id: voiture.id }) }}'">
-                                    <span>Réserver →</span>
+                                    <span>{{ 'common.book'|trans }} →</span>
                                 </div>
 
                                 </div>
                             </div>
                         </div>
                         {% else %}
-                            <p style="grid-column: 1/-1; text-align: center; color: #7f8c8d; font-size: 18px; padding: 40px;">Aucune voiture disponible pour le moment.</p>
+                            <p style="grid-column: 1/-1; text-align: center; color: #7f8c8d; font-size: 18px; padding: 40px;">{{ 'vehicles.no_cars'|trans }}</p>
                         {% endfor %}
     </div>
 </div>

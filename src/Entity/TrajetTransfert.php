@@ -19,7 +19,7 @@ class TrajetTransfert
     #[ORM\Column(length: 255)]
     private ?string $lieuArrivee = null;
 
-    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
+    #[ORM\Column(type: 'float', precision: 10, scale: 2)]
     private ?float $prix = null;
 
     #[ORM\Column(length: 255, nullable: true)]

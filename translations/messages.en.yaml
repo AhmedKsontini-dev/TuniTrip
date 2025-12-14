@@ -1,0 +1,259 @@
+# Navbar
+menu.home: "Home"
+menu.about: "About"
+menu.vehicles: "Vehicle list"
+menu.excursions: "Excursions list"
+menu.blogs: "Blogs"
+menu.contact: "Contact"
+
+# Home services
+home.services.airportTransfer.title: "Airport Transfers"
+home.services.airportTransfer.text: "Travel without stress with our fast and reliable transfers to and from all airports in Tunisia."
+
+home.services.businessTransfer.badge: "Business Transfer"
+home.services.businessTransfer.title: "Professional Transfers"
+home.services.businessTransfer.text: "Enjoy an elegant and punctual service for your business trips, meetings, or corporate events."
+
+home.services.excursions.badge: "Excursions"
+home.services.excursions.title: "Excursions & Tours"
+home.services.excursions.text: "Explore Tunisia with our guided excursions and discover its landscapes, historical sites, and hidden gems."
+
+# Home hero slider
+home.hero.slide1.line1: "Explore"
+home.hero.slide1.line2: "Tunisia"
+home.hero.slide2.line1: "Discover"
+home.hero.slide2.line2: "new adventures"
+home.hero.slide3.line1: "Travel"
+home.hero.slide3.line2: "with peace of mind"
+home.hero.cta.bookNow: "Book now"
+home.hero.cta.exploreNow: "Explore now"
+home.hero.cta.startNow: "Start now"
+
+# Home reservation modal
+home.modal.title: "Welcome to our booking platform"
+home.modal.intro: "Our website offers <strong>3 types of services</strong> to make your stay in Tunisia unforgettable:"
+home.modal.service.cars.title: "Car rental"
+home.modal.service.cars.text: "Explore Tunisia at your own pace with our fleet of vehicles."
+home.modal.service.excursions.title: "Excursions"
+home.modal.service.excursions.text: "Discover the wonders of Tunisia with our guided tours."
+home.modal.service.transfers.title: "Transfers"
+home.modal.service.transfers.text: "Comfortable transfers between the airport and your destination."
+home.modal.cta: "Browse our site to choose the service that best fits your needs!"
+home.modal.button.ok: "Got it"
+
+# Home airport intro block
+home.airportIntro.title: "Your best option for airport transfers in Tunis"
+home.airportIntro.paragraph1: "Arriving at an airport, especially after a long flight, can often be stressful. That is where <strong>TuniTrip</strong> comes in to turn this moment into a smooth and pleasant transition. Whether you travel alone for business or with your family for holidays, our transfer services are tailored to meet all your needs."
+home.airportIntro.paragraph2: "From downtown or surrounding areas, our professional drivers ensure you arrive at the airport on time and in complete comfort. The excellence of our transfer service in Tunis has made us the preferred choice of many travellers."
+
+# Home cars section
+home.cars.title: "Our prestige vehicles"
+home.cars.subtitle: "Discover our premium fleet for your journeys"
+home.cars.lowestPrice: "%price% TND · Lowest price / month"
+home.cars.empty: "No vehicles available at the moment."
+home.cars.moreButton: "See more vehicles"
+
+# Home comfort sections
+home.comfort.hero.smallText: "We value the time and travel quality of each of our customers"
+home.comfort.hero.title.line1: "Incredible"
+home.comfort.hero.title.line2: "comfort"
+home.comfort.plus.title.base: "We make sure that every one of your journeys is"
+home.comfort.plus.title.highlight: "comfortable"
+home.comfort.plus.item1: "24/7 booking<br>Available"
+home.comfort.plus.item1.alt: "24/7 service icon"
+home.comfort.plus.item2: "Fast<br>delivery"
+home.comfort.plus.item2.alt: "Fast delivery icon"
+home.comfort.plus.item3: "High safety<br>and reliability"
+home.comfort.plus.item3.alt: "Security icon"
+home.comfort.plus.item4: "Professional<br>drivers"
+home.comfort.plus.item4.alt: "Professional driver icon"
+
+# BAP shuttle block
+home.bap.subtitle: "SHUTTLE"
+home.bap.title: "Effortless Airport Transfers in Tunisia"
+home.bap.text: "Discover the ultimate convenience of our airport transfer services from Tunis-Carthage Airport in Tunisia. Whether you are arriving or departing, our reliable and professional drivers ensure a smooth, worry-free journey to your destination. With a wide range of comfortable vehicles, we welcome solo travellers, families, and groups of all sizes. From popular tourist spots to business destinations, our punctual and customer-focused service is designed to exceed your expectations. Book your economy or VIP airport transfer from Tunis-Carthage today and enjoy a seamless travel experience in Tunis. Benefit from a smooth, stress-free ride with our reliable airport transfers in Tunisia. Our friendly drivers and comfortable vehicles ensure a pleasant trip to your hotel or any other destination in the city. Let us take care of your transport needs so you can fully enjoy the beauty and charm of Tunis. Start your journey the right way by booking our trusted transfer service between Tunis and Carthage Airport now!"
+
+# Steps block
+home.steps.step1.title: "Create your itinerary"
+home.steps.step1.text: "Enter your pickup and drop-off locations, or specify the number of hours for which you would like to book a car with driver."
+home.steps.step2.alt: "Hammer and car key"
+home.steps.step2.title: "Choose your car"
+home.steps.step2.text: "Select the car that matches your style or budget. Choose your favourite from a range of options tailored to your needs."
+home.steps.step3.alt: "Booking confirmed"
+home.steps.step3.title: "Receive your confirmation"
+home.steps.step3.text: "Your booking has been recorded. You will receive an email or notification with all the details of your reservation."
+
+# Transfers section
+home.transfers.title: "Transfer"
+home.transfers.text: "We have selected the most popular destinations among our customers. Whether you are travelling to Tunis-Carthage Airport or Enfidha Airport, explore our options and plan your transfer with ease."
+home.transfers.empty: "No transfers available."
+
+# Carthage shuttle info block
+home.carthageShuttle.title: "Carthage Airport Shuttle Transfer"
+home.carthageShuttle.text: "Discover the excellence of the <strong>TuniTrip</strong> service, your trusted partner for all transfers between the airport and your destination in Tunis. Our experienced and punctual drivers welcome you as soon as you arrive and guarantee a comfortable journey in modern, perfectly maintained vehicles. Every detail is designed to offer you a smooth, safe experience that lives up to your expectations."
+
+# Excursions section
+home.excursions.title: "Featured Adventure Excursions"
+home.excursions.allButton: "View all excursions"
+
+# Testimonials
+home.testimonials.title: "What our customers say"
+home.testimonials.tooltip: "Click the review to read it all"
+home.testimonials.empty: "No reviews yet."
+home.testimonials.button: "Your review →"
+
+# Review modal
+home.review.close: "Close"
+home.review.title: "Leave a review"
+home.review.commentLabel: "Comment"
+home.review.ratingLabel: "Rating"
+home.review.rating5: "5 stars"
+home.review.rating4: "4 stars"
+home.review.rating3: "3 stars"
+home.review.rating2: "2 stars"
+home.review.rating1: "1 star"
+home.review.submit: "Submit"
+
+# Comment modal
+home.comment.close: "Close"
+
+# Footer
+footer.about.text: "Your Tunisian platform dedicated to excursions, transfers, and car rentals."
+
+footer.nav.title: "Navigation"
+footer.nav.home: "Home"
+footer.nav.cars: "Cars"
+footer.nav.excursions: "Excursions"
+footer.nav.blogs: "Blogs"
+footer.nav.about: "About"
+footer.nav.contact: "Contact"
+
+footer.services.title: "Services"
+footer.services.cars: "Car reservations"
+footer.services.excursions: "Excursions"
+footer.services.transfers: "Private transfers"
+
+footer.contact.title: "Contact"
+footer.contact.address: "Hammamet, Tunisia"
+footer.contact.phone: "+216 26 341 186"
+footer.contact.email: "contact@tunitrip.com"
+footer.contact.website: "www.tunitrip.com"
+
+footer.copy.text: "© %year% TuniTrip – All rights reserved. Developed by <a href=\"https://www.linkedin.com/in/ahmed-ksontini-9530112bb/\" target=\"_blank\">Ksontini Ahmed</a>"
+
+# About page
+about.hero.title: "About us"
+
+about.intro.title: "We offer the best excursions"
+about.intro.text: "At TuniTrip, we are passionate about discovering Tunisia. We provide premium airport transfer services, vehicle rental, and unforgettable excursions across the country’s most beautiful sites. With professional drivers, comfortable vehicles, and exceptional customer service, we are committed to making every trip memorable. Whether you travel for business or leisure, you can rely on TuniTrip for a smooth and pleasant travel experience."
+about.intro.cta: "Discover now"
+
+about.stats.title: "Annual statistics"
+about.stats.text: "Discover our growth and achievements over the years. We have served thousands of satisfied customers with our transfer, rental, and excursion services in Tunisia."
+about.stats.clients: "Clients"
+about.stats.loyalClients: "Loyal clients"
+about.stats.reach: "Reach"
+about.stats.articles: "Articles"
+about.stats.moreArticles: "More articles"
+
+about.promo.title: "Thailand"
+about.promo.subtitle: "From <span>%price%</span>"
+about.promo.cta: "Discover now"
+
+about.milestones.clients: "Clients"
+about.milestones.projects: "Projects"
+about.milestones.countries: "Countries"
+about.milestones.cafes: "Cafés"
+
+# Vehicles List Page
+vehicles.list.title: "TuniTrip - Vehicle List"
+vehicles.hero.title: "Our Vehicles"
+vehicles.hero.subtitle: "Choose your next rental from our premium fleet"
+
+# Filters
+vehicles.filter.title: "Filter Cars"
+vehicles.filter.passengers: "Passengers"
+vehicles.filter.suitcases: "Suitcases"
+vehicles.filter.transmission: "Transmission"
+vehicles.filter.automatic: "Automatic"
+vehicles.filter.manual: "Manual"
+vehicles.filter.aria_label: "Filter cars"
+
+# Features
+vehicles.features.seats: "seats"
+vehicles.features.suitcases: "suitcases"
+vehicles.features.air_conditioning: "Air Conditioning"
+vehicles.features.no_air_conditioning: "No A/C"
+
+# Price and Booking
+vehicles.price_per_day: "per day"
+vehicles.lowest_price: "Lowest price / month"
+vehicles.no_cars: "No vehicles available at the moment."
+
+# Know More Section
+vehicles.know.title: "Good to know"
+vehicles.know.delivery: "Car delivery available at the airport or any location."
+vehicles.know.payment: "Payment on delivery with a secure deposit."
+vehicles.know.contact: "For any questions, contact us on WhatsApp"
+
+# Common
+common.all: "All"
+common.view_details: "View Details"
+common.errors.generic: "An error occurred"
+
+# Languages
+languages.french: "French"
+languages.english: "English"
+languages.german: "German"
+languages.italian: "Italian"
+languages.spanish: "Spanish"
+
+# Excursions List Page
+excursions.list.page_title: "TuniTrip | Our Excursions"
+
+excursions.list.hero.title: "Our Excursions"
+excursions.list.hero.breadcrumb: "Home // Excursions List"
+
+excursions.list.filters.title: "Filters"
+excursions.list.filters.category: "Category"
+excursions.list.filters.location: "Location"
+excursions.list.filters.max_price: "Max price"
+excursions.list.filters.duration: "Duration (days)"
+excursions.list.filters.days_count: "%count% day"
+excursions.list.filters.days_count_plural: "%count% days"
+excursions.list.filters.days_count_plus: "%count%+ days"
+excursions.list.filters.ratings: "Traveler ratings"
+excursions.list.filters.guide_language: "Guide language"
+excursions.list.filters.max_people: "Max people"
+excursions.list.filters.max_people_placeholder: "e.g. 8"
+excursions.list.filters.apply: "Apply filters"
+
+excursions.list.no_results: "No excursions match your filters."
+
+# Excursion card content
+excursions.per_person: "/person"
+excursions.duration.day: "%count% day"
+excursions.duration.days: "%count% days"
+common.book: "Book"
+
+# Contact Page
+contact:
+    page_title: "TuniTrip - Contact Us"
+    hero:
+        title: "Contact Us"
+        breadcrumb: "Home // Contact"
+    info:
+        email: "Email"
+        hours: "Opening Hours"
+        hours_value: "Mon - Sat: 9AM - 6PM"
+    form:
+        title: "Send Us a Message"
+        name: "Name"
+        name_placeholder: "Your name"
+        email: "Email"
+        email_placeholder: "Your email"
+        subject: "Subject"
+        subject_placeholder: "Message subject"
+        message: "Message"
+        message_placeholder: "Type your message here"
+        submit_button: "Send Message"

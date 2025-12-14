@@ -46,8 +46,8 @@ class Voitures
     #[ORM\Column]
     private ?int $suitcases = null;
 
-    #[ORM\Column (type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?int $prixMois = null;
+    #[ORM\Column (type: 'float', precision: 10, scale: 2)]
+    private ?float $prixMois = null;
 
     // ---------- Getters & Setters ----------
 
@@ -72,8 +72,8 @@ class Voitures
     public function setPassengers(int $passengers): static { $this->passengers = $passengers; return $this; }
     public function getSuitcases(): ?int { return $this->suitcases; }
     public function setSuitcases(int $suitcases): static { $this->suitcases = $suitcases; return $this; }
-    public function getPrixMois(): ?int { return $this->prixMois; }
-    public function setPrixMois(int $prixMois): static { $this->prixMois = $prixMois; return $this; }
+    public function getPrixMois(): ?float { return $this->prixMois; }
+    public function setPrixMois(float $prixMois): static { $this->prixMois = $prixMois; return $this; }
 
 
 

@@ -857,13 +857,22 @@ button:focus-visible {
 						</div>
 						<div class="main_nav_container ml-auto">
 							<ul class="main_nav_list">
-                                <li class="main_nav_item"><a href="{{path('app_accueil')}}">Accueil</a></li>
-                                <li class="main_nav_item"><a href="{{path('app_front_about')}}">À propos</a></li>
-                                <li class="main_nav_item"><a href="{{path('app_front_list_voitures')}}">Liste des véhicules</a></li>
-                                <li class="main_nav_item"><a href="{{path('app_front_excursions_list')}}">Liste des excursions</a></li>
-                                <li class="main_nav_item soon"><a href="{{path('app_front_blogs')}}">Blogs</a></li>
-                                <li class="main_nav_item"><a href="{{path('app_front_contact')}}">Contact</a></li>
-                            </ul>
+                                <li class="main_nav_item"><a href="{{path('app_accueil')}}">{{ 'menu.home'|trans }}</a></li>
+                                <li class="main_nav_item"><a href="{{path('app_front_about')}}">{{ 'menu.about'|trans }}</a></li>
+                                <li class="main_nav_item"><a href="{{path('app_front_list_voitures')}}">{{ 'menu.vehicles'|trans }}</a></li>
+                                <li class="main_nav_item"><a href="{{path('app_front_excursions_list')}}">{{ 'menu.excursions'|trans }}</a></li>
+                                <li class="main_nav_item soon"><a href="{{path('app_front_blogs')}}">{{ 'menu.blogs'|trans }}</a></li>
+                                <li class="main_nav_item"><a href="{{path('app_front_contact')}}">{{ 'menu.contact'|trans }}</a></li>
+								<li class="main_nav_item dropdown">
+									<a class="dropdown-toggle" href="#" id="languageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										{{ app.request.locale|upper }}
+									</a>
+									<div class="dropdown-menu" aria-labelledby="languageDropdown">
+										<a class="dropdown-item" href="{{ path('change_locale', {'_locale': 'fr'}) }}">FR</a>
+										<a class="dropdown-item" href="{{ path('change_locale', {'_locale': 'en'}) }}">EN</a>
+									</div>
+								</li>
+							</ul>
 
 						</div>
 						<div class="user_box ml-auto">
@@ -1111,8 +1120,7 @@ button:focus-visible {
                         </div>
 
                         <p class="footer-text">
-                            Votre plateforme tunisienne dédiée aux excursions,
-                            transferts et locations de voitures.
+                            {{ 'footer.about.text'|trans }}
                         </p>
 
                         <div class="footer-social">
@@ -1124,35 +1132,35 @@ button:focus-visible {
 
                     <!-- NAVIGATION -->
                     <div class="col-lg-3 col-md-6 mb-4">
-                        <h4 class="footer-title">Navigation</h4>
+                        <h4 class="footer-title">{{ 'footer.nav.title'|trans }}</h4>
                         <ul class="footer-links">
-                            <li><a href="{{path('app_accueil')}}">Accueil</a></li>
-                            <li><a href="{{path('app_front_list_voitures')}}">Voitures</a></li>
-                            <li><a href="{{path('app_front_excursions_list')}}">Excursions</a></li>
-                            <li><a href="{{path('app_front_blogs')}}">Blogs</a></li>
-                            <li><a href="{{path('app_front_about')}}">À propos</a></li>
-                            <li><a href="{{path('app_front_contact')}}">Contact</a></li>
+                            <li><a href="{{path('app_accueil')}}">{{ 'footer.nav.home'|trans }}</a></li>
+                            <li><a href="{{path('app_front_list_voitures')}}">{{ 'footer.nav.cars'|trans }}</a></li>
+                            <li><a href="{{path('app_front_excursions_list')}}">{{ 'footer.nav.excursions'|trans }}</a></li>
+                            <li><a href="{{path('app_front_blogs')}}">{{ 'footer.nav.blogs'|trans }}</a></li>
+                            <li><a href="{{path('app_front_about')}}">{{ 'footer.nav.about'|trans }}</a></li>
+                            <li><a href="{{path('app_front_contact')}}">{{ 'footer.nav.contact'|trans }}</a></li>
                         </ul>
                     </div>
 
                     <!-- SERVICES -->
                     <div class="col-lg-3 col-md-6 mb-4">
-                        <h4 class="footer-title">Services</h4>
+                        <h4 class="footer-title">{{ 'footer.services.title'|trans }}</h4>
                         <ul class="footer-links">
-                            <li><a href="{{path('app_front_list_voitures')}}">Réservation voitures</a></li>
-                            <li><a href="{{path('app_front_excursions_list')}}">Excursions</a></li>
-                            <li><a href="{{path('app_accueil')}}#transfers-section">Transferts privés</a></li>
+                            <li><a href="{{path('app_front_list_voitures')}}">{{ 'footer.services.cars'|trans }}</a></li>
+                            <li><a href="{{path('app_front_excursions_list')}}">{{ 'footer.services.excursions'|trans }}</a></li>
+                            <li><a href="{{path('app_accueil')}}#transfers-section">{{ 'footer.services.transfers'|trans }}</a></li>
                         </ul>
                     </div>
 
                     <!-- CONTACT -->
                     <div class="col-lg-3 col-md-6 mb-4">
-                        <h4 class="footer-title">Contact</h4>
+                        <h4 class="footer-title">{{ 'footer.contact.title'|trans }}</h4>
                         <ul class="footer-contact">
-                            <li><i class="fa fa-map-marker"></i> Hammamet, Tunisie</li>
-                            <li><i class="fa fa-phone"></i> +216 26 341 186</li>
-                            <li><i class="fa fa-envelope"></i> contact@tunitrip.com</li>
-                            <li><i class="fa fa-globe"></i> www.tunitrip.com</li>
+                            <li><i class="fa fa-map-marker"></i> {{ 'footer.contact.address'|trans }}</li>
+                            <li><i class="fa fa-phone"></i> {{ 'footer.contact.phone'|trans }}</li>
+                            <li><i class="fa fa-envelope"></i> {{ 'footer.contact.email'|trans }}</li>
+                            <li><i class="fa fa-globe"></i> {{ 'footer.contact.website'|trans }}</li>
                         </ul>
                     </div>
 
@@ -1160,9 +1168,7 @@ button:focus-visible {
 
                 <!-- Copy -->
                 <div class="footer-bottom">
-                    <p>© 2025 TuniTrip – Tous droits réservés. Développé par 
-                        <a href="https://www.linkedin.com/in/ahmed-ksontini-9530112bb/" target="_blank">Ksontini Ahmed</a>
-                    </p>
+                    <p>{{ 'footer.copy.text'|trans({'%year%': '2025'})|raw }}</p>
                 </div>
                 
 

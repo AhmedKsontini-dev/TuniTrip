@@ -11,8 +11,8 @@
 <!-- === HEADER === -->
 <div class="home">
     <div class="home_content">
-        <h1 class="home_title">Contactez TuniTrip</h1>
-        <p>Accueil // Contact </p>
+        <div class="home_title">{{ 'contact.hero.title'|trans }}</div>
+        <p>{{ 'contact.hero.breadcrumb'|trans }}</p>
     </div>
 </div>
 
@@ -28,18 +28,18 @@
     <div class="info-line">
         <div class="info-block">
             <img src="{{ asset('assetsFront/icons/phone-call.png') }}" alt="Phone Icon" class="info-icon">
-            <h4>Téléphone</h4>
-            <p>+216 55 123 456</p>
+            <h4>WhatsApp</h4>
+            <p>+216 26 341 186</p>
         </div>
         <div class="info-block">
             <img src="{{ asset('assetsFront/icons/email.png') }}" alt="Email Icon" class="info-icon">
-            <h4>Email</h4>
+            <h4>{{ 'contact.info.email'|trans }}</h4>
             <p>contact@tunitrip.com</p>
         </div>
         <div class="info-block">
             <img src="{{ asset('assetsFront/icons/clock (1).png') }}" alt="Clock Icon" class="info-icon">
-            <h4>Horaires</h4>
-            <p>Lun - Ven: 8:00 - 18:00</p>
+            <h4>{{ 'contact.info.hours'|trans }}</h4>
+            <p>{{ 'contact.info.hours_value'|trans }}</p>
         </div>
     </div>
 </section>
@@ -48,7 +48,7 @@
 <section class="contact_form_section">
     
 
-    <h2>Envoyer un Message</h2>
+    <h2>{{ 'contact.form.title'|trans }}</h2>
 
     <form id="contactForm" action="{{ path('app_front_contact') }}" method="POST" class="contact_form">
         {{ form_widget(form._token) }}
@@ -56,30 +56,30 @@
         <!-- Nom et Email côte à côte -->
         <div class="form_row">
             <div class="form_group">
-                <label for="name">Nom et Prénom</label>
+                <label for="name">{{ 'contact.form.name'|trans }}</label>
                 <input type="text" class="form_input" name="{{ form.nom.vars.full_name }}" id="name"
-                       placeholder="Votre Nom et prénom*" value="{{ form.nom.vars.value|default('') }}" required>
+                       placeholder="{{ 'contact.form.name_placeholder'|trans }}" value="{{ form.nom.vars.value|default('') }}" required>
                 <div class="text-danger small">{{ form_errors(form.nom) }}</div>
             </div>
             <div class="form_group">
-                <label for="email">Email</label>
+                <label for="email">{{ 'contact.form.email'|trans }}</label>
                 <input type="email" class="form_input" name="{{ form.email.vars.full_name }}" id="email"
-                       placeholder="Votre Email*" value="{{ form.email.vars.value|default('') }}" required>
+                       placeholder="{{ 'contact.form.email_placeholder'|trans }}" value="{{ form.email.vars.value|default('') }}" required>
                 <div class="text-danger small">{{ form_errors(form.email) }}</div>
             </div>
         </div>
 
         <!-- Sujet -->
         <div class="form_group">
-            <label for="subject">Sujet</label>
+            <label for="subject">{{ 'contact.form.subject'|trans }}</label>
             <input type="text" class="form_input" name="{{ form.sujet.vars.full_name }}" id="subject"
-                   placeholder="Sujet*" value="{{ form.sujet.vars.value|default('') }}" required>
+                   placeholder="{{ 'contact.form.subject_placeholder'|trans }}" value="{{ form.sujet.vars.value|default('') }}" required>
             <div class="text-danger small">{{ form_errors(form.sujet) }}</div>
         </div>
 
         <!-- Message -->
         <div class="form_group">
-            <label for="message">Message</label>
+            <label for="message">{{ 'contact.form.message'|trans }}</label>
             <textarea name="{{ form.message.vars.full_name }}" class="form_input form_textarea" id="message" rows="6"
                       placeholder="Tapez votre message" required>{{ form.message.vars.value|default('') }}</textarea>
             <div class="text-danger small">{{ form_errors(form.message) }}</div>
@@ -88,7 +88,7 @@
         <div class="contact-envoyer-container">
             <div class="button">
                 <div class="button_bcg"></div>
-                <a href="javascript:void(0)" onclick="document.getElementById('contactForm').submit()">Envoyer le message</a>
+                <a href="javascript:void(0)" onclick="document.getElementById('contactForm').submit()">{{ 'contact.form.submit_button'|trans }}</a>
             </div>
         </div>
     </form>

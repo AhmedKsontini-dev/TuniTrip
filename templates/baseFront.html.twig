@@ -2,9 +2,13 @@
 <html lang="fr">
 <head>
 <title>{% block title %} {% endblock %}</title>
+
+{% block metaDescription %}
+    <meta name="description" content="TuniTrip, agence de location en Tunisie spécialisée dans les excursions, transferts et locations touristiques.">
+{% endblock %}
+
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="TuniTrip Project">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="keywords" content="TuniTrip - voyage trip travel agence de voyage transfère">
 <meta name="author" content="TuniTrip">
@@ -19,18 +23,14 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('assetsFront/styles/responsive.css') }}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
-
-
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('assetsFront/css/contact.css') }}">
 
+{% endblock %}
 
-
-    {% block stylesheet %}
-     
-    {% endblock %}
 
 </head>
 
@@ -1204,303 +1204,306 @@ window.onclick = function(event) {
 </script>
 
 {% block script %}
-<script>
-$(document).ready(function () {
+    <script src="{{ asset('assetsFront/js/contact.js') }}" defer></script>
 
-    // ------------------------
-    // 1. Auto-hide toast après inscription
-    // ------------------------
-    const toast = $('#toast-success-register');
-    if (toast.length) {
-        setTimeout(function () {
-            toast.fadeOut(400, function () {
+
+    <script>
+    $(document).ready(function () {
+
+        // ------------------------
+        // 1. Auto-hide toast après inscription
+        // ------------------------
+        const toast = $('#toast-success-register');
+        if (toast.length) {
+            setTimeout(function () {
+                toast.fadeOut(400, function () {
+                    $(this).remove();
+                });
+            }, 4000);
+        }
+
+        // ------------------------
+        // 2. Ouvrir login modal après register (flash)
+        // ------------------------
+        {% if app.flashes('open_login_after_register') is not empty %}
+            $('#loginModal').modal('show');
+        {% endif %}
+
+        // ------------------------
+        // 3. Gestion globale des boutons require-login
+        // ------------------------
+        const isLoggedIn = {{ app.user ? 'true' : 'false' }};
+
+        $(document).on('click', '[data-require-login]', function(e) {
+
+            // Si NON connecté → ouvrir modal login
+            if (!isLoggedIn) {
+                e.preventDefault();
+                e.stopPropagation();
+                $('#loginModal').modal('show');
+                return false;
+            }
+
+            // Si connecté → on détecte l'action
+            const action = $(this).data('action');
+
+            // --- 3.1 Ouvrir modal "review" (sécurisé)
+            if (action === 'open-review-modal') {
+                const reviewModal = document.getElementById('reviewModal');
+                if (reviewModal) {
+                    $(reviewModal).css('display', 'flex');
+                }
+            }
+
+            // --- 3.2 Ajouter aux favoris
+            if (action === 'add-favoris') {
+                const excursionId = $(this).data('excursion-id');
+                if (excursionId) {
+                    addToFavoris(excursionId);
+                }
+            }
+
+        
+
+            // Tu peux ajouter ici d'autres actions :
+            // if (action === 'open-reservation-modal') { ... }
+            // if (action === 'open-chat-modal') { ... }
+
+        });
+
+    });
+    </script>
+
+
+    <script>
+    function toggleDropdown() {
+        const menu = document.getElementById("dropdownMenu");
+        menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    }
+
+    document.addEventListener("click", function(event) {
+        const menu = document.getElementById("dropdownMenu");
+        const avatar = document.querySelector(".avatar_circle");
+
+        if (!avatar.contains(event.target)) {
+            menu.style.display = "none";
+        }
+    });
+    </script>
+
+    {# Script pour ouvrir automatiquement le modal de login après l'inscription #}
+    {% if app.flashes('open_login_after_register')|length > 0 %}
+        <script>
+            $(document).ready(function() {
+                $('#loginModal').modal('show');
+            });
+        </script>
+    {% endif %}
+
+    {# Script pour ouvrir automatiquement le modal de login en cas d'erreur de connexion #}
+    {% if app.flashes('open_login_modal')|length > 0 %}
+        <script>
+            $(document).ready(function() {
+                $('#loginModal').modal('show');
+            });
+        </script>
+    {% endif %}
+
+    {# Script pour ouvrir automatiquement le modal de register en cas d'erreur #}
+    {% if app.flashes('error_register')|length > 0 %}
+        <script>
+            $(document).ready(function() {
+                $('#registerModal').modal('show');
+            });
+        </script>
+    {% endif %}
+    <script>
+    // ============================================
+    // AUTO-HIDE ALERTS AFTER 4 SECONDS
+    // ============================================
+    $(document).ready(function() {
+        // Masquer automatiquement les alertes après 4 secondes
+        setTimeout(function() {
+            $('.alert').fadeOut('slow', function() {
                 $(this).remove();
             });
         }, 4000);
-    }
+    });
 
-    // ------------------------
-    // 2. Ouvrir login modal après register (flash)
-    // ------------------------
-    {% if app.flashes('open_login_after_register') is not empty %}
-        $('#loginModal').modal('show');
-    {% endif %}
-
-    // ------------------------
-    // 3. Gestion globale des boutons require-login
-    // ------------------------
-    const isLoggedIn = {{ app.user ? 'true' : 'false' }};
-
-    $(document).on('click', '[data-require-login]', function(e) {
-
-        // Si NON connecté → ouvrir modal login
-        if (!isLoggedIn) {
-            e.preventDefault();
-            e.stopPropagation();
-            $('#loginModal').modal('show');
-            return false;
-        }
-
-        // Si connecté → on détecte l'action
-        const action = $(this).data('action');
-
-        // --- 3.1 Ouvrir modal "review" (sécurisé)
-        if (action === 'open-review-modal') {
-            const reviewModal = document.getElementById('reviewModal');
-            if (reviewModal) {
-                $(reviewModal).css('display', 'flex');
+    // ============================================
+    // VALIDATION EN TEMPS RÉEL DU FORMULAIRE
+    // ============================================
+    $(document).ready(function() {
+        
+        // Fonction pour afficher les messages d'erreur
+        function showError(input, message) {
+            const formGroup = input.closest('.auth-field, .auth-field-row > div');
+            let errorDiv = formGroup.find('.error-message');
+            
+            if (errorDiv.length === 0) {
+                errorDiv = $('<div class="error-message"></div>');
+                formGroup.append(errorDiv);
             }
+            
+            errorDiv.text(message).show();
+            input.addClass('is-invalid');
         }
-
-        // --- 3.2 Ajouter aux favoris
-        if (action === 'add-favoris') {
-            const excursionId = $(this).data('excursion-id');
-            if (excursionId) {
-                addToFavoris(excursionId);
+        
+        // Fonction pour masquer les messages d'erreur
+        function hideError(input) {
+            const formGroup = input.closest('.auth-field, .auth-field-row > div');
+            formGroup.find('.error-message').hide();
+            input.removeClass('is-invalid');
+        }
+        
+        // ============================================
+        // VALIDATION NOM ET PRÉNOM (lettres uniquement)
+        // ============================================
+        $('#reg_nom, #reg_prenom').on('blur', function() {
+            const value = $(this).val().trim();
+            const fieldName = $(this).attr('id') === 'reg_nom' ? 'nom' : 'prénom';
+            const regex = /^[a-zA-ZÀ-ÿ\s'-]+$/;
+            
+            if (value === '') {
+                showError($(this), `Le ${fieldName} est requis.`);
+            } else if (!regex.test(value)) {
+                showError($(this), `Le ${fieldName} ne doit contenir que des lettres.`);
+            } else if (value.length < 2) {
+                showError($(this), `Le ${fieldName} doit contenir au moins 2 caractères.`);
+            } else {
+                hideError($(this));
             }
-        }
-
-       
-
-        // Tu peux ajouter ici d'autres actions :
-        // if (action === 'open-reservation-modal') { ... }
-        // if (action === 'open-chat-modal') { ... }
-
-    });
-
-});
-</script>
-
-
-<script>
-function toggleDropdown() {
-    const menu = document.getElementById("dropdownMenu");
-    menu.style.display = (menu.style.display === "block") ? "none" : "block";
-}
-
-document.addEventListener("click", function(event) {
-    const menu = document.getElementById("dropdownMenu");
-    const avatar = document.querySelector(".avatar_circle");
-
-    if (!avatar.contains(event.target)) {
-        menu.style.display = "none";
-    }
-});
-</script>
-
-{# Script pour ouvrir automatiquement le modal de login après l'inscription #}
-{% if app.flashes('open_login_after_register')|length > 0 %}
-    <script>
-        $(document).ready(function() {
-            $('#loginModal').modal('show');
         });
-    </script>
-{% endif %}
-
-{# Script pour ouvrir automatiquement le modal de login en cas d'erreur de connexion #}
-{% if app.flashes('open_login_modal')|length > 0 %}
-    <script>
-        $(document).ready(function() {
-            $('#loginModal').modal('show');
+        
+        // ============================================
+        // VALIDATION EMAIL
+        // ============================================
+        $('#reg_email').on('blur', function() {
+            const value = $(this).val().trim();
+            const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            
+            if (value === '') {
+                showError($(this), 'L\'email est requis.');
+            } else if (!regex.test(value)) {
+                showError($(this), 'Veuillez entrer un email valide (ex: exemple@domaine.com).');
+            } else {
+                hideError($(this));
+            }
         });
-    </script>
-{% endif %}
-
-{# Script pour ouvrir automatiquement le modal de register en cas d'erreur #}
-{% if app.flashes('error_register')|length > 0 %}
-    <script>
-        $(document).ready(function() {
-            $('#registerModal').modal('show');
+        
+        // ============================================
+        // VALIDATION TÉLÉPHONE (chiffres uniquement)
+        // ============================================
+        $('#reg_tel').on('blur', function() {
+            const value = $(this).val().trim();
+            const regex = /^[0-9]{8,15}$/;
+            
+            if (value === '') {
+                showError($(this), 'Le téléphone est requis.');
+            } else if (!/^[0-9]+$/.test(value)) {
+                showError($(this), 'Le téléphone ne doit contenir que des chiffres.');
+            } else if (!regex.test(value)) {
+                showError($(this), 'Le téléphone doit contenir entre 8 et 15 chiffres.');
+            } else {
+                hideError($(this));
+            }
         });
-    </script>
-{% endif %}
-<script>
-// ============================================
-// AUTO-HIDE ALERTS AFTER 4 SECONDS
-// ============================================
-$(document).ready(function() {
-    // Masquer automatiquement les alertes après 4 secondes
-    setTimeout(function() {
-        $('.alert').fadeOut('slow', function() {
-            $(this).remove();
+        
+        // Empêcher la saisie de caractères non numériques dans le téléphone
+        $('#reg_tel').on('keypress', function(e) {
+            const charCode = e.which ? e.which : e.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                e.preventDefault();
+                return false;
+            }
         });
-    }, 4000);
-});
-
-// ============================================
-// VALIDATION EN TEMPS RÉEL DU FORMULAIRE
-// ============================================
-$(document).ready(function() {
-    
-    // Fonction pour afficher les messages d'erreur
-    function showError(input, message) {
-        const formGroup = input.closest('.auth-field, .auth-field-row > div');
-        let errorDiv = formGroup.find('.error-message');
         
-        if (errorDiv.length === 0) {
-            errorDiv = $('<div class="error-message"></div>');
-            formGroup.append(errorDiv);
-        }
+        // ============================================
+        // VALIDATION MOT DE PASSE
+        // ============================================
+        $('#reg_password').on('blur', function() {
+            const value = $(this).val();
+            
+            if (value === '') {
+                showError($(this), 'Le mot de passe est requis.');
+                return;
+            }
+            
+            // Vérifications individuelles
+            const hasUpperCase = /[A-Z]/.test(value);
+            const hasLowerCase = /[a-z]/.test(value);
+            const hasNumber = /[0-9]/.test(value);
+            const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(value);
+            const validLength = value.length >= 8 && value.length <= 12;
+            
+            let errors = [];
+            
+            if (!validLength) {
+                errors.push('entre 8 et 12 caractères');
+            }
+            if (!hasUpperCase) {
+                errors.push('une lettre majuscule');
+            }
+            if (!hasLowerCase) {
+                errors.push('une lettre minuscule');
+            }
+            if (!hasNumber) {
+                errors.push('un chiffre');
+            }
+            if (!hasSpecialChar) {
+                errors.push('un caractère spécial (!@#$%...)');
+            }
+            
+            if (errors.length > 0) {
+                showError($(this), 'Le mot de passe doit contenir : ' + errors.join(', ') + '.');
+            } else {
+                hideError($(this));
+            }
+        });
         
-        errorDiv.text(message).show();
-        input.addClass('is-invalid');
-    }
-    
-    // Fonction pour masquer les messages d'erreur
-    function hideError(input) {
-        const formGroup = input.closest('.auth-field, .auth-field-row > div');
-        formGroup.find('.error-message').hide();
-        input.removeClass('is-invalid');
-    }
-    
-    // ============================================
-    // VALIDATION NOM ET PRÉNOM (lettres uniquement)
-    // ============================================
-    $('#reg_nom, #reg_prenom').on('blur', function() {
-        const value = $(this).val().trim();
-        const fieldName = $(this).attr('id') === 'reg_nom' ? 'nom' : 'prénom';
-        const regex = /^[a-zA-ZÀ-ÿ\s'-]+$/;
-        
-        if (value === '') {
-            showError($(this), `Le ${fieldName} est requis.`);
-        } else if (!regex.test(value)) {
-            showError($(this), `Le ${fieldName} ne doit contenir que des lettres.`);
-        } else if (value.length < 2) {
-            showError($(this), `Le ${fieldName} doit contenir au moins 2 caractères.`);
-        } else {
-            hideError($(this));
-        }
-    });
-    
-    // ============================================
-    // VALIDATION EMAIL
-    // ============================================
-    $('#reg_email').on('blur', function() {
-        const value = $(this).val().trim();
-        const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        
-        if (value === '') {
-            showError($(this), 'L\'email est requis.');
-        } else if (!regex.test(value)) {
-            showError($(this), 'Veuillez entrer un email valide (ex: exemple@domaine.com).');
-        } else {
-            hideError($(this));
-        }
-    });
-    
-    // ============================================
-    // VALIDATION TÉLÉPHONE (chiffres uniquement)
-    // ============================================
-    $('#reg_tel').on('blur', function() {
-        const value = $(this).val().trim();
-        const regex = /^[0-9]{8,15}$/;
-        
-        if (value === '') {
-            showError($(this), 'Le téléphone est requis.');
-        } else if (!/^[0-9]+$/.test(value)) {
-            showError($(this), 'Le téléphone ne doit contenir que des chiffres.');
-        } else if (!regex.test(value)) {
-            showError($(this), 'Le téléphone doit contenir entre 8 et 15 chiffres.');
-        } else {
-            hideError($(this));
-        }
-    });
-    
-    // Empêcher la saisie de caractères non numériques dans le téléphone
-    $('#reg_tel').on('keypress', function(e) {
-        const charCode = e.which ? e.which : e.keyCode;
-        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-            e.preventDefault();
-            return false;
-        }
-    });
-    
-    // ============================================
-    // VALIDATION MOT DE PASSE
-    // ============================================
-    $('#reg_password').on('blur', function() {
-        const value = $(this).val();
-        
-        if (value === '') {
-            showError($(this), 'Le mot de passe est requis.');
-            return;
-        }
-        
-        // Vérifications individuelles
-        const hasUpperCase = /[A-Z]/.test(value);
-        const hasLowerCase = /[a-z]/.test(value);
-        const hasNumber = /[0-9]/.test(value);
-        const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(value);
-        const validLength = value.length >= 8 && value.length <= 12;
-        
-        let errors = [];
-        
-        if (!validLength) {
-            errors.push('entre 8 et 12 caractères');
-        }
-        if (!hasUpperCase) {
-            errors.push('une lettre majuscule');
-        }
-        if (!hasLowerCase) {
-            errors.push('une lettre minuscule');
-        }
-        if (!hasNumber) {
-            errors.push('un chiffre');
-        }
-        if (!hasSpecialChar) {
-            errors.push('un caractère spécial (!@#$%...)');
-        }
-        
-        if (errors.length > 0) {
-            showError($(this), 'Le mot de passe doit contenir : ' + errors.join(', ') + '.');
-        } else {
-            hideError($(this));
-        }
-    });
-    
-    // ============================================
-    // VALIDATION À LA SOUMISSION DU FORMULAIRE
-    // ============================================
-    $('#registerFormModal').on('submit', function(e) {
-        let hasError = false;
-        
-        // Valider tous les champs
-        $('#reg_nom, #reg_prenom, #reg_email, #reg_tel, #reg_password').each(function() {
-            $(this).trigger('blur');
-            if ($(this).hasClass('is-invalid')) {
+        // ============================================
+        // VALIDATION À LA SOUMISSION DU FORMULAIRE
+        // ============================================
+        $('#registerFormModal').on('submit', function(e) {
+            let hasError = false;
+            
+            // Valider tous les champs
+            $('#reg_nom, #reg_prenom, #reg_email, #reg_tel, #reg_password').each(function() {
+                $(this).trigger('blur');
+                if ($(this).hasClass('is-invalid')) {
+                    hasError = true;
+                }
+            });
+            
+            // Vérifier les conditions d'utilisation
+            if (!$('#reg_agree').is(':checked')) {
+                alert('Vous devez accepter les conditions d\'utilisation.');
                 hasError = true;
             }
+            
+            // Empêcher la soumission si erreur
+            if (hasError) {
+                e.preventDefault();
+                return false;
+            }
         });
         
-        // Vérifier les conditions d'utilisation
-        if (!$('#reg_agree').is(':checked')) {
-            alert('Vous devez accepter les conditions d\'utilisation.');
-            hasError = true;
-        }
-        
-        // Empêcher la soumission si erreur
-        if (hasError) {
-            e.preventDefault();
-            return false;
-        }
-    });
-    
-    // Réinitialiser les erreurs lors de la modification
-    $('#reg_nom, #reg_prenom, #reg_email, #reg_tel, #reg_password, #reg_adresse').on('input', function() {
-        if ($(this).val().trim() !== '') {
-            hideError($(this));
-        }
-    });
-});
-</script>
-{# Script pour ouvrir automatiquement le modal de register en cas d'erreur #}
-{% if app.flashes('open_register_modal')|length > 0 %}
-    <script>
-        $(document).ready(function() {
-            $('#registerModal').modal('show');
+        // Réinitialiser les erreurs lors de la modification
+        $('#reg_nom, #reg_prenom, #reg_email, #reg_tel, #reg_password, #reg_adresse').on('input', function() {
+            if ($(this).val().trim() !== '') {
+                hideError($(this));
+            }
         });
+    });
     </script>
-{% endif %}
+    {# Script pour ouvrir automatiquement le modal de register en cas d'erreur #}
+    {% if app.flashes('open_register_modal')|length > 0 %}
+        <script>
+            $(document).ready(function() {
+                $('#registerModal').modal('show');
+            });
+        </script>
+    {% endif %}
 {% endblock %}
 
 </body>

@@ -756,22 +756,22 @@
                                     <div class="feature">
                                         <span class="feature-icon">⚙️</span>
                                         <span class="feature-text">
-    {% if voiture.boiteVitesse == 'Auto' %}
-        {{ 'vehicles.filter.automatic'|trans }}
-    {% else %}
-        {{ 'vehicles.filter.manual'|trans }}
-    {% endif %}
-</span>
+                                            {% if voiture.boiteVitesse == 'Auto' %}
+                                                {{ 'vehicles.filter.automatic'|trans }}
+                                            {% else %}
+                                                {{ 'vehicles.filter.manual'|trans }}
+                                            {% endif %}
+                                        </span>
                                     </div>
                                     <div class="feature">
                                         <span class="feature-icon">🌡️</span>
                                         <span class="feature-text">
-    {% if voiture.climatiseur %}
-        {{ 'vehicles.features.air_conditioning'|trans }}
-    {% else %}
-        {{ 'vehicles.features.no_air_conditioning'|trans }}
-    {% endif %}
-</span>
+                                        {% if voiture.climatiseur %}
+                                            {{ 'vehicles.features.air_conditioning'|trans }}
+                                        {% else %}
+                                            {{ 'vehicles.features.no_air_conditioning'|trans }}
+                                        {% endif %}
+                                    </span>
                                     </div>
                                     <div class="feature">
                                         <span class="feature-icon">🧳</span>

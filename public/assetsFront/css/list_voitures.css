@@ -1,0 +1,664 @@
+﻿:root {
+    --primary: #1c2228;
+    --secondary: #d8b65d;
+    --offwhite: #f5f4f1;
+}
+.page-hero {
+    position: relative;
+    height: 420px;
+    background-image: url("../SLIDE_01.jpg");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center; /* centre verticalement le contenu */
+    justify-content: center; /* centre horizontalement */
+    text-align: center;
+    color: white;
+}
+
+.page-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(28, 34, 40, 0.8); /* superposition sombre */
+}
+
+.page-hero_content {
+    position: relative;
+    z-index: 2;
+    margin-top: 60px; 
+}
+
+.page-hero_title {
+    font-size: 40px;
+    color: #D7B65D; /* couleur dorÃ©e comme ton exemple */
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.page-hero p {
+     font-size: 1.05rem;
+    margin: 0;
+    color: rgba(255,255,255,.8);
+}
+
+.cars-page {
+    max-width: 1300px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+    font-family: "Poppins", sans-serif;
+}
+.filters {
+    display: flex;
+    gap: 18px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 20px 60px rgba(10,15,20,.08);
+    margin-bottom: 35px;
+    flex-wrap: wrap;
+}
+.filters h3 {
+    width: 100%;
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+    color: var(--primary);
+}
+.filter-field {
+    flex: 1;
+    min-width: 160px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.filters label {
+    font-weight: 600;
+    color: var(--primary);
+    font-size: .95rem;
+}
+.filters select {
+    border-radius: 16px;
+    border: 1px solid rgba(28,34,40,.15);
+    padding: 10px 14px;
+    font-size: .95rem;
+    outline: none;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+.filters select:focus {
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 0.15rem rgba(216,182,93,.25);
+}
+.cars-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 30px;
+}
+
+
+/* --- Section de liste des voitures --- */
+.cars-section {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+    padding: 100px 0;
+    overflow: hidden;
+}
+
+.container {
+    width: 90%;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    color: #1c2228;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #7f8c8d;
+    font-size: 1rem;
+    margin-bottom: 60px;
+}
+
+/* --- Grille des cartes (Desktop) --- */
+.cars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 40px;
+}
+
+/* --- Carte voiture --- */
+.car-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    max-width: 350px;
+    margin: 0 auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.car-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.car-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Image wrapper + gradient overlay --- */
+.car-image-wrapper {
+    width: 100%;
+    height: 200px; /* ðŸ”¥ rÃ©duit pour toutes dimensions */
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, rgba(216, 182, 93, 1) 0%, rgba(28, 34, 40, 0.95) 50%);
+}
+
+.car-image-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 100%);
+    z-index: 2;
+}
+
+/* --- Texte "TuniTrip" --- */
+.car-brand {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    z-index: 1;
+    pointer-events: none;
+    font-family: 'Playfair Display', serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Image de voiture --- */
+.car-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 2;
+    opacity: 0;
+    transform: translateX(100%) scale(0.8);
+    transition: all 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.car-card.visible .car-image {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+}
+
+/* --- Contenu de la carte --- */
+.car-content {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.car-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1c2228;
+    margin-bottom: 15px;
+    letter-spacing: -0.5px;
+}
+
+/* --- CaractÃ©ristiques modernes --- */
+.car-features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 12px 15px;
+    font-size: 14px;
+    color: #495057;
+    transition: all 0.3s ease;
+}
+
+.feature:hover {
+    background: #e9ecef;
+    transform: translateX(5px);
+}
+
+.feature-icon {
+    font-size: 20px;
+}
+
+.feature-text {
+    font-weight: 500;
+}
+
+/* --- SÃ©parateur Ã©lÃ©gant --- */
+.divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #e9ecef, transparent);
+   
+}
+
+/* --- Badge prix animÃ© --- */
+.price-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: linear-gradient(135deg, #d8b65d 0%, #c9a12c 100%);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    z-index: 3;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    border: 3px solid #fff;
+    text-align: center;
+    line-height: 1.2;
+
+    /* Animation swing */
+    animation: swing 2.5s ease-in-out infinite;
+    transform-origin: top center;
+}
+
+/* Mouvement de gauche Ã  droite faÃ§on balanÃ§oire */
+@keyframes swing {
+    0% { transform: rotate(5deg); }
+    25% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(5deg); }
+}
+
+.price-badge-amount {
+    display: block;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.price-badge-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 500;
+    opacity: 0.95;
+    text-transform: uppercase;
+}
+
+/* --- Bouton CTA moderne --- */
+.cta-button {
+    border: none;
+    border-radius: 999px;
+    padding: 9px 16px;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(28,34,40,.3);
+    color: #fff;
+}
+
+.cta-button:hover::before {
+    left: 100%;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+}
+
+/* --- Bouton Voir Plus --- */
+.see-more-wrapper {
+    text-align: center;
+    margin-top: 60px;
+}
+
+.see-more-button {
+    display: inline-block;
+    padding: 16px 40px;
+    background: transparent;
+    color: #d8b65d;
+    border: 2px solid #d8b65d;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.see-more-button:hover {
+    background: #d8b65d;
+    color: white;
+    transform: translateY(-3px);
+}
+
+/* --- Animated Gradient Button --- */
+.reserver-btn-container .button {
+    display: inline-block !important;
+    height: 53px !important;
+    border-radius: 27px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+}
+.reserver-btn-container .button_bcg {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 200% !important;
+    height: 100% !important;
+    background: linear-gradient(to right, #D7B65D, #192026, #D7B65D) !important;
+    z-index: 1 !important;
+    transition: all 400ms ease !important;
+}
+.reserver-btn-container .button:hover .button_bcg {
+    left: -100% !important;
+}
+.reserver-btn-container .button a {
+    display: block !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #e6dfdf !important;
+    text-transform: uppercase !important;
+    line-height: 53px !important;
+    padding-left: 46px !important;
+    padding-right: 46px !important;
+    white-space: nowrap !important;
+    z-index: 2 !important;
+    position: relative !important;
+    text-decoration: none !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    text-align: center !important;
+}
+
+/* --- Responsive tablette et mobile --- */
+@media (max-width: 768px) {
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .car-features {
+        grid-template-columns: 1fr;
+    }
+
+    /* Slider Mobile */
+    .cars-grid {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        gap: 20px;
+    }
+
+    .cars-slider-wrapper {
+        overflow-x: auto;
+        padding-bottom: 20px;
+        scroll-snap-type: x mandatory;
+    }
+
+    .car-card {
+        min-width: 300px;
+        max-width: 330px;
+        scroll-snap-align: start;
+    }
+}
+
+/* TrÃ¨s petits Ã©crans */
+@media (max-width: 480px) {
+
+    .car-title {
+        font-size: 18px;
+    }
+
+    .car-content {
+        padding: 20px;
+    }
+
+    .feature {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .price-badge {
+        padding: 7px 12px;
+        font-size: 13px;
+    }
+
+    .price-badge-amount {
+        font-size: 17px;
+    }
+}
+
+/* --- Responsive for animated buttons and page layout --- */
+@media (max-width: 992px) {
+    .cars-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-hero {
+        height: 300px;
+    }
+    
+    .page-hero_title {
+        font-size: 28px;
+    }
+    
+    .filters {
+        flex-direction: column;
+        padding: 20px;
+        gap: 15px;
+    }
+    
+    .filter-field {
+        min-width: 100%;
+    }
+    
+    .cars-list {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .car-card {
+        max-width: 100%;
+    }
+    
+    .reserver-btn-container .button {
+        height: 48px !important;
+    }
+    
+    .reserver-btn-container .button a {
+        font-size: 12px !important;
+        line-height: 48px !important;
+        padding-left: 30px !important;
+        padding-right: 30px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-hero {
+        height: 250px;
+    }
+    
+    .page-hero_title {
+        font-size: 24px;
+    }
+    
+    .page-hero p {
+        font-size: 0.9rem;
+    }
+    
+    .cars-page {
+        padding: 0 15px;
+    }
+    
+    .reserver-btn-container .button {
+        height: 45px !important;
+    }
+    
+    .reserver-btn-container .button a {
+        font-size: 11px !important;
+        line-height: 45px !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+}
+
+.car-low-price {
+    display: flex;
+    align-items: center;
+    background: #fff6d6;
+    border: 1px solid #f3d27a;
+    padding: 8px 12px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #b8860b;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.car-low-price .money-icon {
+    font-size: 20px;
+    margin-right: 8px;
+}
+/* --- End liste voiture  --- */
+
+.btn-animated-primary {
+    position: relative;
+    display: inline-block;
+    border: none;
+    border-radius: 27px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 25px;
+    cursor: pointer;
+    overflow: hidden;
+    background: linear-gradient(270deg, #2a3138, #d8b65d, #2a3138);
+    background-size: 600% 600%;
+    animation: gradientMove 5s ease infinite;
+    text-decoration: none; /* pour <a> */
+    text-align: center;
+}
+
+.btn-animated-primary i {
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+/* Animation gradient partagÃ© */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+.btn-animated-primary {
+    position: relative;
+    display: inline-block;
+    border: none;
+    border-radius: 27px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 25px;
+    cursor: pointer;
+    overflow: hidden;
+    background: linear-gradient(270deg, #2a3138, #d8b65d, #2a3138);
+    background-size: 600% 600%;
+    animation: gradientMove 5s ease infinite;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-animated-primary span {
+    display: inline-block;
+}
+
+/* Animation gradient partagÃ©e */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+.car-info-box {
+    background: #f7f9fc;
+    border-left: 4px solid #192026;
+    padding: 15px 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.car-info-box h4 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: #d8b65d;
+}
+
+.car-info-box ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.car-info-box li {
+    margin-bottom: 6px;
+    font-size: 15px;
+    color: #333;
+}
+
+.whatsapp-link {
+    color: #25d366;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.whatsapp-link:hover {
+    text-decoration: underline;
+}
+

@@ -1,317 +1,11 @@
-{% extends 'baseFront.html.twig' %}
+﻿{% extends 'baseFront.html.twig' %}
 
 {% block title %}{{ 'excursions.list.page_title'|trans }}{% endblock %}
 
 {% block stylesheet %}
 <link rel="stylesheet" href="{{ asset('assetsFront/styles/offers_styles.css') }}">
 <link rel="stylesheet" href="{{ asset('assetsFront/styles/offers_responsive.css') }}">
-<style>
-/* Container */
-.filter-section {
-    background: #f9fafb;
-    padding: 20px;
-    border-radius: 12px;
-    color: #111827;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
-/* Title */
-.filter-title {
-    font-weight: 700;
-    color: #192026;
-    margin-bottom: 20px;
-}
-
-/* Inputs style */
-.theme-input {
-    width: 100%;
-    padding: 9px 10px;
-    border-radius: 8px;
-    background: #ffffff;
-    border: 1px solid #d1d5db;
-    color: #111827;
-}
-
-.theme-input:focus {
-    outline: none;
-    border-color: #D7B65D;
-}
-
-.filter-group label {
-    font-weight: 600;
-    color: #111827;
-    margin-bottom: 6px;
-}
-
-/* Slider */
-.theme-slider {
-    width: 100%;
-    accent-color: #D7B65D;
-}
-
-/* Filter groups spacing */
-.filter-group {
-    margin-bottom: 18px;
-}
-
-/* Ratings */
-.ratings-filter {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.rating-option {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-}
-
-.stars {
-    color: #D7B65D;
-    font-size: 17px;
-}
-
-/* Button */
-.filter-btn {
-    width: 100%;
-    padding: 12px;
-    background: #D7B65D;
-    color: #192026;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.filter-btn:hover {
-    background: #c9a44f;
-    cursor: pointer;
-}
-
-    /* ----------- COULEURS PRINCIPALES ----------- */
-:root {
-    --primary: #192026;
-    --secondary: #D7B65D;
-}
-
-
-
-/* ----------- CARTE EXCURSION ----------- */
-.excursion-card {
-    display: flex;
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: 25px;
-    box-shadow: 0px 4px 15px rgba(0,0,0,0.10);
-    border: 1px solid var(--secondary);
-}
-
-.excursion-image {
-    width: 35%;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-}
-
-.excursion-content {
-    width: 65%;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-
-
-/* ----------- BADGE CATÉGORIE ----------- */
-.excursion-badge {
-    position: absolute;
-    top: 12px;
-    left: -10px;
-    background: var(--secondary);
-    color: var(--primary);
-    padding: 6px 18px;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    transform: rotate(-8deg);
-    border-radius: 6px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
-}
-
-
-
-/* ----------- TITRE + PRIX ----------- */
-.excursion-title {
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 8px;
-}
-
-.excursion-price {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--secondary);
-}
-
-
-
-/* ----------- DESCRIPTION ----------- */
-.excursion-description {
-    color: #444;
-    margin-bottom: 15px;
-}
-
-
-
-/* ----------- MÉTA ----------- */
-.excursion-meta span {
-    margin-right: 15px;
-    color: var(--primary);
-    font-weight: 600;
-}
-
-.excursion-meta i {
-    color: var(--secondary);
-    margin-right: 5px;
-}
-
-
-
-/* ----------- BOUTON DÉTAILS ----------- */
-.excursion-details-btn {
-    background: var(--primary);
-    color: #fff;
-    padding: 10px 18px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.3s;
-    align-self: flex-start;
-}
-
-.excursion-details-btn:hover {
-    background: var(--secondary);
-    color: var(--primary);
-}
-
-.home {
-    position: relative;
-    height: 420px;
-    background-image: url("{{ asset('assetsFront/images/excur.jpg') }}");
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
-}
-
-.home::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(25, 32, 38, 0.8); /* même overlay que les autres headers */
-}
-
-.home_content {
-    position: absolute;
-    z-index: 2; /* au-dessus de l'overlay */
-    margin-top: 60px; /* pour aligner le contenu comme les autres headers */
-}
-
-.home_title {
-    font-size: 40px;
-    color: #D7B65D; /* couleur dorée identique */
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.home_content p {
-    font-size: 1.05rem;
-    margin: 0;
-    color: rgba(255,255,255,.8);
-}
-
-/* Bouton favoris positionné dans le coin supérieur droit de l'image */
-.favorite-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    z-index: 10;
-    font-size: 1.6rem;
-    transition: transform 0.2s ease;
-}
-
-/* Couleur initiale du cœur (vide) */
-.favorite-btn i.far.fa-heart {
-    color: #fff; /* blanc pour cœur vide */
-    text-shadow: 0 0 5px rgba(0,0,0,0.5);
-    transition: color 0.3s ease, transform 0.2s ease;
-}
-
-/* Cœur plein lorsque actif */
-.favorite-btn i.fas.fa-heart {
-    color: #d8b65d; /* couleur secondaire */
-    text-shadow: 0 0 5px rgba(0,0,0,0.7);
-    transform: scale(1.2);
-}
-
-/* Effet hover sur le bouton */
-.favorite-btn:hover i {
-    transform: scale(1.3);
-    color: #d8b65d;
-}
-
-/* Animation au clic */
-.favorite-btn.clicked i {
-    animation: pop 0.3s ease forwards;
-}
-
-@keyframes pop {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.5); }
-    100% { transform: scale(1.2); }
-}
-.btn-animated-primary {
-    position: relative;
-    display: inline-block;
-    border: none;
-    border-radius: 27px;
-    color: #fff;
-    font-size: 16px;
-    font-weight: 600;
-    padding: 10px 25px;
-    cursor: pointer;
-    overflow: hidden;
-    background: linear-gradient(270deg, #2a3138, #d8b65d, #2a3138);
-    background-size: 600% 600%;
-    animation: gradientMove 5s ease infinite;
-    text-decoration: none; /* pour <a> */
-    text-align: center;
-    margin-top: 15px;
-}
-
-.btn-animated-primary i {
-    vertical-align: middle;
-    margin-right: 5px;
-}
-
-/* Animation gradient partagé */
-@keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-</style>
+    <link rel="stylesheet" href="{{ asset('assetsFront/css/excursions_list.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -339,7 +33,7 @@
 
                 <form method="get" action="{{ path('app_front_excursions_list') }}">
 
-                    <!-- Catégorie -->
+                    <!-- CatÃ©gorie -->
                     <div class="filter-group">
                         <label for="categorie">{{ 'excursions.list.filters.category'|trans }}</label>
                         <select name="categorie" id="categorie" class="theme-input">
@@ -370,7 +64,7 @@
                             oninput="document.getElementById('prixValue').textContent=this.value">
                     </div>
 
-                    <!-- Durée -->
+                    <!-- DurÃ©e -->
                     <div class="filter-group">
                         <label for="duree">{{ 'excursions.list.filters.duration'|trans }}</label>
                         <select name="duree" id="duree" class="theme-input">
@@ -382,27 +76,12 @@
                         </select>
                     </div>
 
-                    <!-- Notes voyageurs -->
-                    <div class="filter-group">
-                        <label>{{ 'excursions.list.filters.ratings'|trans }}</label>
-                        <div class="ratings-filter">
-                            {% for n in [5,4,3,2,1] %}
-                                <label class="rating-option">
-                                    <input type="radio" name="rating" value="{{ n }}" {% if app.request.query.get('rating') == n %}checked{% endif %}>
-                                    <span class="stars">
-                                        {% for i in 1..n %}★{% endfor %}
-                                    </span>
-                                </label>
-                            {% endfor %}
-                        </div>
-                    </div>
-
                     <!-- Langue du guide -->
                     <div class="filter-group">
                         <label for="langue">{{ 'excursions.list.filters.guide_language'|trans }}</label>
                         <select name="langue" id="langue" class="theme-input">
                             <option value="">{{ 'common.all'|trans }}</option>
-                            <option value="Français" {% if app.request.query.get('langue') == 'Français' %}selected{% endif %}>{{ 'languages.french'|trans }}</option>
+                            <option value="FranÃ§ais" {% if app.request.query.get('langue') == 'FranÃ§ais' %}selected{% endif %}>{{ 'languages.french'|trans }}</option>
                             <option value="Anglais" {% if app.request.query.get('langue') == 'Anglais' %}selected{% endif %}>{{ 'languages.english'|trans }}</option>
                             <option value="Allemand" {% if app.request.query.get('langue') == 'Allemand' %}selected{% endif %}>{{ 'languages.german'|trans }}</option>
                             <option value="Italien" {% if app.request.query.get('langue') == 'Italien' %}selected{% endif %}>{{ 'languages.italian'|trans }}</option>
@@ -483,63 +162,10 @@
 {% block script %}
 <script src="{{ asset('assetsFront/plugins/parallax-js-master/parallax.min.js') }}"></script>
 <script>
-    const slider = document.getElementById("prixSlider");
-    const output = document.getElementById("prixValue");
-    slider.oninput = function () {
-        output.textContent = this.value;
-    }
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const isLoggedIn = {{ app.user ? 'true' : 'false' }};
-
-    // Utilisation de delegation pour tous les boutons favorites (y compris chargés dynamiquement)
-    document.addEventListener('click', async (e) => {
-        const btn = e.target.closest('.favorite-btn');
-
-        if (!btn) return; // Si ce n'est pas un bouton favorite, ignorer
-
-        const excursionId = btn.dataset.excursionId;
-        const icon = btn.querySelector('i');
-
-        // Si non connecté → ouvrir le modal login
-        if (!isLoggedIn) {
-            e.preventDefault();
-            e.stopPropagation();
-            $('#loginModal').modal('show');
-            return false;
-        }
-
-        // Si connecté → exécuter la requête AJAX pour toggler le favoris
-        try {
-            const response = await fetch(`/favori/toggle/${excursionId}`, {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-                if (data.favori) {
-                    icon.classList.remove('far');
-                    icon.classList.add('fas', 'text-warning');
-                } else {
-                    icon.classList.remove('fas', 'text-warning');
-                    icon.classList.add('far');
-                }
-            } else if (data.message) {
-                alert(data.message);
-            }
-        } catch (err) {
-            console.error(err);
-            alert("{{ 'common.errors.generic'|trans }}");
-        }
+    document.addEventListener('DOMContentLoaded', () => {
+         document.body.dataset.userLoggedIn = "{{ app.user ? 'true' : 'false' }}";
     });
-});
 </script>
 
+<script src="{{ asset('assetsFront/js/excursions_list.js') }}"></script>
 {% endblock %}

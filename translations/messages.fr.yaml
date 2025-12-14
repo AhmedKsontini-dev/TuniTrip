@@ -139,7 +139,7 @@ footer.contact.phone: "+216 26 341 186"
 footer.contact.email: "contact@tunitrip.com"
 footer.contact.website: "www.tunitrip.com"
 
-footer.copy.text: "© %year% TuniTrip – Tous droits réservés. Développé par <a href=\"https://www.linkedin.com/in/ahmed-ksontini-9530112bb/\" target=\"_blank\">Ksontini Ahmed</a>"
+footer.copy.text: '© %year% TuniTrip – Tous droits réservés. Développé par <a href="https://www.linkedin.com/in/ahmed-ksontini-9530112bb/" target="_blank">Ksontini Ahmed</a>'
 
 # About page
 about.hero.title: "À propos de nous"
@@ -257,3 +257,15 @@ contact:
         message: "Message"
         message_placeholder: "Tapez votre message"
         submit_button: "Envoyer le message"
+    intro:
+        subtitle: >
+            Une question, une demande particulière ou besoin d’informations supplémentaires ?
+            Notre équipe TuniTrip est à votre écoute et vous répondra dans les plus brefs délais.
+
+# Home Contact Section
+home:
+    contact:
+        title: "Contactez-nous"
+        subtitle: >
+            Une question, une demande particulière ou besoin d’informations supplémentaires ?
+            Notre équipe TuniTrip est à votre écoute et vous répondra dans les plus brefs délais.

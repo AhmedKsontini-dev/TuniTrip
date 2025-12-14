@@ -50,6 +50,10 @@
 
     <h2>{{ 'contact.form.title'|trans }}</h2>
 
+    <p class="contact_form_subtitle">
+        {{ 'contact.intro.subtitle'|trans }}
+    </p>
+
     <form id="contactForm" action="{{ path('app_front_contact') }}" method="POST" class="contact_form">
         {{ form_widget(form._token) }}
 

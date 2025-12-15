@@ -1,0 +1,492 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Statistiques Avancées - Tableau de Bord{% endblock %}
+
+{% block body %}
+<div class="container-fluid py-4">
+    <!-- En-tête -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h1 class="h4 mb-1">📊 Tableau de Bord des Statistiques</h1>
+                            <p class="text-muted mb-0">Analyse complète des performances et des revenus</p>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="periodDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-calendar-alt me-2"></i>
+                                    <span id="selectedPeriod">Ce Mois</span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="periodDropdown">
+                                    <li><a class="dropdown-item period-option" href="#" data-period="day">Aujourd'hui</a></li>
+                                    <li><a class="dropdown-item period-option active" href="#" data-period="month">Ce Mois</a></li>
+                                    <li><a class="dropdown-item period-option" href="#" data-period="year">Cette Année</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#customRangeModal">Période personnalisée</a></li>
+                                </ul>
+                            </div>
+                            <button class="btn btn-primary" id="refreshBtn">
+                                <i class="fas fa-sync-alt me-2"></i>Rafraîchir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cartes de statistiques -->
+    <div class="row mb-4">
+        <!-- Revenus Totaux -->
+        <div class="col-xl-3 col-sm-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-muted text-sm">Revenus Totaux</span>
+                            <h3 class="mb-0">{{ total_revenue|number_format(0, ',', ' ') }} TND</h3>
+                            <span class="text-success small">
+                                <i class="fas fa-arrow-up"></i> {{ revenue_evolution|number_format(1) }}% vs période précédente
+                            </span>
+                        </div>
+                        <div class="bg-primary bg-opacity-10 p-3 rounded">
+                            <i class="fas fa-wallet text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Réservations -->
+        <div class="col-xl-3 col-sm-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-muted text-sm">Réservations</span>
+                            <h3 class="mb-0">{{ total_bookings|number_format(0, ',', ' ') }}</h3>
+                            <span class="text-success small">
+                                <i class="fas fa-arrow-up"></i> {{ booking_evolution|number_format(1) }}%
+                            </span>
+                        </div>
+                        <div class="bg-success bg-opacity-10 p-3 rounded">
+                            <i class="fas fa-calendar-check text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Taux de conversion -->
+        <div class="col-xl-3 col-sm-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-muted text-sm">Taux de conversion</span>
+                            <h3 class="mb-0">{{ conversion_rate|number_format(1) }}%</h3>
+                            <span class="text-danger small">
+                                <i class="fas fa-arrow-down"></i> 2.1% vs période précédente
+                            </span>
+                        </div>
+                        <div class="bg-warning bg-opacity-10 p-3 rounded">
+                            <i class="fas fa-chart-line text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Clients actifs -->
+        <div class="col-xl-3 col-sm-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-muted text-sm">Clients actifs</span>
+                            <h3 class="mb-0">{{ active_customers|number_format(0, ',', ' ') }}</h3>
+                            <span class="text-success small">
+                                <i class="fas fa-arrow-up"></i> 12.5% vs période précédente
+                            </span>
+                        </div>
+                        <div class="bg-info bg-opacity-10 p-3 rounded">
+                            <i class="fas fa-users text-info"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Graphiques principaux -->
+    <div class="row mb-4">
+        <!-- Graphique des revenus -->
+        <div class="col-lg-8 mb-4">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Évolution des Revenus</h5>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary chart-period" data-period="day">J</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary chart-period active" data-period="week">S</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary chart-period" data-period="month">M</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary chart-period" data-period="year">A</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="revenueChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Répartition des revenus -->
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">Répartition par Service</h5>
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <div class="chart-container" style="position: relative; height:250px;">
+                        <canvas id="revenueDistribution"></canvas>
+                    </div>
+                    <div class="mt-auto pt-3">
+                        <div class="d-flex justify-content-between mb-2">
+                            <div class="d-flex align-items-center">
+                                <span class="legend-indicator bg-primary"></span>
+                                <span class="ms-2">Locations</span>
+                            </div>
+                            <span class="fw-medium">{{ (revenue_distribution.cars.percentage)|number_format(1) }}%</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <div class="d-flex align-items-center">
+                                <span class="legend-indicator bg-success"></span>
+                                <span class="ms-2">Transferts</span>
+                            </div>
+                            <span class="fw-medium">{{ (revenue_distribution.transfers.percentage)|number_format(1) }}%</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <span class="legend-indicator bg-warning"></span>
+                                <span class="ms-2">Excursions</span>
+                            </div>
+                            <span class="fw-medium">{{ (revenue_distribution.excursions.percentage)|number_format(1) }}%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tableau des réservations récentes -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Dernières Réservations</h5>
+                    <a href="{{ path('admin_dashboard') }}" class="btn btn-sm btn-outline-primary">Voir tout</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-nowrap mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Client</th>
+                                <th>Service</th>
+                                <th>Date</th>
+                                <th>Montant</th>
+                                <th>Statut</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for booking in recent_bookings %}
+                            <tr>
+                                <td>#{{ booking.id }}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar avatar-sm me-2">
+                                            <span class="avatar-initial rounded-circle bg-primary text-white">
+                                                {{ booking.client|first|upper }}
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">{{ booking.client }}</h6>
+                                            <small class="text-muted">{{ booking.email }}</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-soft-{{ booking.service == 'Voiture' ? 'primary' : (booking.service == 'Transfert' ? 'success' : 'warning') }}">
+                                        {{ booking.service }}
+                                    </span>
+                                </td>
+                                <td>{{ booking.date|date('d/m/Y H:i') }}</td>
+                                <td>{{ booking.amount|number_format(0, ',', ' ') }} TND</td>
+                                <td>
+                                    <span class="badge bg-soft-{{ booking.status == 'Confirmée' ? 'success' : (booking.status == 'En attente' ? 'warning' : 'danger') }}">
+                                        {{ booking.status }}
+                                    </span>
+                                </td>
+                                <td class="text-end">
+                                    <a href="#" class="btn btn-sm btn-outline-primary">Voir</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Période personnalisée -->
+<div class="modal fade" id="customRangeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Sélectionner une période</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">De</label>
+                    <input type="date" class="form-control" id="startDate">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">À</label>
+                    <input type="date" class="form-control" id="endDate">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-primary" id="applyCustomRange">Appliquer</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+    .card {
+        border: none;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+    }
+    
+    .card-header {
+        background-color: #fff;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    .legend-indicator {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+    }
+    
+    .avatar {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .avatar-initial {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .bg-soft-primary { background-color: rgba(102, 126, 234, 0.1) !important; }
+    .bg-soft-success { background-color: rgba(25, 195, 125, 0.1) !important; }
+    .bg-soft-warning { background-color: rgba(247, 183, 49, 0.1) !important; }
+    .bg-soft-danger { background-color: rgba(255, 71, 87, 0.1) !important; }
+    .bg-soft-info { background-color: rgba(45, 206, 255, 0.1) !important; }
+</style>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Données pour les graphiques (à remplacer par des données réelles)
+        const revenueData = {
+            labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'],
+            datasets: [
+                {
+                    label: 'Locations',
+                    data: [1200, 1900, 1500, 2500, 2200, 3000, 2800, 2600, 3000, 3500, 4000, 4200],
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                },
+                {
+                    label: 'Transferts',
+                    data: [800, 1200, 1000, 1500, 1800, 2000, 2200, 2000, 2500, 2800, 3000, 3200],
+                    borderColor: '#19c37d',
+                    backgroundColor: 'rgba(25, 195, 125, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                },
+                {
+                    label: 'Excursions',
+                    data: [500, 700, 800, 1000, 1200, 1500, 1300, 1400, 1600, 1800, 2000, 2200],
+                    borderColor: '#f7b731',
+                    backgroundColor: 'rgba(247, 183, 49, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }
+            ]
+        };
+
+        // Configuration du graphique des revenus
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        const revenueChart = new Chart(revenueCtx, {
+            type: 'line',
+            data: revenueData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString() + ' TND';
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                }
+            }
+        });
+
+        // Configuration du graphique de répartition
+        const distributionCtx = document.getElementById('revenueDistribution').getContext('2d');
+        const distributionChart = new Chart(distributionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Locations', 'Transferts', 'Excursions'],
+                datasets: [{
+                    data: [
+                        {{ revenue_distribution.cars.amount }}, 
+                        {{ revenue_distribution.transfers.amount }}, 
+                        {{ revenue_distribution.excursions.amount }}
+                    ],
+                    backgroundColor: [
+                        'rgba(102, 126, 234, 0.8)',
+                        'rgba(25, 195, 125, 0.8)',
+                        'rgba(247, 183, 49, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(102, 126, 234, 1)',
+                        'rgba(25, 195, 125, 1)',
+                        'rgba(247, 183, 49, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                cutout: '70%'
+            }
+        });
+
+        // Gestion du changement de période
+        document.querySelectorAll('.period-option').forEach(option => {
+            option.addEventListener('click', function(e) {
+                e.preventDefault();
+                const period = this.getAttribute('data-period');
+                updatePeriod(period);
+                document.getElementById('selectedPeriod').textContent = this.textContent;
+                document.querySelectorAll('.period-option').forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Gestion du changement de période personnalisée
+        document.getElementById('applyCustomRange').addEventListener('click', function() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            
+            if (startDate && endDate) {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+                const periodText = `${formatDate(start)} - ${formatDate(end)}`;
+                
+                document.getElementById('selectedPeriod').textContent = periodText;
+                updateCustomPeriod(startDate, endDate);
+                
+                const modal = bootstrap.Modal.getInstance(document.getElementById('customRangeModal'));
+                modal.hide();
+            }
+        });
+
+        // Mise à jour des données en fonction de la période
+        function updatePeriod(period) {
+            // Ici, vous feriez un appel AJAX pour récupérer les données de la période sélectionnée
+            console.log(`Mise à jour des données pour la période: ${period}`);
+            // Exemple de mise à jour des données du graphique
+            // fetch(`/api/statistics?period=${period}`)
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         updateCharts(data);
+            //     });
+        }
+
+        // Mise à jour pour une période personnalisée
+        function updateCustomPeriod(start, end) {
+            console.log(`Mise à jour des données de ${start} à ${end}`);
+            // fetch(`/api/statistics?start=${start}&end=${end}`)
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         updateCharts(data);
+            //     });
+        }
+
+        // Formatage des dates
+        function formatDate(date) {
+            return date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        }
+
+        // Rafraîchissement des données
+        document.getElementById('refreshBtn').addEventListener('click', function() {
+            const period = document.querySelector('.period-option.active').getAttribute('data-period');
+            updatePeriod(period);
+        });
+    });
+</script>
+{% endblock %}

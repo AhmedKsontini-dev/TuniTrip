@@ -49,6 +49,179 @@
 
 /* ======== BOUTONS ======== */
 .btn-primary {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+
+.btn-primary:hover {
+    background-color: #0d1013 !important;
+}
+
+/* ======== TABLEAU DE BORD STATISTIQUES ======== */
+.stat-card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-left: 4px solid;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card.revenue { border-color: #10b981; }
+.stat-card.bookings { border-color: #3b82f6; }
+.stat-card.conversion { border-color: #f59e0b; }
+.stat-card.customers { border-color: #8b5cf6; }
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: #6b7280;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stat-change {
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.stat-change.positive {
+    color: #10b981;
+}
+
+.stat-change.negative {
+    color: #ef4444;
+}
+
+/* Graphiques */
+.chart-container {
+    position: relative;
+    min-height: 300px;
+}
+
+/* Légende */
+.legend-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+/* Tableau des réservations */
+.recent-bookings {
+    margin-top: 2rem;
+}
+
+.recent-bookings .table th {
+    background-color: #f9fafb;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+}
+
+/* Filtres de période */
+.period-selector {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.period-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.375rem;
+    background-color: white;
+    color: #4b5563;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.period-btn:hover, .period-btn.active {
+    background-color: #f3f4f6;
+    border-color: #d1d5db;
+}
+
+.period-btn.active {
+    background-color: #1f2937;
+    color: white;
+    border-color: #1f2937;
+}
+
+/* Cartes de statistiques */
+.stat-card {
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+
+.stat-card .icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.stat-card .icon i {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.stat-card .stat-number {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.stat-card .stat-label {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card .stat-change {
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+}
+
+.stat-card .stat-change.positive {
+    color: #10b981;
+}
+
+.stat-card .stat-change.negative {
+    color: #ef4444;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .stat-card {
+        margin-bottom: 1rem;
+    }
+    
+    .period-selector {
+        flex-wrap: wrap;
+    }
+}
+
+/* ======== BOUTONS ======== */
+.btn-primary {
     background-color: var(--secondary) !important;
     border-color: var(--secondary) !important;
     color: var(--primary) !important;

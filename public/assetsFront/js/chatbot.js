@@ -34,7 +34,8 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             id: 5,
             question: "📞 Comment contacter le support ?",
-            answer: `Notre équipe est dispo 24/7. <br><br><a href="${routes.contact}" class="chat-link">Page Contact</a>`
+            answer: `Notre équipe est disponible 24h/24 et 7j/7 pour vous accompagner. Vous pouvez nous contacter via le formulaire de contact ou directement par WhatsApp au <br> +216 26 341 186
+            <br><a href="${routes.contact}" class="chat-link">Page Contact</a>`
         }
     ];
 

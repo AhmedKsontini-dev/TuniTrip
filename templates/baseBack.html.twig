@@ -56,9 +56,15 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{{ path('admin_dashboard') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Tableau de bord</span>
+                </a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_statistics') }}">
+                    <i class="fas fa-fw fa-chart-line"></i>
+                    <span>Statistiques avancées</span>
+                </a>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('admin_calendar_index') }}">
@@ -630,6 +636,7 @@
         setTimeout(pollNotifications, 5000);
     });
     </script>
+    
 
 {% block javascripts  %}
 

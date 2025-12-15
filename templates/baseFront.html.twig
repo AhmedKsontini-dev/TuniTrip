@@ -24,10 +24,12 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="{{ asset('assetsFront/css/chatbot.css') }}">
 
 
 {% block stylesheet %}
     <link rel="stylesheet" href="{{ asset('assetsFront/css/contact.css') }}">
+    
 
 {% endblock %}
 
@@ -2165,6 +2167,41 @@ window.onclick = function(event) {
         </script>
     {% endif %}
 {% endblock %}
+
+<!-- Chatbot Widget -->
+<div id="chatbot-container">
+    <div id="chatbot-window">
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar">
+                   <i class="fas fa-robot" style="color: #d8b65d;"></i>
+                </div>
+                <div class="chat-title">
+                    <h3>TuniBot</h3>
+                    <span>Assistant Voyage</span>
+                </div>
+            </div>
+            <button id="chat-close-btn" class="chat-close-btn">&times;</button>
+        </div>
+        <div id="chat-body" class="chat-body">
+            <!-- Messages -->
+        </div>
+    </div>
+    <div id="chatbot-toggle-btn">
+        <i class="fas fa-comments"></i>
+    </div>
+</div>
+
+<script>
+    window.chatbotRoutes = {
+        cars: "{{ path('app_front_list_voitures') }}",
+        excursions: "{{ path('app_front_excursions_list') }}",
+        contact: "{{ path('app_front_contact') }}",
+        login: "{{ path('app_login') }}",
+        home: "{{ path('app_accueil') }}" 
+    };
+</script>
+<script src="{{ asset('assetsFront/js/chatbot.js') }}"></script>
 
 </body>
 

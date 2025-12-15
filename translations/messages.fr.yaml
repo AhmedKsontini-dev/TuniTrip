@@ -5,6 +5,13 @@ menu.vehicles: "Liste des véhicules"
 menu.excursions: "Liste des excursions"
 menu.blogs: "Blogs"
 menu.contact: "Contact"
+menu.inscription: "inscription"
+menu.connexion: "connexion"
+
+# Avatar dropedown
+avatar.favoris: "Mes favoris"
+avatar.dashboard: "Tableau de bord"
+avatar.deconnexion: "Déconnexion"
 
 # Home services
 home.services.airportTransfer.title: "Transferts Aéroport"

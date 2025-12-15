@@ -5,6 +5,15 @@ menu.vehicles: "Vehicle list"
 menu.excursions: "Excursions list"
 menu.blogs: "Blogs"
 menu.contact: "Contact"
+menu.inscription: "Register"
+menu.connexion: "Login"
+
+
+# Avatar dropedown
+avatar.favoris: "My favorite"
+avatar.dashboard: "Dashboard"
+avatar.deconnexion: "Logout"
+
 
 # Home services
 home.services.airportTransfer.title: "Airport Transfers"

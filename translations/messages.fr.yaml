@@ -298,4 +298,27 @@ Card:
     title: "Votre liste d'envies est vide"
     subtitle: "Vous n'avez pas encore sauvegardé d'excursions. Explorez nos offres incroyables et gardez vos préférées ici pour plus tard."       
     btn: "Découvrir les excursions"
+
+# Authentication
+auth:
+  login:
+    title: "Connexion"
+    subtitle: "Accédez à votre compte TuniTrip"
+  register:
+    title: "Créer un compte"
+    subtitle: "Rejoignez TuniTrip en quelques secondes"
+  email: "Email"
+  password: "Mot de passe"
+  firstname: "Prénom"
+  lastname: "Nom"
+  address: "Adresse"
+  phone: "Téléphone"
+  terms: "J'accepte les conditions d'utilisation"
+  login_btn: "Se connecter"
+  register_btn: "S'inscrire"
+  have_account: "Vous avez déjà un compte ?"
+  new_user: "Nouveau sur TuniTrip ?"
+  create_account: "Créer un compte"
+  user_connected: "Vous êtes connecté en tant que"
+  logout_link: "se déconnecter"
     

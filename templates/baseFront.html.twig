@@ -1538,12 +1538,23 @@ button:focus-visible {
         <div class="modal-content">
             <div class="modal-header border-0">
                 <div>
-                    <h5 class="modal-title mb-0" id="loginModalLabel">Connexion</h5>
-                    <div class="auth-title-sub">Accédez à votre compte TuniTrip</div>
+                    <h5 class="modal-title mb-0" id="loginModalLabel">{{ 'auth.login.title'|trans }}</h5>
+                    <div class="auth-title-sub">{{ 'auth.login.subtitle'|trans }}</div>
                 </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown mr-3">
+                        <a class="dropdown-toggle text-muted font-weight-bold" href="#" id="langLogin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration:none; font-size: 14px;">
+                            {{ app.request.locale|upper }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="langLogin">
+                            <a class="dropdown-item" href="{{ path('change_locale', {'_locale': 'fr'}) }}">FR</a>
+                            <a class="dropdown-item" href="{{ path('change_locale', {'_locale': 'en'}) }}">EN</a>
+                        </div>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             </div>
             <div class="modal-body pt-0">
                 {# Messages flash pour les erreurs de login #}
@@ -1569,13 +1580,13 @@ button:focus-visible {
                 <form method="post" action="{{ path('app_login') }}">
                     {% if app.user %}
                         <div class="alert alert-info small mb-3">
-                            Vous êtes connecté en tant que {{ app.user.userIdentifier }},
-                            <a href="{{ path('app_logout') }}">se déconnecter</a>.
+                            {{ 'auth.user_connected'|trans }} {{ app.user.userIdentifier }},
+                            <a href="{{ path('app_logout') }}">{{ 'auth.logout_link'|trans }}</a>.
                         </div>
                     {% endif %}
 
                     <div class="auth-field">
-                        <label for="inputEmail">Email</label>
+                        <label for="inputEmail">{{ 'auth.email'|trans }}</label>
                         <i class="fa fa-envelope"></i>
                         <input
                             type="email"
@@ -1590,7 +1601,7 @@ button:focus-visible {
                     </div>
 
                     <div class="auth-field mb-2">
-                        <label for="inputPassword">Mot de passe</label>
+                        <label for="inputPassword">{{ 'auth.password'|trans }}</label>
                         <i class="fa fa-lock"></i>
                         <input
                             type="password"
@@ -1606,14 +1617,14 @@ button:focus-visible {
 
                     <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
                         <div class="auth-footer-text">
-                            Nouveau sur TuniTrip ?
-                            <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#registerModal">Créer un compte</a>
+                            {{ 'auth.new_user'|trans }}
+                            <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#registerModal">{{ 'auth.create_account'|trans }}</a>
                         </div>
                     </div>
 
                     <div class="mt-2">
                         <button class="btn btn-animated-primary mt-2" type="submit">
-                            Se connecter
+                            {{ 'auth.login_btn'|trans }}
                         </button>
                     </div>
                 </form>
@@ -1628,12 +1639,23 @@ button:focus-visible {
         <div class="modal-content">
             <div class="modal-header border-0">
                 <div>
-                    <h5 class="modal-title mb-0" id="registerModalLabel">Créer un compte</h5>
-                    <div class="auth-title-sub">Rejoignez TuniTrip en quelques secondes</div>
+                    <h5 class="modal-title mb-0" id="registerModalLabel">{{ 'auth.register.title'|trans }}</h5>
+                    <div class="auth-title-sub">{{ 'auth.register.subtitle'|trans }}</div>
                 </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown mr-3">
+                        <a class="dropdown-toggle text-muted font-weight-bold" href="#" id="langRegister" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration:none; font-size: 14px;">
+                            {{ app.request.locale|upper }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="langRegister">
+                            <a class="dropdown-item" href="{{ path('change_locale', {'_locale': 'fr'}) }}">FR</a>
+                            <a class="dropdown-item" href="{{ path('change_locale', {'_locale': 'en'}) }}">EN</a>
+                        </div>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             </div>
             <div class="modal-body pt-0">
                 {# Messages flash pour le register #}
@@ -1658,51 +1680,51 @@ button:focus-visible {
                 <form method="post" action="{{ path('app_register') }}" id="registerFormModal">
                     <div class="auth-field-row">
                         <div class="auth-field">
-                            <label for="reg_nom">Nom</label>
+                            <label for="reg_nom">{{ 'auth.lastname'|trans }}</label>
                             <i class="fa fa-user"></i>
                             <input type="text" name="registration_form[nom]" id="reg_nom" class="form-control" required>
                         </div>
                         <div class="auth-field">
-                            <label for="reg_prenom">Prénom</label>
+                            <label for="reg_prenom">{{ 'auth.firstname'|trans }}</label>
                             <i class="fa fa-user"></i>
                             <input type="text" name="registration_form[prenom]" id="reg_prenom" class="form-control" required>
                         </div>
                     </div>
                     <div class="auth-field">
-                        <label for="reg_email">Email</label>
+                        <label for="reg_email">{{ 'auth.email'|trans }}</label>
                         <i class="fa fa-envelope"></i>
                         <input type="email" name="registration_form[email]" id="reg_email" class="form-control" required>
                     </div>
                     <div class="auth-field-row">
                         <div class="auth-field">
-                            <label for="reg_adresse">Adresse</label>
+                            <label for="reg_adresse">{{ 'auth.address'|trans }}</label>
                             <i class="fa fa-location-dot"></i>
                             <input type="text" name="registration_form[adresse]" id="reg_adresse" class="form-control" required>
                         </div>
                         <div class="auth-field mb-1">
-                            <label for="reg_tel">Téléphone</label>
+                            <label for="reg_tel">{{ 'auth.phone'|trans }}</label>
                             <i class="fa fa-phone"></i>
                             <input type="text" name="registration_form[tel]" id="reg_tel" class="form-control" required>
                         </div>
                     </div>
                     <div class="auth-field mb-2">
-                        <label for="reg_password">Mot de passe</label>
+                        <label for="reg_password">{{ 'auth.password'|trans }}</label>
                         <i class="fa fa-lock"></i>
                         <input type="password" name="registration_form[plainPassword]" id="reg_password" class="form-control" required>
                     </div>
                     <div class="form-group form-check mb-2">
                         <input type="checkbox" class="form-check-input" id="reg_agree" name="registration_form[agreeTerms]" required>
-                        <label class="form-check-label" for="reg_agree">J'accepte les conditions d'utilisation</label>
+                        <label class="form-check-label" for="reg_agree">{{ 'auth.terms'|trans }}</label>
                     </div>
 
                     <div class="auth-footer-text mb-3">
-                        Vous avez déjà un compte ?
-                        <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">Se connecter</a>
+                        {{ 'auth.have_account'|trans }}
+                        <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">{{ 'auth.login_btn'|trans }}</a>
                     </div>
                     <input type="hidden" name="registration_form[_token]" value="{{ csrf_token('registration_form') }}">
 
                     <div class="d-flex justify-content-end mt-2">
-                        <button type="submit" class="btn btn-animated-primary mt-2">S'inscrire</button>
+                        <button type="submit" class="btn btn-animated-primary mt-2">{{ 'auth.register_btn'|trans }}</button>
                     </div>
                 </form>
             </div>
@@ -2200,6 +2222,7 @@ window.onclick = function(event) {
         login: "{{ path('app_login') }}",
         home: "{{ path('app_accueil') }}" 
     };
+    window.currentLocale = "{{ app.request.locale }}";
 </script>
 <script src="{{ asset('assetsFront/js/chatbot.js') }}"></script>
 

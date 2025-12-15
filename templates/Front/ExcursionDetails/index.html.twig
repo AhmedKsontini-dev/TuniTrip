@@ -2231,7 +2231,7 @@ body, p, .description, .stop-details {
 <div class="home">
     <div class="home_content">
         <div class="home_title">{{ excursion.titre }}</div>
-        <p>Liste des excursions // Details</p>
+        <p>{{ 'excursion_detail.breadcrumb'|trans }}</p>
     </div>
 </div>
 
@@ -2295,52 +2295,52 @@ body, p, .description, .stop-details {
 
                 {# ================= NAVBAR INTERNE ================= #}
                 <div class="excursion-nav mb-4">
-                    <a href="javascript:void(0)" class="exc-nav-link active" data-target="#section-description">Description</a>
-                    <a href="javascript:void(0)" class="exc-nav-link" data-target="#section-details">Détails</a>
-                    <a href="javascript:void(0)" class="exc-nav-link" data-target="#section-itineraire">Itinéraire</a>
+                    <a href="javascript:void(0)" class="exc-nav-link active" data-target="#section-description">{{ 'excursion_detail.nav.description'|trans }}</a>
+                    <a href="javascript:void(0)" class="exc-nav-link" data-target="#section-details">{{ 'excursion_detail.nav.details'|trans }}</a>
+                    <a href="javascript:void(0)" class="exc-nav-link" data-target="#section-itineraire">{{ 'excursion_detail.nav.itinerary'|trans }}</a>
                 </div>
 
                 {# ================= DESCRIPTION ================= #}
-                <h3 class="section-title" id="section-description">Description</h3>
+                <h3 class="section-title" id="section-description">{{ 'excursion_detail.description.title'|trans }}</h3>
 
                 <div class="description-container mb-3">
                     <p class="description" id="description-{{ excursion.id }}">
                         {{ excursion.description|nl2br|raw }}
                     </p>
                     <a href="javascript:void(0);" class="toggle-description" 
-                    data-target="description-{{ excursion.id }}">...Plus</a>
+                    data-target="description-{{ excursion.id }}">{{ 'excursion_detail.description.read_more'|trans }}</a>
                 </div>
 
                 {# ================= TABLEAU DÉTAILS ================= #}
                 <table class="table table-bordered align-middle shadow-sm">
                     <tbody>
                         <tr>
-                            <th class="bg-light w-25"><i class="bi bi-clock text-primary me-2 text-dark"></i>Durée</th>
-                            <td><strong>{{ excursion.duree }} jours</strong></td>
+                            <th class="bg-light w-25"><i class="bi bi-clock text-primary me-2 text-dark"></i>{{ 'excursion_detail.table.duration'|trans }}</th>
+                            <td><strong>{{ excursion.duree }} {{ 'excursions.duration.days'|trans({'%count%': ''})|trim }}</strong></td>
                         </tr>
 
                         <tr>
-                            <th class="bg-light"><i class="bi bi-tag text-primary me-2 text-dark"></i>Catégorie</th>
+                            <th class="bg-light"><i class="bi bi-tag text-primary me-2 text-dark"></i>{{ 'excursion_detail.table.category'|trans }}</th>
                             <td><strong>{{ excursion.categorie }}</strong></td>
                         </tr>
 
                         <tr>
-                            <th class="bg-light"><i class="bi bi-geo-alt text-primary me-2 text-dark"></i>Localisation</th>
+                            <th class="bg-light"><i class="bi bi-geo-alt text-primary me-2 text-dark"></i>{{ 'excursion_detail.table.location'|trans }}</th>
                             <td><strong>{{ excursion.localisation }}</strong></td>
                         </tr>
 
                         <tr>
-                            <th class="bg-light"><i class="bi bi-people text-primary me-2 text-dark"></i>Âges</th>
+                            <th class="bg-light"><i class="bi bi-people text-primary me-2 text-dark"></i>{{ 'excursion_detail.table.ages'|trans }}</th>
                             <td><strong>{{ excursion.ages }}</strong></td>
                         </tr>
 
                         <tr>
-                            <th class="bg-light"><i class="bi bi-person-badge text-primary me-2 text-dark"></i>Max personnes</th>
+                            <th class="bg-light"><i class="bi bi-person-badge text-primary me-2 text-dark"></i>{{ 'excursion_detail.table.max_people'|trans }}</th>
                             <td><strong>{{ excursion.maxPers }}</strong></td>
                         </tr>
 
                         <tr>
-                            <th class="bg-light"><i class="bi bi-book text-primary me-2 text-dark"></i>Guide</th>
+                            <th class="bg-light"><i class="bi bi-book text-primary me-2 text-dark"></i>{{ 'excursion_detail.table.guide'|trans }}</th>
                             <td><strong>{{ excursion.guide }}</strong></td>
                         </tr>
                     </tbody>
@@ -2353,7 +2353,7 @@ body, p, .description, .stop-details {
 
                 {# ================= BLOC INFORMATIONS ================= #}
                 <div class="info-box-modern mb-4 p-4 shadow-sm">
-                    <h3 class="mb-4 fw-bold">Informations</h3>
+                    <h3 class="mb-4 fw-bold">{{ 'excursion_detail.sidebar.info_title'|trans }}</h3>
                             {# Bouton favoris #}
                             <button class="favorite-btn require-login" 
                                     data-excursion-id="{{ excursion.id }}" 
@@ -2366,10 +2366,10 @@ body, p, .description, .stop-details {
                             <i class="bi bi-cash-stack"></i>
                         </div>
                         <div>
-                            <strong class="fs-5">À partir de {{ excursion.prixParPersonne }} TND</strong><br>
-                            <small class="text-muted">par adulte (prix variable selon le groupe)</small><br>
+                            <strong class="fs-5">{{ 'excursion_detail.sidebar.from'|trans }} {{ excursion.prixParPersonne }} TND</strong><br>
+                            <small class="text-muted">{{ 'excursion_detail.sidebar.per_adult'|trans }}</small><br>
                             <a href="#" data-bs-toggle="modal" data-bs-target="#modalPrix" class="link-modern">
-                                Garantie Prix le Plus Bas
+                                {{ 'excursion_detail.sidebar.low_price_guarantee'|trans }}
                             </a>
                         </div>
                     </div>
@@ -2381,9 +2381,9 @@ body, p, .description, .stop-details {
                         </div>
                         <div>
                             <a href="#" data-bs-toggle="modal" data-bs-target="#modalReserver"
-                            class="link-modern fw-semibold">Réservez maintenant et payez plus tard</a>
+                            class="link-modern fw-semibold">{{ 'excursion_detail.sidebar.reserve_pay_later'|trans }}</a>
                             <ul class="mt-1">
-                                <li>Garantissez votre place tout en restant flexible.</li>
+                                <li>{{ 'excursion_detail.sidebar.reserve_pay_later_desc'|trans }}</li>
                             </ul>
                         </div>
                     </div>
@@ -2396,9 +2396,9 @@ body, p, .description, .stop-details {
                             </div>
                             <div>
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#modalCancellation"
-                                class="link-modern fw-semibold">Annulation gratuite</a>
+                                class="link-modern fw-semibold">{{ 'excursion_detail.sidebar.free_cancellation'|trans }}</a>
                                 <ul class="mt-1">
-                                    <li>{{ excursion.cancellation }}</li>
+                                    <li>{{ excursion.cancellation }}</li>{% if excursion.cancellation is empty %}<li>{{ 'excursion_detail.sidebar.free_cancellation'|trans }}</li>{% endif %}
                                 </ul>
                             </div>
                         </div>
@@ -2407,7 +2407,7 @@ body, p, .description, .stop-details {
                     <!-- BOUTON : OUVRIR MODAL -->
                     <div class="col-md-auto">
                         <button class="btn btn-animated btn-lg px-4" data-bs-toggle="modal" data-bs-target="#reservationModal">
-                            Réserver maintenant
+                            {{ 'excursion_detail.sidebar.book_now'|trans }}
                         </button>
                     </div>
 
@@ -2415,7 +2415,7 @@ body, p, .description, .stop-details {
 
                 {# ================= BLOC QUESTIONS ================= #}
                 <div class="info-box-modern mb-4 p-4 shadow-sm">
-                    <h3 class="mb-3 fw-bold">Des questions ?</h3>
+                    <h3 class="mb-3 fw-bold">{{ 'excursion_detail.questions.title'|trans }}</h3>
 
                     <div class="d-flex align-items-center mb-3">
                         <div class="icon-circle me-3">
@@ -2429,7 +2429,7 @@ body, p, .description, .stop-details {
                         <div class="icon-circle me-3">
                             <i class="bi bi-chat-right-dots-fill"></i>
                         </div>
-                        <a href="#" id="open-chat" class="link-modern">Ouvrir le chat</a>
+                        <a href="#" id="open-chat" class="link-modern">{{ 'excursion_detail.questions.open_chat'|trans }}</a>
                     </div>
                 </div>
 
@@ -2440,16 +2440,16 @@ body, p, .description, .stop-details {
                     <div class="chat-header">
                         <div>
                             <strong>Support</strong>
-                            <div style="font-size:0.8rem;">Contact admin via WhatsApp</div>
+                            <div style="font-size:0.8rem;">{{ 'excursion_detail.questions.contact_admin'|trans }}</div>
                         </div>
                         <button id="close-chat">✕</button>
                     </div>
                     <div id="chat-messages">
-                        <div class="text-muted small">Bonjour ! Écris ton message et appuie sur Envoyer.</div>
+                        <div class="text-muted small">{{ 'excursion_detail.questions.welcome_msg'|trans }}</div>
                     </div>
                     <div class="chat-footer">
-                        <input type="text" id="chat-input" placeholder="Écris ton message..." maxlength="1000">
-                        <button id="send-btn">Envoyer</button>
+                        <input type="text" id="chat-input" placeholder="{{ 'excursion_detail.questions.placeholder'|trans }}" maxlength="1000">
+                        <button id="send-btn">{{ 'excursion_detail.questions.send'|trans }}</button>
                     </div>
                 </div>
             </div> <!-- FIN RIGHT COLUMN -->
@@ -2463,7 +2463,7 @@ body, p, .description, .stop-details {
                 <div class="accordion-item" id="section-details">
                     <h2 class="accordion-header" id="headingInclus">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInclus">
-                            ✔️ Ce qui est inclus
+                            ✔️ {{ 'excursion_detail.accordion.included'|trans }}
                         </button>
                     </h2>
                     <div id="collapseInclus" class="accordion-collapse collapse">
@@ -2482,7 +2482,7 @@ body, p, .description, .stop-details {
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingNonInclus">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNonInclus">
-                            ❌ Ce qui n'est pas inclus
+                            ❌ {{ 'excursion_detail.accordion.not_included'|trans }}
                         </button>
                     </h2>
                     <div id="collapseNonInclus" class="accordion-collapse collapse">
@@ -2525,12 +2525,12 @@ body, p, .description, .stop-details {
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingDetailEmpty">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDetailEmpty">
-                                • Détails de l'excursion
+                                • {{ 'excursion_detail.accordion.details_title'|trans }}
                             </button>
                         </h2>
                         <div id="collapseDetailEmpty" class="accordion-collapse collapse show">
                             <div class="accordion-body">
-                                <p class="text-muted">Aucun détail disponible.</p>
+                                <p class="text-muted">{{ 'excursion_detail.accordion.no_details'|trans }}</p>
                             </div>
                         </div>
                     </div>
@@ -2540,12 +2540,12 @@ body, p, .description, .stop-details {
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingDetailEmpty">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDetailEmpty">
-                            • Détails de l'excursion
+                            • {{ 'excursion_detail.accordion.details_title'|trans }}
                         </button>
                     </h2>
                     <div id="collapseDetailEmpty" class="accordion-collapse collapse show">
                         <div class="accordion-body">
-                            <p class="text-muted">Aucun détail disponible.</p>
+                            <p class="text-muted">{{ 'excursion_detail.accordion.no_details'|trans }}</p>
                         </div>
                     </div>
                 </div>
@@ -2555,7 +2555,7 @@ body, p, .description, .stop-details {
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingApropos">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseApropos">
-                            • À Quoi s'attendre
+                            • {{ 'excursion_detail.accordion.expect'|trans }}
                         </button>
                     </h2>
                     <div id="collapseApropos" class="accordion-collapse collapse">
@@ -2577,7 +2577,7 @@ body, p, .description, .stop-details {
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title" id="reservationModalLabel">Réserver votre excursion</h5>
+                <h5 class="modal-title" id="reservationModalLabel">{{ 'reservation.excursion.title'|trans }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
             </div>
 
@@ -2589,7 +2589,7 @@ body, p, .description, .stop-details {
 
                     <!-- Nom -->
                     <div class="col-md-6">
-                        <label class="form-label fw-bold">{{ form_label(reservationForm.nom) }}</label>
+                        <label class="form-label fw-bold">{{ 'reservation.excursion.form.nom'|trans }}</label>
                         {{ form_widget(reservationForm.nom, {
                             'attr': {'class': 'form-control form-control-lg'}
                         }) }}
@@ -2598,7 +2598,7 @@ body, p, .description, .stop-details {
 
                     <!-- Prénom -->
                     <div class="col-md-6">
-                        <label class="form-label fw-bold">{{ form_label(reservationForm.prenom) }}</label>
+                        <label class="form-label fw-bold">{{ 'reservation.excursion.form.prenom'|trans }}</label>
                         {{ form_widget(reservationForm.prenom, {
                             'attr': {'class': 'form-control form-control-lg'}
                         }) }}
@@ -2607,14 +2607,14 @@ body, p, .description, .stop-details {
 
                     <!-- Email -->
                     <div class="col-md-6">
-                        <label class="form-label fw-bold">Email</label>
+                        <label class="form-label fw-bold">{{ 'reservation.excursion.form.email'|trans }}</label>
                         {{ form_widget(reservationForm.email, {
                             'attr': {
                                 'class': 'form-control form-control-lg', 
-                                'placeholder': 'exemple@email.com', 
+                                'placeholder': 'reservation.excursion.form.email_placeholder'|trans, 
                                 'type': 'email',
                                 'pattern': '[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$',
-                                'title': 'Veuillez entrer une adresse email valide (ex: exemple@domaine.com)',
+                                'title': 'reservation.excursion.form.email_title'|trans,
                                 'id': 'clientEmail'
                             }
                         }) }}
@@ -2623,16 +2623,16 @@ body, p, .description, .stop-details {
 
                     <!-- Téléphone -->
                     <div class="col-md-6">
-                        <label class="form-label fw-bold">WhatsApp</label>
+                        <label class="form-label fw-bold">{{ 'reservation.excursion.form.whatsapp'|trans }}</label>
                         {{ form_widget(reservationForm.tel, {
-                            'attr': {'class': 'form-control form-control-lg', 'placeholder': '+216 00 000 000'}
+                            'attr': {'class': 'form-control form-control-lg', 'placeholder': 'reservation.excursion.form.whatsapp_placeholder'|trans}
                         }) }}
                         {{ form_errors(reservationForm.tel) }}
                     </div>
 
                     <!-- Adultes -->
                     <div class="col-md-4">
-                        <label class="form-label fw-bold">Adultes</label>
+                        <label class="form-label fw-bold">{{ 'reservation.excursion.form.adults'|trans }}</label>
                         {{ form_widget(reservationForm.adult, {
                             'attr': {'class': 'form-control form-control-lg'}
                         }) }}
@@ -2641,19 +2641,19 @@ body, p, .description, .stop-details {
 
                     <!-- Enfants -->
                     <div class="col-md-4">
-                        <label class="form-label fw-bold">Enfants</label>
+                        <label class="form-label fw-bold">{{ 'reservation.excursion.form.children'|trans }}</label>
                         {{ form_widget(reservationForm.child, {
                             'attr': {'class': 'form-control form-control-lg'}
                         }) }}
                         {{ form_errors(reservationForm.child) }}
 
                         <div class="form-text text-second fw-bold mt-1">
-                            Vous avez une remise de 20% pour les enfants 🎉
+                            {{ 'reservation.excursion.form.children_discount'|trans }}
                         </div>
                     </div>
                     <!-- Date & Heure -->
                     <div class="col-md-6">
-                        <label class="form-label fw-bold">Date & Heure</label>
+                        <label class="form-label fw-bold">{{ 'reservation.excursion.form.date_time'|trans }}</label>
                         {{ form_widget(reservationForm.dateHeure, {
                             'attr': {
                                 'class': 'form-control form-control-lg',
@@ -2666,9 +2666,9 @@ body, p, .description, .stop-details {
 
                     <!-- Point de prise en charge -->
                     <div class="col-md-6">
-                        <label class="form-label fw-bold">Point de prise en charge</label>
+                        <label class="form-label fw-bold">{{ 'reservation.excursion.form.pickup_point'|trans }}</label>
                         {{ form_widget(reservationForm.localisationPoint, {
-                            'attr': {'class': 'form-control form-control-lg', 'placeholder': 'ex: Devant hôtel Golden Tulip'}
+                            'attr': {'class': 'form-control form-control-lg', 'placeholder': 'reservation.excursion.form.pickup_placeholder'|trans}
                         }) }}
                         {{ form_errors(reservationForm.localisationPoint) }}
                     </div>
@@ -2680,8 +2680,8 @@ body, p, .description, .stop-details {
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-animated-secondary" data-bs-dismiss="modal">Annuler</button>
-                <button type="submit" class="btn btn-animated-primary">Confirmer la réservation</button>
+                <button class="btn btn-animated-secondary" data-bs-dismiss="modal">{{ 'reservation.excursion.btn.cancel'|trans }}</button>
+                <button type="submit" class="btn btn-animated-primary">{{ 'reservation.excursion.btn.confirm'|trans }}</button>
             </div>
 
 
@@ -2697,28 +2697,28 @@ body, p, .description, .stop-details {
         <div class="modal-content">
 
             <div class="modal-header bg-success text-white">
-                <h5 class="modal-title">Réservation confirmée</h5>
+                <h5 class="modal-title">{{ 'reservation.excursion.confirmation.title'|trans }}</h5>
             </div>
 
             <div class="modal-body">
 
-                <h4 class="mb-3">Merci pour votre réservation !</h4>
+                <h4 class="mb-3">{{ 'reservation.excursion.confirmation.thank_you'|trans }}</h4>
                 <p class="text-center mb-3">
-                    Un email de confirmation vous sera envoyé à <strong>{{ reservation.email }}</strong> dans les 24 heures. Notre équipe vous contactera pour finaliser les détails.
+                    {{ 'reservation.excursion.confirmation.email_sent'|trans }} <strong>{{ reservation.email }}</strong> {{ 'reservation.excursion.confirmation.contact_soon'|trans }}
                 </p>
 
                 <div class="card p-3 shadow-sm">
-                    <h5 class="fw-bold mb-3">Détails de la réservation</h5>
+                    <h5 class="fw-bold mb-3">{{ 'reservation.excursion.confirmation.details_title'|trans }}</h5>
 
-                    <p><strong>Excursion :</strong> {{ reservation.excursion.titre }}</p>
-                    <p><strong>Nom :</strong> {{ reservation.nom }} {{ reservation.prenom }}</p>
-                    <p><strong>Adultes :</strong> {{ reservation.adult }}</p>
-                    <p><strong>Enfants :</strong> {{ reservation.child }}</p>
-                    <p><strong>Date & Heure :</strong> {{ reservation.dateHeure|date('d/m/Y H:i') }}</p>
-                    <p><strong>Point de prise en charge :</strong> {{ reservation.localisationPoint }}</p>
-                    <p><strong>Email :</strong> {{ reservation.email }}</p>
-                    <p><strong>WhatsApp :</strong> {{ reservation.tel }}</p>
-                    <p><strong>Prix total :</strong> {{ reservation.prixTotal }} TND</p>
+                    <p><strong>{{ 'reservation.excursion.confirmation.label_excursion'|trans }}</strong> {{ reservation.excursion.titre }}</p>
+                    <p><strong>{{ 'reservation.excursion.confirmation.label_name'|trans }}</strong> {{ reservation.nom }} {{ reservation.prenom }}</p>
+                    <p><strong>{{ 'reservation.excursion.confirmation.label_adults'|trans }}</strong> {{ reservation.adult }}</p>
+                    <p><strong>{{ 'reservation.excursion.confirmation.label_children'|trans }}</strong> {{ reservation.child }}</p>
+                    <p><strong>{{ 'reservation.excursion.confirmation.label_date'|trans }}</strong> {{ reservation.dateHeure|date('d/m/Y H:i') }}</p>
+                    <p><strong>{{ 'reservation.excursion.confirmation.label_pickup'|trans }}</strong> {{ reservation.localisationPoint }}</p>
+                    <p><strong>{{ 'reservation.excursion.confirmation.label_email'|trans }}</strong> {{ reservation.email }}</p>
+                    <p><strong>{{ 'reservation.excursion.confirmation.label_whatsapp'|trans }}</strong> {{ reservation.tel }}</p>
+                    <p><strong>{{ 'reservation.excursion.confirmation.label_total_price'|trans }}</strong> {{ reservation.prixTotal }} TND</p>
 
 
                     
@@ -2727,7 +2727,7 @@ body, p, .description, .stop-details {
             </div>
 
             <div class="modal-footer">
-                <a href="{{ path('app_front_excursions_list') }}" class="btn btn-primary">Retour aux excursions</a>
+                <a href="{{ path('app_front_excursions_list') }}" class="btn btn-primary">{{ 'reservation.excursion.confirmation.back_to_list'|trans }}</a>
             </div>
 
         </div>
@@ -2746,15 +2746,15 @@ body, p, .description, .stop-details {
 
                         <!-- LEFT : Itinéraire stylé TripAdvisor -->
                         <div style="flex: 1 1 40%; max-height:80vh; overflow-y:auto; padding-right:10px; min-width: 300px;">
-                            <h2 class="section-title" id="section-itineraire">Itinéraire</h2>
+                            <h2 class="section-title" id="section-itineraire">{{ 'excursion_detail.itinerary.title'|trans }}</h2>
 
                             <div class="itinerary-container-tripadvisor">
 
                                 <!-- Point de Départ -->
                                 <div class="itinerary-step-trip">
-                                    <div class="itinerary-icon-trip start-icon">Départ</div>
+                                    <div class="itinerary-icon-trip start-icon">{{ 'excursion_detail.itinerary.start'|trans }}</div>
                                     <div class="itinerary-content-trip">
-                                        <h5 class="fw-bold">On passera vous prendre</h5>
+                                        <h5 class="fw-bold">{{ 'excursion_detail.itinerary.pickup'|trans }}</h5>
                                         
                                     </div>
                                 </div>
@@ -2774,7 +2774,7 @@ body, p, .description, .stop-details {
                                         <div class="itinerary-content-trip">
                                             <h5 class="fw-bold">{{ etape.titreEtape }}</h5>
                                             <p class="stop-details">
-                                                {% if etape.dureeVisite %} Arrêt : {{ etape.dureeVisite }} {% endif %}
+                                                {% if etape.dureeVisite %} {{ 'excursion_detail.itinerary.stop'|trans }} : {{ etape.dureeVisite }} {% endif %}
                                                 {% if etape.admission %} 
                                                     <span class="admission-badge">{{ etape.admission }}</span> 
                                                 {% endif %}
@@ -2784,7 +2784,7 @@ body, p, .description, .stop-details {
                                             <a href="javascript:void(0);" 
                                             class="itinerary-link toggle-details" 
                                             data-target="details-{{ loop.index }}">
-                                                {% if etape.hasPhotos %} Voir les détails et les photos {% else %} Voir les détails {% endif %}
+                                                {% if etape.hasPhotos %} {{ 'excursion_detail.itinerary.see_details_photos'|trans }} {% else %} {{ 'excursion_detail.itinerary.see_details'|trans }} {% endif %}
                                             </a>
 
                                             <!-- Contenu caché (description + photos) -->
@@ -2813,7 +2813,7 @@ body, p, .description, .stop-details {
                                                 <a href="javascript:void(0);" 
                                                 class="itinerary-link toggle-details mt-2" 
                                                 data-target="details-{{ loop.index }}">
-                                                    Voir moins
+                                                    {{ 'excursion_detail.itinerary.see_less'|trans }}
                                                 </a>
                                             </div>
                                         </div>
@@ -2823,9 +2823,9 @@ body, p, .description, .stop-details {
 
                                 <!-- Point de Retour -->
                                 <div class="itinerary-step-trip">
-                                    <div class="itinerary-icon-trip end-icon">Destination</div>
+                                    <div class="itinerary-icon-trip end-icon">{{ 'excursion_detail.itinerary.destination'|trans }}</div>
                                     <div class="itinerary-content-trip">
-                                        <h5 class="fw-bold">Retournerez au point de départ</h5>
+                                        <h5 class="fw-bold">{{ 'excursion_detail.itinerary.return'|trans }}</h5>
                                     </div>
                                 </div>
 
@@ -2836,7 +2836,7 @@ body, p, .description, .stop-details {
                         <div style="flex: 1 1 55%; min-width: 300px;">
                             <div class="map-header">
                                 <button class="btn-recenter" onclick="recenterMap()">
-                                    <i class="bi bi-crosshair"></i> Recentrer l'itinéraire
+                                    <i class="bi bi-crosshair"></i> {{ 'excursion_detail.itinerary.recenter_map'|trans }}
                                 </button>
                             </div>
                             <div id="map" style="height:75vh; width:100%; border-radius:10px;"></div>
@@ -2978,10 +2978,10 @@ body, p, .description, .stop-details {
                 <div class="col-lg-6">
                     <section class="avis-section">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h3 class="mb-0">⭐ Avis des utilisateurs</h3>
+                            <h3 class="mb-0">⭐ {{ 'excursion_detail.reviews.title'|trans }}</h3>
                             {% if app.user %}
                                 <button type="button" class="btn btn-animated-primary" id="btnAvis">
-                                    <i class="bi bi-plus-circle"></i> Donner mon avis
+                                    <i class="bi bi-plus-circle"></i> {{ 'excursion_detail.reviews.btn_give_opinion'|trans }}
                                 </button>
 
                             {% endif %}
@@ -2990,7 +2990,7 @@ body, p, .description, .stop-details {
 
                         {% if noteMoyenne > 0 %}
                             <div class="alert alert-info mb-3">
-                                <strong>Note moyenne :</strong> 
+                                <strong>{{ 'excursion_detail.reviews.avg_note'|trans }} :</strong> 
                                 <span class="fs-5">{{ noteMoyenne|number_format(1) }}/5</span>
                                 <span class="text-warning">⭐</span>
                                 <small class="text-muted">({{ avis|length }} avis)</small>
@@ -2998,7 +2998,7 @@ body, p, .description, .stop-details {
                         {% endif %}
                         {% if not app.user %}
                             <small class="text-danger d-block mb-3">
-                                ⚠️ Vous devez être connecté pour donner un avis.
+                                ⚠️ {{ 'excursion_detail.reviews.login_required'|trans }}
                             </small>
                         {% endif %}
 
@@ -3040,7 +3040,7 @@ body, p, .description, .stop-details {
                             </div>
                         {% else %}
                             <div class="alert alert-light text-center">
-                                <p class="mb-0">Aucun avis pour le moment. Soyez le premier à donner votre avis !</p>
+                                <p class="mb-0">{{ 'excursion_detail.reviews.no_reviews'|trans }}</p>
                             </div>
                         {% endif %}
                     </section>
@@ -3049,10 +3049,10 @@ body, p, .description, .stop-details {
                 <!-- ========== COLONNE DROITE : FAQ ========== -->
                 <div class="col-lg-6">
                     <section class="faq-section">
-                        <h3 class="mb-3">❓ Questions fréquentes</h3>
+                        <h3 class="mb-3">❓ {{ 'excursion_detail.faq.title'|trans }}</h3>
                          {% if not app.user %}
                             <small class="text-danger d-block mb-3">
-                                ⚠️ Vous devez être connecté pour poser des questions.
+                                ⚠️ {{ 'excursion_detail.faq.login_required'|trans }}
                             </small>
                         {% endif %}
 
@@ -3065,14 +3065,14 @@ body, p, .description, .stop-details {
                                             {% if faq.reponse %}
                                                 {{ faq.reponse|nl2br }}
                                             {% else %}
-                                                <em>En attente de réponse de l'administrateur...</em>
+                                                <em>{{ 'excursion_detail.faq.waiting_answer'|trans }}</em>
                                             {% endif %}
                                         </p>
                                     </div>
                                 {% endfor %}
                             {% else %}
                                 <div class="alert alert-light text-center">
-                                    <p class="mb-0">Aucune question pour le moment.</p>
+                                    <p class="mb-0">{{ 'excursion_detail.faq.no_questions'|trans }}</p>
                                 </div>
                             {% endif %}
                         </div>
@@ -3081,7 +3081,7 @@ body, p, .description, .stop-details {
                             <!-- FORMULAIRE POUR POSER UNE QUESTION -->
                             <div class="card mt-4 ">
                                 <div class="card-header text-white">
-                                    <h5 class="mb-0">💬 Poser une question</h5>
+                                    <h5 class="mb-0">💬 {{ 'excursion_detail.faq.ask_title'|trans }}</h5>
                                 </div>
                                 <div class="card-body">
                                     {{ form_start(faqForm, {'attr': {'id': 'faqForm'}}) }}
@@ -3089,12 +3089,12 @@ body, p, .description, .stop-details {
                                             'attr': {'class': 'form-control', 'rows': 3}
                                         }) }}
                                         <button type="submit" class="btn btn-animated-primary mt-2">
-                                            <i class="bi bi-send"></i> Envoyer la question
+                                            <i class="bi bi-send"></i> {{ 'excursion_detail.faq.btn_send'|trans }}
                                         </button>
 
                                     {{ form_end(faqForm) }}
                                     <small class="text-muted d-block mt-2">
-                                        Votre question sera visible après qu'un administrateur y réponde.
+                                        {{ 'excursion_detail.faq.moderation_note'|trans }}
                                     </small>
                                 </div>
                             </div>
@@ -3115,7 +3115,7 @@ body, p, .description, .stop-details {
                 <div class="modal-content">
                     <div class="modal-header ">
                         <h5 class="modal-title" id="modalAvisLabel">
-                            <i class="bi bi-star-fill"></i> Donner mon avis sur l'excursion
+                            <i class="bi bi-star-fill"></i> {{ 'excursion_detail.reviews.modal_title'|trans }}
                         </h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -3125,19 +3125,19 @@ body, p, .description, .stop-details {
                         
                     
                         <div class="mb-4">
-                            <label class="form-label fw-bold">Avec qui avez-vous voyagé ? *</label>
+                            <label class="form-label fw-bold">{{ 'excursion_detail.reviews.label_companion'|trans }}</label>
                             {{ form_widget(avisForm.compagnon, {
                                 'attr': {'class': 'form-select'}
                             }) }}
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Votre commentaire</label>
+                            <label class="form-label fw-bold">{{ 'excursion_detail.reviews.label_comment'|trans }}</label>
                             {{ form_widget(avisForm.commentaire, {
                                 'attr': {
                                     'class': 'form-control',
                                     'rows': 5,
-                                    'placeholder': 'Partagez votre expérience...'
+                                    'placeholder': 'excursion_detail.reviews.placeholder_comment'|trans
                                 }
                             }) }}
                         </div>
@@ -3154,10 +3154,10 @@ body, p, .description, .stop-details {
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-animated-secondary" data-bs-dismiss="modal">
-                            <i class="bi bi-x-circle"></i> Annuler
+                            <i class="bi bi-x-circle"></i> {{ 'excursion_detail.reviews.btn_cancel'|trans }}
                         </button>
                         <button type="submit" class="btn btn-animated-primary">
-                            <i class="bi bi-send-fill"></i> Envoyer mon avis
+                            <i class="bi bi-send-fill"></i> {{ 'excursion_detail.reviews.btn_send'|trans }}
                         </button>
                     </div>
 

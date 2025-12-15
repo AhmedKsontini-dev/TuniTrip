@@ -254,13 +254,13 @@
 <!-- === HEADER === -->
 <div class="home">
     <div class="home_content">
-        <div class="home_title">Réservation de voiture</div>
-        <p>Accueil // Réservation </p>
+        <div class="home_title">{{ 'reservation.voiture.title_home'|trans }}</div>
+        <p>{{ 'reservation.voiture.breadcrumb'|trans }} </p>
     </div>
 </div>
 <section class="reservation-bg">
 <div class="container reservation-wrapper">
-    <h2 class="form-section-title text-center mb-4">Réservation de voiture</h2>
+    <h2 class="form-section-title text-center mb-4">{{ 'reservation.voiture.title_page'|trans }}</h2>
 <!-- CARTE VOITURE -->
 <div class="car-card shadow-sm mb-4 p-4">
     <div class="car-card-inner d-flex flex-column flex-lg-row align-items-center gap-4">
@@ -275,12 +275,12 @@
             <div class="car-card-header d-flex flex-wrap align-items-center justify-content-between gap-3">
                 <div>
                     <h4 class="mb-1">{{ voiture.marque }} {{ voiture.modele }}</h4>
-                    <p>Véhicule sélectionné</p>
+                    <p>{{ 'reservation.voiture.vehicle_selected'|trans }}</p>
                 </div>
                 <div class="car-price">
-                    <small>À partir de</small>
+                    <small>{{ 'reservation.voiture.price_from'|trans }}</small>
                     <span>{{ voiture.prixJour }} TND</span>
-                    <small>/ jour</small>
+                    <small>{{ 'reservation.voiture.per_day'|trans }}</small>
                 </div>
             </div>
 
@@ -291,15 +291,15 @@
                 </span>
                 <span class="badge-spec">
                     <i class="bi bi-people-fill"></i>
-                    {{ voiture.passengers }} passagers
+                    {{ voiture.passengers }} {{ 'reservation.voiture.passengers'|trans }}
                 </span>
                 <span class="badge-spec">
                     <i class="bi bi-briefcase-fill"></i>
-                    {{ voiture.suitcases }} valises
+                    {{ voiture.suitcases }} {{ 'reservation.voiture.suitcases'|trans }}
                 </span>
                 <span class="badge-spec badge-price">
                     <i class="bi bi-cash-stack"></i>
-                    {{ voiture.prixMois }} TND / mois
+                    {{ voiture.prixMois }} TND {{ 'reservation.voiture.per_month'|trans }}
                 </span>
             </div>
         </div>
@@ -309,8 +309,8 @@
 
     <!-- Progression -->
     <div class="step-indicator">
-        <div class="step step-1 active">1. Informations personnelles</div>
-        <div class="step step-2">2. Informations documents</div>
+        <div class="step step-1 active">{{ 'reservation.voiture.step1_label'|trans }}</div>
+        <div class="step step-2">{{ 'reservation.voiture.step2_label'|trans }}</div>
     </div>
 
     <!-- FORM -->
@@ -361,13 +361,13 @@
             
             <div class="col-md-6 mb-3">
                 {{ form_label(form.email) }}
-                {{ form_widget(form.email, {'attr': {'class': 'form-control step1-field', 'pattern': '[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$', 'placeholder': 'exemple@domaine.com'}}) }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control step1-field', 'pattern': '[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$', 'placeholder': 'form.voiture.placeholder_email'|trans}}) }}
                 {{ form_errors(form.email) }}
             </div>
         </div>
 
         <!-- BTN SUIVANT -->
-        <button type="button" class="btn btn-primary btn-step" id="nextBtn">Suivant →</button>
+        <button type="button" class="btn btn-primary btn-step" id="nextBtn">{{ 'reservation.voiture.btn_next'|trans }}</button>
     </div>
 
     <!-- ÉTAPE 2 -->
@@ -381,7 +381,7 @@
             <div class="col-md-6 mb-3">
                 {{ form_label(form.cinDelivreLe) }}
                 {{ form_widget(form.cinDelivreLe, {'attr': {'class': 'form-control', 'max': 'now'|date('Y-m-d')}}) }}
-                <div class="invalid-feedback">La date de délivrance du CIN ne peut pas être dans le futur.</div>
+                <div class="invalid-feedback">{{ 'reservation.voiture.alert.cin_future'|trans }}</div>
             </div>
 
             <div class="col-md-6 mb-3">
@@ -410,8 +410,8 @@
         </div>
 
         <!-- BOUTONS -->
-        <button type="button" class="btn btn-secondary btn-step" id="prevBtn">← Retour</button>
-        <button type="submit" class="btn btn-success btn-step">Réserver</button>
+        <button type="button" class="btn btn-secondary btn-step" id="prevBtn">{{ 'reservation.voiture.btn_prev'|trans }}</button>
+        <button type="submit" class="btn btn-success btn-step">{{ 'reservation.voiture.btn_reserve'|trans }}</button>
     </div>
     {% if form_errors(form) %}
         <div class="alert alert-danger mt-3">
@@ -433,26 +433,26 @@
       <!-- HEADER AVEC LOGO -->
       <div class="modal-header d-flex flex-column text-center border-0 bg-primary-modern text-white py-4">
        TuniTrip
-        <h4 class="modal-title fw-bold">Réservation Confirmée</h4>
+        <h4 class="modal-title fw-bold">{{ 'reservation.voiture.modal_title'|trans }}</h4>
       </div>
 
       <div class="modal-body p-4">
         <p class="text-center mb-3">
-            Un email de confirmation vous sera envoyé à <strong>{{ data.email }}</strong> dans les 24 heures. Notre équipe vous contactera pour finaliser les détails.
+            {{ 'reservation.voiture.modal_message'|trans }} <strong>{{ data.email }}</strong> {{ 'reservation.voiture.modal_contact'|trans }}
         </p>
 
         <hr>
 
-        <h5 class="fw-bold">Rappel de votre réservation :</h5>
+        <h5 class="fw-bold">{{ 'reservation.voiture.modal_summary'|trans }}</h5>
 
         <ul class="list-unstyled mt-3 reservation-summary">
-            <li><strong>Nom :</strong> {{ data.nom }}</li>
-            <li><strong>Prénom :</strong> {{ data.prenom }}</li>
-            <li><strong>Date début :</strong> {{ data.dateDebut }}</li>
-            <li><strong>Date fin :</strong> {{ data.dateFin }}</li>
-            <li><strong>Voiture :</strong> {{ data.marque }} {{ data.modele }}</li>
-            <li><strong>Prix / jour :</strong> {{ data.prixJour }} TND</li>
-            <li><strong>Prix total :</strong> {{ data.prixTotal }} TND</li>
+            <li><strong>{{ 'reservation.voiture.summary.name'|trans }}</strong> {{ data.nom }}</li>
+            <li><strong>{{ 'reservation.voiture.summary.firstname'|trans }}</strong> {{ data.prenom }}</li>
+            <li><strong>{{ 'reservation.voiture.summary.start_date'|trans }}</strong> {{ data.dateDebut }}</li>
+            <li><strong>{{ 'reservation.voiture.summary.end_date'|trans }}</strong> {{ data.dateFin }}</li>
+            <li><strong>{{ 'reservation.voiture.summary.car'|trans }}</strong> {{ data.marque }} {{ data.modele }}</li>
+            <li><strong>{{ 'reservation.voiture.summary.price_day'|trans }}</strong> {{ data.prixJour }} TND</li>
+            <li><strong>{{ 'reservation.voiture.summary.total_price'|trans }}</strong> {{ data.prixTotal }} TND</li>
         </ul>
       </div>
 
@@ -611,7 +611,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         dFin.addEventListener('change', function() {
             if (dDebut.value && this.value < dDebut.value) {
-                alert("La date de fin ne peut pas être antérieure à la date de début.");
+                alert("{{ 'reservation.voiture.alert.end_date_error_short'|trans }}");
                 this.value = dDebut.value;
             }
         });
@@ -629,7 +629,7 @@ document.addEventListener('DOMContentLoaded', function() {
         cinDelivreLe.addEventListener('change', function() {
             if (this.value > today) {
                 this.classList.add('is-invalid');
-                alert("La date de délivrance du CIN ne peut pas être dans le futur.");
+                alert("{{ 'reservation.voiture.alert.cin_future'|trans }}");
                 this.value = '';
             } else {
                 this.classList.remove('is-invalid');
@@ -641,7 +641,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Validation CIN délivré le
         if (cinDelivreLe && cinDelivreLe.value > today) {
             e.preventDefault();
-            alert("La date de délivrance du CIN ne peut pas être dans le futur.");
+            alert("{{ 'reservation.voiture.alert.cin_future'|trans }}");
             cinDelivreLe.focus();
             return;
         }
@@ -649,7 +649,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Validation dates de réservation
         if (dDebut && dFin && dFin.value < dDebut.value) {
             e.preventDefault();
-            alert("La date de fin doit être supérieure ou égale à la date de début.");
+            alert("{{ 'reservation.voiture.alert.end_date_error'|trans }}");
             dFin.focus();
         }
     });

@@ -452,14 +452,14 @@
 <!-- === HEADER === -->
 <div class="home">
     <div class="home_content">
-        <div class="home_title">Réservation transfert</div>
-        <p>Accueil // Transfert </p>
+        <div class="home_title">{{ 'reservation.transfer.title_home'|trans }}</div>
+        <p>{{ 'reservation.transfer.breadcrumb'|trans }} </p>
     </div>
 </div>
 <div class="reservation-container">
   <!-- EN-TÊTE -->
   <div class="form-header">
-    <h2>Réservation de Transfert</h2>
+    <h2>{{ 'reservation.transfer.title_page'|trans }}</h2>
     <div class="route">
       <span>{{ trajet.lieuDepart }}</span>
       <span class="route-arrow">→</span>
@@ -471,11 +471,11 @@
   <div class="steps-indicator">
     <div class="step-item active" id="step-indicator-1">
       <div class="step-circle">1</div>
-      <div class="step-label">Détails du trajet</div>
+      <div class="step-label">{{ 'reservation.transfer.step1_label'|trans }}</div>
     </div>
     <div class="step-item" id="step-indicator-2">
       <div class="step-circle">2</div>
-      <div class="step-label">Vos informations</div>
+      <div class="step-label">{{ 'reservation.transfer.step2_label'|trans }}</div>
     </div>
   </div>
 
@@ -485,7 +485,7 @@
 
     <!-- ÉTAPE 1 : Détails du Trajet -->
     <div class="form-step active" id="step-1">
-      <h3 class="step-title">Détails de votre transfert</h3>
+      <h3 class="step-title">{{ 'reservation.transfer.step1_title'|trans }}</h3>
 
       <div class="form-row-custom">
         <div class="form-group">{{ form_row(form.pickupDate) }}</div>
@@ -506,7 +506,7 @@
       <div class="return-fields" id="returnFields">
         <div class="return-fields-title">
           <span>↩️</span>
-          <span>Informations du retour</span>
+          <span>{{ 'reservation.transfer.return_info_title'|trans }}</span>
         </div>
         <div class="form-row-custom">
           <div class="form-group">{{ form_row(form.returnPickupDate) }}</div>
@@ -517,7 +517,7 @@
       <div class="form-actions">
         <div style="flex: 1;"></div>
         <button type="button" class="btn btn-primary" onclick="goToStep(2)">
-          Continuer
+          {{ 'reservation.transfer.btn_continue'|trans }}
           <span>→</span>
         </button>
       </div>
@@ -525,7 +525,7 @@
 
     <!-- ÉTAPE 2 : Informations Personnelles -->
     <div class="form-step" id="step-2">
-      <h3 class="step-title">Vos informations</h3>
+      <h3 class="step-title">{{ 'reservation.transfer.step2_label'|trans }}</h3>
 
       <div class="form-row-custom">
         <div class="form-group">{{ form_row(form.firstName) }}</div>
@@ -549,11 +549,11 @@
       <div class="form-actions">
         <button type="button" class="btn btn-secondary" onclick="goToStep(1)">
           <span>←</span>
-          Retour
+          {{ 'reservation.transfer.btn_back'|trans }}
         </button>
         <button type="submit" class="btn btn-success">
           <span>✓</span>
-          Confirmer la réservation
+          {{ 'reservation.transfer.btn_confirm'|trans }}
         </button>
       </div>
     </div>
@@ -566,61 +566,61 @@
 <div class="modal-overlay" id="confirmationModal">
   <div class="modal-card">
     
-    <h3>Réservation confirmée !</h3>
-    <p class="subtitle">Merci {{ reservation.firstName }} {{ reservation.lastName }}</p>
+    <h3>{{ 'reservation.transfer.modal_title'|trans }}</h3>
+    <p class="subtitle">{{ 'reservation.transfer.modal_thanks'|trans }} {{ reservation.firstName }} {{ reservation.lastName }}</p>
 
     <div class="modal-details">
       <p>
-        <strong>Type de transfert</strong>
+        <strong>{{ 'reservation.transfer.modal_type'|trans }}</strong>
         <span>
           {% if reservation.transferType and reservation.transferType.value == 'one_way' %}
-            Aller simple
+            {{ 'reservation.transfer.modal_one_way'|trans }}
           {% else %}
-            Aller-retour
+            {{ 'reservation.transfer.modal_return'|trans }}
           {% endif %}
         </span>
       </p>
       <p>
-        <strong>Date & Heure départ</strong>
+        <strong>{{ 'reservation.transfer.modal_departure'|trans }}</strong>
         <span>{{ reservation.pickupDate|date('d/m/Y') }} à {{ reservation.pickupTime|date('H:i') }}</span>
       </p>
       <p>
-        <strong>Trajet</strong>
+        <strong>{{ 'reservation.transfer.modal_route'|trans }}</strong>
         <span>{{ trajet.lieuDepart }} → {{ trajet.lieuArrivee }}</span>
       </p>
       
       {% if reservation.transferType and reservation.transferType.value == 'return' and reservation.returnPickupDate %}
         <div class="modal-divider"></div>
         <p style="color: var(--secondary); font-weight: 600; margin-top: 1rem;">
-          <strong>↩️ Informations du retour</strong>
+          <strong>↩️ {{ 'reservation.transfer.modal_return_info'|trans }}</strong>
         </p>
         <p>
-          <strong>Date & Heure retour</strong>
+          <strong>{{ 'reservation.transfer.modal_return_date'|trans }}</strong>
           <span>{{ reservation.returnPickupDate|date('d/m/Y') }} à {{ reservation.returnPickupTime|date('H:i') }}</span>
         </p>
         <p>
-          <strong>Trajet retour</strong>
+          <strong>{{ 'reservation.transfer.modal_return_route'|trans }}</strong>
           <span>{{ trajet.lieuArrivee }} → {{ trajet.lieuDepart }}</span>
         </p>
       {% endif %}
       
       <div class="modal-divider"></div>
       <p>
-        <strong>Personnes</strong>
+        <strong>{{ 'reservation.transfer.modal_persons'|trans }}</strong>
         <span>{{ reservation.persons }}</span>
       </p>
       <p style="font-size: 1.2rem; color: var(--primary);">
-        <strong>Prix total</strong>
+        <strong>{{ 'reservation.transfer.modal_price'|trans }}</strong>
         <span style="font-weight: 700; color: var(--secondary);">{{ reservation.prixTotal }} DT</span>
       </p>
     </div>
 
     <p class="modal-footer-text">
-      Un email de confirmation vous sera envoyé à <strong>{{ reservation.email }}</strong> dans les 24 heures. Notre équipe vous contactera pour finaliser les détails.
+      {{ 'reservation.transfer.modal_email_sent'|trans }} <strong>{{ reservation.email }}</strong> {{ 'reservation.transfer.modal_contact_soon'|trans }}
     </p>
 
     <button class="btn btn-success" onclick="closeModal()">
-      Retour à l'accueil
+      {{ 'reservation.transfer.btn_home'|trans }}
     </button>
   </div>
 </div>
@@ -644,7 +644,7 @@ function goToStep(stepNumber) {
     });
 
     if (!isValid) {
-      alert('Veuillez remplir tous les champs obligatoires');
+      alert("{{ 'js.alert.required_fields'|trans }}");
       return;
     }
   }
@@ -694,7 +694,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Si la date de retour est déjà sélectionnée et est antérieure, la réinitialiser
         if (returnPickupDateField.value && returnPickupDateField.value < this.value) {
-          alert('La date de retour ne peut pas être antérieure à la date de prise en charge. Elle a été ajustée.');
+          alert("{{ 'js.alert.date_adjusted'|trans }}");
           returnPickupDateField.value = this.value;
         }
       }
@@ -702,7 +702,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     returnPickupDateField.addEventListener('change', function() {
       if (pickupDateField.value && this.value < pickupDateField.value) {
-        alert('La date de retour ne peut pas être antérieure à la date de prise en charge.');
+        alert("{{ 'js.alert.date_error'|trans }}");
         this.value = pickupDateField.value;
       }
     });

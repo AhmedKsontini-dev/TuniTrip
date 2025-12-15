@@ -16,8 +16,8 @@
 <div class="favorites-hero">
     <div class="favorites-hero-bg"></div>
     <div class="favorites-hero-content">
-        <h1 class="favorites-title">Vos Excursions Préférées en Tunisie</h1>
-        <p class="favorites-subtitle">Retrouvez toutes vos excursions préférées et planifiez votre prochaine aventure en Tunisie.</p>
+        <h1 class="favorites-title">{{'banniere.title'|trans }}</h1>
+        <p class="favorites-subtitle">{{'banniere.subtitle'|trans}}</p>
     </div>
 </div>
 
@@ -65,10 +65,10 @@
                     <div class="empty-icon">
                         <i class="far fa-heart"></i>
                     </div>
-                    <h2 class="empty-title">Votre liste d'envies est vide</h2>
-                    <p class="empty-text">Vous n'avez pas encore sauvegardé d'excursions. Explorez nos offres incroyables et gardez vos préférées ici pour plus tard.</p>
+                    <h2 class="empty-title">{{'Card.title'|trans}}</h2>
+                    <p class="empty-text">{{'Card.subtitle'|trans}}</p>
                     <a href="{{ path('app_front_excursions_list') }}" class="btn-animated-primary excursion-details-btn">
-                        Découvrir les excursions
+                        {{'Card.btn'|trans}}
                     </a>
                 </div>
             </div>

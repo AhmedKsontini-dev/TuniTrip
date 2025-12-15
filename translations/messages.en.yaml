@@ -286,3 +286,14 @@ menu:
   excursions: "Excursions"
   transfers: "Transfers"
   contact: "Contact"
+
+
+#page-favoris
+banniere:
+    title: "Your favorite excursion in Tunisia"
+    subtitle: "Find all your favorite excursions and plan your next adventure in Tunisia."
+Card:
+    title: "Your favorite List is empty"
+    subtitle: "You haven't saved any excursions yet. Explore our amazing offers and save your favorites here for later."        
+    btn: "Discover the excursions"
+    

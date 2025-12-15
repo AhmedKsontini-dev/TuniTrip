@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function () {
     var homeSlider = $('.home_slider');
     homeSlider.owlCarousel({
         items: 1,
@@ -117,27 +117,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Back to Top and other standalone scripts
 document.addEventListener('DOMContentLoaded', () => {
-    const backToTopBtn = document.getElementById('back-to-top');
-    if(backToTopBtn) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 200) {
-                backToTopBtn.style.opacity = '1';
-            } else {
-                backToTopBtn.style.opacity = '0';
-            }
-        });
+    // Back to Top logic removed (replaced by chatbot)
 
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    }
 
     // Contact Form
     const form = document.getElementById("contactForm");
-    if(form) {
+    if (form) {
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
             const formData = new FormData(form);
@@ -168,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
         msg.innerHTML = message;
         // Check if contact-right exists
         const container = document.querySelector(".contact-right");
-        if(container) container.appendChild(msg);
+        if (container) container.appendChild(msg);
         else document.body.appendChild(msg); // Fallback
 
         setTimeout(() => {
@@ -198,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Review Form
     const reviewForm = document.getElementById('reviewForm');
-    if(reviewForm) {
+    if (reviewForm) {
         reviewForm.addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = {
@@ -218,28 +203,28 @@ document.addEventListener('DOMContentLoaded', () => {
             // Let's assume the user will update the HTML to pass the URL, or I will update HTML to add data-action="{{ path('avis_add') }}"
             // and use it here.
             const url = reviewForm.dataset.action || '/avis/add'; // Fallback
-            
+
             fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             })
-            .then(r => r.json())
-            .then(res => {
-                if (res.success) {
-                    alert('Avis envoyé avec succès !');
-                    document.getElementById('reviewModal').style.display = 'none';
-                    reviewForm.reset();
-                    location.reload();
-                }
-            });
+                .then(r => r.json())
+                .then(res => {
+                    if (res.success) {
+                        alert('Avis envoyé avec succès !');
+                        document.getElementById('reviewModal').style.display = 'none';
+                        reviewForm.reset();
+                        location.reload();
+                    }
+                });
         });
     }
 
     // Modal click outside
     const reviewModal = document.getElementById('reviewModal');
-    if(reviewModal) {
-        reviewModal.addEventListener('click', function(e) {
+    if (reviewModal) {
+        reviewModal.addEventListener('click', function (e) {
             if (e.target === this) {
                 this.style.display = 'none';
             }
@@ -264,17 +249,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const etoiles = container.querySelector('.test_rating').innerText;
             const date = container.querySelector('.test_date').innerText;
 
-            if(modalName) modalName.textContent = nom;
-            if(modalRating) modalRating.textContent = etoiles;
-            if(modalCommentaire) modalCommentaire.textContent = commentaire;
-            if(modalDate) modalDate.textContent = date;
+            if (modalName) modalName.textContent = nom;
+            if (modalRating) modalRating.textContent = etoiles;
+            if (modalCommentaire) modalCommentaire.textContent = commentaire;
+            if (modalDate) modalDate.textContent = date;
 
-            if(commentModal) commentModal.style.display = 'flex';
+            if (commentModal) commentModal.style.display = 'flex';
         });
     });
 
-    if(commentModal) {
-        commentModal.addEventListener('click', function(e) {
+    if (commentModal) {
+        commentModal.addEventListener('click', function (e) {
             if (e.target === this) {
                 this.style.display = 'none';
             }
@@ -284,33 +269,33 @@ document.addEventListener('DOMContentLoaded', () => {
     // Favorite Toggle (Robust version)
     document.querySelectorAll('.favorite-btn').forEach(btn => {
         // Remove previous listeners to avoid duplicates if any (not possible with native validation but good practice)
-        btn.onclick = null; 
-        btn.addEventListener('click', function(e) {
+        btn.onclick = null;
+        btn.addEventListener('click', function (e) {
             // Note: e.stopPropagation might be needed if card is clickable.
             e.stopPropagation();
-            
+
             const excursionId = this.dataset.excursionId;
             const icon = this.querySelector('i');
-            
-            // Check for login requirement
-            if(!excursionId) return; // or handle login redirect via onclick in HTML
 
-            fetch('/favori/toggle/' + excursionId, { method: 'POST', headers: {'X-Requested-With': 'XMLHttpRequest'} })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    if (data.favori) {
-                        icon.classList.remove('far');
-                        icon.classList.add('fas', 'text-warning');
+            // Check for login requirement
+            if (!excursionId) return; // or handle login redirect via onclick in HTML
+
+            fetch('/favori/toggle/' + excursionId, { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        if (data.favori) {
+                            icon.classList.remove('far');
+                            icon.classList.add('fas', 'text-warning');
+                        } else {
+                            icon.classList.remove('fas', 'text-warning');
+                            icon.classList.add('far');
+                        }
                     } else {
-                        icon.classList.remove('fas', 'text-warning');
-                        icon.classList.add('far');
+                        alert(data.message);
                     }
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(err => console.error(err));
+                })
+                .catch(err => console.error(err));
         });
     });
 
@@ -343,7 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeBtn) {
         closeBtn.onclick = closeReservationModal;
     }
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         const modal = document.getElementById('reservationModal');
         if (modal && event.target == modal) {
             closeReservationModal();
@@ -356,10 +341,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Observer for transfer image
     const image = document.querySelector('.transfer-image-right img');
-    if(image){
+    if (image) {
         const observer = new IntersectionObserver((entries, obs) => {
             entries.forEach(entry => {
-                if(entry.isIntersecting){
+                if (entry.isIntersecting) {
                     image.style.transform = 'translateX(0)';
                     image.style.opacity = '1';
                     obs.unobserve(entry.target);
@@ -371,10 +356,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Observer for comfort image
     const comfortImage = document.querySelector('.comfort-section .img-container img');
-    if(comfortImage){
+    if (comfortImage) {
         const observer = new IntersectionObserver((entries, obs) => {
             entries.forEach(entry => {
-                if(entry.isIntersecting){
+                if (entry.isIntersecting) {
                     comfortImage.style.transform = 'translateX(0)';
                     comfortImage.style.opacity = '1';
                     obs.unobserve(entry.target);
@@ -388,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Global functions (needed for inline onclicks)
 function openReservationModal() {
     const m = document.getElementById('reservationModal');
-    if(m) {
+    if (m) {
         m.style.display = 'block';
         document.body.style.overflow = 'hidden';
     }
@@ -397,7 +382,7 @@ function openReservationModal() {
 
 function closeReservationModal() {
     const m = document.getElementById('reservationModal');
-    if(m) {
+    if (m) {
         m.style.display = 'none';
         document.body.style.overflow = 'auto';
     }
@@ -408,24 +393,24 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.js-open-review-modal').forEach(btn => {
         btn.addEventListener('click', () => {
             const m = document.getElementById('reviewModal');
-            if(m) m.style.display = 'flex';
+            if (m) m.style.display = 'flex';
         });
     });
 
     // Close Review Modal (Button)
     document.querySelectorAll('.review-modal-card .close-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-             const m = document.getElementById('reviewModal');
-             if(m) m.style.display = 'none';
+            const m = document.getElementById('reviewModal');
+            if (m) m.style.display = 'none';
         });
     });
 
     // Voir Vehicules Redirect
     const voirVehiculesBtn = document.querySelector('.voir-vehicules-btn');
-    if(voirVehiculesBtn) {
+    if (voirVehiculesBtn) {
         voirVehiculesBtn.addEventListener('click', () => {
             const url = voirVehiculesBtn.dataset.url;
-            if(url) window.location.href = url;
+            if (url) window.location.href = url;
         });
     }
 });

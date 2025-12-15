@@ -1,264 +1,176 @@
 {% extends 'baseFront.html.twig' %}
 
-{% block title %}TuniTrip_About{% endblock %}
+{% block title %}{{ 'about.title'|trans }} | TuniTrip{% endblock %}
 
 {% block stylesheet %}
-     <link rel="stylesheet" type="text/css" href="{{ asset('assetsFront/styles/about_styles.css')}}">
-<link rel="stylesheet" type="text/css" href="{{ asset('assetsFront/styles/about_responsive.css')}}">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('assetsFront/css/about.css') }}">
 {% endblock %}
 
+{% block meta %}
+<meta name="description" content="{{ 'meta.about'|trans }}">
+{% endblock %}
 
 {% block body %}
 
-	<!-- Home -->
+<!-- HERO HEADER -->
+<div class="hero-header">
+    <div class="hero-background"></div>
+    <div class="hero-overlay"></div>
 
-	<div class="home">
-		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('assetsFront/images/about_background.jpg')}}"></div>
-		<div class="home_content">
-			<div class="home_title">à propos de nous</div>
-		</div>
-	</div>
+    <div class="hero-content">
+        <div class="hero-icon pulse-glow">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+        </div>
 
-	<!-- Intro -->
+        <h1>
+            {{ 'about.title'|trans }}
+        </h1>
 
-	<div class="intro">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-7">
-					<div class="intro_image"><img src="{{ asset('assetsFront/images/intro.png')}}" alt=""></div>
-				</div>
-				<div class="col-lg-5">
-					<div class="intro_content">
-						<div class="intro_title">nous avons les meilleures excursions</div>
-						<p class="intro_text">Chez TuniTrip, nous sommes passionnés par la découverte de la Tunisie. Nous offrons des services de transfert aéroport premium, des locations de véhicules et des excursions inoubliables à travers les plus beaux sites du pays. Avec des chauffeurs professionnels, des véhicules confortables et un service client exceptionnel, nous nous engageons à rendre chaque voyage mémorable. Que vous voyagiez pour affaires ou pour le plaisir, faites confiance à TuniTrip pour une expérience de voyage fluide et agréable.</p>
-						<div class="button intro_button"><div class="button_bcg"></div><a href="#">Découvrir maintenant<span></span><span></span><span></span></a></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+        <p class="subtitle">
+            {{ 'about.subtitle'|trans }}
+        </p>
 
-	<!-- Stats -->
+        <a href="{{ path('app_accueil') }}" class="hero-btn">
+            {{ 'about.explore'|trans }}
+        </a>
+    </div>
+</div>
 
-	<div class="stats">
-		<div class="container">
-			<div class="row">
-				<div class="col text-center">
-					<div class="section_title">statistiques annuelles</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-10 offset-lg-1 text-center">
-					<p class="stats_text">Découvrez notre croissance et nos réalisations au fil des années. Nous avons servi des milliers de clients satisfaits avec nos services de transfert, location et excursions en Tunisie.</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col">
-					<div class="stats_years">
-						<div class="stats_years_last">2016</div>
-						<div class="stats_years_new float-right">2017</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col">
-					<div class="stats_contents">
-						
-						<!-- Stats Item -->
-						<div class="stats_item d-flex flex-md-row flex-column clearfix">
-							<div class="stats_last order-md-1 order-3">
-								<div class="stats_last_icon d-flex flex-column align-items-center justify-content-end">
-									<img src="{{ asset('assetsFront/images/stats_1.png')}}" alt="">
-								</div>
-								<div class="stats_last_content">
-									<div class="stats_number">1642</div>
-									<div class="stats_type">Clients</div>
-								</div>
-							</div>
-							<div class="stats_bar order-md-2 order-2" data-x="1642" data-y="3527" data-color="#31124b">
-								<div class="stats_bar_perc">
-									<div>
-										<div class="stats_bar_value"></div>
-									</div>
-								</div>
-							</div>
-							<div class="stats_new order-md-3 order-1 text-right">
-								<div class="stats_new_icon d-flex flex-column align-items-center justify-content-end">
-									<img src="{{ asset('assetsFront/images/stats_1.png')}}" alt="">
-								</div>
-								<div class="stats_new_content">
-									<div class="stats_number">3527</div>
-									<div class="stats_type">Clients</div>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Stats Item -->
-						<div class="stats_item d-flex flex-md-row flex-column clearfix">
-							<div class="stats_last order-md-1 order-3">
-								<div class="stats_last_icon d-flex flex-column align-items-center justify-content-end">
-									<img src="{{ asset('assetsFront/images/stats_2.png')}}" alt="">
-								</div>
-								<div class="stats_last_content">
-									<div class="stats_number">768</div>
-									<div class="stats_type">Clients fidèles</div>
-								</div>
-							</div>
-							<div class="stats_bar order-md-2 order-2" data-x="768" data-y="145" data-color="#a95ce4">
-								<div class="stats_bar_perc">
-									<div>
-										<div class="stats_bar_value"></div>
-									</div>
-								</div>
-							</div>
-							<div class="stats_new order-md-3 order-1 text-right">
-								<div class="stats_new_icon d-flex flex-column align-items-center justify-content-end">
-									<img src="{{ asset('assetsFront/images/stats_2.png')}}" alt="">
-								</div>
-								<div class="stats_new_content">
-									<div class="stats_number">145</div>
-									<div class="stats_type">Clients fidèles</div>
-								</div>
-							</div>
-						</div>
+<!-- WHO WE ARE -->
+<section class="section section-light">
+    <div class="container">
+        <div class="animate-on-scroll">
+            <div class="section-title-wrapper">
+                <div class="title-line"></div>
+                <h2 class="section-title">
+                    {{ 'about.who_title'|trans }}
+                </h2>
+            </div>
 
-						<!-- Stats Item -->
-						<div class="stats_item d-flex flex-md-row flex-column clearfix">
-							<div class="stats_last order-md-1 order-3">
-								<div class="stats_last_icon d-flex flex-column align-items-center justify-content-end">
-									<img src="{{ asset('assetsFront/images/stats_3.png')}}" alt="">
-								</div>
-								<div class="stats_last_content">
-									<div class="stats_number">11546</div>
-									<div class="stats_type">Portée</div>
-								</div>
-							</div>
-							<div class="stats_bar order-md-2 order-2" data-x="11546" data-y="9321" data-color="#fa6f1b">
-								<div class="stats_bar_perc">
-									<div>
-										<div class="stats_bar_value"></div>
-									</div>
-								</div>
-							</div>
-							<div class="stats_new order-md-3 order-1 text-right">
-								<div class="stats_new_icon d-flex flex-column align-items-center justify-content-end">
-									<img src="{{ asset('assetsFront/images/stats_3.png')}}" alt="">
-								</div>
-								<div class="stats_new_content">
-									<div class="stats_number">9321</div>
-									<div class="stats_type">Portée</div>
-								</div>
-							</div>
-						</div>
+            <div class="two-columns">
+                <div class="content-text">
+                    <p>
+                        {{ 'about.who_text_1'|trans }}
+                    </p>
+                    <p>
+                        {{ 'about.who_text_2'|trans }}
+                    </p>
+                </div>
 
-						<!-- Stats Item -->
-						<div class="stats_item d-flex flex-md-row flex-column clearfix">
-							<div class="stats_last order-md-1 order-3">
-								<div class="stats_last_icon d-flex flex-column align-items-center justify-content-end">
-									<img src="{{ asset('assetsFront/images/stats_4.png')}}" alt="">
-								</div>
-								<div class="stats_last_content">
-									<div class="stats_number">3729</div>
-									<div class="stats_type">Articles</div>
-								</div>
-							</div>
-							<div class="stats_bar order-md-2 order-2" data-x="3729" data-y="17429" data-color="#fa9e1b">
-								<div class="stats_bar_perc">
-									<div>
-										<div class="stats_bar_value"></div>
-									</div>
-								</div>
-							</div>
-							<div class="stats_new order-md-3 order-1 text-right">
-								<div class="stats_new_icon d-flex flex-column align-items-center justify-content-end">
-									<img src="{{ asset('assetsFront/images/stats_4.png')}}" alt="">
-								</div>
-								<div class="stats_new_content">
-									<div class="stats_number">17429</div>
-									<div class="stats_type">Plus d'articles</div>
-								</div>
-							</div>
-						</div>
+                <div class="image-wrapper">
+                    <div class="image-background"></div>
+                    <img src="{{ asset('assetsFront/images/tunisia-travel.jpg') }}"
+                         alt="Tunisia travel"
+                         class="image-front">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<!-- SERVICES -->
+<section class="section section-dark">
+    <div class="container">
+        <div class="animate-on-scroll">
+            <h2 class="section-title section-title-center">
+                {{ 'about.services_title'|trans }}
+            </h2>
 
-	<!-- Add -->
+            <div class="services-grid">
+                <div class="service-card hover-lift">
+                    <span class="service-icon">⭐</span>
+                    <p class="service-text">{{ 'about.service_1'|trans }}</p>
+                </div>
 
-	<div class="add">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="add_container">
-						<div class="add_background" style="background-image:url({{ asset('assetsFront/images/add.jpg')}})"></div>
-						<div class="add_content">
-							<h1 class="add_title">thaïlande</h1>
-							<div class="add_subtitle">À partir de <span>999$</span></div>
-							<div class="button add_button"><div class="button_bcg"></div><a href="#">Découvrir maintenant<span></span><span></span><span></span></a></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                <div class="service-card hover-lift">
+                    <span class="service-icon">🚐</span>
+                    <p class="service-text">{{ 'about.service_2'|trans }}</p>
+                </div>
 
-	<!-- Milestones -->
+                <div class="service-card hover-lift">
+                    <span class="service-icon">📍</span>
+                    <p class="service-text">{{ 'about.service_3'|trans }}</p>
+                </div>
 
-	<div class="milestones">
-		<div class="container">
-			<div class="row">
-				
-				<!-- Milestone -->
-				<div class="col-lg-3 milestone_col">
-					<div class="milestone text-center">
-						<div class="milestone_icon"><img src="{{ asset('assetsFront/images/milestone_1.png')}}" alt=""></div>
-						<div class="milestone_counter" data-end-value="255">0</div>
-						<div class="milestone_text">Clients</div>
-					</div>
-				</div>
+                <div class="service-card hover-lift">
+                    <span class="service-icon">🛫</span>
+                    <p class="service-text">{{ 'about.service_4'|trans }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-				<!-- Milestone -->
-				<div class="col-lg-3 milestone_col">
-					<div class="milestone text-center">
-						<div class="milestone_icon"><img src="{{ asset('assetsFront/images/milestone_2.png')}}" alt=""></div>
-						<div class="milestone_counter" data-end-value="1176">0</div>
-						<div class="milestone_text">Projets</div>
-					</div>
-				</div>
+<!-- WHY CHOOSE US -->
+<section class="section section-light">
+    <div class="container">
+        <div class="animate-on-scroll">
+            <h2 class="section-title section-title-center">
+                {{ 'about.why_title'|trans }}
+            </h2>
 
-				<!-- Milestone -->
-				<div class="col-lg-3 milestone_col">
-					<div class="milestone text-center">
-						<div class="milestone_icon"><img src="{{ asset('assetsFront/images/milestone_3.png')}}" alt=""></div>
-						<div class="milestone_counter" data-end-value="39">0</div>
-						<div class="milestone_text">Pays</div>
-					</div>
-				</div>
+            <div class="features-grid">
 
-				<!-- Milestone -->
-				<div class="col-lg-3 milestone_col">
-					<div class="milestone text-center">
-						<div class="milestone_icon"><img src="{{ asset('assetsFront/images/milestone_4.png')}}" alt=""></div>
-						<div class="milestone_counter" data-end-value="127">0</div>
-						<div class="milestone_text">Cafés</div>
-					</div>
-				</div>
+                <div class="feature-card hover-lift">
+                    <h3>{{ 'about.pro'|trans }}</h3>
+                    <p>{{ 'about.pro_desc'|trans }}</p>
+                </div>
 
-			</div>
-		</div>
-	</div>
+                <div class="feature-card hover-lift">
+                    <h3>{{ 'about.safety'|trans }}</h3>
+                    <p>{{ 'about.safety_desc'|trans }}</p>
+                </div>
+
+                <div class="feature-card hover-lift">
+                    <h3>{{ 'about.flex'|trans }}</h3>
+                    <p>{{ 'about.flex_desc'|trans }}</p>
+                </div>
+
+                <div class="feature-card hover-lift">
+                    <h3>{{ 'about.price'|trans }}</h3>
+                    <p>{{ 'about.price_desc'|trans }}</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- VISION -->
+<section class="section section-gradient">
+    <div class="container">
+        <div class="animate-on-scroll vision-content">
+            <h2 class="section-title section-title-center">
+                {{ 'about.vision_title'|trans }}
+            </h2>
+
+            <p>
+                {{ 'about.vision_text'|trans }}
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="section section-gold">
+    <div class="container">
+        <div class="cta-content">
+            <h2>{{ 'about.cta_title'|trans }}</h2>
+            <a href="{{ path('app_front_excursions_list') }}" class="cta-btn">
+                {{ 'about.cta_btn'|trans }}
+            </a>
+        </div>
+    </div>
+</section>
 
 {% endblock %}
 
 {% block script %}
-<script src="{{ asset('assetsFront/plugins/greensock/TweenMax.min.js')}}"></script>
-<script src="{{ asset('assetsFront/plugins/greensock/TimelineMax.min.js')}}"></script>
-<script src="{{ asset('assetsFront/plugins/scrollmagic/ScrollMagic.min.js')}}"></script>
-<script src="{{ asset('assetsFront/plugins/greensock/animation.gsap.min.js')}}"></script>
-<script src="{{ asset('assetsFront/plugins/greensock/ScrollToPlugin.min.js')}}"></script>
-<script src="{{ asset('assetsFront/plugins/parallax-js-master/parallax.min.js')}}"></script>
+<script src="{{ asset('assetsFront/js/about.js') }}"></script>
 {% endblock %}
-

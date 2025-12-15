@@ -141,29 +141,6 @@ footer.contact.website: "www.tunitrip.com"
 
 footer.copy.text: '© %year% TuniTrip – Tous droits réservés. Développé par <a href="https://www.linkedin.com/in/ahmed-ksontini-9530112bb/" target="_blank">Ksontini Ahmed</a>'
 
-# About page
-about.hero.title: "À propos de nous"
-
-about.intro.title: "Nous avons les meilleures excursions"
-about.intro.text: "Chez TuniTrip, nous sommes passionnés par la découverte de la Tunisie. Nous offrons des services de transfert aéroport premium, des locations de véhicules et des excursions inoubliables à travers les plus beaux sites du pays. Avec des chauffeurs professionnels, des véhicules confortables et un service client exceptionnel, nous nous engageons à rendre chaque voyage mémorable. Que vous voyagiez pour affaires ou pour le plaisir, faites confiance à TuniTrip pour une expérience de voyage fluide et agréable."
-about.intro.cta: "Découvrir maintenant"
-
-about.stats.title: "Statistiques annuelles"
-about.stats.text: "Découvrez notre croissance et nos réalisations au fil des années. Nous avons servi des milliers de clients satisfaits avec nos services de transfert, location et excursions en Tunisie."
-about.stats.clients: "Clients"
-about.stats.loyalClients: "Clients fidèles"
-about.stats.reach: "Portée"
-about.stats.articles: "Articles"
-about.stats.moreArticles: "Plus d'articles"
-
-about.promo.title: "Thaïlande"
-about.promo.subtitle: "À partir de <span>%price%</span>"
-about.promo.cta: "Découvrir maintenant"
-
-about.milestones.clients: "Clients"
-about.milestones.projects: "Projets"
-about.milestones.countries: "Pays"
-about.milestones.cafes: "Cafés"
 
 # Vehicles List Page
 vehicles.list.title: "TuniTrip - Liste des véhicules"
@@ -269,3 +246,44 @@ home:
         subtitle: >
             Une question, une demande particulière ou besoin d’informations supplémentaires ?
             Notre équipe TuniTrip est à votre écoute et vous répondra dans les plus brefs délais.
+
+
+# About page
+about:
+  title: "À propos de TuniTrip"
+  subtitle: "Votre partenaire pour découvrir la Tunisie"
+  explore: "Explorez maintenant"
+
+  who_title: "Qui sommes-nous ?"
+  who_text_1: "TuniTrip est une plateforme tunisienne dédiée à aider les voyageurs à explorer la Tunisie facilement et agréablement."
+  who_text_2: "Que vous voyagiez seul, en couple ou en famille, notre équipe est à vos côtés pour un service fiable et personnalisé."
+
+  services_title: "Nos Services"
+  service_1: "Excursions culturelles et aventures authentiques"
+  service_2: "Transferts aéroport & trajets inter-villes"
+  service_3: "Visites guidées des sites incontournables"
+  service_4: "Assistance client disponible et réservation rapide"
+
+  why_title: "Pourquoi TuniTrip ?"
+  pro: "Professionnalisme"
+  pro_desc: "Une équipe dédiée pour organiser votre voyage de A à Z."
+  safety: "Sécurité & Confort"
+  safety_desc: "Des partenaires vérifiés pour votre tranquillité."
+  flex: "Flexibilité"
+  flex_desc: "Des prestations adaptables selon vos besoins."
+  price: "Tarifs transparents"
+  price_desc: "Aucune surprise — prix clairs et compétitifs."
+
+  vision_title: "Notre Vision"
+  vision_text: "Être une référence du tourisme en ligne en Tunisie."
+
+  cta_title: "Prêt à vivre l'aventure en Tunisie ?"
+  cta_btn: "Voir nos excursions"
+
+
+menu:
+  home: "Accueil"
+  about: "À propos"
+  excursions: "Excursions"
+  transfers: "Transferts"
+  contact: "Contact"

@@ -141,29 +141,6 @@ footer.contact.website: "www.tunitrip.com"
 
 footer.copy.text: '© %year% TuniTrip – All rights reserved. Developed by <a href="https://www.linkedin.com/in/ahmed-ksontini-9530112bb/" target="_blank">Ksontini Ahmed</a>'
 
-# About page
-about.hero.title: "About us"
-
-about.intro.title: "We offer the best excursions"
-about.intro.text: "At TuniTrip, we are passionate about discovering Tunisia. We provide premium airport transfer services, vehicle rental, and unforgettable excursions across the country’s most beautiful sites. With professional drivers, comfortable vehicles, and exceptional customer service, we are committed to making every trip memorable. Whether you travel for business or leisure, you can rely on TuniTrip for a smooth and pleasant travel experience."
-about.intro.cta: "Discover now"
-
-about.stats.title: "Annual statistics"
-about.stats.text: "Discover our growth and achievements over the years. We have served thousands of satisfied customers with our transfer, rental, and excursion services in Tunisia."
-about.stats.clients: "Clients"
-about.stats.loyalClients: "Loyal clients"
-about.stats.reach: "Reach"
-about.stats.articles: "Articles"
-about.stats.moreArticles: "More articles"
-
-about.promo.title: "Thailand"
-about.promo.subtitle: "From <span>%price%</span>"
-about.promo.cta: "Discover now"
-
-about.milestones.clients: "Clients"
-about.milestones.projects: "Projects"
-about.milestones.countries: "Countries"
-about.milestones.cafes: "Cafés"
 
 # Vehicles List Page
 vehicles.list.title: "TuniTrip - Vehicle List"
@@ -269,3 +246,43 @@ home:
         subtitle: >
             Have a question, a specific request, or need more information?
             The TuniTrip team is here to help and will get back to you as soon as possible.
+
+#about page
+about:
+  title: "About TuniTrip"
+  subtitle: "Your partner to discover Tunisia"
+  explore: "Explore now"
+
+  who_title: "Who are we?"
+  who_text_1: "TuniTrip is a Tunisian platform helping travelers explore Tunisia easily and comfortably."
+  who_text_2: "Whether you travel alone, as a couple or with family, our team offers reliable and personalized services."
+
+  services_title: "Our Services"
+  service_1: "Cultural excursions and authentic adventures"
+  service_2: "Airport transfers & intercity transport"
+  service_3: "Guided tours of must-see locations"
+  service_4: "Customer support and fast booking"
+
+  why_title: "Why TuniTrip?"
+  pro: "Professionalism"
+  pro_desc: "A dedicated team to organize your trip from A to Z."
+  safety: "Safety & Comfort"
+  safety_desc: "Verified drivers and partners for peace of mind."
+  flex: "Flexibility"
+  flex_desc: "Services adapted to your needs."
+  price: "Transparent pricing"
+  price_desc: "No surprises — clear and competitive prices."
+
+  vision_title: "Our Vision"
+  vision_text: "To become a leading online tourism platform in Tunisia."
+
+  cta_title: "Ready to explore Tunisia?"
+  cta_btn: "View our excursions"
+
+
+menu:
+  home: "Home"
+  about: "About"
+  excursions: "Excursions"
+  transfers: "Transfers"
+  contact: "Contact"

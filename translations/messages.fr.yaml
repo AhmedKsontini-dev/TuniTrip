@@ -287,3 +287,15 @@ menu:
   excursions: "Excursions"
   transfers: "Transferts"
   contact: "Contact"
+
+
+
+#page-favoris
+banniere:
+    title: "Votre liste d'envies est vide"
+    subtitle: "Retrouvez toutes vos excursions préférées et planifiez votre prochaine aventure en Tunisie."
+Card:
+    title: "Votre liste d'envies est vide"
+    subtitle: "Vous n'avez pas encore sauvegardé d'excursions. Explorez nos offres incroyables et gardez vos préférées ici pour plus tard."       
+    btn: "Découvrir les excursions"
+    

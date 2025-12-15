@@ -799,6 +799,482 @@ button:focus-visible {
     
 }
 
+
+
+
+
+/* Menu Mobile Styles */
+.menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 320px;
+    height: 100vh;
+    background: #1c2228;
+    z-index: 10000;
+    transition: all 0.5s ease;
+    overflow-y: auto;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.menu.active {
+    right: 0;
+}
+
+.menu_content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px;
+}
+
+/* Header */
+.menu_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start !important;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(216, 182, 93, 0.2);
+    margin-bottom: 20px;
+}
+
+.menu_logo img {
+    max-height: 40px;
+    width: auto;
+}
+
+.menu_close_container {
+    cursor: pointer;
+}
+
+.menu_close {
+    width: 40px;
+    height: 40px;
+    background: rgba(216, 182, 93, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.menu_close i {
+    color: #d8b65d;
+    font-size: 20px;
+}
+
+.menu_close:hover {
+    background: #d8b65d;
+    transform: rotate(90deg);
+}
+
+.menu_close:hover i {
+    color: #1c2228;
+}
+
+/* User Section */
+.menu_user_section {
+    background: linear-gradient(135deg, rgba(216, 182, 93, 0.15), rgba(216, 182, 93, 0.05));
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid rgba(216, 182, 93, 0.2);
+}
+
+.menu_user_avatar {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #d8b65d, #c9a84d);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1c2228;
+    font-weight: 700;
+    font-size: 18px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 10px rgba(216, 182, 93, 0.3);
+}
+
+.menu_user_info {
+    flex: 1;
+    min-width: 0;
+}
+
+.menu_user_email {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Navigation */
+.menu_navigation {
+    flex: 1;
+
+}
+
+.menu_list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu_item {
+    margin-bottom: 5px;
+}
+
+.menu_item a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 14px 16px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    font-size: 15px;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    font-family: sans-serif;
+}
+
+.menu_item a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: #d8b65d;
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.menu_item a:hover::before,
+.menu_item a.active::before {
+    transform: scaleY(1);
+}
+
+.menu_item a i {
+    color: #d8b65d;
+    font-size: 20px;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.menu_item a span {
+    flex: 1;
+}
+
+.menu_item a:hover {
+    background: rgba(216, 182, 93, 0.1);
+    padding-left: 20px;
+}
+
+.menu_item.logout a {
+    color: #ff6b6b;
+}
+
+.menu_item.logout a i {
+    color: #ff6b6b;
+}
+
+.menu_item.logout a:hover {
+    background: rgba(255, 107, 107, 0.1);
+}
+
+/* Divider */
+.menu_divider {
+    height: 1px;
+    background: rgba(216, 182, 93, 0.2);
+    margin: 15px 0;
+}
+
+/* Footer */
+.menu_footer {
+    padding-top: 20px;
+    border-top: 1px solid rgba(216, 182, 93, 0.2);
+    margin-top: auto;
+}
+
+/* Language Switch */
+.menu_lang_switch {
+    background: rgba(216, 182, 93, 0.05);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.lang_label {
+    color: #d8b65d;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+
+.lang_label i {
+    font-size: 16px;
+}
+
+.lang_buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.lang_btn {
+    flex: 1;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.lang_btn:hover {
+    background: rgba(216, 182, 93, 0.1);
+    border-color: #d8b65d;
+    color: #d8b65d;
+    transform: translateY(-2px);
+}
+
+.lang_btn.active {
+    background: #d8b65d;
+    color: #1c2228;
+    font-weight: 700;
+}
+
+/* Contact */
+.menu_contact {
+    margin-bottom: 15px;
+}
+
+.menu_phone {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    background: rgba(216, 182, 93, 0.05);
+    border-radius: 10px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.menu_phone i {
+    color: #d8b65d;
+    font-size: 16px;
+}
+
+.menu_phone:hover {
+    background: rgba(216, 182, 93, 0.15);
+    transform: translateX(5px);
+}
+
+/* Social Links */
+.menu_social {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.social_link {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(216, 182, 93, 0.2);
+}
+
+.social_link i {
+    font-size: 18px;
+}
+
+.social_link.facebook {
+    color: #1877f2;
+}
+
+.social_link.whatsapp {
+    color: #25d366;
+}
+
+.social_link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(216, 182, 93, 0.3);
+    border-color: #d8b65d;
+}
+
+.social_link.facebook:hover {
+    background: #1877f2;
+    color: #fff;
+}
+
+.social_link.whatsapp:hover {
+    background: #25d366;
+    color: #fff;
+}
+
+/* Scrollbar */
+.menu_navigation::-webkit-scrollbar {
+    width: 6px;
+}
+
+.menu_navigation::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+.menu_navigation::-webkit-scrollbar-thumb {
+    background: #d8b65d;
+    border-radius: 10px;
+}
+
+.menu_navigation::-webkit-scrollbar-thumb:hover {
+    background: #c9a84d;
+}
+
+/* Responsive */
+@media (max-width: 360px) {
+    .menu {
+        width: 100%;
+    }
+}
+
+/* Animation pour le hamburger */
+.hamburger {
+    cursor: pointer;
+    padding: 10px;
+}
+
+.hamburger i {
+    font-size: 24px;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.hamburger:hover i {
+    color: #d8b65d;
+}
+
+
+
+@media (max-width: 991px) {
+   
+
+    /* Main nav réduit */
+    .main_nav {
+        max-height: 100px;
+    }
+
+    /* Ajuste le conteneur des items pour centrer verticalement */
+    .main_nav_col {
+        align-items: center;
+    }
+
+    /* Cache les liens principaux et ne garde que le hamburger */
+    .main_nav_container {
+        display: none;
+    }
+
+    /* Hamburger à droite, centré verticalement */
+    .hamburger {
+        margin-left: auto; /* pousse à droite */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%; /* prend toute la hauteur du main_nav */
+    }
+
+    .hamburger i {
+        font-size: 28px;
+        color: #fff;
+    }
+    .user_name{
+        display: none;
+    }
+    .top_bar{
+        display: none;
+    }
+}
+
+.menu_header {
+    display: flex;
+    align-items: center;     /* centre verticalement */
+    justify-content: space-between; /* espace entre logo et close */
+    gap: 15px;               /* petit espace entre logo et bouton */
+    padding: 10px 0;
+}
+
+.menu_logo img {
+    max-height: 40px;
+    width: auto;
+}
+
+.menu_close_container {
+    cursor: pointer;
+}
+
+.menu_close {
+    width: 40px;
+    height: 40px;
+    background: rgba(216, 182, 93, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.menu_close i {
+    color: #d8b65d;
+    font-size: 20px;
+}
+
+.menu_close:hover {
+    background: #d8b65d;
+    transform: rotate(90deg);
+}
+
+.menu_close:hover i {
+    color: #1c2228;
+}
+
+@media (max-width: 991px) {
+    .menu_close_container{
+        display: contents;
+    }
+    .user_box_dropdown{
+        display: none; 
+    }
+}
+
+.menu_close::after{
+    display: none !important;
+}
 </style>
 <div class="super_container">
 	
@@ -867,7 +1343,7 @@ button:focus-visible {
 									<a class="dropdown-toggle" href="#" id="languageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										{{ app.request.locale|upper }}
 									</a>
-									<div class="dropdown-menu" aria-labelledby="languageDropdown">
+									<div class="dropdown-menu" aria-labelledby="languageDropdown" >
 										<a class="dropdown-item" href="{{ path('change_locale', {'_locale': 'fr'}) }}">FR</a>
 										<a class="dropdown-item" href="{{ path('change_locale', {'_locale': 'en'}) }}">EN</a>
 									</div>
@@ -906,19 +1382,149 @@ button:focus-visible {
 
 	</header>
 
-	<div class="menu trans_500">
-		<div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
-			<div class="menu_close_container"><div class="menu_close"></div></div>
-			<div class="logo menu_logo"><a href="#"><img src="#" alt=""></a></div>
-			<ul>
-				<li class="menu_item"><a href="#">Accueil</a></li>
-				<li class="menu_item"><a href="about.html">À propos</a></li>
-				<li class="menu_item"><a href="offers.html">Offres</a></li>
-				<li class="menu_item"><a href="blog.html">Actualités</a></li>
-				<li class="menu_item"><a href="contact.html">Contact</a></li>
-			</ul>
-		</div>
-	</div>
+	<!-- MOBILE MENU -->
+    <div class="menu trans_500">
+        <div class="menu_content">
+            <!-- Header du menu -->
+            <div class="menu_header d-flex">
+                <div class="logo menu_logo">
+                    <a href="{{ path('app_accueil') }}">
+                        <img src="{{ asset('assetsFront/images/logo.png') }}" alt="TuniTrip">
+                    </a>
+                </div>
+                <div class="menu_close_container">
+                    <div class="menu_close">
+                        <i class="fa fa-times"></i>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- User Info Section -->
+            {% if app.user %}
+            <div class="menu_user_section">
+                {% set initials = (app.user.nom|slice(0,1)|upper ~ app.user.prenom|slice(0,1)|upper) %}
+                <div class="menu_user_avatar">{{ initials }}</div>
+                <div class="menu_user_info">
+                    <span class="menu_user_email">{{ app.user.email }}</span>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Navigation Links -->
+            <nav class="menu_navigation">
+                <ul class="menu_list">
+                    <li class="menu_item">
+                        <a href="{{ path('app_accueil') }}">
+                            <i class="fa-solid fa-house"></i>
+                            <span>{{ 'menu.home'|trans }}</span>
+                        </a>
+                    </li>
+
+                    <li class="menu_item">
+                        <a href="{{ path('app_front_about') }}">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>{{ 'menu.about'|trans }}</span>
+                        </a>
+                    </li>
+
+                    <li class="menu_item">
+                        <a href="{{ path('app_front_list_voitures') }}">
+                            <i class="fa-solid fa-car"></i>
+                            <span>{{ 'menu.vehicles'|trans }}</span>
+                        </a>
+                    </li>
+
+                    <li class="menu_item">
+                        <a href="{{ path('app_front_excursions_list') }}">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            <span>{{ 'menu.excursions'|trans }}</span>
+                        </a>
+                    </li>
+
+                    <li class="menu_item">
+                        <a href="{{ path('app_front_blogs') }}">
+                            <i class="fa-solid fa-blog"></i>
+                            <span>{{ 'menu.blogs'|trans }}</span>
+                        </a>
+                    </li>
+
+                    <li class="menu_item">
+                        <a href="{{ path('app_front_contact') }}">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>{{ 'menu.contact'|trans }}</span>
+                        </a>
+                    </li>
+
+                    {% if app.user %}
+                    <li class="menu_divider"></li>
+
+                    <li class="menu_item">
+                        <a href="{{ path('app_front_favoris_index') }}">
+                            <i class="fa-solid fa-heart"></i>
+                            <span>Mes Favoris</span>
+                        </a>
+                    </li>
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <li class="menu_item">
+                        <a href="{{ path('admin_dashboard') }}">
+                            <i class="fa-solid fa-gauge"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    <li class="menu_item logout">
+                        <a href="{{ path('app_logout') }}">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <span>Déconnexion</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+
+            <!-- Footer du menu -->
+            <div class="menu_footer">
+                <!-- Language Switch -->
+                <div class="menu_lang_switch">
+                    <span class="lang_label">
+                        <i class="fa-solid fa-globe"></i>
+                        Langue
+                    </span>
+                    <div class="lang_buttons">
+                        <a href="{{ path('change_locale', {'_locale': 'fr'}) }}" 
+                        class="lang_btn {% if app.request.locale == 'fr' %}active{% endif %}">
+                            FR
+                        </a>
+                        <a href="{{ path('change_locale', {'_locale': 'en'}) }}" 
+                        class="lang_btn {% if app.request.locale == 'en' %}active{% endif %}">
+                            EN
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="menu_contact">
+                    <a href="tel:+21626341186" class="menu_phone">
+                        <i class="fa-solid fa-phone"></i>
+                        +216 26 341 186
+                    </a>
+                </div>
+
+                <!-- Social Links -->
+                <div class="menu_social">
+                    <a href="#" class="social_link facebook">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social_link whatsapp">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% block body %}
 
@@ -1189,6 +1795,56 @@ button:focus-visible {
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 <script>
+// JavaScript pour ouvrir/fermer le menu
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.querySelector('.hamburger');
+    const menu = document.querySelector('.menu');
+    const menuClose = document.querySelector('.menu_close');
+    const menuItems = document.querySelectorAll('.menu_item a');
+
+    // Ouvrir le menu
+    if (hamburger) {
+        hamburger.addEventListener('click', function() {
+            menu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    }
+
+    // Fermer le menu
+    if (menuClose) {
+        menuClose.addEventListener('click', function() {
+            menu.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
+
+    // Fermer le menu lors du clic sur un lien
+    menuItems.forEach(item => {
+        item.addEventListener('click', function() {
+            menu.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    });
+
+    // Fermer le menu en cliquant en dehors
+    document.addEventListener('click', function(e) {
+        if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
+            menu.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Marquer le lien actif
+    const currentPath = window.location.pathname;
+    menuItems.forEach(item => {
+        if (item.getAttribute('href') === currentPath) {
+            item.classList.add('active');
+        }
+    });
+});
+</script>
+
+<script>
 function toggleDropdown() {
     var dropdown = document.getElementById("dropdownMenu");
     if (dropdown) {
@@ -1208,7 +1864,7 @@ window.onclick = function(event) {
 </script>
 
 {% block script %}
-    <script src="{{ asset('assetsFront/js/contact.js') }}" defer></script>
+    
 
 
     <script>

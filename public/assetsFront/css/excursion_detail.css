@@ -1,0 +1,2211 @@
+/* HERO */
+.home {
+    height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.home {
+    background-image:
+        linear-gradient(rgba(28,34,40,0.5), rgba(28,34,40,0.5)),
+        var(--hero-bg);
+}
+
+
+
+.home::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(25, 32, 38, 0.8);
+}
+.home_content {
+    position: relative;
+    z-index: 2;
+    margin-top: 60px; 
+    text-align: center;
+}
+.home_title {
+    font-size: 40px;
+    color: #D7B65D;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.home_content p {
+    font-size: 1.05rem;
+    margin: 0;
+    color: rgba(255,255,255,.8);
+}
+
+/* CAROUSEL */
+#galleryCarousel img {
+    height: 420px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* INFO BOX */
+.info-box, .info-box-modern {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border-left: 4px solid #d8b65d; /* accent doré */
+}
+
+.info-item i {
+    color: #d8b65d; /* icônes importantes dorées */
+    margin-right: 8px;
+}
+
+.info-item strong {
+    color: #1c2228;
+}
+
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+
+/* ACCORDIONS */
+.accordion-button {
+    font-weight: 600;
+    font-size: 17px;
+    color: #1c2228;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+    border-radius: 10px;
+    z-index: 1; 
+    border: 2px solid #d8b65d;
+}
+
+.btn-reserver, .btn-primary {
+    background-color: #d8b65d; /* doré */
+    color: #1c2228;
+    border: none;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.3s;
+}
+
+.btn-reserver:hover, .btn-primary:hover {
+    background-color: #c5a954; /* doré plus foncé au hover */
+    color: #fff;
+}
+
+.link-modern {
+    color: #1c2228;
+    text-decoration: underline;
+}
+
+.link-modern:hover {
+    color: #d8b65d;
+}
+
+
+.accordion-button:not(.collapsed) {
+    background-color: #d8b65d;
+    color: #1c2228;
+}
+
+.itinerary-icon-trip.number-icon {
+    background: #d8b65d; /* doré pour les étapes */
+    color: #1c2228;
+}
+
+.itinerary-icon-trip.start-icon, .itinerary-icon-trip.end-icon {
+    background: #1c2228; /* sombre */
+    color: #d8b65d; /* doré */
+}
+
+
+.btn-recenter:hover {
+    background: #c5a954;
+    color: #fff;
+}
+body, p, .description, .stop-details {
+    color: #1c2228;
+    line-height: 1.6;
+}
+
+.toggle-description, .itinerary-link {
+    color: #d8b65d;
+}
+
+.toggle-description:hover, .itinerary-link:hover {
+    color: #1c2228;
+}
+
+
+.info-box-modern {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #e5e5e5;
+}
+
+.icon-circle {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #f3f6f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+   
+}
+
+.link-modern {
+    text-decoration: underline;
+    color: #000;
+    cursor: pointer;
+}
+
+
+
+/* Description en noir */
+.description {
+
+    transition: max-height 0.5s ease;
+}
+
+
+
+/* Lien Lire plus / Lire moins en noir et souligné */
+.toggle-description {
+    color: #000 !important;       /* couleur noire */
+    text-decoration: underline !important; /* soulignement */
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+/* Container principal */
+.itinerary-container-tripadvisor {
+    position: relative;
+    padding-left: 0;
+    margin-top: 25px;
+}
+
+/* Chaque étape */
+.itinerary-step-trip {
+    position: relative;
+    padding-left: 120px;
+    padding-bottom: 40px;
+    padding-top: 5px;
+}
+
+.itinerary-step-trip:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 37px;
+    top: 45px;
+    bottom: -5px;
+    width: 2px;
+    background: repeating-linear-gradient(
+        to bottom,
+        #d0d0d0 0px,
+        #d0d0d0 8px,
+        transparent 8px,
+        transparent 12px
+    );
+}
+
+/* Icônes */
+.itinerary-icon-trip {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+/* Badge Départ */
+.itinerary-icon-trip.start-icon {
+    background-color: #ffc107;
+    color: #000;
+    padding: 6px 14px;
+    border-radius: 16px;
+    font-size: 13px;
+}
+
+/* Badge Destination */
+.itinerary-icon-trip.end-icon {
+    background-color: #ffc107;
+    color: #000;
+    padding: 6px 14px;
+    border-radius: 16px;
+    font-size: 13px;
+}
+
+/* Numéros */
+.itinerary-icon-trip.number-icon {
+    width: 36px;
+    height: 36px;
+    background: #000;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 16px;
+    left: 20px;
+}
+
+/* Contenu */
+.itinerary-content-trip h5 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    color: #000;
+}
+
+.itinerary-content-trip p {
+    margin: 6px 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.stop-details {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.admission-badge {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 2px 8px;
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.itinerary-link {
+    color: #000;
+    text-decoration: underline;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 8px;
+}
+
+.itinerary-link:hover {
+    color: #333;
+}
+
+/* Contenu des détails caché par défaut */
+.details-content {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.details-content p {
+    line-height: 1.6;
+}
+
+.etape-photos img {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+}
+
+/* Header de la carte */
+.map-header {
+    position: relative;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-recenter {
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    z-index: 2;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    background: #d8b65d;
+    color: #1c2228;
+    border: none;
+}
+
+
+.btn-recenter i {
+    font-size: 16px;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .excursion-container {
+        flex-direction: column !important;
+    }
+    
+    .excursion-container > div {
+        width: 100% !important;
+    }
+    
+    #map {
+        height: 60vh !important;
+    }
+}
+
+.traveler-dropdown {
+    min-width: 340px;
+}
+
+.counter button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.counter span {
+    font-size: 1.1rem;
+    min-width: 24px;
+    display: inline-block;
+    text-align: center;
+}
+
+.availability-section {
+    background: #ffffff;
+    border-radius: 12px;
+}
+.modern-date-input {
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    transition: all .3s;
+}
+
+.modern-date-input:focus {
+    border-color: #2a3138;
+    box-shadow: 0 0 10px rgba(13,110,253,0.2);
+}
+
+.traveler-icon-btn {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 16px;
+    transition: .3s ease;
+}
+
+.traveler-icon-btn:hover {
+    background: #eef1f4;
+}
+
+.traveler-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #ff4d4d;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.excursion-nav {
+    display: flex;
+    gap: 25px;
+    padding: 15px 10px;
+    border-bottom: 2px solid #e9ecef;
+    position: sticky;
+    top: 70px;
+    background: #fff;
+    z-index: 10;
+}
+
+.exc-nav-link {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 17px;
+    color: #000; /* 🔥 en noir */
+    padding-bottom: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-bottom: 3px solid transparent; /* permet soulignement propre */
+}
+
+.exc-nav-link:hover {
+    color: #000;
+}
+
+.exc-nav-link.active {
+    border-bottom: 3px solid #000; /* souligné en noir */
+}
+
+.reviews-section {
+  max-width: 800px;
+  margin: auto;
+}
+
+.review-card {
+  background-color: #fff;
+}
+
+.review-header .review-author {
+  font-size: 1.1rem;
+}
+
+.review-comment p {
+  margin: 0;
+}
+
+/* Style du modal de réservation */
+#reservationModal .modal-content {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 50px rgba(28, 34, 40, 0.4);
+}
+
+#reservationModal .modal-header {
+    background: linear-gradient(135deg, #1c2228 0%, #2a3139 100%);
+    color: #ffffff;
+    padding: 2rem 2.5rem;
+    border-bottom: 4px solid #d8b65d;
+    position: relative;
+}
+
+#reservationModal .modal-header::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100px;
+    height: 4px;
+    background: #ffffff;
+    box-shadow: 0 0 15px rgba(216, 182, 93, 0.6);
+}
+
+#reservationModal .modal-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#reservationModal .btn-close {
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+    transition: all 0.3s ease;
+    background-size: 60%;
+}
+
+#reservationModal .btn-close:hover {
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+#reservationModal .modal-body {
+    background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+    padding: 2.5rem;
+}
+
+/* Style des groupes de formulaire */
+#reservationModal .mb-3 {
+    margin-bottom: 1.5rem !important;
+}
+
+/* Style des labels */
+#reservationModal .form-label {
+    color: #1c2228;
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#reservationModal .form-label::before {
+    content: '';
+    width: 4px;
+    height: 16px;
+    background: linear-gradient(180deg, #d8b65d 0%, #c9a84d 100%);
+    border-radius: 2px;
+}
+
+/* Style moderne des inputs */
+#reservationModal .form-control,
+#reservationModal .form-select {
+    border: 2px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1c2228;
+    background-color: #ffffff;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(28, 34, 40, 0.05);
+}
+
+#reservationModal .form-control::placeholder {
+    color: #adb5bd;
+    font-weight: 400;
+    opacity: 0.7;
+}
+
+/* Effet focus - Bordure dorée animée */
+#reservationModal .form-control:focus,
+#reservationModal .form-select:focus {
+    border-color: #d8b65d;
+    background-color: #fffef8;
+    box-shadow: 0 0 0 4px rgba(216, 182, 93, 0.15), 0 4px 12px rgba(216, 182, 93, 0.2);
+    outline: none;
+    transform: translateY(-2px);
+}
+
+/* Effet hover */
+#reservationModal .form-control:not(:focus):hover,
+#reservationModal .form-select:not(:focus):hover {
+    border-color: #d8b65d;
+    background-color: #fafafa;
+    box-shadow: 0 4px 12px rgba(28, 34, 40, 0.08);
+}
+
+/* Style spécifique pour les selects */
+#reservationModal .form-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23d8b65d' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 12px;
+    padding-right: 3rem;
+}
+
+#reservationModal .form-select:focus {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23d8b65d' d='M6 3l5 5H1z'/%3E%3C/svg%3E");
+}
+
+/* Style pour les champs numériques (adultes/enfants) */
+#reservationModal input[type="number"] {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #1c2228;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+#reservationModal input[type="number"]::-webkit-inner-spin-button,
+#reservationModal input[type="number"]::-webkit-outer-spin-button {
+    opacity: 1;
+    height: 40px;
+    cursor: pointer;
+}
+
+/* Style pour le champ date */
+#reservationModal input[type="datetime-local"] {
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#reservationModal input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: invert(60%) sepia(50%) saturate(400%) hue-rotate(5deg);
+    width: 20px;
+    height: 20px;
+}
+
+/* Container pour champs côte à côte */
+#reservationModal .row {
+    margin: 0 -0.5rem;
+}
+
+#reservationModal .row > [class*="col-"] {
+    padding: 0 0.5rem;
+}
+
+/* Style du footer */
+#reservationModal .modal-footer {
+    background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 2rem 2.5rem;
+    border-top: 2px solid #e8e8e8;
+    gap: 1rem;
+}
+
+/* Boutons stylisés */
+#reservationModal .btn {
+    padding: 1rem 2.5rem;
+    font-weight: 700;
+    border-radius: 30px;
+    border: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-size: 0.9rem;
+    position: relative;
+    overflow: hidden;
+}
+
+#reservationModal .btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+#reservationModal .btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+#reservationModal .btn-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+}
+
+#reservationModal .btn-secondary:hover {
+    background: linear-gradient(135deg, #5a6268 0%, #4e555b 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+}
+
+#reservationModal .btn-primary {
+    background: linear-gradient(135deg, #d8b65d 0%, #c9a84d 100%);
+    color: #1c2228;
+    font-weight: 800;
+    box-shadow: 0 4px 15px rgba(216, 182, 93, 0.4);
+}
+
+#reservationModal .btn-primary:hover {
+    background: linear-gradient(135deg, #e5c673 0%, #d8b65d 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(216, 182, 93, 0.5);
+}
+
+#reservationModal .btn-primary:active {
+    transform: translateY(-1px);
+}
+
+/* Animation d'entrée du modal */
+#reservationModal.fade .modal-dialog {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(0.9) translateY(-20px);
+}
+
+#reservationModal.show .modal-dialog {
+    transform: scale(1) translateY(0);
+}
+
+/* Messages d'erreur stylisés */
+#reservationModal .invalid-feedback {
+    color: #dc3545;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #ffe6e6;
+    border-left: 4px solid #dc3545;
+    border-radius: 6px;
+}
+
+#reservationModal .form-control.is-invalid,
+#reservationModal .form-select.is-invalid {
+    border-color: #dc3545;
+    background-color: #fff5f5;
+    animation: shake 0.4s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Style responsive */
+@media (max-width: 768px) {
+    #reservationModal .modal-body {
+        padding: 1.5rem;
+    }
+    
+    #reservationModal .modal-header {
+        padding: 1.5rem;
+    }
+    
+    #reservationModal .modal-title {
+        font-size: 1.35rem;
+    }
+    
+    #reservationModal .btn {
+        padding: 0.85rem 1.75rem;
+        font-size: 0.85rem;
+    }
+    
+    #reservationModal .form-control,
+    #reservationModal .form-select {
+        padding: 0.85rem 1rem;
+        font-size: 0.95rem;
+    }
+}
+
+/* Effet de chargement pour le bouton submit */
+#reservationModal .btn-primary.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+#reservationModal .btn-primary.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid #1c2228;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spinner 0.6s linear infinite;
+}
+
+@keyframes spinner {
+    to { transform: rotate(360deg); }
+}
+
+/* Amélioration visuelle pour les champs désactivés */
+#reservationModal .form-control:disabled,
+#reservationModal .form-select:disabled {
+    background-color: #f0f0f0;
+    border-color: #d0d0d0;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Style du modal de confirmation */
+#reservationConfirmation .modal-content {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 50px rgba(28, 34, 40, 0.4);
+    animation: modalBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes modalBounce {
+    0% {
+        transform: scale(0.3) translateY(-100px);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* En-tête avec animation de succès */
+#reservationConfirmation .modal-header {
+    background: linear-gradient(135deg, #d8b65d 0%, #c9a84d 100%);
+    color: #1c2228;
+    padding: 2rem 2.5rem;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+#reservationConfirmation .modal-header::before {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: -100px;
+    transform: translateY(-50%);
+    font-size: 8rem;
+    font-weight: bold;
+    color: rgba(28, 34, 40, 0.1);
+    animation: slideCheck 0.8s ease-out 0.3s forwards;
+}
+
+@keyframes slideCheck {
+    to {
+        left: -20px;
+    }
+}
+
+#reservationConfirmation .modal-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+    animation: fadeInUp 0.6s ease-out 0.4s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Icône de succès animée */
+#reservationConfirmation .modal-header::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    right: 2.5rem;
+    transform: translateY(-50%);
+    font-size: 3rem;
+    font-weight: bold;
+    color: #1c2228;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(28, 34, 40, 0.2);
+    animation: checkPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes checkPulse {
+    0%, 100% {
+        transform: translateY(-50%) scale(1);
+        box-shadow: 0 4px 15px rgba(28, 34, 40, 0.2);
+    }
+    50% {
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 6px 20px rgba(28, 34, 40, 0.3);
+    }
+}
+
+/* Corps du modal */
+#reservationConfirmation .modal-body {
+    background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+    padding: 2.5rem;
+}
+
+#reservationConfirmation .modal-body h4 {
+    color: #1c2228;
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.6s ease-out 0.5s both;
+    position: relative;
+}
+
+#reservationConfirmation .modal-body h4::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #d8b65d, transparent);
+    border-radius: 2px;
+}
+
+/* Carte de détails */
+#reservationConfirmation .card {
+    border: 2px solid #e8e8e8;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(28, 34, 40, 0.08);
+    animation: fadeInUp 0.6s ease-out 0.6s both;
+    position: relative;
+    overflow: hidden;
+}
+
+#reservationConfirmation .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #d8b65d 0%, #c9a84d 50%, #d8b65d 100%);
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+#reservationConfirmation .card h5 {
+    color: #1c2228;
+    font-weight: 800;
+    font-size: 1.25rem;
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Style des détails de réservation */
+#reservationConfirmation .card p {
+    margin-bottom: 1.25rem;
+    padding: 0.75rem 1rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border-radius: 10px;
+    border-left: 4px solid #d8b65d;
+    transition: all 0.3s ease;
+    animation: slideInRight 0.5s ease-out both;
+    animation-delay: calc(0.7s + var(--delay));
+}
+
+#reservationConfirmation .card p:nth-child(2) { --delay: 0s; }
+#reservationConfirmation .card p:nth-child(3) { --delay: 0.1s; }
+#reservationConfirmation .card p:nth-child(4) { --delay: 0.2s; }
+#reservationConfirmation .card p:nth-child(5) { --delay: 0.3s; }
+#reservationConfirmation .card p:nth-child(6) { --delay: 0.4s; }
+#reservationConfirmation .card p:nth-child(7) { --delay: 0.5s; }
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+#reservationConfirmation .card p:hover {
+    background: linear-gradient(135deg, #fffef8 0%, #f8f9fa 100%);
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(216, 182, 93, 0.15);
+}
+
+#reservationConfirmation .card p strong {
+    color: #1c2228;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    min-width: 180px;
+}
+
+/* Icônes avant les labels */
+#reservationConfirmation .card p strong::before {
+    content: '▸';
+    color: #d8b65d;
+    font-weight: bold;
+    margin-right: 0.5rem;
+    font-size: 1.1rem;
+}
+
+/* Footer du modal */
+#reservationConfirmation .modal-footer {
+    background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 2rem 2.5rem;
+    border-top: 2px solid #e8e8e8;
+    justify-content: center;
+}
+
+/* Bouton de retour stylisé */
+#reservationConfirmation .btn-primary {
+    background: linear-gradient(135deg, #1c2228 0%, #2a3139 100%);
+    color: #d8b65d;
+    border: 3px solid #d8b65d;
+    padding: 1rem 3rem;
+    font-weight: 800;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 0.95rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(28, 34, 40, 0.3);
+    animation: fadeInUp 0.6s ease-out 1.3s both;
+}
+
+#reservationConfirmation .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(216, 182, 93, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+#reservationConfirmation .btn-primary:hover::before {
+    left: 100%;
+}
+
+#reservationConfirmation .btn-primary:hover {
+    background: linear-gradient(135deg, #d8b65d 0%, #c9a84d 100%);
+    color: #1c2228;
+    border-color: #1c2228;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(216, 182, 93, 0.5);
+}
+
+#reservationConfirmation .btn-primary:active {
+    transform: translateY(-1px) scale(1.02);
+}
+
+/* Animation de confettis (optionnel) */
+#reservationConfirmation .modal-body::after {
+    content: '★ ✦ ✧ ★ ✦ ✧';
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    color: #d8b65d;
+    opacity: 0;
+    animation: confetti 2s ease-out 0.5s;
+    letter-spacing: 1rem;
+}
+
+@keyframes confetti {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-50px) scale(0);
+    }
+    50% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(50px) scale(0.5);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #reservationConfirmation .modal-header {
+        padding: 1.5rem;
+    }
+    
+    #reservationConfirmation .modal-header::after {
+        width: 50px;
+        height: 50px;
+        font-size: 2.5rem;
+        right: 1.5rem;
+    }
+    
+    #reservationConfirmation .modal-title {
+        font-size: 1.25rem;
+        padding-right: 60px;
+    }
+    
+    #reservationConfirmation .modal-body {
+        padding: 1.5rem;
+    }
+    
+    #reservationConfirmation .modal-body h4 {
+        font-size: 1.25rem;
+    }
+    
+    #reservationConfirmation .card p strong {
+        min-width: 140px;
+        font-size: 0.8rem;
+    }
+    
+    #reservationConfirmation .btn-primary {
+        padding: 0.85rem 2rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Animation de pulsation pour attirer l'attention */
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(216, 182, 93, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 20px rgba(216, 182, 93, 0);
+    }
+}
+
+#reservationConfirmation .btn-primary {
+    animation: fadeInUp 0.6s ease-out 1.3s both, pulse 2s infinite 2s;
+}
+
+/* Bouton favoris positionné dans le coin supérieur droit de l'image */
+.favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    font-size: 1.6rem;
+    transition: transform 0.2s ease;
+}
+
+/* Couleur initiale du cœur (vide) */
+.favorite-btn i.far.fa-heart {
+    color: #fff; /* blanc pour cœur vide */
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+/* Cœur plein lorsque actif */
+.favorite-btn i.fas.fa-heart {
+    color: #d8b65d; /* couleur secondaire */
+    text-shadow: 0 0 5px rgba(0,0,0,0.7);
+    transform: scale(1.2);
+}
+
+/* Effet hover sur le bouton */
+.favorite-btn:hover i {
+    transform: scale(1.3);
+    color: #d8b65d;
+}
+
+/* Animation au clic */
+.favorite-btn.clicked i {
+    animation: pop 0.3s ease forwards;
+}
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.5); }
+    100% { transform: scale(1.2); }
+}
+
+/* Style pour les notes en étoiles dans le formulaire */
+#formAvis .form-check {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+#formAvis .form-check-label {
+    cursor: pointer;
+    padding: 8px 12px;
+    border: 2px solid #dee2e6;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+#formAvis .form-check-input:checked + .form-check-label {
+    background-color: #d8b65d;
+    color: white;
+    border-color: #d8b65d;
+}
+
+/* ========== STYLE AVIS MODERNE ========== */
+
+.avis-section {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(28, 34, 40, 0.1);
+}
+
+.avis-section h3 {
+    color: #1c2228;
+    font-weight: 700;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Bouton Donner mon avis */
+.avis-section .btn-primary {
+    background: linear-gradient(135deg, #d8b65d 0%, #c9a84d 100%);
+    border: none;
+    color: #1c2228;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(216, 182, 93, 0.2);
+}
+
+.avis-section .btn-primary:hover {
+    background: linear-gradient(135deg, #c9a84d 0%, #b8973d 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(216, 182, 93, 0.3);
+    color: #1c2228;
+}
+
+.avis-section .btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Alert Note Moyenne */
+.avis-section .alert-info {
+    background: linear-gradient(135deg, #f7f9fb 0%, #eef2f7 100%);
+    border: 2px solid #d8b65d;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 15px rgba(216, 182, 93, 0.1);
+}
+
+.avis-section .alert-info strong {
+    color: #1c2228;
+    font-size: 1.1rem;
+}
+
+.avis-section .alert-info .fs-5 {
+    color: #d8b65d;
+    font-weight: 700;
+    font-size: 1.5rem !important;
+    margin: 0 5px;
+}
+
+.avis-section .alert-info .text-warning {
+    font-size: 1.3rem;
+}
+
+.avis-section .alert-info .text-muted {
+    color: #718096 !important;
+    font-size: 0.95rem;
+}
+
+/* Liste des avis */
+.avis-list {
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.avis-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.avis-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.avis-list::-webkit-scrollbar-thumb {
+    background: #d8b65d;
+    border-radius: 10px;
+}
+
+.avis-list::-webkit-scrollbar-thumb:hover {
+    background: #c9a84d;
+}
+
+/* Carte Avis */
+.avis-list .card {
+    border: none !important;
+    border-radius: 16px !important;
+    background: #f8f9fa;
+    box-shadow: 0 4px 15px rgba(28, 34, 40, 0.08) !important;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.avis-list .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(180deg, #d8b65d 0%, #c9a84d 100%);
+}
+
+.avis-list .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(216, 182, 93, 0.2) !important;
+}
+
+.avis-list .card-body {
+    padding: 20px 20px 20px 25px;
+}
+
+/* En-tête de l'avis */
+.avis-list .card-body strong {
+    color: #1c2228;
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.avis-list .badge {
+    background: linear-gradient(135deg, #1c2228 0%, #2a3138 100%) !important;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+
+/* Étoiles */
+.avis-list .text-warning {
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.avis-list .text-dark {
+    color: #1c2228 !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+/* Commentaire */
+.avis-list .card-body p {
+    color: #4a5568;
+    line-height: 1.7;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    padding: 12px;
+    background: white;
+    border-radius: 10px;
+    border-left: 3px solid #d8b65d;
+}
+
+/* Date */
+.avis-list .text-muted {
+    color: #718096 !important;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.avis-list .text-muted i {
+    color: #d8b65d;
+}
+
+/* État vide */
+.avis-section .alert-light {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px dashed #d8b65d;
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    color: #1c2228;
+    margin-top: 20px;
+}
+
+.avis-section .alert-light::before {
+    content: "💬";
+    display: block;
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.avis-section .alert-light p {
+    font-size: 1.05rem;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .avis-section {
+        padding: 20px;
+    }
+
+    .avis-section h3 {
+        font-size: 1.5rem;
+    }
+
+    .avis-section .d-flex {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 15px;
+    }
+
+    .avis-section .btn-primary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .avis-list {
+        max-height: 400px;
+    }
+
+    .avis-list .card-body {
+        padding: 15px 15px 15px 20px;
+    }
+
+    .avis-list .d-flex {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 10px;
+    }
+}
+
+/* Animation d'apparition */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.avis-list .card {
+    animation: fadeInUp 0.4s ease-out;
+}
+/* ========== STYLE FAQ MODERNE ========== */
+
+.faq-section {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(28, 34, 40, 0.1);
+}
+
+.faq-section h3 {
+    color: #1c2228;
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 3px solid #d8b65d;
+    padding-bottom: 10px;
+}
+
+/* Liste des FAQ */
+.faq-list {
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.faq-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.faq-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.faq-list::-webkit-scrollbar-thumb {
+    background: #d8b65d;
+    border-radius: 10px;
+}
+
+.faq-list::-webkit-scrollbar-thumb:hover {
+    background: #c9a84d;
+}
+
+/* Carte FAQ */
+.faq-item {
+    background: #f8f9fa;
+    border-left: 4px solid #d8b65d !important;
+    border-radius: 12px !important;
+    padding: 20px !important;
+    margin-bottom: 1rem !important;
+    box-shadow: 0 4px 15px rgba(28, 34, 40, 0.08) !important;
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(216, 182, 93, 0.2) !important;
+    border-left-color: #1c2228 !important;
+}
+
+.faq-item .fw-bold {
+    color: #1c2228;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    position: relative;
+    padding-left: 25px;
+}
+
+.faq-item .fw-bold::before {
+    content: "Q:";
+    position: absolute;
+    left: 0;
+    color: #d8b65d;
+    font-weight: 700;
+}
+
+.faq-item p:last-child {
+    color: #4a5568;
+    line-height: 1.7;
+    padding-left: 25px;
+    position: relative;
+}
+
+.faq-item p:last-child:not(em)::before {
+    content: "R:";
+    position: absolute;
+    left: 0;
+    color: #1c2228;
+    font-weight: 700;
+}
+
+.faq-item em {
+    color: #d8b65d;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.faq-item em::before {
+    content: "⏳";
+    font-style: normal;
+}
+
+/* État vide */
+.faq-list .alert-light {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px dashed #d8b65d;
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    color: #1c2228;
+}
+
+.faq-list .alert-light::before {
+    content: "💭";
+    display: block;
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+/* Formulaire FAQ */
+.faq-section .card {
+    border: none !important;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(28, 34, 40, 0.15);
+}
+
+.faq-section .card-header {
+    background: linear-gradient(135deg, #1c2228 0%, #2a3138 100%) !important;
+    border: none;
+    padding: 20px 25px;
+}
+
+.faq-section .card-header h5 {
+    color: white;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.faq-section .card-body {
+    padding: 25px;
+    background: white;
+}
+
+.faq-section .form-control {
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.faq-section .form-control:focus {
+    border-color: #d8b65d;
+    box-shadow: 0 0 0 3px rgba(216, 182, 93, 0.15);
+    outline: none;
+}
+
+.faq-section .btn-primary {
+    background: linear-gradient(135deg, #d8b65d 0%, #c9a84d 100%);
+    border: none;
+    color: #1c2228;
+    font-weight: 600;
+    padding: 12px 30px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.faq-section .btn-primary:hover {
+    background: linear-gradient(135deg, #c9a84d 0%, #b8973d 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(216, 182, 93, 0.3);
+}
+
+.faq-section .btn-primary:active {
+    transform: translateY(0);
+}
+
+.faq-section .text-muted {
+    color: #718096 !important;
+    font-size: 0.9rem;
+    padding: 12px;
+    background: #f7fafc;
+    border-radius: 8px;
+    border-left: 3px solid #d8b65d;
+}
+
+.faq-section .text-muted::before {
+    content: "ℹ️ ";
+}
+
+/* Labels du formulaire */
+.faq-section label {
+    color: #1c2228;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .faq-section {
+        padding: 20px;
+    }
+
+    .faq-section h3 {
+        font-size: 1.5rem;
+    }
+
+    .faq-item {
+        padding: 15px !important;
+    }
+
+    .faq-list {
+        max-height: 400px;
+    }
+}
+.card-header{
+    background-color: #d8b65d;
+    border: #d8b65d;
+}
+
+
+/* ========== STYLE MODAL AVIS PROFESSIONNEL ========== */
+
+/* Fond du modal */
+#modalAvis .modal-dialog {
+    max-width: 700px;
+}
+
+#modalAvis .modal-content {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(28, 34, 40, 0.3);
+}
+
+/* Header du modal */
+#modalAvis .modal-header {
+    background: linear-gradient(135deg, #1c2228 0%, #2a3138 100%);
+    color: white;
+    padding: 25px 30px;
+    border: none;
+}
+
+#modalAvis .modal-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+}
+
+#modalAvis .modal-title i {
+    color: #d8b65d;
+    font-size: 1.6rem;
+}
+
+#modalAvis .btn-close-white {
+    filter: brightness(0) invert(1);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+#modalAvis .btn-close-white:hover {
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+/* Body du modal */
+#modalAvis .modal-body {
+    padding: 35px 30px;
+    background: #ffffff;
+}
+
+/* Système d'étoiles */
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 35px;
+    padding: 30px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #eef2f7 100%);
+    border-radius: 16px;
+    border: 2px solid #e9ecef;
+}
+
+.star-rating input[type="radio"] {
+    display: none;
+}
+
+.star-rating label {
+    cursor: pointer;
+    font-size: 2.5rem;
+    color: #cbd5e0;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.star-rating label::before {
+    content: "☆";
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #d8b65d;
+    transform: scale(1.15);
+}
+
+.star-rating input[type="radio"]:checked ~ label {
+    color: #d8b65d;
+}
+
+.star-rating input[type="radio"]:checked ~ label::before {
+    content: "★";
+}
+
+.star-rating label:hover::before,
+.star-rating label:hover ~ label::before {
+    content: "★";
+}
+
+/* Animation des étoiles */
+.star-rating label:active {
+    transform: scale(0.95);
+}
+
+/* Labels */
+#modalAvis .form-label {
+    color: #1c2228;
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#modalAvis .form-label::before {
+    content: "•";
+    color: #d8b65d;
+    font-size: 1.5rem;
+}
+
+/* Select */
+#modalAvis .form-select {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    color: #1c2228;
+    transition: all 0.3s ease;
+    background-color: white;
+    cursor: pointer;
+}
+
+#modalAvis .form-select:focus {
+    border-color: #d8b65d;
+    box-shadow: 0 0 0 4px rgba(216, 182, 93, 0.15);
+    outline: none;
+}
+
+#modalAvis .form-select:hover {
+    border-color: #d8b65d;
+}
+
+/* Textarea */
+#modalAvis .form-control {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 1rem;
+    color: #1c2228;
+    transition: all 0.3s ease;
+    resize: vertical;
+    min-height: 120px;
+}
+
+#modalAvis .form-control:focus {
+    border-color: #d8b65d;
+    box-shadow: 0 0 0 4px rgba(216, 182, 93, 0.15);
+    outline: none;
+}
+
+#modalAvis .form-control::placeholder {
+    color: #a0aec0;
+    font-style: italic;
+}
+
+/* Footer du modal */
+#modalAvis .modal-footer {
+    background: #f8f9fa;
+    padding: 20px 30px;
+    border: none;
+    gap: 12px;
+}
+
+/* Bouton Annuler */
+#modalAvis .btn-secondary {
+    background: white;
+    border: 2px solid #e2e8f0;
+    color: #1c2228;
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#modalAvis .btn-secondary:hover {
+    background: #f8f9fa;
+    border-color: #1c2228;
+    color: #1c2228;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(28, 34, 40, 0.15);
+}
+
+#modalAvis .btn-secondary:active {
+    transform: translateY(0);
+}
+
+/* Bouton Envoyer */
+#modalAvis .btn-primary {
+    background: linear-gradient(135deg, #d8b65d 0%, #c9a84d 100%);
+    border: none;
+    color: #1c2228;
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(216, 182, 93, 0.3);
+}
+
+#modalAvis .btn-primary:hover {
+    background: linear-gradient(135deg, #c9a84d 0%, #b8973d 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(216, 182, 93, 0.4);
+    color: #1c2228;
+}
+
+#modalAvis .btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Icônes des boutons */
+#modalAvis .modal-footer button i {
+    font-size: 1.1rem;
+}
+
+/* Séparateurs visuels entre sections */
+#modalAvis .mb-4 {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+/* Animation d'ouverture du modal */
+#modalAvis.fade .modal-dialog {
+    transform: scale(0.95);
+    transition: transform 0.3s ease-out;
+}
+
+#modalAvis.show .modal-dialog {
+    transform: scale(1);
+}
+
+/* Message d'aide pour les étoiles */
+.star-rating::after {
+    content: "Cliquez pour noter";
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #718096;
+    font-size: 0.85rem;
+    font-style: italic;
+    white-space: nowrap;
+}
+
+.star-rating {
+    position: relative;
+    margin-bottom: 50px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #modalAvis .modal-dialog {
+        margin: 10px;
+    }
+
+    #modalAvis .modal-header {
+        padding: 20px;
+    }
+
+    #modalAvis .modal-title {
+        font-size: 1.2rem;
+    }
+
+    #modalAvis .modal-body {
+        padding: 25px 20px;
+    }
+
+    #modalAvis .modal-footer {
+        padding: 15px 20px;
+        flex-direction: column;
+    }
+
+    #modalAvis .modal-footer button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .star-rating label {
+        font-size: 2rem;
+    }
+
+    .star-rating {
+        padding: 20px;
+        gap: 5px;
+    }
+}
+
+/* Animation de focus sur les éléments du formulaire */
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(216, 182, 93, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 4px rgba(216, 182, 93, 0.1);
+    }
+}
+
+#modalAvis .form-control:focus,
+#modalAvis .form-select:focus {
+    animation: pulse 2s ease-in-out;
+}
+
+#avis_excursion_note{
+    display: none !important;
+}
+
+#chat-widget {
+    display:none;
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    width:320px;
+    max-width:90%;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.2);
+    z-index:10000;
+    font-family:Arial,sans-serif;
+    overflow:hidden;
+    flex-direction:column;
+}
+.chat-header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#075E54;
+    color:#fff;
+    padding:10px;
+    font-weight:bold;
+}
+#close-chat {
+    background:none;
+    border:none;
+    color:#fff;
+    font-size:1rem;
+    cursor:pointer;
+}
+#chat-messages {
+    height:240px;
+    overflow-y:auto;
+    padding:10px;
+    background:#ece5dd;
+}
+.chat-footer {
+    display:flex;
+    border-top:1px solid #ccc;
+}
+#chat-input {
+    flex:1;
+    border:none;
+    padding:10px;
+}
+#send-btn {
+    background:#25D366;
+    color:#fff;
+    border:none;
+    padding:0 15px;
+    cursor:pointer;
+}
+.message-user {
+    background:#dcf8c6;
+    padding:5px 10px;
+    border-radius:10px;
+    margin-bottom:5px;
+    max-width:80%;
+    align-self:flex-end;
+}
+.message-admin {
+    background:#fff;
+    padding:5px 10px;
+    border-radius:10px;
+    margin-bottom:5px;
+    max-width:80%;
+    align-self:flex-start;
+}
+.info-box-modern .icon-circle {
+    background-color: #d8b65d; /* fond du cercle */
+    color: #2a3138; /* icône en blanc */
+}
+.btn-animated {
+    position: relative;
+    display: inline-block;
+    border: none;
+    border-radius: 27px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 12px 30px;
+    cursor: pointer;
+    overflow: hidden;
+    background: linear-gradient(270deg, #2a3138, #d8b65d, #2a3138);
+    background-size: 600% 600%;
+    animation: gradientMove 5s ease infinite;
+    transition: color 0.3s;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+/* Bouton animé primaire (Confirmer) */
+.btn-animated-primary {
+    position: relative;
+    display: inline-block;
+    border: none;
+    border-radius: 27px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 25px;
+    cursor: pointer;
+    overflow: hidden;
+    background: linear-gradient(270deg, #2a3138, #d8b65d, #2a3138);
+    background-size: 600% 600%;
+    animation: gradientMove 5s ease infinite;
+    transition: color 0.3s;
+}
+
+/* Bouton animé secondaire (Annuler) */
+.btn-animated-secondary {
+    position: relative;
+    display: inline-block;
+    border: none;
+    border-radius: 27px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 25px;
+    cursor: pointer;
+    overflow: hidden;
+    background: linear-gradient(270deg, #6c757d, #495057, #6c757d); /* gris foncé animé */
+    background-size: 600% 600%;
+    animation: gradientMove 5s ease infinite;
+    transition: color 0.3s;
+}
+
+/* Animation gradient partagé */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.step-marker span{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    background:#000;
+    color:#fff;
+    font-weight:bold;
+}
+
+.etape-box {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background-color: transparent;
+    padding-left: 90px; /* المسافة عند المرور بالماوس */
+}
+
+.etape-box:hover {
+    background-color: #f8f9fa;
+    padding-left: 100px; /* المسافة عند تحريك الماوس */
+    margin-left: -10px; /* تأثير الإزاحة */
+}
+

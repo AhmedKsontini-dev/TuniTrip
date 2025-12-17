@@ -14,6 +14,7 @@ avatar.dashboard: "Tableau de bord"
 avatar.deconnexion: "Déconnexion"
 
 # Home services
+homepage.page_title: "TuniTrip - Location de Voitures, Transferts Aéroport & Excursions en Tunisie"
 home.services.airportTransfer.title: "Transferts Aéroport"
 home.services.airportTransfer.text: "Voyagez sans stress avec nos transferts rapides et fiables depuis et vers tous les aéroports de Tunisie."
 
@@ -299,6 +300,7 @@ menu:
 
 #page-favoris
 banniere:
+    page_title: "Mes excursions favorites en Tunisie | TuniTrip"
     title: "Votre liste d'envies est vide"
     subtitle: "Retrouvez toutes vos excursions préférées et planifiez votre prochaine aventure en Tunisie."
 Card:
@@ -306,6 +308,7 @@ Card:
     subtitle: "Vous n'avez pas encore sauvegardé d'excursions. Explorez nos offres incroyables et gardez vos préférées ici pour plus tard."       
     btn: "Découvrir les excursions"
     button: "Voir les détails"
+
 
 # Authentication
 auth:
@@ -541,6 +544,7 @@ js:
     date_adjusted: "La date de retour ne peut pas être antérieure à la date de prise en charge. Elle a été ajustée."
 
 excursion:
+
   modal:
     cancellation:
       title: "Politique d'annulation"

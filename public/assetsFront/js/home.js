@@ -415,3 +415,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Tous les boutons review
+    const reviewButtons = document.querySelectorAll('.cta-button');
+
+    reviewButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Si l'utilisateur n'est pas connecté
+            if (btn.dataset.requireLogin !== undefined) {
+                // Ouvrir le modal de login
+                const loginModal = document.getElementById('loginModal'); // Assure-toi d'avoir ce modal dans le HTML
+                if (loginModal) {
+                    const modal = new bootstrap.Modal(loginModal);
+                    modal.show();
+                }
+            } else {
+                // Ouvrir le modal de review pour les utilisateurs connectés
+                const reviewModal = document.getElementById('reviewModal');
+                if (reviewModal) {
+                    reviewModal.style.display = 'block';
+                }
+            }
+        });
+    });
+});

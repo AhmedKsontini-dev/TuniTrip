@@ -16,6 +16,8 @@ avatar.deconnexion: "Logout"
 
 
 # Home services
+homepage.page_title: "TuniTrip - Car Rentals, Airport Transfers & Excursions in Tunisia"
+
 home.services.airportTransfer.title: "Airport Transfers"
 home.services.airportTransfer.text: "Travel without stress with our fast and reliable transfers to and from all airports in Tunisia."
 
@@ -299,6 +301,7 @@ menu:
 
 #page-favoris
 banniere:
+    page_title: "My favorite excursions in Tunisia | TuniTrip"
     title: "Your favorite excursion in Tunisia"
     subtitle: "Find all your favorite excursions and plan your next adventure in Tunisia."
 Card:
@@ -545,6 +548,7 @@ js:
 
 # Modal excursion details
 excursion:
+
   modal:
     cancellation:
       title: "Cancellation Policy"

@@ -1,9 +1,10 @@
 {% extends 'baseFront.html.twig' %}
 
-{% block title %}Contact TuniTrip | Agence de location en Tunisie{% endblock %}
+{% block title %}{{ 'contact.page_title'|trans }}{% endblock %}
+
 
 {% block metaDescription %}
-<meta name="description" content="Contactez TuniTrip, agence de location en Tunisie, pour réserver vos excursions, transferts et voyages sur mesure.">
+Contactez TuniTrip, agence de location en Tunisie, pour réserver vos excursions, transferts et voyages sur mesure.
 {% endblock %}
 
 {% block stylesheet %}
@@ -15,7 +16,7 @@
 <!-- === HEADER === -->
 <div class="home">
     <div class="home_content">
-        <div class="home_title">{{ 'contact.hero.title'|trans }}</div>
+        <h1 class="home_title">{{ 'contact.hero.title'|trans }}</h1>
         <p>{{ 'contact.hero.breadcrumb'|trans }}</p>
     </div>
 </div>
@@ -41,19 +42,24 @@
         </div>
     </div>
 </section>
+{# 🔔 Container UNIQUE pour flash Symfony + AJAX #}
+    <div id="contactFlashContainer">
+        {% for message in app.flashes('success') %}
+            <div class="popup-message alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
 
+        {% for message in app.flashes('error') %}
+            <div class="popup-message alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
 <!-- === FORMULAIRE SIMPLE STYLE HTML === -->
 <section class="contact_form_section">
-    <!-- Flash messages (fallback non-AJAX) -->
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success fw-semibold popup-message">{{ message }}</div>
-    {% endfor %}
-    {% for message in app.flashes('error') %}
-        <div class="alert alert-danger fw-semibold popup-message">{{ message }}</div>
-    {% endfor %}
 
     <h2>{{ 'contact.form.title'|trans }}</h2>
-
     <p class="contact_form_subtitle">
         {{ 'contact.intro.subtitle'|trans }}
     </p>

@@ -80,28 +80,5 @@ class ReservationVoitureController extends AbstractController
         ]);
     }
 
-    #[Route('/reservation-voiture/check-disponibilite', name: 'reservation_voiture_check_dispo', methods: ['POST'])]
-    public function checkDisponibilite(Request $request, ReservationVoitureRepository $repo): JsonResponse
-    {
-        $voitureId = $request->request->get('voitureId');
-        $dateDebut = new \DateTime($request->request->get('dateDebut'));
-        $dateFin = new \DateTime($request->request->get('dateFin'));
 
-        $existing = $repo->findOverlapReservation($voitureId, $dateDebut, $dateFin);
-
-        if ($existing) {
-            return new JsonResponse([
-                'available' => false,
-                'message' => sprintf(
-                    "Cette voiture n’est pas disponible du %s au %s.",
-                    $existing->getDateDebut()->format('d/m/Y'),
-                    $existing->getDateFin()->format('d/m/Y')
-                )
-            ]);
-        }
-
-        return new JsonResponse([
-            'available' => true
-        ]);
-    }
 }

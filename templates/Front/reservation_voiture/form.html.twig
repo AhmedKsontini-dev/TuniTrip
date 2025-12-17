@@ -249,7 +249,72 @@
     padding: 60px 0 110px;
 }
 
+/* Couleurs personnalisées */
+:root {
+    --primary-color: #1c2228;
+    --secondary-color: #d8b65d;
+    --white-color: #ffffff;
+}
 
+/* Contenu du modal */
+.modal-modern {
+    border-radius: 15px;
+    overflow: hidden;
+    animation: fadeInScale 0.5s ease forwards;
+    background-color: var(--white-color);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Header */
+.bg-primary-modern {
+    background: var(--primary-color);
+    color: var(--white-color);
+}
+
+.modal-header h4 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+/* Bouton */
+.btn-modern {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.btn-modern:hover {
+    background-color: #c7a852; /* nuance secondaire hover */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Liste récapitulatif réservation */
+.reservation-summary li {
+    padding: 6px 0;
+    font-size: 0.95rem;
+    border-bottom: 1px dashed #ddd;
+}
+
+.reservation-summary li:last-child {
+    border-bottom: none;
+}
+
+/* Animation */
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
 </style>
 <!-- === HEADER === -->
 <div class="home">
@@ -459,75 +524,6 @@
     </div>
   </div>
 </div>
-
-<style>
-/* Couleurs personnalisées */
-:root {
-    --primary-color: #1c2228;
-    --secondary-color: #d8b65d;
-    --white-color: #ffffff;
-}
-
-/* Contenu du modal */
-.modal-modern {
-    border-radius: 15px;
-    overflow: hidden;
-    animation: fadeInScale 0.5s ease forwards;
-    background-color: var(--white-color);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-
-/* Header */
-.bg-primary-modern {
-    background: var(--primary-color);
-    color: var(--white-color);
-}
-
-.modal-header h4 {
-    margin: 0;
-    font-size: 1.5rem;
-}
-
-/* Bouton */
-.btn-modern {
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    padding: 0.6rem 1.2rem;
-    transition: all 0.3s ease;
-}
-
-.btn-modern:hover {
-    background-color: #c7a852; /* nuance secondaire hover */
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
-/* Liste récapitulatif réservation */
-.reservation-summary li {
-    padding: 6px 0;
-    font-size: 0.95rem;
-    border-bottom: 1px dashed #ddd;
-}
-
-.reservation-summary li:last-child {
-    border-bottom: none;
-}
-
-/* Animation */
-@keyframes fadeInScale {
-    0% {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-</style>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {

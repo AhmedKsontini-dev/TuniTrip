@@ -2,17 +2,21 @@
 
 {% block title %}{{ 'excursions.list.page_title'|trans }}{% endblock %}
 
+{% block metaDescription %}
+Explorez toutes nos excursions en Tunisie avec TuniTrip : désert, mer, culture et aventure. Comparez les prix, consultez les avis et réservez votre excursion facilement.
+{% endblock %}
+
 {% block stylesheet %}
 <link rel="stylesheet" href="{{ asset('assetsFront/styles/offers_styles.css') }}">
 <link rel="stylesheet" href="{{ asset('assetsFront/styles/offers_responsive.css') }}">
-    <link rel="stylesheet" href="{{ asset('assetsFront/css/excursions_list.css') }}">
+<link rel="stylesheet" href="{{ asset('assetsFront/css/excursions_list.css') }}">
 {% endblock %}
 
 {% block body %}
 <!-- Header -->
 <div class="home">
     <div class="home_content">
-        <div class="home_title">{{ 'excursions.list.hero.title'|trans }}</div>
+        <h1 class="home_title">{{ 'excursions.list.hero.title'|trans }}</h1>
         <p>{{ 'excursions.list.hero.breadcrumb'|trans }}</p>
     </div>
 </div>
@@ -113,6 +117,10 @@
                     <div class="excursion-card">
                         <div class="excursion-image" style="background-image: url('{{ excursion.imagePrincipalePath }}');">
                             <span class="excursion-badge">{{ excursion.categorie }}</span>
+                            <img src="{{ excursion.imagePrincipalePath }}"
+                            alt="Excursion {{ excursion.titre }} en Tunisie"
+                            class="d-none">
+
 
                             {# Bouton favoris #}
                             <button class="favorite-btn require-login" 
@@ -126,7 +134,7 @@
 
                         <div class="excursion-content">
                             <div class="excursion-header">
-                                <h5 class="excursion-title">{{ excursion.titre }}</h5>
+                                <h3 class="excursion-title">{{ excursion.titre }}</h3>
                                 <div class="excursion-price">
                                     {{ excursion.prixParPersonne }} TND <span class="text-muted fs-6">{{ 'excursions.per_person'|trans }}</span>
                                 </div>

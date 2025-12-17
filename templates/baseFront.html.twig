@@ -3,9 +3,9 @@
 <head>
 <title>{% block title %} {% endblock %}</title>
 
-{% block metaDescription %}
-    <meta name="description" content="TuniTrip, agence de location en Tunisie spécialisée dans les excursions, transferts et locations touristiques.">
-{% endblock %}
+<meta name="description" content="{% block metaDescription %}
+TuniTrip, agence de location en Tunisie spécialisée dans les excursions, transferts et locations touristiques.
+{% endblock %}">
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -1530,6 +1530,7 @@ button:focus-visible {
     </div>
 
 {% block body %}
+
 
 {% endblock %}
 

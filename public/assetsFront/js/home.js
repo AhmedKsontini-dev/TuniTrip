@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(r => r.json())
                 .then(res => {
                     if (res.success) {
-                        alert('Avis envoyé avec succès !');
+                        
                         document.getElementById('reviewModal').style.display = 'none';
                         reviewForm.reset();
                         location.reload();

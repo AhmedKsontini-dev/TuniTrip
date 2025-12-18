@@ -17,8 +17,8 @@ class CalendarController extends AbstractController
     {
         $events = [];
 
-        // 1. Récupérer les réservations d'excursions
-        $resExcursions = $em->getRepository(ReservationExcursion::class)->findAll();
+        // 1. Récupérer les réservations d'excursions acceptées
+        $resExcursions = $em->getRepository(ReservationExcursion::class)->findBy(['statut' => 'acceptee']);
         foreach ($resExcursions as $res) {
             $excursionTitle = $res->getExcursion() ? $res->getExcursion()->getTitre() : 'Excursion inconnue';
             $clientName = $res->getPrenom() . ' ' . $res->getNom();
@@ -38,8 +38,8 @@ class CalendarController extends AbstractController
             ];
         }
 
-        // 2. Récupérer les réservations de voitures
-        $resVoitures = $em->getRepository(ReservationVoiture::class)->findAll();
+        // 2. Récupérer les réservations de voitures acceptées
+        $resVoitures = $em->getRepository(ReservationVoiture::class)->findBy(['statut' => 'acceptee']);
         foreach ($resVoitures as $res) {
             $voitureModel = $res->getVoiture() ? $res->getVoiture()->getModele() : 'Voiture inconnue';
             $clientName = $res->getPrenom() . ' ' . $res->getNom();

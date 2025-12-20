@@ -2,6 +2,9 @@
 
 {% block title %}{{ 'vehicles.list.title'|trans }}{% endblock %}
 
+{% block metaDescription %}
+Découvrez toutes nos voitures de location en Tunisie avec TuniTrip : compactes, berlines, SUV et vans. Comparez les prix, consultez les avis et réservez facilement votre véhicule pour vos transferts et excursions.
+{% endblock %}
 
 {% block stylesheet %}
     <link rel="stylesheet" href="{{ asset('assetsFront/css/list_voitures.css') }}">
@@ -11,7 +14,7 @@
 <!-- HERO IMAGE EN HAUT -->
 <div class="page-hero">
     <div class="page-hero_content">
-        <div class="page-hero_title">{{ 'vehicles.hero.title'|trans }}</div>
+        <h1 class="page-hero_title">{{ 'vehicles.hero.title'|trans }}</h1>
         <p>{{ 'vehicles.hero.subtitle'|trans }}</p>
     </div>
 </div>
@@ -50,7 +53,7 @@
         </div>
 
         <button type="submit" class="btn-animated-primary excursion-details-btn" aria-label="{{ 'vehicles.filter.aria_label'|trans }}">
-            <img src="{{ asset('filter.png') }}" alt="Filtrer" style="width:20px;height:18px;object-fit:contain;display:block;" />
+            <img src="{{ asset('assetsFront/images/filter.png') }}" alt="Filtrer" style="width:20px;height:18px;object-fit:contain;display:block;" />
         </button>
     </form>
 

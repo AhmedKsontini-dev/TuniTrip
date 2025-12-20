@@ -1,6 +1,6 @@
-
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("contactForm");
+    const flashContainer = document.getElementById("contactFlashContainer");
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -17,33 +17,37 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
 
             if (data.success) {
-                showPopupMessage(data.message, "success");
+                showFlash(data.message, "success");
                 form.reset();
             } else {
-                // 🔴 Message d’erreur général
-                showPopupMessage(data.message, "error");
-
-                // 🧾 Afficher les erreurs détaillées (si tu veux)
-                if (data.errors) {
-                    console.warn("Détails des erreurs :", data.errors);
-                }
+                showFlash(data.message, "error");
             }
         } catch (error) {
-            showPopupMessage("❌ Une erreur est survenue. Veuillez réessayer.", "error");
-            console.error("Erreur d’envoi :", error);
+            showFlash("❌ Une erreur est survenue. Veuillez réessayer.", "error");
+            console.error(error);
         }
     });
 
-    function showPopupMessage(message, type = "success") {
-        const msg = document.createElement("div");
-        msg.className = `alert ${type === "success" ? "alert-success" : "alert-danger"} fw-semibold popup-message`;
-        msg.innerHTML = message;
+    function showFlash(message, type) {
+        // Supprimer ancien message
+        flashContainer.innerHTML = "";
 
-        document.querySelector(".contact_form_section").appendChild(msg);
+        const flash = document.createElement("div");
+        flash.className = `popup-message ${type === "success" ? "alert-success" : "alert-danger"}`;
+        flash.textContent = message;
 
+        flashContainer.appendChild(flash);
+
+        // ⏱️ disparaît après 3 secondes
         setTimeout(() => {
-            msg.classList.add("fade-out");
-            setTimeout(() => msg.remove(), 500);
-        }, 5000);
+            flash.classList.add("fade-out");
+
+            // suppression après l’animation
+            setTimeout(() => {
+                flash.remove();
+            }, 500);
+
+        }, 3000);
     }
+
 });

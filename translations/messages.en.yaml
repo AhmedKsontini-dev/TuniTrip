@@ -16,6 +16,8 @@ avatar.deconnexion: "Logout"
 
 
 # Home services
+homepage.page_title: "TuniTrip - Car Rentals, Airport Transfers & Excursions in Tunisia"
+
 home.services.airportTransfer.title: "Airport Transfers"
 home.services.airportTransfer.text: "Travel without stress with our fast and reliable transfers to and from all airports in Tunisia."
 
@@ -299,12 +301,14 @@ menu:
 
 #page-favoris
 banniere:
+    page_title: "My favorite excursions in Tunisia | TuniTrip"
     title: "Your favorite excursion in Tunisia"
     subtitle: "Find all your favorite excursions and plan your next adventure in Tunisia."
 Card:
     title: "Your favorite List is empty"
     subtitle: "You haven't saved any excursions yet. Explore our amazing offers and save your favorites here for later."        
     btn: "Discover the excursions"
+    button: "See details"
 
 # Authentication
 auth:
@@ -533,7 +537,77 @@ form:
     date_fin: "Rental End Date"
     placeholder_email: "example@domain.com"
 
+
+# Alerte
 js:
   alert:
     required_fields: "Please fill in all required fields"
-    date_error: "The return date cannot be before the pickup date."
+    date_error: "Return date cannot be earlier than the pickup date."
+    date_adjusted: "The return date cannot be earlier than the pickup date. It has been adjusted."
+
+
+# Modal excursion details
+excursion:
+
+  modal:
+    cancellation:
+      title: "Cancellation Policy"
+      free_cancellation: "Free cancellation up to 24 hours before departure"
+      free_cancellation_details: "Get a full refund if you cancel at least 24 hours before the scheduled departure time. No refund will be provided for cancellations made less than 24 hours before departure."
+      departure_time: "Departure Time"
+      departure_time_details: "The departure time is based on the local operator's experience. Please check the departure time in your booking confirmation."
+    
+    book_now:
+      title: "Book Now, Pay Later"
+      secure_payment: "Secure Payment"
+      secure_payment_details: "Your payment information is encrypted and secure."
+      immediate_confirmation: "Instant Confirmation"
+      immediate_confirmation_details: "Receive your confirmation email immediately."
+      free_cancellation: "Free Cancellation"
+      free_cancellation_details: "Free cancellation up to 24 hours before your experience."
+      support: "24/7 Support"
+      support_details: "Our team is available to assist you anytime."
+      continue_booking: "Continue Booking"
+    
+    best_price:
+      title: "Best Price Guarantee"
+      subtitle: "We guarantee the lowest prices for our experiences"
+      guaranteed_price: "Price Guarantee"
+      guaranteed_price_details: "If you find the same package at a lower price elsewhere, we'll refund the difference."
+      special_discount: "Special Discount"
+      special_discount_details: "Get an exclusive discount by booking directly on our website."
+      no_hidden_fees: "No Hidden Fees"
+      no_hidden_fees_details: "All displayed prices include taxes and fees. No additional charges upon arrival."
+      best_rate: "Best Rate Guaranteed"
+      best_rate_details: "We offer you the best available rate online for this experience."
+      how_it_works: "How does it work?"
+      how_it_works_details: "If you find a lower price for the same experience within 24 hours of booking, contact us with the details and we'll refund the difference."
+      view_offers: "View Special Offers"
+
+common:
+  close: "Close"
+
+
+
+
+  # Flash messages
+flash:
+  success:
+    account_created: "Your account has been created successfully!"
+    login_success: "Login successful. Welcome!"
+    logout_success: "You have been successfully logged out."
+    reservation_created: "Your reservation has been created successfully."
+    favorite_added: "Added to favorites."
+    favorite_removed: "Removed from favorites."
+    profile_updated: "Your profile has been updated successfully."
+    password_updated: "Your password has been updated successfully."
+  error:
+    login_invalid: "Invalid email or password."
+    access_denied: "Access denied. Please log in."
+    form_errors: "Please correct the errors in the form."
+    reservation_error: "An error occurred while processing your reservation."
+    favorite_error: "An error occurred while updating favorites."
+  info:
+    login_required: "Please log in to perform this action."
+    cart_updated: "Your cart has been updated."
+    item_removed: "The item has been removed."

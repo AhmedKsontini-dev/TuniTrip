@@ -1,9 +1,10 @@
 {% extends 'baseFront.html.twig' %}
 
-{% block title %}TuniTrip - Location de Voitures, Transferts Aéroport & Excursions en Tunisie{% endblock %}
+{% block title %}{{ 'homepage.page_title'|trans }}{% endblock %}
+
 
 {% block metaDescription %}
-    <meta name="description" content="Découvrez la Tunisie avec TuniTrip. Réservez votre voiture de location, vos transferts aéroport et vos excursions inoubliables en quelques clics. Service 24/7 et prix compétitifs.">
+Découvrez la Tunisie avec TuniTrip. Réservez votre voiture de location, vos transferts aéroport et vos excursions inoubliables en quelques clics. Service 24/7 et prix compétitifs.
 {% endblock %}
 
 {% block stylesheet %}
@@ -13,6 +14,16 @@
 {% endblock %}
 
 {% block body %}
+<div class="flash-container">
+    {% for type in ['success', 'error', 'warning', 'info'] %}
+        {% for message in app.flashes(type) %}
+            <div class="alert alert-{{ type }} fw-semibold popup-message">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>
+
 	<div class="home">
 		
 		<!-- Home Slider -->
@@ -233,11 +244,6 @@
         </section>
         <!-- end list voiture -->
 
-
-
-
-
-
 {# Section Confort - Hero avec voiture animée #}
 <section class="car-section position-relative text-center text-white">
     <div class="car-bg"></div>
@@ -320,11 +326,6 @@
     </div>
 </section>
 
-
-
-
-
-
 <!-- B A P -->
 <section class="airport-transfer">
   <div class="transfer-container">
@@ -344,11 +345,7 @@
 
   </div>
 </section>
-
 	<!-- END B A P -->
-
-
-
         <!-- Étapes -->
         <section class="process-section">
             <div class="process-container">
@@ -384,13 +381,6 @@
             </div>
         </section>
         <!-- Fin des étapes -->
-
-
-
-
-
-	
-	
 
 	<section class="popular-locations"  id="transfers-section">
   <div class="container">
@@ -458,14 +448,6 @@
   </div>
 </section>
 
-
-
-
-
-
-
-
-
 <!-- Section Instructions Transfert -->
 <section class="propos-transfer-section">
   <div class="propos-container">
@@ -485,14 +467,8 @@
 </section>
 <!-- end Section Instructions Transfert -->
 
-
-
-
-
 <div class="excurssion-container">
     <h1 class="section-title">{{ 'home.excursions.title'|trans }}</h1>
-
-
     <div class="swiper toursSwiper">
         <div class="swiper-wrapper">
             {% for excursion in excursions %}
@@ -565,8 +541,6 @@
     </div>
 </div>
 
-
-
 <!-- Testimonials -->
 <div class="testimonials">
     <div class="container">
@@ -574,6 +548,7 @@
             <div class="col text-center">
                 <h2 class="section_title">{{ 'home.testimonials.title'|trans }}</h2>
             </div>
+            
         </div>
         <div class="row">
             <div class="col">
@@ -629,8 +604,6 @@
                     </div>
                 {% endif %}
 
-
-
             </div>
         </div>
     </div>
@@ -673,11 +646,9 @@
                     <span>{{ 'home.review.submit'|trans }}</span>
                 </button>
 
-
             </form>
         </div>
 </div>
-
 
 <!-- Modal Commentaire complet -->
 <div id="commentModal" class="review-modal-overlay" style="display: none;">
@@ -689,7 +660,6 @@
         <div id="modalDate" class="helper-text">Date</div>
     </div>
 </div>
-
 
 <!-- Contact -->
 <div class="contact-section">
@@ -767,7 +737,6 @@
     </div>
 </div>
 
-<!-- Bouton flottant pour revenir en haut -->
 
 {% endblock %}
 

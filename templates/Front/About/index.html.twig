@@ -2,14 +2,15 @@
 
 {% block title %}{{ 'about.title'|trans }} | TuniTrip{% endblock %}
 
+{% block metaDescription %}
+TuniTrip est une agence de voyages en Tunisie dédiée aux excursions, transferts touristiques et expériences authentiques. Qualité, sécurité et satisfaction client.
+{% endblock %}
+
 {% block stylesheet %}
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('assetsFront/css/about.css') }}">
 {% endblock %}
 
-{% block meta %}
-<meta name="description" content="{{ 'meta.about'|trans }}">
-{% endblock %}
 
 {% block body %}
 

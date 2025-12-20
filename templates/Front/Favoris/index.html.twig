@@ -1,9 +1,10 @@
 {% extends 'baseFront.html.twig' %}
 
-{% block title %}Mes Coups de Cœur & Excursions Favorites en Tunisie - TuniTrip{% endblock %}
+{% block title %}{{ 'banniere.page_title'|trans }}{% endblock %}
+
 
 {% block metaDescription %}
-    <meta name="description" content="Découvrez vos excursions préférées sauvegardées sur TuniTrip. Retrouvez et gérez votre liste de favoris pour planifier facilement votre prochaine aventure en Tunisie.">
+Découvrez vos excursions préférées sauvegardées sur TuniTrip. Retrouvez et gérez votre liste de favoris pour planifier facilement votre prochaine aventure en Tunisie.
 {% endblock %}
 
 {% block stylesheet %}
@@ -53,7 +54,7 @@
                             </div>
                             
                             <a href="{{ path('app_front_excursion_details', {'id': excursion.id}) }}" class="fav-btn">
-                                Voir les détails <i class="fas fa-arrow-right ml-2"></i>
+                                {{'Card.button'|trans}} <i class="fas fa-arrow-right ml-2"></i>
                             </a>
                         </div>
                     </div>

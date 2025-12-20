@@ -14,6 +14,7 @@ avatar.dashboard: "Tableau de bord"
 avatar.deconnexion: "Déconnexion"
 
 # Home services
+homepage.page_title: "TuniTrip - Location de Voitures, Transferts Aéroport & Excursions en Tunisie"
 home.services.airportTransfer.title: "Transferts Aéroport"
 home.services.airportTransfer.text: "Voyagez sans stress avec nos transferts rapides et fiables depuis et vers tous les aéroports de Tunisie."
 
@@ -299,12 +300,15 @@ menu:
 
 #page-favoris
 banniere:
+    page_title: "Mes excursions favorites en Tunisie | TuniTrip"
     title: "Votre liste d'envies est vide"
     subtitle: "Retrouvez toutes vos excursions préférées et planifiez votre prochaine aventure en Tunisie."
 Card:
     title: "Votre liste d'envies est vide"
     subtitle: "Vous n'avez pas encore sauvegardé d'excursions. Explorez nos offres incroyables et gardez vos préférées ici pour plus tard."       
     btn: "Découvrir les excursions"
+    button: "Voir les détails"
+
 
 # Authentication
 auth:
@@ -538,3 +542,68 @@ js:
     required_fields: "Veuillez remplir tous les champs obligatoires"
     date_error: "La date de retour ne peut pas être antérieure à la date de prise en charge."
     date_adjusted: "La date de retour ne peut pas être antérieure à la date de prise en charge. Elle a été ajustée."
+
+excursion:
+
+  modal:
+    cancellation:
+      title: "Politique d'annulation"
+      free_cancellation: "Annulation gratuite jusqu'à 24h avant le départ"
+      free_cancellation_details: "Bénéficiez d'un remboursement intégral si vous annulez au moins 24 heures avant l'heure de départ prévue de l'expérience. En cas d'annulation moins de 24 heures avant le départ, aucun remboursement ne sera effectué."
+      departure_time: "Heure de départ"
+      departure_time_details: "L'heure de départ est basée sur l'expérience de l'opérateur local. Veuillez vérifier l'heure de départ dans votre confirmation de réservation."
+
+    book_now:
+      title: "Réservez maintenant, payez plus tard"
+      secure_payment: "Paiement sécurisé"
+      secure_payment_details: "Vos informations de paiement sont cryptées et sécurisées."
+      immediate_confirmation: "Confirmation immédiate"
+      immediate_confirmation_details: "Recevez instantanément votre confirmation par email."
+      free_cancellation: "Annulation gratuite"
+      free_cancellation_details: "Annulation gratuite jusqu'à 24h avant votre expérience."
+      support: "Assistance 24/7"
+      support_details: "Notre équipe est disponible pour vous aider à tout moment."
+      continue_booking: "Poursuivre la réservation"
+
+    best_price:
+      title: "Garantie du Meilleur Prix"
+      subtitle: "Nous garantissons les prix les plus bas pour nos expériences"
+      guaranteed_price: "Prix Garanti"
+      guaranteed_price_details: "Si vous trouvez le même forfait à un prix inférieur ailleurs, nous vous remboursons la différence."
+      special_discount: "Réduction Spéciale"
+      special_discount_details: "Bénéficiez d'une réduction exclusive en réservant directement sur notre site."
+      no_hidden_fees: "Sans Frais Cachés"
+      no_hidden_fees_details: "Tous les prix affichés incluent les taxes et frais. Aucun frais supplémentaire à l'arrivée."
+      best_rate: "Meilleur Tarif Garanti"
+      best_rate_details: "Nous vous offrons le meilleur tarif disponible en ligne pour cette expérience."
+      how_it_works: "Comment ça marche ?"
+      how_it_works_details: "Si vous trouvez un prix inférieur pour la même expérience dans les 24 heures suivant votre réservation, contactez-nous avec les détails et nous vous rembourserons la différence."
+      view_offers: "Voir les offres spéciales"
+
+common:
+  close: "Fermer"
+
+
+
+  # Messages flash
+flash:
+  success:
+    account_created: "Votre compte a été créé avec succès !"
+    login_success: "Connexion réussie. Bienvenue !"
+    logout_success: "Vous avez été déconnecté avec succès."
+    reservation_created: "Votre réservation a été créée avec succès."
+    favorite_added: "Ajouté aux favoris."
+    favorite_removed: "Retiré des favoris."
+    profile_updated: "Votre profil a été mis à jour avec succès."
+    password_updated: "Votre mot de passe a été mis à jour avec succès."
+  error:
+    login_invalid: "Email ou mot de passe incorrect."
+    access_denied: "Accès refusé. Veuillez vous connecter."
+    form_errors: "Veuillez corriger les erreurs dans le formulaire."
+    reservation_error: "Une erreur est survenue lors de la réservation."
+    favorite_error: "Une erreur est survenue lors de la mise à jour des favoris."
+  info:
+    login_required: "Veuillez vous connecter pour effectuer cette action."
+    cart_updated: "Votre panier a été mis à jour."
+    item_removed: "L'élément a été supprimé."
+

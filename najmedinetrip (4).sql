@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 12 déc. 2025 à 00:29
+-- Généré le : ven. 19 déc. 2025 à 17:33
 -- Version du serveur : 9.1.0
 -- Version de PHP : 8.3.14
 
@@ -38,20 +38,7 @@ CREATE TABLE IF NOT EXISTS `avis` (
   `user_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_8F91ABF0A76ED395` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
-
---
--- Déchargement des données de la table `avis`
---
-
-INSERT INTO `avis` (`id`, `nom`, `prenom`, `commentaire`, `etoiles`, `date_creation`, `user_id`) VALUES
-(9, 'ahmed', 'maghrbi', 'tttttttttttttttttttttttttyyyyyyyyyyyyyyyyyyyyyyyyyyyyy', 4, '2025-11-28 12:46:32', NULL),
-(10, 'fergferg', 'LINA', 'ergzregrtgh\'rth', 5, '2025-11-30 19:12:47', NULL),
-(11, 'beji', 'amin', 'test 3', 3, '2025-12-03 10:14:36', NULL),
-(12, 'fewgfweg', 'wrgregerg', 'ergegerg', 5, '2025-12-03 10:22:43', NULL),
-(13, 'admin', 'admin', 'srgergergte', 4, '2025-12-03 10:54:28', 2),
-(14, 'admin', 'admin', 'ttt', 3, '2025-12-07 17:22:32', 2),
-(15, 'admin', 'admin', 'gdgergwrgerg', 3, '2025-12-10 20:38:15', 2);
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -71,20 +58,7 @@ CREATE TABLE IF NOT EXISTS `avis_excursion` (
   PRIMARY KEY (`id`),
   KEY `IDX_3D5DF8EE4AB4296F` (`excursion_id`),
   KEY `IDX_3D5DF8EEA76ED395` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
-
---
--- Déchargement des données de la table `avis_excursion`
---
-
-INSERT INTO `avis_excursion` (`id`, `excursion_id`, `note`, `user_id`, `commentaire`, `created_at`, `compagnon`) VALUES
-(24, 16, 4, 2, 'tt', '2025-12-04 12:48:31', 'Couples'),
-(25, 16, 2, 2, 'gfefg', '2025-12-04 12:49:50', 'Amis'),
-(26, 16, 3, 2, 'bbbb', '2025-12-04 12:50:00', 'Affaires'),
-(27, 16, 2, 2, 'bb', '2025-12-04 12:50:08', 'Famille'),
-(28, 16, 3, 2, 'oui', '2025-12-04 12:53:55', 'Couples'),
-(29, 16, 2, 2, 'hhfhf', '2025-12-06 14:54:58', 'Couples'),
-(30, 19, 5, 2, 'najmedin yatek asba', '2025-12-10 20:36:26', 'Solo');
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -100,16 +74,7 @@ CREATE TABLE IF NOT EXISTS `chat_message` (
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_FAB3FC16A76ED395` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
-
---
--- Déchargement des données de la table `chat_message`
---
-
-INSERT INTO `chat_message` (`id`, `user_id`, `message`, `created_at`) VALUES
-(13, 2, 'ahla', '2025-12-06 13:17:45'),
-(14, 2, 'cc', '2025-12-06 13:27:19'),
-(15, 2, 'sdgsdg', '2025-12-10 20:37:35');
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -127,16 +92,7 @@ CREATE TABLE IF NOT EXISTS `contact_message` (
   `date_envoi` datetime NOT NULL,
   `lus` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
-
---
--- Déchargement des données de la table `contact_message`
---
-
-INSERT INTO `contact_message` (`id`, `nom`, `email`, `sujet`, `message`, `date_envoi`, `lus`) VALUES
-(24, 'ksontini', 'sahbi@gmail.com', 'test', 'adazdazd', '2025-12-11 22:44:44', 1),
-(25, 'ksontini', 'najmedin@gmail.com', 'test', 'azfezefzef zef zef zef zef azdf zef erg sdv xcv zef sdc', '2025-12-11 23:19:17', 1),
-(26, 'ksontini', 'ahmed@gmail.com', 'test', 'fdgergergqergq', '2025-12-12 00:15:49', 0);
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -285,24 +241,7 @@ CREATE TABLE IF NOT EXISTS `faqexcursion` (
   PRIMARY KEY (`id`),
   KEY `IDX_496A5B584AB4296F` (`excursion_id`),
   KEY `IDX_496A5B58A76ED395` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
-
---
--- Déchargement des données de la table `faqexcursion`
---
-
-INSERT INTO `faqexcursion` (`id`, `excursion_id`, `question`, `reponse`, `ordre`, `user_id`) VALUES
-(12, 16, 'test', 'oui', 1, NULL),
-(13, 16, 'test', NULL, 2, NULL),
-(14, 16, 'yes', NULL, 3, NULL),
-(15, 16, 'tt', NULL, 4, NULL),
-(16, 16, 'yy', NULL, 5, NULL),
-(17, 16, 'jj', NULL, 6, NULL),
-(18, 16, 'qq', NULL, 7, NULL),
-(19, 16, 'jj', NULL, 8, 2),
-(20, 16, 'hh', NULL, 9, NULL),
-(21, 16, 'bb', NULL, 10, NULL),
-(22, 19, 'sdfbewdfewdgw', NULL, 1, NULL);
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -319,15 +258,15 @@ CREATE TABLE IF NOT EXISTS `favori` (
   PRIMARY KEY (`id`),
   KEY `IDX_EF85A2CCA76ED395` (`user_id`),
   KEY `IDX_EF85A2CC4AB4296F` (`excursion_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Déchargement des données de la table `favori`
 --
 
 INSERT INTO `favori` (`id`, `user_id`, `excursion_id`, `date_ajout`) VALUES
-(10, 2, 14, '2025-12-03 20:53:59'),
-(11, 2, 16, '2025-12-05 14:18:58');
+(20, 2, 18, '2025-12-18 20:57:59'),
+(21, 2, 19, '2025-12-18 20:58:01');
 
 -- --------------------------------------------------------
 
@@ -499,7 +438,7 @@ CREATE TABLE IF NOT EXISTS `messenger_messages` (
   KEY `IDX_75EA56E0FB7336F0` (`queue_name`),
   KEY `IDX_75EA56E0E3BD61CE` (`available_at`),
   KEY `IDX_75EA56E016BA31DB` (`delivered_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Déchargement des données de la table `messenger_messages`
@@ -520,7 +459,10 @@ INSERT INTO `messenger_messages` (`id`, `body`, `headers`, `queue_name`, `create
 (12, 'O:36:\\\"Symfony\\\\Component\\\\Messenger\\\\Envelope\\\":2:{s:44:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0stamps\\\";a:1:{s:46:\\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\\";a:1:{i:0;O:46:\\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\\":1:{s:55:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\0busName\\\";s:21:\\\"messenger.bus.default\\\";}}}s:45:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0message\\\";O:51:\\\"Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\\":2:{s:60:\\\"\\0Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\0message\\\";O:28:\\\"Symfony\\\\Component\\\\Mime\\\\Email\\\":6:{i:0;N;i:1;N;i:2;s:1650:\\\"<!DOCTYPE html>\n<html>\n<head>\n    <meta charset=\\\"UTF-8\\\">\n    <title>Confirmation de réservation d\\\'excursion</title>\n</head>\n<body style=\\\"font-family: Arial, sans-serif; color: #333;\\\">\n    <div style=\\\"max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; padding: 20px;\\\">\n        <h2 style=\\\"color: #d8b65d; text-align: center;\\\">TuniTrip - Confirmation</h2>\n        \n        <p>Bonjour <strong>ahmed ksontini</strong>,</p>\n        \n        <p>Nous avons le plaisir de vous confirmer votre réservation pour l\\\'excursion <strong>Visite Privée et Guidée à Kairouan et El Jem et Monastir</strong> ! ', '[]', 'default', '2025-12-11 17:18:27', '2025-12-11 17:18:27', NULL),
 (13, 'O:36:\\\"Symfony\\\\Component\\\\Messenger\\\\Envelope\\\":2:{s:44:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0stamps\\\";a:1:{s:46:\\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\\";a:1:{i:0;O:46:\\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\\":1:{s:55:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\0busName\\\";s:21:\\\"messenger.bus.default\\\";}}}s:45:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0message\\\";O:51:\\\"Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\\":2:{s:60:\\\"\\0Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\0message\\\";O:28:\\\"Symfony\\\\Component\\\\Mime\\\\Email\\\":6:{i:0;s:265:\\\"Bonjour ahmed ksontini,\n\nVotre réservation de transfert avec TuniTrip a été confirmée.\n\nDétails :\nDate : 11/12/2025\nHeure : 22:38\nDépart : Enfidha Airport\nArrivée : Hammamet\nPersonnes : 2\nPrix total : 40 €\n\nMerci pour votre confiance.\n– Équipe TuniTrip\n\\\";i:1;s:5:\\\"utf-8\\\";i:2;s:570:\\\"<p>Bonjour ahmed ksontini,</p>\n\n<p>Votre réservation de transfert avec <strong>TuniTrip</strong> a été <strong>confirmée</strong> ! ', '[]', 'default', '2025-12-11 22:30:15', '2025-12-11 22:30:15', NULL),
 (14, 'O:36:\\\"Symfony\\\\Component\\\\Messenger\\\\Envelope\\\":2:{s:44:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0stamps\\\";a:1:{s:46:\\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\\";a:1:{i:0;O:46:\\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\\":1:{s:55:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\0busName\\\";s:21:\\\"messenger.bus.default\\\";}}}s:45:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0message\\\";O:51:\\\"Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\\":2:{s:60:\\\"\\0Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\0message\\\";O:28:\\\"Symfony\\\\Component\\\\Mime\\\\Email\\\":6:{i:0;N;i:1;N;i:2;s:1294:\\\"<!DOCTYPE html>\n<html>\n<head>\n    <meta charset=\\\"UTF-8\\\">\n    <title>Confirmation de Réservation</title>\n</head>\n<body style=\\\"font-family: Arial, sans-serif; color: #333;\\\">\n    <div style=\\\"max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee;\\\">\n        <h2 style=\\\"color: #d32f2f; text-align: center;\\\">TuniTrip - Réservation Confirmée ', '[]', 'default', '2025-12-11 22:30:36', '2025-12-11 22:30:36', NULL),
-(15, 'O:36:\\\"Symfony\\\\Component\\\\Messenger\\\\Envelope\\\":2:{s:44:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0stamps\\\";a:1:{s:46:\\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\\";a:1:{i:0;O:46:\\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\\":1:{s:55:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\0busName\\\";s:21:\\\"messenger.bus.default\\\";}}}s:45:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0message\\\";O:51:\\\"Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\\":2:{s:60:\\\"\\0Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\0message\\\";O:28:\\\"Symfony\\\\Component\\\\Mime\\\\Email\\\":6:{i:0;N;i:1;N;i:2;s:1650:\\\"<!DOCTYPE html>\n<html>\n<head>\n    <meta charset=\\\"UTF-8\\\">\n    <title>Confirmation de réservation d\\\'excursion</title>\n</head>\n<body style=\\\"font-family: Arial, sans-serif; color: #333;\\\">\n    <div style=\\\"max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; padding: 20px;\\\">\n        <h2 style=\\\"color: #d8b65d; text-align: center;\\\">TuniTrip - Confirmation</h2>\n        \n        <p>Bonjour <strong>ahmed ksontini</strong>,</p>\n        \n        <p>Nous avons le plaisir de vous confirmer votre réservation pour l\\\'excursion <strong>Visite Privée et Guidée à Kairouan et El Jem et Monastir</strong> ! ', '[]', 'default', '2025-12-11 22:30:55', '2025-12-11 22:30:55', NULL);
+(15, 'O:36:\\\"Symfony\\\\Component\\\\Messenger\\\\Envelope\\\":2:{s:44:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0stamps\\\";a:1:{s:46:\\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\\";a:1:{i:0;O:46:\\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\\":1:{s:55:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\0busName\\\";s:21:\\\"messenger.bus.default\\\";}}}s:45:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0message\\\";O:51:\\\"Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\\":2:{s:60:\\\"\\0Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\0message\\\";O:28:\\\"Symfony\\\\Component\\\\Mime\\\\Email\\\":6:{i:0;N;i:1;N;i:2;s:1650:\\\"<!DOCTYPE html>\n<html>\n<head>\n    <meta charset=\\\"UTF-8\\\">\n    <title>Confirmation de réservation d\\\'excursion</title>\n</head>\n<body style=\\\"font-family: Arial, sans-serif; color: #333;\\\">\n    <div style=\\\"max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; padding: 20px;\\\">\n        <h2 style=\\\"color: #d8b65d; text-align: center;\\\">TuniTrip - Confirmation</h2>\n        \n        <p>Bonjour <strong>ahmed ksontini</strong>,</p>\n        \n        <p>Nous avons le plaisir de vous confirmer votre réservation pour l\\\'excursion <strong>Visite Privée et Guidée à Kairouan et El Jem et Monastir</strong> ! ', '[]', 'default', '2025-12-11 22:30:55', '2025-12-11 22:30:55', NULL),
+(16, 'O:36:\\\"Symfony\\\\Component\\\\Messenger\\\\Envelope\\\":2:{s:44:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0stamps\\\";a:1:{s:46:\\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\\";a:1:{i:0;O:46:\\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\\":1:{s:55:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\0busName\\\";s:21:\\\"messenger.bus.default\\\";}}}s:45:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0message\\\";O:51:\\\"Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\\":2:{s:60:\\\"\\0Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\0message\\\";O:28:\\\"Symfony\\\\Component\\\\Mime\\\\Email\\\":6:{i:0;N;i:1;N;i:2;s:1650:\\\"<!DOCTYPE html>\n<html>\n<head>\n    <meta charset=\\\"UTF-8\\\">\n    <title>Confirmation de réservation d\\\'excursion</title>\n</head>\n<body style=\\\"font-family: Arial, sans-serif; color: #333;\\\">\n    <div style=\\\"max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 8px; padding: 20px;\\\">\n        <h2 style=\\\"color: #d8b65d; text-align: center;\\\">TuniTrip - Confirmation</h2>\n        \n        <p>Bonjour <strong>ahmed ksontini</strong>,</p>\n        \n        <p>Nous avons le plaisir de vous confirmer votre réservation pour l\\\'excursion <strong>Visite Privée et Guidée à Kairouan et El Jem et Monastir</strong> ! ', '[]', 'default', '2025-12-18 22:21:56', '2025-12-18 22:21:56', NULL),
+(17, 'O:36:\\\"Symfony\\\\Component\\\\Messenger\\\\Envelope\\\":2:{s:44:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0stamps\\\";a:1:{s:46:\\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\\";a:1:{i:0;O:46:\\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\\":1:{s:55:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\0busName\\\";s:21:\\\"messenger.bus.default\\\";}}}s:45:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0message\\\";O:51:\\\"Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\\":2:{s:60:\\\"\\0Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\0message\\\";O:28:\\\"Symfony\\\\Component\\\\Mime\\\\Email\\\":6:{i:0;N;i:1;N;i:2;s:1295:\\\"<!DOCTYPE html>\n<html>\n<head>\n    <meta charset=\\\"UTF-8\\\">\n    <title>Confirmation de Réservation</title>\n</head>\n<body style=\\\"font-family: Arial, sans-serif; color: #333;\\\">\n    <div style=\\\"max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee;\\\">\n        <h2 style=\\\"color: #d32f2f; text-align: center;\\\">TuniTrip - Réservation Confirmée ', '[]', 'default', '2025-12-18 22:26:53', '2025-12-18 22:26:53', NULL),
+(18, 'O:36:\\\"Symfony\\\\Component\\\\Messenger\\\\Envelope\\\":2:{s:44:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0stamps\\\";a:1:{s:46:\\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\\";a:1:{i:0;O:46:\\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\\":1:{s:55:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\0busName\\\";s:21:\\\"messenger.bus.default\\\";}}}s:45:\\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0message\\\";O:51:\\\"Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\\":2:{s:60:\\\"\\0Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\0message\\\";O:28:\\\"Symfony\\\\Component\\\\Mime\\\\Email\\\":6:{i:0;s:263:\\\"Bonjour ahmed ksontini,\n\nVotre réservation de transfert avec TuniTrip a été confirmée.\n\nDétails :\nDate : 24/12/2025\nHeure : 01:30\nDépart : Enfidha Airport\nArrivée : Sousse\nPersonnes : 4\nPrix total : 60 €\n\nMerci pour votre confiance.\n– Équipe TuniTrip\n\\\";i:1;s:5:\\\"utf-8\\\";i:2;s:568:\\\"<p>Bonjour ahmed ksontini,</p>\n\n<p>Votre réservation de transfert avec <strong>TuniTrip</strong> a été <strong>confirmée</strong> ! ', '[]', 'default', '2025-12-18 22:30:19', '2025-12-18 22:30:19', NULL);
 
 -- --------------------------------------------------------
 
@@ -571,15 +513,14 @@ CREATE TABLE IF NOT EXISTS `reservation_excursion` (
   `tel` varchar(20) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_814F86B04AB4296F` (`excursion_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Déchargement des données de la table `reservation_excursion`
 --
 
 INSERT INTO `reservation_excursion` (`id`, `excursion_id`, `nom`, `prenom`, `adult`, `child`, `date_heure`, `localisation_point`, `date_creation`, `statut`, `prix_total`, `email`, `tel`) VALUES
-(10, 19, 'ksontini', 'ahmed', 1, 1, '2025-12-11 17:14:00', 'hammamet', '2025-12-11 17:15:13', 'annulee', 216, 'ahmed@gmail', '+216 93313278'),
-(11, 19, 'ksontini', 'ahmed', 1, 2, '2025-12-11 22:36:00', 'hammamet', '2025-12-11 19:34:40', 'confirmee', 312, 'ahmed@gmail.com', '+216 93313278');
+(29, 19, 'ksontini', 'ahmed', 1, 1, '2025-12-28 02:24:00', 'hammamet', '2025-12-18 22:21:31', 'confirmee', 216, 'ahmed@gmail.com', '+216 93313278');
 
 -- --------------------------------------------------------
 
@@ -613,21 +554,14 @@ CREATE TABLE IF NOT EXISTS `reservation_transfert` (
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_409CD24556A9926` (`trajet_transfert_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Déchargement des données de la table `reservation_transfert`
 --
 
 INSERT INTO `reservation_transfert` (`id`, `trajet_transfert_id`, `pickup_date`, `pickup_time`, `pickup_location`, `dropoff_location`, `transfer_type`, `persons`, `return_pickup_date`, `return_pickup_time`, `return_pickup_location`, `return_dropoff_location`, `first_name`, `last_name`, `email`, `tel`, `whatsapp_number`, `flight_number`, `comments`, `prix_total`, `statut`, `created_at`) VALUES
-(4, 12, '2025-11-20 00:00:00', '00:01:00', 'Enfidha Airport', 'Sfax', 'return', 4, '2025-11-29 00:00:00', '00:01:00', 'Sfax', 'Enfidha Airport', 'ahmed', 'ksontini', 'ahmedksontini@hmail.com', '12234234', '12323124', '234234', 'teeesstt', 180.00, 'confirmee', '2025-11-11 11:22:39'),
-(19, 3, '2025-11-29 00:00:00', '17:17:00', 'Tunis Carthage Airport', 'Tunis', 'one_way', 2, '2025-12-06 00:00:00', '19:19:00', NULL, NULL, 'ahmed', 'ksontini', 'ahmedksontini@hmail.com', '12234234', '12323124', '234234', NULL, 40.00, 'en_attente', '2025-11-25 14:18:45'),
-(20, 3, '2025-11-29 00:00:00', '17:17:00', 'Tunis Carthage Airport', 'Tunis', 'return', 2, '2025-12-06 00:00:00', '19:19:00', 'Tunis', 'Tunis Carthage Airport', 'ahmed', 'ksontini', 'ahmedksontini@hmail.com', '12234234', '12323124', '234234', NULL, 80.00, 'en_attente', '2025-11-25 14:18:54'),
-(27, 4, '2025-12-27 00:00:00', '17:54:00', 'Tunis Carthage Airport', 'Sousse', 'one_way', 5, NULL, NULL, NULL, NULL, 'ahmed', 'ksontini', 'ahmedksontini@hmail.com', '12234234', '12323124', '234234', NULL, 140.00, 'en_attente', '2025-12-06 14:51:31'),
-(28, 11, '2025-12-17 00:00:00', '23:30:00', 'Enfidha Airport', 'Monastir', 'return', 4, '2025-12-26 00:00:00', '23:31:00', NULL, NULL, 'ahmed', 'ksontini', 'ahmedksontini@hmail.com', '93313278', '12323124', '234234', 'gfgdgdgdfgb', 180.00, 'annulee', '2025-12-10 20:28:45'),
-(29, 5, '2025-12-18 00:00:00', '22:48:00', 'Tunis Carthage Airport', 'Monastir', 'return', 2, '2025-12-27 00:00:00', '23:48:00', NULL, NULL, 'ahmed', 'ksontini', 'ahmedksontini@hmail.com', '93313278', '12323124', '234234', NULL, 180.00, 'confirmee', '2025-12-10 20:45:33'),
-(30, 2, '2025-12-13 00:00:00', '02:11:00', 'Tunis Carthage Airport', 'Hammamet', 'one_way', 1, NULL, NULL, NULL, NULL, 'ahmed', 'ksontini', 'ahmedksontini560@gmail.com', '93313278', '12323124', '234234', NULL, 120.00, 'en_attente', '2025-12-11 00:09:11'),
-(31, 8, '2025-12-11 00:00:00', '22:38:00', 'Enfidha Airport', 'Hammamet', 'one_way', 2, NULL, NULL, NULL, NULL, 'ahmed', 'ksontini', 'ahmedksontini@hmail.com', '93313278', '12323124', '234234', 'hvjjkh', 40.00, 'confirmee', '2025-12-11 19:35:23');
+(39, 10, '2025-12-24 00:00:00', '01:30:00', 'Enfidha Airport', 'Sousse', 'one_way', 4, NULL, NULL, NULL, NULL, 'ahmed', 'ksontini', 'ahmedksontini@hmail.com', '93313278', '12323124', '234234', NULL, 60.00, 'confirmee', '2025-12-18 22:29:24');
 
 -- --------------------------------------------------------
 
@@ -660,16 +594,14 @@ CREATE TABLE IF NOT EXISTS `reservation_voiture` (
   `statut` varchar(20) COLLATE utf8mb3_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_8E773A8A181A8BA` (`voiture_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Déchargement des données de la table `reservation_voiture`
 --
 
 INSERT INTO `reservation_voiture` (`id`, `voiture_id`, `nom`, `prenom`, `date_naissance`, `lieu_naissance`, `nationalite`, `adresse`, `tel`, `num_cin_passport`, `cin_delivre_le`, `num_permis`, `permis_delivre_le`, `permis_lieu_delivrance`, `created_at`, `updated_at`, `date_debut`, `date_fin`, `prix_total`, `email`, `statut`) VALUES
-(29, 6, 'ksontini', 'ahmed', '2007-11-29', 'nabeul', 'tunisien', 'rue taher ben fraj', '93313278', '12546', '2025-12-17', '2591951', '2023-12-08', 'hammaet', '2025-12-11 15:04:47', '2025-12-11 15:04:47', '2025-12-18', '2025-12-20', 360, 'ahmedksontini@gmail.com', 'confirmee'),
-(30, 6, 'ksontini', 'ahmed', '2007-12-07', 'nabeul', 'tunisien', 'rue taher ben fraj', '93313278', '12546', '2025-12-11', '2591951', '2023-12-07', 'hammaet', '2025-12-11 15:18:01', '2025-12-11 15:18:01', '2025-12-18', '2025-12-20', 360, 'ahmedksontini@gmail.com', 'annulee'),
-(31, 6, 'ksontini', 'ahmed', '2007-12-06', 'nabeul', 'tunisien', 'rue taher ben fraj', '93313278', '12546', '2025-12-11', '2591951', '2023-12-05', 'hammaet', '2025-12-11 19:32:30', '2025-12-11 19:32:30', '2025-12-11', '2025-12-20', 1620, 'ahmedksontini@gmail.com', 'confirmee');
+(44, 2, 'ksontini', 'ahmed', '2007-12-14', 'nabeul', 'tunisien', 'rue taher ben fraj', '93313278', '12546', '2025-12-12', '2591951', '2023-12-08', 'hammaet', '2025-12-18 22:26:27', '2025-12-18 22:26:27', '2025-12-19', '2025-12-21', 360, 'ahmedksontini@gmail.com', 'confirmee');
 
 -- --------------------------------------------------------
 
@@ -732,10 +664,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `roles`, `password`, `nom`, `prenom`, `adresse`, `tel`) VALUES
-(2, 'admin@gmail.com', '[\"ROLE_ADMIN\"]', '$2y$13$Iwcysy2IY8K1uVLaILqWqueIACCDK7rg740socDWeSfWXJZTAzvz6', 'admin', 'admin', 'rue taher ben fraj', '93313278'),
-(5, 'nidhal@gmail.com', '[]', '$2y$13$hZs54RWLu5WCbTNRgGNYh.xT.hFe5FuvXHz4aS7UrkflsCcuCHykO', 'nidhal', 'safta', 'rue taher ben fraj', '93313278'),
-(7, 'ahmedksontini122@gmail.com', '[]', '$2y$13$bBfzw049vW.ORSf.qxLAjOAeFCS6Gn9zYUkcX382.04zxJLbT/0Gy', 'kson', 'kson', 'rue taher ben fraj', '93313278'),
-(8, 'ahmedksontini@gmail.com', '[]', '$2y$13$51u5ZLRqSscgD22KH3HZ.e15N6R9gGLDAQLVXvP0feVC.zYMwPHRO', 'habibi', 'med', 'rue taher ben fraj', '93313278');
+(2, 'admin@gmail.com', '[\"ROLE_ADMIN\"]', '$2y$13$Iwcysy2IY8K1uVLaILqWqueIACCDK7rg740socDWeSfWXJZTAzvz6', 'admin', 'admin', 'rue taher ben fraj', '93313278');
 
 -- --------------------------------------------------------
 

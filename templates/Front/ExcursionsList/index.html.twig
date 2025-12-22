@@ -10,6 +10,32 @@ Explorez toutes nos excursions en Tunisie avec TuniTrip : désert, mer, culture 
 <link rel="stylesheet" href="{{ asset('assetsFront/styles/offers_styles.css') }}">
 <link rel="stylesheet" href="{{ asset('assetsFront/styles/offers_responsive.css') }}">
 <link rel="stylesheet" href="{{ asset('assetsFront/css/excursions_list.css') }}">
+<style>
+.pagination {
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+}
+.pagination .page-item .page-link {
+    color: #d8b65d; /* gold color */
+    border: none;
+    background-color: transparent;
+}
+.pagination .page-item.active .page-link {
+    background-color: #d8b65d;
+    color: black;
+    font-weight: bold;
+    border-radius: 8px;
+}
+.pagination .page-item.disabled .page-link {
+    color: #555;
+    pointer-events: none;
+}
+.pagination .page-item .page-link:hover {
+    color: black;
+    background-color: #d8b65d;
+    text-decoration: none;
+}
+</style>
 {% endblock %}
 
 {% block body %}
@@ -37,7 +63,7 @@ Explorez toutes nos excursions en Tunisie avec TuniTrip : désert, mer, culture 
 
                 <form method="get" action="{{ path('app_front_excursions_list') }}">
 
-                    <!-- CatÃ©gorie -->
+                    <!-- Catégorie -->
                     <div class="filter-group">
                         <label for="categorie">{{ 'excursions.list.filters.category'|trans }}</label>
                         <select name="categorie" id="categorie" class="theme-input">
@@ -163,7 +189,33 @@ Explorez toutes nos excursions en Tunisie avec TuniTrip : désert, mer, culture 
 
 
         </div>
+
     </div>
+
+    {% if totalPages > 1 %}
+        <nav aria-label="Page navigation" class="mt-3">
+            <ul class="pagination justify-content-center">
+                <li class="page-item {% if currentPage == 1 %}disabled{% endif %}">
+                    <a class="page-link" href="{{ path('app_front_excursions_list', app.request.query.all|merge({'page': currentPage - 1})) }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                {% for page in 1..totalPages %}
+                    <li class="page-item {% if page == currentPage %}active{% endif %}">
+                        <a class="page-link" href="{{ path('app_front_excursions_list', app.request.query.all|merge({'page': page})) }}">{{ page }}</a>
+                    </li>
+                {% endfor %}
+
+                <li class="page-item {% if currentPage == totalPages %}disabled{% endif %}">
+                    <a class="page-link" href="{{ path('app_front_excursions_list', app.request.query.all|merge({'page': currentPage + 1})) }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+</div>
 </div>
 {% endblock %}
 

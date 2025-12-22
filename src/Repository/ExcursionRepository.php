@@ -40,7 +40,9 @@ class ExcursionRepository extends ServiceEntityRepository
         ?string $duree,
         ?int $rating,
         ?string $langue,
-        ?int $maxPers
+        ?int $maxPers,
+        ?int $limit = null,
+        ?int $offset = null
     )
     {
         $qb = $this->createQueryBuilder('e')
@@ -94,6 +96,14 @@ class ExcursionRepository extends ServiceEntityRepository
             $qb->groupBy('e.id')
                ->having('AVG(av.note) >= :rating')
                ->setParameter('rating', $rating);
+        }
+
+        if ($limit !== null) {
+            $qb->setMaxResults($limit);
+        }
+
+        if ($offset !== null) {
+            $qb->setFirstResult($offset);
         }
 
         return $qb->getQuery()->getResult();

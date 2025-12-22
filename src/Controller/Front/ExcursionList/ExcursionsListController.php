@@ -25,7 +25,11 @@ final class ExcursionsListController extends AbstractController
         $rating = $rating !== null && $rating !== '' ? (int) $rating : null;
         $nbrPersonnes = $nbrPersonnes !== null && $nbrPersonnes !== '' ? (int) $nbrPersonnes : null;
 
-        // 🔽 Récupère toutes les excursions avec filtres
+        $page = max(1, (int) $request->query->get('page', 1));
+        $limit = 2;
+        $offset = ($page - 1) * $limit;
+
+        // 🔽 Récupère les excursions paginées avec filtres
         $excursions = $excursionRepository->findByFilters(
             $localisation,
             $categorie,
@@ -33,13 +37,13 @@ final class ExcursionsListController extends AbstractController
             $duree,
             $rating,
             $langue,
-            $nbrPersonnes
+            $nbrPersonnes,
+            $limit,
+            $offset
         );
 
         // 🔽 Définir l'image principale pour Twig via une propriété virtuelle (optionnelle)
-        // Ici on n'utilise pas setMainImagePath(), mais Twig fera l'affichage
         foreach ($excursions as $excursion) {
-            // Si tu veux une propriété temporaire, tu peux la définir ainsi :
             $imagePrincipale = $excursion->getImagePrincipale();
             $excursion->imagePrincipalePath = $imagePrincipale 
                 ? '/uploads/images/' . $imagePrincipale
@@ -56,11 +60,26 @@ final class ExcursionsListController extends AbstractController
             $userFavorisIds = $user->getFavoris()->map(fn($f) => $f->getExcursion()->getId())->toArray();
         }
 
+        // 🔽 Calculer le nombre total d'excursions pour pagination
+        $totalExcursions = count($excursionRepository->findByFilters(
+            $localisation,
+            $categorie,
+            $prix,
+            $duree,
+            $rating,
+            $langue,
+            $nbrPersonnes
+        ));
+
+        $totalPages = (int) ceil($totalExcursions / $limit);
+
         return $this->render('Front/ExcursionsList/index.html.twig', [
             'excursions' => $excursions,
             'localisations' => $localisations,
             'categories' => $categories,
-            'userFavorisIds' => $userFavorisIds, // <-- envoyer à Twig
+            'userFavorisIds' => $userFavorisIds,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
         ]);
     }
 }

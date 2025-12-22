@@ -43,68 +43,87 @@ class ExcursionRepository extends ServiceEntityRepository
         ?int $maxPers,
         ?int $limit = null,
         ?int $offset = null
-    )
-    {
-        $qb = $this->createQueryBuilder('e')
-            ->leftJoin('e.images', 'img')      // Charge les images
-            ->addSelect('img')
-            ->leftJoin('e.inclusList', 'inc')  // Charge inclus
-            ->addSelect('inc')
-            ->leftJoin('e.nonInclusList', 'ninc') // Charge non inclus
-            ->addSelect('ninc')
-            ->leftJoin('e.itineraires', 'it')  // Charge itinéraires
-            ->addSelect('it')
-            ->leftJoin('e.avis', 'av')        // Pour filtrer sur la note moyenne
-            ->addSelect('av')
-            ->where('e.actif = true')
-            ->orderBy('e.createdAt', 'DESC');
+    ) {
+        // D'abord, on récupère les IDs des excursions qui correspondent aux critères
+        $subQb = $this->createQueryBuilder('e')
+            ->select('e.id')
+            ->where('e.actif = true');
 
         if ($localisation) {
-            $qb->andWhere('e.localisation = :loc')
-               ->setParameter('loc', $localisation);
+            $subQb->andWhere('e.localisation = :loc')
+                ->setParameter('loc', $localisation);
         }
 
         if ($categorie) {
-            $qb->andWhere('e.categorie = :cat')
-               ->setParameter('cat', $categorie);
+            $subQb->andWhere('e.categorie = :cat')
+                ->setParameter('cat', $categorie);
         }
 
         if ($prix) {
-            $qb->andWhere('ABS(e.prixParPersonne) <= :prix')
-               ->setParameter('prix', $prix);
+            $subQb->andWhere('ABS(e.prixParPersonne) <= :prix')
+                ->setParameter('prix', $prix);
         }
 
         if ($duree) {
-            // On filtre simplement sur la valeur de la colonne duree ("1", "2", "3", "4+", ...)
-            $qb->andWhere('e.duree = :duree')
-               ->setParameter('duree', $duree);
+            $subQb->andWhere('e.duree = :duree')
+                ->setParameter('duree', $duree);
         }
 
         if ($langue) {
-            // Le champ "guide" peut contenir le code langue (fr, en, ...)
-            $qb->andWhere('e.guide = :langue')
-               ->setParameter('langue', $langue);
+            $subQb->andWhere('e.guide = :langue')
+                ->setParameter('langue', $langue);
         }
 
         if ($maxPers) {
-            $qb->andWhere('e.maxPers <= :maxPers')
-               ->setParameter('maxPers', $maxPers);
+            $subQb->andWhere('e.maxPers <= :maxPers')
+                ->setParameter('maxPers', $maxPers);
         }
 
+        // Si on a un filtre de note, on applique une sous-requête
         if ($rating) {
-            // Filtrer les excursions dont la moyenne des notes est >= rating
-            $qb->groupBy('e.id')
-               ->having('AVG(av.note) >= :rating')
-               ->setParameter('rating', $rating);
+            $subQb->andWhere(
+                $subQb->expr()->gte(
+                    $this->createQueryBuilder('e2')
+                        ->select('AVG(av2.note)')
+                        ->leftJoin('e2.avis', 'av2')
+                        ->where('e2.id = e.id')
+                        ->getDQL(),
+                    ':rating'
+                )
+            )->setParameter('rating', $rating);
         }
 
+        // On applique la pagination sur la sous-requête
         if ($limit !== null) {
-            $qb->setMaxResults($limit);
+            $subQb->setMaxResults($limit);
         }
 
         if ($offset !== null) {
-            $qb->setFirstResult($offset);
+            $subQb->setFirstResult($offset);
         }
+
+        $excursionIds = array_column($subQb->getQuery()->getScalarResult(), 'id');
+
+        // Si aucun résultat, on retourne un tableau vide
+        if (empty($excursionIds)) {
+            return [];
+        }
+
+        // Ensuite, on récupère les excursions complètes avec toutes les relations
+        $qb = $this->createQueryBuilder('e')
+            ->leftJoin('e.images', 'img')
+            ->addSelect('img')
+            ->leftJoin('e.inclusList', 'inc')
+            ->addSelect('inc')
+            ->leftJoin('e.nonInclusList', 'ninc')
+            ->addSelect('ninc')
+            ->leftJoin('e.itineraires', 'it')
+            ->addSelect('it')
+            ->leftJoin('e.avis', 'av')
+            ->addSelect('av')
+            ->where('e.id IN (:ids)')
+            ->setParameter('ids', $excursionIds)
+            ->orderBy('e.createdAt', 'DESC');
 
         return $qb->getQuery()->getResult();
     }
@@ -137,5 +156,58 @@ class ExcursionRepository extends ServiceEntityRepository
                 ->getScalarResult(),
             'categorie'
         );
+    }
+
+    public function countByFilters(
+        ?string $localisation,
+        ?string $categorie,
+        ?float $prix,
+        ?string $duree,
+        ?int $rating,
+        ?string $langue,
+        ?int $maxPers
+    ): int {
+        $qb = $this->createQueryBuilder('e')
+            ->select('COUNT(DISTINCT e.id)')
+            ->where('e.actif = true');
+
+        if ($localisation) {
+            $qb->andWhere('e.localisation = :loc')
+            ->setParameter('loc', $localisation);
+        }
+
+        if ($categorie) {
+            $qb->andWhere('e.categorie = :cat')
+            ->setParameter('cat', $categorie);
+        }
+
+        if ($prix) {
+            $qb->andWhere('ABS(e.prixParPersonne) <= :prix')
+            ->setParameter('prix', $prix);
+        }
+
+        if ($duree) {
+            $qb->andWhere('e.duree = :duree')
+            ->setParameter('duree', $duree);
+        }
+
+        if ($langue) {
+            $qb->andWhere('e.guide = :langue')
+            ->setParameter('langue', $langue);
+        }
+
+        if ($maxPers) {
+            $qb->andWhere('e.maxPers <= :maxPers')
+            ->setParameter('maxPers', $maxPers);
+        }
+
+        if ($rating) {
+            $qb->leftJoin('e.avis', 'av')
+            ->groupBy('e.id')
+            ->having('AVG(av.note) >= :rating')
+            ->setParameter('rating', $rating);
+        }
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
     }
 }

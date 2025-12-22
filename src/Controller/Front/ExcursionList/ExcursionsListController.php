@@ -38,7 +38,7 @@ final class ExcursionsListController extends AbstractController
             $rating,
             $langue,
             $nbrPersonnes,
-            $limit,
+            $limit,   // Ajout du paramètre limit
             $offset
         );
 
@@ -68,7 +68,7 @@ final class ExcursionsListController extends AbstractController
             $duree,
             $rating,
             $langue,
-            $nbrPersonnes
+            $nbrPersonnes,
         ));
 
         $totalPages = (int) ceil($totalExcursions / $limit);

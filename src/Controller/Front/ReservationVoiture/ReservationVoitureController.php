@@ -13,14 +13,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ReservationVoitureRepository;
+use App\Repository\VoituresRepository;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ReservationVoitureController extends AbstractController
 {
-    #[Route('/reserver-voiture/{id}', name: 'app_reservation_voiture')]
-    public function reserver(int $id, Request $request, EntityManagerInterface $em): Response
+    #[Route('/reserver-voiture/{slug}', name: 'app_reservation_voiture')]
+    public function reserver(string $slug, Request $request, EntityManagerInterface $em, VoituresRepository $voituresRepository): Response
     {
-        // Récupérer la voiture
-        $voiture = $em->getRepository(Voitures::class)->find($id);
+        // Récupérer la voiture par son slug
+        $voiture = $voituresRepository->findOneBy(['slug' => $slug]);
         if (!$voiture) {
             throw $this->createNotFoundException("Voiture introuvable");
         }
@@ -69,7 +71,7 @@ class ReservationVoitureController extends AbstractController
                 ]);
 
                 return $this->redirectToRoute('app_reservation_voiture', [
-                    'id' => $voiture->getId()
+                    'slug' => $voiture->getSlug()
                 ]);
             
         }

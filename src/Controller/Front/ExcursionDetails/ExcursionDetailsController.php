@@ -19,9 +19,9 @@ use Symfony\Component\Security\Core\Security;
 
 final class ExcursionDetailsController extends AbstractController
 {
-    #[Route('/excursion/details/{id}', name: 'app_front_excursion_details')]
+    #[Route('/excursion/details/{slug}', name: 'app_front_excursion_details')]
     public function index(
-        int $id,
+        string $slug,
         ExcursionRepository $excursionRepository,
         Request $request,
         EntityManagerInterface $em,
@@ -29,7 +29,7 @@ final class ExcursionDetailsController extends AbstractController
     ): Response
     {
         // -------------- EXCURSION ------------------
-        $excursion = $excursionRepository->find($id);
+        $excursion = $excursionRepository->findOneBy(['slug' => $slug]);
         if (!$excursion) {
             throw $this->createNotFoundException('Excursion non trouvée.');
         }

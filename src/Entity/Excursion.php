@@ -12,6 +12,8 @@ use App\Entity\ImageExcursion;
 use App\Entity\ItineraireExcursion;
 use App\Entity\AvisExcursion;
 use App\Entity\FAQExcursion;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ExcursionRepository::class)]
 class Excursion
@@ -89,6 +91,9 @@ class Excursion
     #[ORM\OneToMany(mappedBy: "excursion", targetEntity: FAQExcursion::class, cascade: ["persist", "remove"])]
     private Collection $faq;
 
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $slug = null;
+
 
 
 
@@ -106,6 +111,7 @@ class Excursion
         $this->avis = new ArrayCollection();
         $this->reservations = new ArrayCollection();
         $this->faq = new ArrayCollection();
+        $this->generateSlug();
 
     }
 
@@ -356,6 +362,23 @@ class Excursion
             }
         }
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+        return $this;
+    }
+    public function generateSlug(): void
+    {
+        // Générer un slug basé sur le titre de l'excursion
+        $titleSlug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $this->getTitre())));
+        // Ajouter un identifiant unique pour éviter les doublons
+        $this->slug = $titleSlug . '-' . Uuid::v4()->toRfc4122();
     }
 
 

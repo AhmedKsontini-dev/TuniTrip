@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[ORM\Entity(repositoryClass: VoituresRepository::class)]
 class Voitures
@@ -49,6 +50,9 @@ class Voitures
     #[ORM\Column (type: 'float', precision: 10, scale: 2)]
     private ?float $prixMois = null;
 
+    #[ORM\Column(length: 255, unique: true, nullable: true)]
+    private ?string $slug = null;
+
     // ---------- Getters & Setters ----------
 
     public function getId(): ?int { return $this->id; }
@@ -75,6 +79,21 @@ class Voitures
     public function getPrixMois(): ?float { return $this->prixMois; }
     public function setPrixMois(float $prixMois): static { $this->prixMois = $prixMois; return $this; }
 
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
 
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+        return $this;
+    }
 
+    public function computeSlug(SluggerInterface $slugger): void
+    {
+        if (!$this->slug || '-' === $this->slug) {
+            $this->slug = (string) $slugger->slug((string) $this->marque . ' ' . $this->modele . ' ' . $this->id)->lower();
+        }
+    }
 }

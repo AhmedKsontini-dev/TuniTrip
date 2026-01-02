@@ -10,6 +10,7 @@ Découvrez toutes nos voitures de location en Tunisie avec TuniTrip : compactes,
     <link rel="stylesheet" href="{{ asset('assetsFront/css/list_voitures.css') }}">
 {% endblock %}
 
+
 {% block body %}
 <!-- HERO IMAGE EN HAUT -->
 <div class="page-hero">
@@ -52,6 +53,8 @@ Découvrez toutes nos voitures de location en Tunisie avec TuniTrip : compactes,
             </select>
         </div>
 
+    
+
         <button type="submit" class="btn-animated-primary excursion-details-btn" aria-label="{{ 'vehicles.filter.aria_label'|trans }}">
             <img src="{{ asset('assetsFront/images/filter.png') }}" alt="Filtrer" style="width:20px;height:18px;object-fit:contain;display:block;" />
         </button>
@@ -76,8 +79,11 @@ Découvrez toutes nos voitures de location en Tunisie avec TuniTrip : compactes,
                         <div class="car-card">
                             <div class="car-image-wrapper">
                                 <span class="car-brand">Tuni<span style="color: #d8b65d;">Trip</span></span>
-                                <div class="price-badge">
-                                    <span class="price-badge-amount">{{ voiture.prixJour }} TND</span>
+                                <div class="price-badge" data-original-price="{{ voiture.prixJour }}">
+                                    <div class="price-container">
+                                        <span class="price-badge-amount">{{ voiture.prixJour }}</span>
+                                        <span class="price-currency">TND</span>
+                                    </div>
                                     <span class="price-badge-label">{{ 'vehicles.price_per_day'|trans }}</span>
                                 </div>
                                 {% if voiture.image %}
@@ -125,7 +131,7 @@ Découvrez toutes nos voitures de location en Tunisie avec TuniTrip : compactes,
                                     <span class="low-price-text">{{ voiture.prixMois }} TND • {{ 'vehicles.lowest_price'|trans }}</span>
                                 </div>
                                 <div class="reserver-btn-container">
-                                    <div style="width:100%;" class="btn-animated-primary reservation-btn" onclick="window.location.href='{{ path('app_reservation_voiture', { id: voiture.id }) }}'">
+                                    <div style="width:100%;" class="btn-animated-primary reservation-btn" onclick="window.location.href='{{ path('app_reservation_voiture', { slug: voiture.slug }) }}'">
                                     <span>{{ 'common.book'|trans }} →</span>
                                 </div>
 

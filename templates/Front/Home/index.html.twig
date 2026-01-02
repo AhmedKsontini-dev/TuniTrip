@@ -397,7 +397,7 @@ Découvrez la Tunisie avec TuniTrip. Réservez votre voiture de location, vos tr
         <h3 class="airport-title">Aéroport de Tunis-Carthage</h3>
         <div class="cards-container">
           {% for transfere in tunisCarthageTransfers %}
-            <a href="{{ path('app_reservation_transfert_new', { id: transfere.id }) }}" class="location-card-link">
+            <a href="{{ path('app_reservation_transfert_new', { 'slug': transfere.slug }) }}" class="location-card-link">
               <div class="location-card"
                    style="background-image: url('{{ asset('uploads/images/' ~ transfere.image) }}');">
                 <div class="card-content">
@@ -423,7 +423,7 @@ Découvrez la Tunisie avec TuniTrip. Réservez votre voiture de location, vos tr
         <h3 class="airport-title">Aéroport d'Enfidha</h3>
         <div class="cards-container">
           {% for transfere in enfidhaTransfers %}
-            <a href="{{ path('app_reservation_transfert_new', { id: transfere.id }) }}" class="location-card-link">
+            <a href="{{ path('app_reservation_transfert_new', { 'slug': transfere.slug }) }}" class="location-card-link">
               <div class="location-card"
                    style="background-image: url('{{ asset('uploads/images/' ~ transfere.image) }}');">
                 <div class="card-content">
@@ -512,7 +512,7 @@ Découvrez la Tunisie avec TuniTrip. Réservez votre voiture de location, vos tr
                                     <span class="per">/personne</span>
                                 </div>
 
-                                <a href="{{ path('app_front_excursion_details', {id: excursion.id}) }}" class="view-btn">
+                                <a href="{{ path('app_front_excursion_details', { 'slug': excursion.slug}) }}" class="view-btn">
                                     Voir l'excursion
                                 </a>
                             </div>

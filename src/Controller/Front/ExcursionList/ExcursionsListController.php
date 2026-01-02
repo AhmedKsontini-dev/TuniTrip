@@ -26,7 +26,7 @@ final class ExcursionsListController extends AbstractController
         $nbrPersonnes = $nbrPersonnes !== null && $nbrPersonnes !== '' ? (int) $nbrPersonnes : null;
 
         $page = max(1, (int) $request->query->get('page', 1));
-        $limit = 2;
+        $limit = 9;
         $offset = ($page - 1) * $limit;
 
         // 🔽 Récupère les excursions paginées avec filtres

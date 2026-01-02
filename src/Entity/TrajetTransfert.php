@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
 #[ORM\Table(name: "transfere")]
@@ -30,6 +32,15 @@ class TrajetTransfert
 
     #[ORM\Column(type: 'boolean')]
     private bool $actif = true; // ✅ nouveau champ
+
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $slug = null;
+
+    public function __construct()
+    {
+        $this->generateSlug();
+
+    }
 
     // -------------------
     // Getters / Setters
@@ -104,5 +115,26 @@ class TrajetTransfert
     {
         $this->actif = $actif;
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+        return $this;
+    }
+    public function generateSlug(): void
+    {
+        // Utilisation de lieu de départ et d'arrivée pour le slug
+        $titleSlug = strtolower(trim(preg_replace(
+            '/[^A-Za-z0-9-]+/', 
+            '-', 
+            $this->getLieuDepart() . ' ' . $this->getLieuArrivee()
+        )));
+        // Ajouter un identifiant unique pour éviter les doublons
+        $this->slug = $titleSlug . '-' . Uuid::v4()->toRfc4122();
     }
 }

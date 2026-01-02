@@ -148,7 +148,7 @@ Explorez toutes nos excursions en Tunisie avec TuniTrip : désert, mer, culture 
                                 <span><i class="fa fa-tag"></i>{{ excursion.categorie }}</span>
                             </div>
 
-                            <a href="{{ path('app_front_excursion_details', {'id': excursion.id}) }}" class="btn-animated-primary excursion-details-btn">
+                            <a href="{{ path('app_front_excursion_details', {'slug': excursion.slug}) }}" class="btn-animated-primary excursion-details-btn">
                                 <i class="fa fa-info-circle me-1"></i> {{ 'common.view_details'|trans }}
                             </a>
 

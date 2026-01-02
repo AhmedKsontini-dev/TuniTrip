@@ -12,17 +12,23 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\TransferPriceCalculator;
+use App\Repository\TrajetTransfertRepository;
 
 #[Route('/reservation-transfert')]
 class ReservationTransfertController extends AbstractController
 {
-    #[Route('/new/{id}', name: 'app_reservation_transfert_new', methods: ['GET', 'POST'])]
+    #[Route('/new/{slug}', name: 'app_reservation_transfert_new', methods: ['GET', 'POST'])]
     public function new(
-        TrajetTransfert $trajetTransfert,
+        string $slug,
+        TrajetTransfertRepository $trajetTransfertRepository,
         Request $request,
         EntityManagerInterface $em,
         TransferPriceCalculator $calculator
     ): Response {
+        $trajetTransfert = $trajetTransfertRepository->findOneBy(['slug' => $slug]);
+        if (!$trajetTransfert) {
+            throw $this->createNotFoundException('Trajet non trouvé');
+        }
         $reservation = new ReservationTransfert();
         $reservation->setTrajetTransfert($trajetTransfert);
 

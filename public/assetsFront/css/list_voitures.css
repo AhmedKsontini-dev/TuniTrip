@@ -284,11 +284,15 @@
     border: 3px solid #fff;
     text-align: center;
     line-height: 1.2;
-
-    /* Animation swing */
     animation: swing 2.5s ease-in-out infinite;
     transform-origin: top center;
 }
+
+.price-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
 
 /* Mouvement de gauche Ã  droite faÃ§on balanÃ§oire */
 @keyframes swing {
